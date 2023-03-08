@@ -1,9 +1,9 @@
 // In App.js in a new project
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {colors} from 'config/colors';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { colors } from 'config/colors';
 import * as React from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AddCard from 'screens/add-card-screen';
 import AppointmentDetails from 'screens/appointment-details';
 import AppointmentsList from 'screens/appointments-list';
@@ -18,18 +18,19 @@ import AddAvailability from 'screens/add-availability';
 import Splash from 'screens/splash';
 import UpdatePassword from 'screens/update-password';
 import UpdateProfile from 'screens/update-profile';
-import {horizontalAnimation} from '../utils';
+import { horizontalAnimation } from '../utils';
 import TabNavigator from './tab-navigation';
 import EditAvailability from 'screens/edit-availability';
 import AvailabilityDetails from 'screens/availability-details';
 import UpdateAvailability from 'screens/update-availability';
-import {TabBar} from './curvedtabs';
+import { TabBar } from './curvedtabs';
+import Checkout from 'screens/checkout';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
   return (
     <View style={styles.container}>
-      <SafeAreaView style={{flex: 0, backgroundColor: colors.primary}} />
+      <SafeAreaView style={{ flex: 0, backgroundColor: colors.primary }} />
       <StatusBar
         translucent={false}
         backgroundColor={colors.primary}
@@ -69,11 +70,13 @@ export const RootNavigator = () => {
           name="AppointmentDetails"
           component={AppointmentDetails}
         />
+        <Stack.Screen name="AppointmentDetails" component={AppointmentDetails} />
+        <Stack.Screen name="Checkout" component={Checkout} />
       </Stack.Navigator>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: { flex: 1 },
 });

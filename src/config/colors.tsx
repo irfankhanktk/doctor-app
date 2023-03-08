@@ -2,7 +2,7 @@
  * @providesModule Colors
  */
 export const colors = {
-  border: '#707070',
+  border: '#E8E8E8',
   black: '#706561',
   white: '#FFFFFF',
   lightGray: '#dfdede',
@@ -25,7 +25,7 @@ export const colors = {
   }
 };
 export const darkTheme = {
-  border: '#707070',
+  border: '#E8E8E8',
   black: '#000000',
   white: '#ffffff',
   transparent: 'transparent',
@@ -33,7 +33,7 @@ export const darkTheme = {
   secondary: '#F2F2F2', //'#F2F2F2',
 };
 export const lightTheme = {
-  border: '#707070',
+  border: '#E8E8E8',
   black: '#ffffff',
   white: '#000000',
   transparent: 'transparent',

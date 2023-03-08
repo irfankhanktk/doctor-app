@@ -20,17 +20,6 @@ const DoctorHospitalDetailsCard = ({
         <Image source={{ uri: item?.banner_image_id }} style={{ height: mvs(120), width: mvs(120), borderRadius: mvs(15) }} />
         <View style={{ flex: 1, marginHorizontal: mvs(10), }}>
           <Medium style={styles.address} label={`${item?.title || 'Jinnah Hospital'}`} fontSize={mvs(16)} />
-          {/* <Row style={{ flex: 1 }}>
-            <Medium style={styles.address} label={`${item?.title || 'Jinnah Hospital'}`} fontSize={mvs(16)} />
-            <Row style={{}}>
-              <TouchableOpacity style={{ padding: mvs(3), marginHorizontal: mvs(10) }}>
-                <Icon name={'delete'} color={colors.primary} size={mvs(15)} />
-              </TouchableOpacity>
-              <TouchableOpacity style={{ padding: mvs(3) }}>
-                <Icon name={'edit'} color={colors.primary} size={mvs(15)} />
-              </TouchableOpacity>
-            </Row>
-          </Row> */}
           <Row style={{ justifyContent: 'flex-start', }}>
             <Icon name={'enviroment'} color={colors.red} size={mvs(15)} />
             <Medium style={{

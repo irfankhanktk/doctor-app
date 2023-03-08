@@ -20,7 +20,7 @@ export const weekDays = [
     'Satureday',
     'Sunday',
 ];
-export const appointmentStatus = {
+export const APPOINTMNETSTATUS = {
     confirmed: 'confirmed',
     completed: 'completed',
     waiting: 'waiting'

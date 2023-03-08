@@ -1,7 +1,7 @@
 import { login_bg } from 'assets/images';
 import { PrimaryButton } from 'components/atoms/buttons';
 import { Row } from 'components/atoms/row';
-import { appointmentStatus } from 'config/constants';
+import { APPOINTMNETSTATUS } from 'config/constants';
 import moment from 'moment';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -72,13 +72,13 @@ const AppointmentCard = ({
           disabled={item?.status === 'completed' || statusLoading}
           onPress={() => {
             onPressStatus(
-              item?.status === appointmentStatus?.confirmed ? appointmentStatus?.completed
-                : item?.status === appointmentStatus?.waiting ? appointmentStatus?.confirmed :
-                  appointmentStatus?.completed
+              item?.status === APPOINTMNETSTATUS?.confirmed ? APPOINTMNETSTATUS?.completed
+                : item?.status === APPOINTMNETSTATUS?.waiting ? APPOINTMNETSTATUS?.confirmed :
+                  APPOINTMNETSTATUS?.completed
             )
           }}
           containerStyle={styles.btnDetails}
-          title={t(item?.status === appointmentStatus?.confirmed ? 'Complete' :
+          title={t(item?.status === APPOINTMNETSTATUS?.confirmed ? 'Complete' :
             item?.status === 'completed' ? 'Completed' : 'Confirm')} />
       </Row>
     </TouchableOpacity>

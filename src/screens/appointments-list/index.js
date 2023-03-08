@@ -2,6 +2,7 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import { Loader } from 'components/atoms/loader';
 import AppointmentCard from 'components/molecules/appointment-card';
 import { EmptyList } from 'components/molecules/empty-list';
+import { APPOINTMNETSTATUS } from 'config/constants';
 import { useAppDispatch, useAppSelector } from 'hooks/use-store';
 import React from 'react';
 import { FlatList, View } from 'react-native';
@@ -28,7 +29,11 @@ const AppointmentsList = (props) => {
   const renderAppointmentItem = ({ item, index }) => (
     <AppointmentCard
       onPressStatus={(status) => {
-        onChangeAppoinmentStatus(item?.id, status, setstatusLoading);
+        if (status === APPOINTMNETSTATUS.completed) {
+
+        } else {
+          onChangeAppoinmentStatus(item?.id, status, setstatusLoading);
+        }
       }}
       onPress={() => props?.navigation?.navigate('AppointmentDetails', {
         id: item?.id,
