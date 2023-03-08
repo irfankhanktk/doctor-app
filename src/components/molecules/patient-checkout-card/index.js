@@ -8,7 +8,7 @@ import { colors } from '../../../config/colors';
 import { mvs } from '../../../config/metrices';
 import Medium from '../../../typography/medium-text';
 
-const DoctorCheckoutCard = ({
+const PatientCheckoutCard = ({
   name = 'Dr. Shruti Kedia',
   subTitle = 'Dermatalogist, Cosmetologist',
   experience = '1 Years experience',
@@ -30,7 +30,7 @@ const DoctorCheckoutCard = ({
     </Row>
   );
 };
-export default React.memo(DoctorCheckoutCard);
+export default React.memo(PatientCheckoutCard);
 const styles = StyleSheet.create({
   container: {
     // width: width - mvs(120)

@@ -4,6 +4,7 @@ import AppointmentCard from 'components/molecules/appointment-card';
 import { EmptyList } from 'components/molecules/empty-list';
 import { APPOINTMNETSTATUS } from 'config/constants';
 import { useAppDispatch, useAppSelector } from 'hooks/use-store';
+import { navigate } from 'navigation/navigation-ref';
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import { getAppointmentsList, onChangeAppoinmentStatus } from 'services/api/api-actions';
@@ -27,10 +28,12 @@ const AppointmentsList = (props) => {
     })()
   }, [])
   const renderAppointmentItem = ({ item, index }) => (
+
     <AppointmentCard
       onPressStatus={(status) => {
+        console.log('status=>', status);
         if (status === APPOINTMNETSTATUS.completed) {
-
+          navigate('Checkout');
         } else {
           onChangeAppoinmentStatus(item?.id, status, setstatusLoading);
         }

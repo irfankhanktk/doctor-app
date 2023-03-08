@@ -2,7 +2,7 @@ import { PrimaryButton } from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import { Loader } from 'components/atoms/loader';
 import { Row } from 'components/atoms/row';
-import DoctorCheckoutCard from 'components/molecules/doctor-checkout-card';
+import PatientCheckoutCard from 'components/molecules/patient-checkout-card';
 import PaymentMethodCard from 'components/molecules/payment-method-card';
 import { colors } from 'config/colors';
 import { mvs } from 'config/metrices';
@@ -34,7 +34,7 @@ const Checkout = (props) => {
         {loading ?
           <Loader />
           : <ScrollView contentContainerStyle={styles.contentContainerStyle}>
-            <DoctorCheckoutCard
+            <PatientCheckoutCard
               name={appointmentDetails?.patient?.name}
               subTitle={appointmentDetails?.patient?.designation}
               image={appointmentDetails?.patient?.banner_image_id}

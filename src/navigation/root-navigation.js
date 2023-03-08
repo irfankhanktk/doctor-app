@@ -66,10 +66,6 @@ export const RootNavigator = () => {
         <Stack.Screen name="LanguageScreen" component={LanguageScreen} />
         <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
         <Stack.Screen name="AppointmentsList" component={AppointmentsList} />
-        <Stack.Screen
-          name="AppointmentDetails"
-          component={AppointmentDetails}
-        />
         <Stack.Screen name="AppointmentDetails" component={AppointmentDetails} />
         <Stack.Screen name="Checkout" component={Checkout} />
       </Stack.Navigator>
