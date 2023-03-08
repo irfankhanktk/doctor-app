@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "91601287529",
+    "project_id": "bookme-d1f6b",
+    "storage_bucket": "bookme-d1f6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91601287529:android:75d1f047603069991a65f8",
+        "android_client_info": {
+          "package_name": "com.bookme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91601287529-bo6pksk2uub7di8djp3gpf9ea3og4nol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYIN2lA1cXqfcuVzVGdjuMxnwji0M9TJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91601287529-bo6pksk2uub7di8djp3gpf9ea3og4nol.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91601287529-abdihggu0140f9sogr6a2t8bmhro17j6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bookme"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91601287529:android:790cc118468f32aa1a65f8",
+        "android_client_info": {
+          "package_name": "com.doctorapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91601287529-bo6pksk2uub7di8djp3gpf9ea3og4nol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYIN2lA1cXqfcuVzVGdjuMxnwji0M9TJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91601287529-bo6pksk2uub7di8djp3gpf9ea3og4nol.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91601287529-abdihggu0140f9sogr6a2t8bmhro17j6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bookme"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
