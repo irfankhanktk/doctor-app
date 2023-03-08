@@ -65,19 +65,19 @@ const Home = (props) => {
 
             <AppointmentCounter
               onPress={() => navigate('AppointmentsList', { status: 'total' })}
-              value={homeData?.counterAppointment?.total}
+              value={homeData?.counterAppointment?.total ?? '-'}
               label={'Total'} />
             <AppointmentCounter
               onPress={() => navigate('AppointmentsList', { status: 'waiting' })}
-              value={homeData?.counterAppointment?.waiting}
+              value={homeData?.counterAppointment?.waiting ?? '-'}
               label={'Waiting'} />
             <AppointmentCounter
               onPress={() => navigate('AppointmentsList', { status: 'confirmed' })}
-              value={homeData?.counterAppointment?.confirmed}
+              value={homeData?.counterAppointment?.confirmed ?? '-'}
               label={'Confirmed'} />
             <AppointmentCounter
               onPress={() => navigate('AppointmentsList', { status: 'completed' })}
-              value={homeData?.counterAppointment?.completed}
+              value={homeData?.counterAppointment?.completed ?? '-'}
               label={'Completed'} />
 
           </Row>
