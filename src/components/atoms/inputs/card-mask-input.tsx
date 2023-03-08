@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {
   I18nManager,
   KeyboardTypeOptions,
@@ -12,18 +12,12 @@ import {
   ViewStyle,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import MaskInput from 'react-native-mask-input';
+import {useAppSelector} from 'hooks/use-store';
 import PhoneInput from 'react-native-phone-number-input';
 import Regular from 'typography/regular-text';
+import {colors} from '../../../config/colors';
 import {mvs} from '../../../config/metrices';
-import {colors} from './../../../config/colors';
-import Medium from 'typography/medium-text';
-import {Row} from '../row';
-import {useAppSelector} from 'hooks/use-store';
-import CartModal from 'components/molecules/modals/cart-modal';
-import DropdownModal from 'components/molecules/modals/dropdown-modal';
-import {t} from 'i18next';
 type Item = {label: string; value: string};
 type props = {
   onChangeText: (text: string) => void;
@@ -47,10 +41,11 @@ type props = {
   disabledSearch?: boolean;
   error?: string;
   id?: any;
+  mask?: any[];
   keyboardType?: KeyboardTypeOptions | undefined;
   onBlur?: (e?: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 };
-const PrimaryInput = (props: props) => {
+const CardMaskInput = (props: props) => {
   const [secure, setSecure] = useState(true);
   const {language} = useAppSelector(s => s.user);
   const {
@@ -69,12 +64,13 @@ const PrimaryInput = (props: props) => {
     editable = true,
     onBlur = () => {},
     onPressIn = () => {},
+    mask = [],
   } = props;
   return (
     <>
       <Regular label={label} style={[styles.labelStyle, labelStyle]} />
       <View style={[styles.Container, containerStyle]}>
-        <TextInput
+        {/* <TextInput
           editable={editable}
           onBlur={onBlur}
           onPressIn={onPressIn}
@@ -89,18 +85,19 @@ const PrimaryInput = (props: props) => {
             style,
             {textAlign: I18nManager.isRTL ? 'right' : 'left'},
           ]}
+          
+        /> */}
+        <MaskInput
+          value={value}
+          onChangeText={(masked, unmasked) => {
+            onChangeText(masked); // you can use the unmasked value as well
+
+            // assuming you typed "9" all the way:
+            console.log(masked); // (99) 99999-9999
+            console.log(unmasked); // 99999999999
+          }}
+          mask={mask}
         />
-        {isPassword && (
-          <TouchableOpacity
-            style={styles.PasswordIcon}
-            onPress={() => setSecure(!secure)}>
-            <Feather
-              size={25}
-              name={secure ? 'eye' : 'eye-off'}
-              color={colors.black}
-            />
-          </TouchableOpacity>
-        )}
       </View>
       <Regular
         label={error ? error : ''}
@@ -109,170 +106,7 @@ const PrimaryInput = (props: props) => {
     </>
   );
 };
-export default React.memo(PrimaryInput);
-
-export const CommentInput = (props: props) => {
-  const {
-    onChangeText,
-    onPress = () => {},
-    value,
-    style,
-    placeholder = 'Write Message',
-    containerStyle,
-    isPassword,
-    keyboardType,
-    error,
-    onBlur = () => {},
-  } = props;
-  return (
-    <>
-      <View style={[styles.commentContainer, containerStyle]}>
-        <TextInput
-          onBlur={onBlur}
-          keyboardType={keyboardType}
-          value={value}
-          placeholderTextColor={`${colors.black}50`}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-          style={[styles.textInput, style]}
-        />
-        <TouchableOpacity style={styles.PasswordIcon} onPress={onPress}>
-          <Feather
-            size={20}
-            name={value?.trim()?.length ? 'send' : 'mic'}
-            color={colors.black}
-          />
-        </TouchableOpacity>
-      </View>
-      <Regular label={error ? error : ''} style={styles.errorLabel} />
-    </>
-  );
-};
-export const InputWithIcon = (props: props) => {
-  const [visible, setVisible] = React.useState(false);
-  const {
-    items = [],
-    onChangeText,
-    onBlur = () => {},
-    value,
-    style,
-    containerStyle,
-    id,
-    editable,
-    error,
-    label,
-  } = props;
-  return (
-    <>
-      {label && <Regular label={label} style={styles.labelStyle} />}
-      <TouchableOpacity
-        disabled={editable}
-        onPress={() => {
-          setVisible(true);
-          onBlur();
-        }}
-        style={[styles.dropDownContainer, containerStyle]}>
-        <Medium label={value} />
-        <Feather size={25} name={'chevron-down'} color={colors.black} />
-      </TouchableOpacity>
-      <Regular label={error ? `${t(error)}` : ''} style={styles.errorLabel} />
-      <DropdownModal
-        onClose={() => setVisible(false)}
-        onChangeText={onChangeText}
-        value={id}
-        visible={visible}
-        items={items}
-      />
-    </>
-  );
-};
-
-export const PrimaryPhoneInput = (props: props) => {
-  const phoneRef = useRef<PhoneInput>(null);
-  const {
-    onChangeText = t => {},
-    getCallingCode = t => {},
-    value,
-    style,
-    label,
-    placeholder = 'Enter phone number',
-    labelStyle,
-    containerStyle,
-    secureTextEntry,
-    isPassword,
-    keyboardType,
-    error,
-    ref,
-    layout = 'first',
-    defaultCode = 'PK',
-    onBlur,
-  } = props;
-  return (
-    <>
-      <PhoneInput
-        ref={phoneRef}
-        value={value}
-        defaultCode={defaultCode}
-        layout={'first'}
-        onChangeText={t => {
-          onChangeText(t);
-          const code = phoneRef.current?.getCallingCode();
-          if (code) getCallingCode(code);
-        }}
-        placeholder={placeholder}
-        containerStyle={styles.phoneContainer}
-        textContainerStyle={styles.textContainerStyle}
-        textInputStyle={styles.textInputStyle}
-        codeTextStyle={styles.codeTextStyle}
-      />
-      <Regular label={error} style={styles.errorLabel} />
-    </>
-  );
-};
-export const SearchInput = (props: props) => {
-  const [secure, setSecure] = useState(true);
-  const {
-    onChangeText,
-    value,
-    style,
-    label,
-    placeholder = 'Search here',
-    labelStyle,
-    containerStyle,
-    secureTextEntry,
-    keyboardType,
-    error,
-    onBlur,
-    editable,
-    disabledSearch = true,
-  } = props;
-  return (
-    <View style={[styles.searchContainer, containerStyle]}>
-      <TouchableOpacity
-        disabled={disabledSearch}
-        style={styles.searchIcon}
-        onPress={() => {}}>
-        <Feather size={mvs(22)} name={'search'} color={colors.black} />
-      </TouchableOpacity>
-      <TextInput
-        editable={editable}
-        onBlur={onBlur}
-        keyboardType={keyboardType}
-        value={value}
-        placeholder={placeholder}
-        placeholderTextColor={`${colors.border}`}
-        onChangeText={onChangeText}
-        style={[styles.searchTextInput, style]}
-      />
-      <TouchableOpacity
-        disabled={disabledSearch}
-        style={styles.searchIcon}
-        onPress={() => {}}>
-        <MaterialIcons size={mvs(22)} name={'cancel'} color={colors.black} />
-      </TouchableOpacity>
-    </View>
-  );
-};
+export default React.memo(CardMaskInput);
 
 const styles = StyleSheet.create({
   Container: {
