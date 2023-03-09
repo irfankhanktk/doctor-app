@@ -101,6 +101,7 @@ const Checkout = (props) => {
             }, setStatusLoading);
             Alert.alert('Congratulation', 'You have completed appointment successfully')
             setIsOtpModal(false);
+            props?.navigation?.pop(2);
 
           } catch (error) {
             console.log('error=>>>:', error);
