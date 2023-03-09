@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: mvs(20),
     },
     time: { marginVertical: mvs(15), },
-    hospital: { width: width - mvs(40), height: mvs(200) }
+    hospital: { width: width - mvs(40), height: mvs(200) },
+    appoinment: {
+        paddingVertical: mvs(5),
+        paddingHorizontal: mvs(15),
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: colors.secondary
+    }
 });
 export default styles;

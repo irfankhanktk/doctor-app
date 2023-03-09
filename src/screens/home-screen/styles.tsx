@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
+  search: {
+    paddingHorizontal: mvs(20),
+    marginTop: -30,
+    marginBottom: mvs(10),
+  },
   body: {
     flex: 1,
   },
@@ -14,6 +19,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingVertical: mvs(10),
     paddingHorizontal: mvs(20),
+    paddingBottom: mvs(100)
   },
   columnWrapperStyle: {
     justifyContent: 'space-between',

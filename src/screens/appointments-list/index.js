@@ -16,7 +16,7 @@ const AppointmentsList = (props) => {
   const dispatch = useAppDispatch();
   const { t } = i18n;
   const [loading, setLoading] = React.useState(true);
-  const [statusLoading, setstatusLoading] = React.useState(false);
+  const [statusLoading, setStatusLoading] = React.useState(false);
   const [arrayFormat, setArrayFormat] = React.useState([]);
   const [appointments, setAppointments] = React.useState([]);
   const { userInfo } = useAppSelector(s => s?.user);
@@ -33,9 +33,11 @@ const AppointmentsList = (props) => {
       onPressStatus={(status) => {
         console.log('status=>', status);
         if (status === APPOINTMNETSTATUS.completed) {
-          navigate('Checkout');
+          navigate('Checkout', {
+            id: item?.id,
+          });
         } else {
-          onChangeAppoinmentStatus(item?.id, status, setstatusLoading);
+          onChangeAppoinmentStatus(item?.id, status, setStatusLoading);
         }
       }}
       onPress={() => props?.navigation?.navigate('AppointmentDetails', {

@@ -78,7 +78,7 @@ const AppointmentCard = ({
             )
           }}
           containerStyle={styles.btnDetails}
-          title={t(item?.status === APPOINTMNETSTATUS?.confirmed ? 'Complete' :
+          title={t(item?.status === APPOINTMNETSTATUS?.confirmed ? 'Checkout' :
             item?.status === 'completed' ? 'Completed' : 'Confirm')} />
       </Row>
     </TouchableOpacity>

@@ -1,15 +1,15 @@
-import {STORAGEKEYS} from 'config/constants';
-import {goBack, navigate} from 'navigation/navigation-ref';
-import {Alert} from 'react-native';
-import {AppDispatch, RootState} from 'store';
-import {getData, postData} from '.';
+import { APPOINTMNETSTATUS, STORAGEKEYS } from 'config/constants';
+import { goBack, navigate } from 'navigation/navigation-ref';
+import { Alert } from 'react-native';
+import { AppDispatch, RootState } from 'store';
+import { getData, postData } from '.';
 import {
   setHospitals,
   setSpecCategories,
 } from '../../store/reducers/doctor-reducer';
-import {setUserInfo} from '../../store/reducers/user-reducer';
-import {UTILS} from '../../utils';
-import {URLS} from './api-urls';
+import { setUserInfo } from '../../store/reducers/user-reducer';
+import { UTILS } from '../../utils';
+import { URLS } from './api-urls';
 
 // export const getNearByHospitals = async (lat: any, long: any) => {
 //     try {
@@ -70,18 +70,30 @@ export const onChangeAppoinmentStatus = async (
 ) => {
   try {
     console.log('onChangeAppoinmentStatus appointment_id=>', appointment_id);
-    setLoading(appointment_id);
+    setLoading(true);
     const res = await postData(URLS.appointment.status_change, {
       appointment_id,
       status,
     });
-    goBack();
-    // return res;
-  } catch (error: any) {
-    // console.log('error in getSpecCategories', error);
-    Alert.alert('', UTILS.returnError(error));
-  } finally {
     setLoading(false);
+  } catch (error: any) {
+    // console.log('error in onChangeAppoinmentStatus', error);
+    setLoading(false);
+    Alert.alert('', UTILS.returnError(error));
+    throw UTILS.returnError(error);
+  }
+};
+export const onCompleteAppoinment = async (values: any, setLoading: (bool: any) => void,
+) => {
+  try {
+    setLoading(true);
+    const res = await postData(URLS.appointment.complete_appoinment, values);
+    setLoading(false);
+  } catch (error: any) {
+    console.log('error in onCompleteAppoinment', error);
+    setLoading(false);
+    Alert.alert('', UTILS.returnError(error));
+    throw UTILS.returnError(error);
   }
 };
 //

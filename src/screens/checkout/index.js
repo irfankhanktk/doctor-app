@@ -2,62 +2,111 @@ import { PrimaryButton } from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import { Loader } from 'components/atoms/loader';
 import { Row } from 'components/atoms/row';
+import OtpModal from 'components/molecules/modals/otp-modal';
 import PatientCheckoutCard from 'components/molecules/patient-checkout-card';
 import PaymentMethodCard from 'components/molecules/payment-method-card';
 import { colors } from 'config/colors';
+import { APPOINTMNETSTATUS } from 'config/constants';
 import { mvs } from 'config/metrices';
+import moment from 'moment';
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Alert, ScrollView, View } from 'react-native';
+import { getAppointmentDetails, onChangeAppoinmentStatus, onCompleteAppoinment } from 'services/api/api-actions';
 import i18n from 'translation';
 import Bold from 'typography/bold-text';
+import Medium from 'typography/medium-text';
 import styles from './styles';
 
 const Checkout = (props) => {
   const { params } = props?.route;
   const { t } = i18n;
   const [loading, setLoading] = React.useState(false);
+  const [isOtpModal, setIsOtpModal] = React.useState(false);
+  const [value, setValue] = React.useState('');
+  const [statusLoading, setStatusLoading] = React.useState(false);
   const [appointmentDetails, setAppointmentDetails] = React.useState(null);
   const [arrayFormat, setArrayFormat] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   (async () => {
-  //     const res = await getAppointmentDetails(params?.id, setLoading);
-  //     console.log('res of appointment: details ->', res);
-  //     setAppointmentDetails(res?.appointment);
-  //     setArrayFormat(res?.arrayFormat || []);
-  //   })()
-  // }, [])
+  const [selectedMethod, setSelectedMethod] = React.useState('cash');
+  React.useEffect(() => {
+    (async () => {
+      const res = await getAppointmentDetails(params?.id, setLoading);
+      console.log('res of appointment: details ->', res);
+      setAppointmentDetails(res?.appointment);
+      setArrayFormat(res?.arrayFormat || []);
+    })()
+  }, [])
   return (
     <View style={styles.container}>
       <Header1x2x title={t('checkout')} />
       <View style={styles.container}>
         {loading ?
           <Loader />
-          : <ScrollView contentContainerStyle={styles.contentContainerStyle}>
+          : <ScrollView
+            contentContainerStyle={styles.contentContainerStyle}>
+            <Row style={styles.appoinment}>
+              <Medium label={t('appoinment_no')} />
+              <Medium label={`${appointmentDetails?.id}`} style={{ color: colors.primary, fontSize: mvs(18), marginHorizontal: mvs(15) }} />
+            </Row>
             <PatientCheckoutCard
               name={appointmentDetails?.patient?.name}
-              subTitle={appointmentDetails?.patient?.designation}
+              address={`${appointmentDetails?.patient?.city || ''} ${appointmentDetails?.patient?.country || ''}`}
               image={appointmentDetails?.patient?.banner_image_id}
               experience={appointmentDetails?.patient?.experience}
-              fee={appointmentDetails?.patient?.price}
-              rating={appointmentDetails?.patient?.review_score}
             />
+            <View style={styles.time}>
+              <Bold label={moment(appointmentDetails?.date).format('ll')} />
+              <Row>
+                <Medium label={t('time')} />
+                <Medium label={`${arrayFormat[appointmentDetails?.start_time_id]} - ${arrayFormat[appointmentDetails?.end_time_id]}`} />
+              </Row>
+            </View>
             <PaymentMethodCard
-              name={appointmentDetails?.patient?.name}
-              subTitle={appointmentDetails?.patient?.designation}
-              image={appointmentDetails?.patient?.banner_image_id}
-              experience={appointmentDetails?.patient?.experience}
-              fee={appointmentDetails?.patient?.price}
-              rating={appointmentDetails?.patient?.review_score}
+              onChange={setSelectedMethod}
+              selectedMethod={selectedMethod}
+              disabledCard={true}
+
             />
             <Row style={{ alignItems: 'center', marginTop: mvs(30) }}>
-              <Bold label={'Total $ '} color={colors.primary}>
-                <Bold label={' 38.0'} fontSize={mvs(18)} />
+              <Bold label={'Total '} color={colors.primary}>
+                <Bold label={`${appointmentDetails?.price}`} fontSize={mvs(18)} />
               </Bold>
-              <PrimaryButton title={'Pay Now'} containerStyle={{ width: '49%' }} />
+              <PrimaryButton
+                loading={statusLoading}
+                onPress={async () => {
+                  try {
+                    await onChangeAppoinmentStatus(appointmentDetails?.id, APPOINTMNETSTATUS.completed, setStatusLoading);
+                    // Alert.alert('OTP', 'Confirmation code is sent to Patient through Email')
+                    setIsOtpModal(true);
+                  } catch (error) {
+                    console.log('error=>>>:', error);
+                  }
+                }} title={'Generate Otp'} containerStyle={{ width: '49%' }} />
             </Row>
           </ScrollView>}
       </View>
+      <OtpModal
+        disabled={statusLoading}
+        email={appointmentDetails?.patient?.email}
+        visible={isOtpModal}
+        value={value}
+        setValue={setValue}
+        onClose={() => setIsOtpModal(false)}
+        onPress={async () => {
+          try {
+            await onCompleteAppoinment({
+              appointment_id: appointmentDetails?.id,
+              amount: appointmentDetails?.price,
+              payment_method: selectedMethod,
+              otp: value
+            }, setStatusLoading);
+            Alert.alert('Congratulation', 'You have completed appointment successfully')
+            setIsOtpModal(false);
+
+          } catch (error) {
+            console.log('error=>>>:', error);
+          }
+        }}
+      />
     </View>
   );
 };

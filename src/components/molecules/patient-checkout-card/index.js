@@ -10,7 +10,7 @@ import Medium from '../../../typography/medium-text';
 
 const PatientCheckoutCard = ({
   name = 'Dr. Shruti Kedia',
-  subTitle = 'Dermatalogist, Cosmetologist',
+  address = '',
   experience = '1 Years experience',
   image,
   style,
@@ -23,9 +23,8 @@ const PatientCheckoutCard = ({
       </View>
       <View style={styles.profile}>
         <Medium label={name} fontSize={mvs(20)} />
-        <Regular label={subTitle} fontSize={mvs(13)} color={colors.primary} />
+        <Regular numberOfLines={2} label={address} fontSize={mvs(13)} color={colors.primary} />
         <Regular label={experience} fontSize={mvs(13)} color={colors.lightGray} />
-        <AntDesign size={mvs(20)} name='heart' color={colors.red} style={styles.heart} />
       </View>
     </Row>
   );

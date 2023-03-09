@@ -40,7 +40,7 @@ const Home = (props) => {
   return (
     <View style={styles.container}>
       <AppHeader title={`${t('greet')} ${userInfo?.name || t('guest')}`} />
-      <View style={{ paddingHorizontal: mvs(20), marginTop: -30, marginBottom: mvs(10) }}>
+      <View style={styles.search}>
         <SearchInput value='' />
       </View>
       <View style={styles.container}>

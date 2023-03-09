@@ -10,57 +10,50 @@ import { mvs } from '../../../config/metrices';
 import Medium from '../../../typography/medium-text';
 
 const PaymentMethodCard = ({
+  disabledCard,
+  selectedMethod = 'cash',
+  onChange = (method) => { },
   style,
   onPress
 }) => {
   return (
     <View style={[styles.container, style]}>
       <Row>
-
         <Medium
           label={'Payment Method'}
           color={colors.black}
           fontSize={mvs(18)}
-          style={{ borderBottomWidth: StyleSheet.hairlineWidth, borderColor: colors.border }}
+          style={styles.payment}
         />
-        <TouchableOpacity onPress={() => navigate('AddCard')}>
-          <Medium
-            label={'Add New'}
-            color={colors.primary}
-            fontSize={mvs(18)}
-          />
-        </TouchableOpacity>
       </Row>
       <View style={[styles.paymentContainer]}>
-        <Medium
-          label={'Debt & Credit Card'}
-          color={colors.black}
-          fontSize={mvs(18)}
-          style={{ marginBottom: mvs(10), }}
-        />
-        <ScrollView horizontal>
-          {
-            [0, 1, 2].map(() => (
-              <Image source={IMG.appointment_bg}
-                style={{
-                  height: mvs(50),
-                  width: mvs(70),
-                  marginHorizontal: mvs(5),
-                  borderRadius: mvs(5),
-                }} />
-            ))
-          }
-        </ScrollView>
+        <Row>
+          <TouchableOpacity onPress={() => onChange('cash')} style={styles.cardContainer}>
+            <Image source={IMG.cash}
+              style={styles.cardImg} />
+            {selectedMethod === 'cash' && <View
+              style={styles.tick}>
+              <AntDesign name={'check'} color={colors.white} />
+            </View>}
+          </TouchableOpacity>
+          <TouchableOpacity
+            disabled={disabledCard}
+            onPress={() => onChange('card')} style={styles.cardContainer}>
+            <Image source={IMG.master}
+              style={styles.cardImg} />
+            {selectedMethod === 'card' && <View
+              style={styles.tick}>
+              <AntDesign name={'check'} color={colors.white} />
+            </View>}
+          </TouchableOpacity>
+        </Row>
+
       </View>
-      {/* <View style={styles.imgContainer}>
-        <Image source={image ? { uri: image } : IMG.login_bg} style={styles.img} />
-      </View>
-      <View style={styles.profile}>
-        <Medium label={name} fontSize={mvs(20)} />
-        <Regular label={subTitle} fontSize={mvs(13)} color={colors.primary} />
-        <Regular label={experience} fontSize={mvs(13)} color={colors.lightGray} />
-        <AntDesign size={mvs(20)} name='heart' color={colors.red} style={styles.heart} />
-      </View> */}
+      <Medium
+        label={'choose payment method'}
+        color={colors.primary}
+        style={{ fontSize: mvs(13), marginTop: mvs(10) }}
+      />
     </View>
   );
 };
@@ -73,6 +66,32 @@ const styles = StyleSheet.create({
     borderRadius: mvs(10),
     padding: mvs(15),
 
+  },
+  payment: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border
+  },
+  cardImg: {
+    height: mvs(50),
+    width: mvs(70),
+    marginHorizontal: mvs(5),
+    borderRadius: mvs(5),
+  },
+  tick: {
+    position: 'absolute',
+    backgroundColor: colors.primary,
+    borderRadius: mvs(35),
+    padding: mvs(5),
+    right: mvs(5)
+  },
+  cardContainer: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: mvs(10),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: mvs(5),
+    width: '45%'
   },
   paymentContainer: {
     marginTop: mvs(15),

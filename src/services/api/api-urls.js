@@ -21,7 +21,8 @@ export const URLS = {
         list: 'doctor/listAppointments',
         details: 'doctor/appointmentDetail',
         home_counter: 'doctor/counterAppointments',
-        status_change: 'doctor/appointmentStatus'
+        status_change: 'doctor/appointmentStatus',
+        complete_appoinment: 'doctor/doctorCompleteAppointment'
     },
     categories: {
         getAll: 'doctor/allSpecialization'

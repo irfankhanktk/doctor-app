@@ -10,7 +10,7 @@ import {
 } from 'react-native-confirmation-code-field';
 import { mvs } from '../../../config/metrices';
 
-const CELL_COUNT = 4;
+const CELL_COUNT = 6;
 
 export const OtpInput = ({ value, setValue }) => {
     // const [value, setValue] = useState('');
