@@ -236,7 +236,7 @@ export const SearchInput = (props: props) => {
     value,
     style,
     label,
-    placeholder = 'Search here',
+    placeholder = t('search_here'),
     labelStyle,
     containerStyle,
     secureTextEntry,

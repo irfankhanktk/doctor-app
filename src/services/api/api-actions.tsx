@@ -1,15 +1,15 @@
-import { APPOINTMNETSTATUS, STORAGEKEYS } from 'config/constants';
-import { goBack, navigate } from 'navigation/navigation-ref';
-import { Alert } from 'react-native';
-import { AppDispatch, RootState } from 'store';
-import { getData, postData } from '.';
+import {APPOINTMNETSTATUS, STORAGEKEYS} from 'config/constants';
+import {goBack, navigate} from 'navigation/navigation-ref';
+import {Alert} from 'react-native';
+import {AppDispatch, RootState} from 'store';
+import {getData, postData} from '.';
 import {
   setHospitals,
   setSpecCategories,
 } from '../../store/reducers/doctor-reducer';
-import { setUserInfo } from '../../store/reducers/user-reducer';
-import { UTILS } from '../../utils';
-import { URLS } from './api-urls';
+import {setNotifications, setUserInfo} from '../../store/reducers/user-reducer';
+import {UTILS} from '../../utils';
+import {URLS} from './api-urls';
 
 // export const getNearByHospitals = async (lat: any, long: any) => {
 //     try {
@@ -83,7 +83,9 @@ export const onChangeAppoinmentStatus = async (
     throw UTILS.returnError(error);
   }
 };
-export const onCompleteAppoinment = async (values: any, setLoading: (bool: any) => void,
+export const onCompleteAppoinment = async (
+  values: any,
+  setLoading: (bool: any) => void,
 ) => {
   try {
     setLoading(true);
@@ -205,7 +207,26 @@ export const getDoctorAvailabilityDetails = async (
     throw error;
   }
 };
+///Notifications///
+export const getNotifications = (
+  values: any,
+  setLoading: (bool: boolean) => void,
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      setLoading(true);
+      const res = await postData(URLS.notification.get_notification, values);
 
+      dispatch(setNotifications(res?.notifications || []));
+      console.log('res of notification=>', res);
+    } catch (error: any) {
+      console.log('error in notification', error);
+      Alert.alert('', UTILS.returnError(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+};
 export const onSignup = (
   values: any,
   setLoading: (bool: boolean) => void,

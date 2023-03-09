@@ -73,7 +73,20 @@
       "add_availability":"إضافة التوافر",
       "checkbox_text":"احفظ هذه البطاقة لسرعة الخروج في المرة القادمة",
       "card_desc":"من خلال حفظ بطاقتك ، فإنك تمنحنا مدفوعاتك  طريقة الطلبات المستقبلية. يمكنك سحب الموافقة في أي وقت.",
-      "appoinment_no":"رقم التعيين"
+      "appoinment_no":"رقم التعيين",
+      "no_notification":"لا إخطارات حتى الآن",
+      "notifications":"إشعارات",
+      "completed":"مكتمل",
+      "confirmed":"مؤكد",
+      "waiting":"منتظر",
+      "total":"المجموع",
+      "payments":"المدفوعات",
+      "patients":"مرضى",
+      "popular_patients":"المرضى المشهورون",
+      "availabilities":"التوفر",
+      "availability":"التوفر",
+      "appointment_status":"حالة الموعد:"
+    
       
 
 
