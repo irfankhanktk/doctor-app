@@ -57,7 +57,7 @@ const UserTab = (props: props) => {
       <View style={styles.body}>
         <View style={styles.img} />
         <Medium
-          label={userInfo?.first_name || 'Guest Mode'}
+          label={userInfo?.first_name || t('guest_mode')}
           style={styles.name}
         />
         <Regular

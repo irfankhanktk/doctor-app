@@ -110,10 +110,10 @@ const AppointmentCard = ({
           containerStyle={styles.btnDetails}
           title={t(
             item?.status === APPOINTMNETSTATUS?.confirmed
-              ? 'Checkout'
+              ? 'checkout'
               : item?.status === 'completed'
-              ? 'Completed'
-              : 'Confirm',
+              ? 'completed'
+              : 'confirm',
           )}
         />
       </Row>

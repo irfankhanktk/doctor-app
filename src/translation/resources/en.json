@@ -86,6 +86,22 @@
       "popular_patients":"Popular Patients",
       "availabilities":"Availabilities",
       "availability":"availability",
-      "appointment_status":"Appointment Status:"
+      "appointment_status":"Appointment Status:",
+    "old_password":"Old Password",
+    "confirm_password":"Confirm Password",
+    "update":"Update",
+    "sign_up":"Sign Up",
+    "change_language":"Change Language",
+    "guest_mode":"Guest Mode",
+    "checkout":"Checkout",
+    "confirm":"Confirm",
+    "reason":"Reason",
+    "forgot_password":"Forgot Password",
+    "choose_category":"Choose Category",
+    "send_email":"Send Email",
+    "verification-otp":"Verification OTP",
+   "verfication_desc":" We have sent you an OTP code via email on"
+
+   
   
 }

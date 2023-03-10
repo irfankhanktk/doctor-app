@@ -85,7 +85,21 @@
       "popular_patients":"المرضى المشهورون",
       "availabilities":"التوفر",
       "availability":"التوفر",
-      "appointment_status":"حالة الموعد:"
+      "appointment_status":"حالة الموعد:",
+      "old_password":"كلمة المرور القديمة",
+      "confirm_password":"تأكيد كلمة المرور",
+      "update":"تحديث",
+      "sign_up":"اشتراك",
+      "change_language":"تغيير اللغة",
+      "guest_mode":"وضع الضيف",
+      "checkout":"الدفع",
+      "confirm":"يتأكد",
+      "reason":"سبب",
+      "forgot_password":"هل نسيت كلمة السر",
+      "choose_category":"اختر الفئة",
+      "send_email":"ارسل بريد الكتروني",
+      "verification-otp":"التحقق من OTP",
+   "verfication_desc":"لقد أرسلنا لك رمز OTP عبر البريد الإلكتروني على"
     
       
 
