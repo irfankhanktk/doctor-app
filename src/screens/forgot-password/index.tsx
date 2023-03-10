@@ -69,7 +69,7 @@ const ForgotPassword = (props: props) => {
         }}>
         <KeyboardAvoidScrollview
           contentContainerStyle={styles.contentContainerStyle}>
-          <RenewLogo style={{alignSelf: 'center', marginBottom: mvs(15)}} />
+          <RenewLogo style={styles.renew} />
           <Bold label={`${t('forgot_password')}`} style={styles.txt} />
           <PrimaryInput
             keyboardType={'email-address'}

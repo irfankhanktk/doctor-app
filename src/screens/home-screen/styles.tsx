@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
   },
   servicesHeading: {
     marginHorizontal: mvs(20),
+  },
+  bgImg:{
+    height: mvs(200),
+    paddingHorizontal: mvs(25),
+    paddingVertical: mvs(30),
   }
 
 });

@@ -45,7 +45,7 @@ const Checkout = (props) => {
             contentContainerStyle={styles.contentContainerStyle}>
             <Row style={styles.appoinment}>
               <Medium label={t('appoinment_no')} />
-              <Medium label={`${appointmentDetails?.id}`} style={{ color: colors.primary, fontSize: mvs(18), marginHorizontal: mvs(15) }} />
+              <Medium label={`${appointmentDetails?.id}`} style={styles.appoinmentDetails} />
             </Row>
             <PatientCheckoutCard
               name={appointmentDetails?.patient?.name}
@@ -95,7 +95,7 @@ const Checkout = (props) => {
           try {
             await onCompleteAppoinment({
               appointment_id: appointmentDetails?.id,
-              amount: appointmentDetails?.price,
+              amount: appointmentDetails?.price || 100,
               payment_method: selectedMethod,
               otp: value
             }, setStatusLoading);

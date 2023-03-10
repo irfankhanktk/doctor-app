@@ -4,7 +4,7 @@ import AppointmentCard from 'components/molecules/appointment-card';
 import { EmptyList } from 'components/molecules/empty-list';
 import { APPOINTMNETSTATUS } from 'config/constants';
 import { useAppDispatch, useAppSelector } from 'hooks/use-store';
-import { navigate } from 'navigation/navigation-ref';
+import { goBack, navigate } from 'navigation/navigation-ref';
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import { getAppointmentsList, onChangeAppoinmentStatus } from 'services/api/api-actions';
@@ -30,15 +30,22 @@ const AppointmentsList = (props) => {
   const renderAppointmentItem = ({ item, index }) => (
 
     <AppointmentCard
-      onPressStatus={(status) => {
+      onPressStatus={async (status) => {try {
         console.log('status=>', status);
         if (status === APPOINTMNETSTATUS.completed) {
           navigate('Checkout', {
             id: item?.id,
           });
         } else {
-          onChangeAppoinmentStatus(item?.id, status, setStatusLoading);
+          setStatusLoading(item?.id)
+          await onChangeAppoinmentStatus(item?.id, status, ()=>{});
+          goBack()
         }
+      } catch (error) {
+        console.log("Error ", error)
+      } finally {
+        setStatusLoading(false)
+      }
       }}
       onPress={() => props?.navigation?.navigate('AppointmentDetails', {
         id: item?.id,

@@ -85,6 +85,7 @@ const Notifications = props => {
         borderColor: colors.border,
         // borderWidth: 0.4,
         borderRadius: mvs(10),
+        backgroundColor: colors.white,
         ...colors.shadow,
       }}>
       <Row style={{justifyContent: 'flex-start'}}>

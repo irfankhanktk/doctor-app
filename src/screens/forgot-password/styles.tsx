@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     button: {
         marginTop: mvs(20),
     },
-    txt: { fontSize: mvs(20), marginBottom: mvs(10), color: colors.primary }
+    txt: { fontSize: mvs(20), marginBottom: mvs(10), color: colors.primary },
+    renew:{alignSelf: 'center', marginBottom: mvs(15)}
 });
 export default styles;

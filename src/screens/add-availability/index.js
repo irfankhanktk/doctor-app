@@ -84,11 +84,7 @@ const AddAvailability = (props) => {
                     return (
                       <PrimaryButton
                         key={weekIndex}
-                        containerStyle={{
-                          backgroundColor: bool ? colors.primary : colors.blueHalf,
-                          width: mvs(60),
-                          borderRadius: mvs(10), height: mvs(36), marginRight: mvs(10)
-                        }}
+                        containerStyle={[styles.primaryButton, { backgroundColor: bool ? colors.primary : colors.blueHalf,}]}
                         onPress={() => {
                           console.log('days?.length ', days?.length);
                           if (bool) {
@@ -146,13 +142,7 @@ const AddAvailability = (props) => {
               </View>
             </View>)
         })}
-        <View style={{
-          position: 'absolute',
-          bottom: 0,
-          alignSelf: 'center',
-          paddingBottom: mvs(Platform.OS === 'ios' ? 40 : 20),
-          width: '100%'
-        }}>
+        <View style={styles.save}>
           <PrimaryButton
             loading={loading}
             // disabled={Object.keys(errors)?.length > 0 || Object.keys(touched)?.length === 0}

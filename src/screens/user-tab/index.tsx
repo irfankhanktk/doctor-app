@@ -1,13 +1,13 @@
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {onLogoutPress} from 'services/api/api-actions';
+import { TouchableOpacity, View } from 'react-native';
+import { onLogoutPress } from 'services/api/api-actions';
 import TabParamList from 'types/navigation-types/bottom-tab';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import i18n from '../../translation/index';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -15,8 +15,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
-import {mvs} from 'config/metrices';
-import {colors} from 'config/colors';
+import { mvs } from 'config/metrices';
+import { colors } from 'config/colors';
+import TabItem from 'components/molecules/tab-item';
+
+
 type props = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, 'UserTab'>,
   NativeStackScreenProps<RootStackParamList>
@@ -26,7 +29,7 @@ const UserTab = (props: props) => {
   const userInfo = user?.userInfo;
   const language = user?.language;
   const dispatch = useAppDispatch();
-  const {t} = i18n;
+  const { t } = i18n;
 
   return (
     // <View style={styles.container}>
@@ -57,13 +60,14 @@ const UserTab = (props: props) => {
       <View style={styles.body}>
         <View style={styles.img} />
         <Medium
-          label={userInfo?.first_name || t('guest_mode')}
+          label={userInfo?.name || t('guest_mode')}
           style={styles.name}
         />
         <Regular
           label={`${userInfo?.email || 'guest@gmail.com'}`}
           style={styles.email}
         />
+        
         <View style={styles.linkContainer}>
           {userInfo && (
             <TouchableOpacity
@@ -76,6 +80,12 @@ const UserTab = (props: props) => {
               />
             </TouchableOpacity>
           )}
+
+         {/* <TabItem title={'sdsd'} onPress={()=>{console.log("PRESSED")}}>
+            <FontAwesome name="key" size={mvs(22)} color={colors.primary} />
+          </TabItem> */}
+
+          {/* <TabItem title={"hello"}/> */}
 
           <TouchableOpacity
             style={styles.itemtabs}

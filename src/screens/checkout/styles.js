@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: mvs(15),
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: colors.secondary
-    }
+        backgroundColor: colors.secondary,
+        marginBottom: mvs(20)
+    },
+    appoinmentDetails: { color: colors.primary, fontSize: mvs(18), marginHorizontal: mvs(15) }
 });
 export default styles;
