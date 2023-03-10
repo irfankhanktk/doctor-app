@@ -5,7 +5,10 @@ export const URLS = {
   auth: {
     signup: 'doctor/signup',
     login: 'doctor/login',
-    // update_password: 'user/updatePassword',
+    update_password: 'doctor/updatePassword',
+    change_password: 'doctor/changePassword',
+    otp_verify: 'doctor/otpVerify',
+    forget_password: 'doctor/forgetPassword',
     // update_profile: 'user/updateProfile',
   },
   availability: {

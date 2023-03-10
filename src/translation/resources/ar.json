@@ -99,7 +99,9 @@
       "choose_category":"اختر الفئة",
       "send_email":"ارسل بريد الكتروني",
       "verification-otp":"التحقق من OTP",
-   "verfication_desc":"لقد أرسلنا لك رمز OTP عبر البريد الإلكتروني على"
+   "verfication_desc":"لقد أرسلنا لك رمز OTP عبر البريد الإلكتروني على",
+   "renew_password":"تجديد كلمة السر",
+   "set_password":"ضبط كلمة السر"
     
       
 

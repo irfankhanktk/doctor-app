@@ -100,7 +100,9 @@
     "choose_category":"Choose Category",
     "send_email":"Send Email",
     "verification-otp":"Verification OTP",
-   "verfication_desc":" We have sent you an OTP code via email on"
+   "verfication_desc":" We have sent you an OTP code via email on",
+   "renew_password":"Renew Password",
+   "set_password":"Set Password"
 
    
   

@@ -26,6 +26,7 @@ import UpdateAvailability from 'screens/update-availability';
 import {TabBar} from './curvedtabs';
 import Checkout from 'screens/checkout';
 import Notifications from 'screens/notifications';
+import RenewPasswordScreen from 'screens/Renew_Password';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -47,6 +48,10 @@ export const RootNavigator = () => {
           <Stack.Screen name="RenewPassword" component={RenewPassword} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="Notifications" component={Notifications} />
+          <Stack.Screen
+            name="RenewPasswordScreen"
+            component={RenewPasswordScreen}
+          />
         </Stack.Group>
         <Stack.Group>
           <Stack.Screen name="AddAvailability" component={AddAvailability} />

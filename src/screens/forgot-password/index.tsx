@@ -2,15 +2,16 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RenewLogo} from 'assets/icons';
 import {auth_bg} from 'assets/images';
 import OtpModal from 'components/molecules/modals/otp-modal';
+import OtpModalRenewPassword from 'components/molecules/modals/otp-modal-signup-renewpassword.js';
 import {colors} from 'config/colors';
 import {height, mvs, width} from 'config/metrices';
 import {useFormik} from 'formik';
 import React from 'react';
 import {ImageBackground, View} from 'react-native';
-import {onSignup} from 'services/api/api-actions';
+import {onForgot, onSignup} from 'services/api/api-actions';
 import i18n from 'translation';
 import Bold from 'typography/bold-text';
-import {signupFormValidation} from 'validations';
+import {forgotemailFormValidation, signupFormValidation} from 'validations';
 import {PrimaryButton} from '../../components/atoms/buttons';
 import PrimaryInput, {PrimaryPhoneInput} from '../../components/atoms/inputs';
 import {KeyboardAvoidScrollview} from '../../components/atoms/keyboard-avoid-scrollview';
@@ -25,32 +26,39 @@ const ForgotPassword = (props: props) => {
   const {t} = i18n;
   const dispatch = useAppDispatch();
   const initialValues = {
-    first_name: '',
-    last_name: '',
+    // first_name: '',
+    // last_name: '',
     email: '',
-    phone: '',
-    birthday: '2000-01-31',
-    city: null,
-    state: null,
-    country: null,
-    zip_code: null,
-    bio: null,
-    confirm_password: '',
-    password: '',
+    // phone: '',
+    // birthday: '2000-01-31',
+
+    // confirm_password: '',
+    // password: '',
   };
   const [loading, setLoading] = React.useState(false);
-  const [otpModal, setOtpModal] = React.useState(false);
+  // const [otpModal, setOtpModal] = React.useState(false);
+  const [otpModalVisible, setOtpModalVisible] = React.useState(false);
   const [value, setValue] = React.useState('');
   const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: true,
-      validationSchema: signupFormValidation,
+      validationSchema: forgotemailFormValidation,
       onSubmit: () => {},
     });
   console.log('errors=>', errors);
 
+  const onSubmit = async () => {
+    try {
+      const res = await onForgot(values);
+
+      console.log('res===>>>>> forgot', res);
+      setOtpModalVisible(true);
+    } catch (error) {
+      console.log('error=>', error);
+    }
+  };
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -77,17 +85,19 @@ const ForgotPassword = (props: props) => {
             // disabled={Object.keys(errors)?.length > 0 || Object.keys(touched)?.length === 0}
             title={t('send_email')}
             // onPress={() => dispatch(onSignup(values, setLoading, props))}
-            onPress={() => setOtpModal(true)}
+            onPress={onSubmit}
             containerStyle={styles.button}
           />
         </KeyboardAvoidScrollview>
       </ImageBackground>
-      <OtpModal
-        email={'irfan@gmail.com'}
+      <OtpModalRenewPassword
+        email={values?.email}
         value={value}
         setValue={setValue}
-        visible={otpModal}
-        onClose={() => setOtpModal(false)}
+        visible={otpModalVisible}
+        onClose={() => setOtpModalVisible(false)}
+        {...props}
+        isSignup={false}
       />
     </View>
   );

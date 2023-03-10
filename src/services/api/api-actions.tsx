@@ -63,6 +63,17 @@ export const getAppointmentDetails = async (
     setLoading(false);
   }
 };
+
+export const onChangePassword = async (values: any) => {
+  try {
+    const res = await postData(URLS.auth.change_password, values);
+    console.log('res of onChangepassword=>', res);
+    return res;
+  } catch (error: any) {
+    console.log('error in change password', error);
+    Alert.alert('', error?.message);
+  }
+};
 export const onChangeAppoinmentStatus = async (
   appointment_id: string,
   status: string,
@@ -227,23 +238,47 @@ export const getNotifications = (
     }
   };
 };
+// export const onSignup = (
+//   values: any,
+//   setLoading: (bool: boolean) => void,
+//   props: any,
+//   setOtpLoading: (bool: boolean) => void,
+// ) => {
+//   return async (dispatch: AppDispatch, getState: () => RootState) => {
+//     try {
+//       setLoading(true);
+//       const res = await postData(URLS.auth.signup, values);
+//       console.log('res of onSignupPress=>', res);
+//       Alert.alert('Account', 'Accrout is created successfully');
+//       UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
+//       dispatch(setUserInfo(res?.user));
+//       UTILS.resetStack(props, 'BottomTab');
+//     } catch (error: any) {
+//       console.log('error in onSignupPress', UTILS?.returnError(error));
+//       Alert.alert('', error?.message);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+// };
 export const onSignup = (
   values: any,
   setLoading: (bool: boolean) => void,
   props: any,
+  setOtpLoading: (bool: boolean) => void,
 ) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       setLoading(true);
       const res = await postData(URLS.auth.signup, values);
       console.log('res of onSignupPress=>', res);
-      Alert.alert('Account', 'Accrout is created successfully');
-      UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
-      dispatch(setUserInfo(res?.user));
-      UTILS.resetStack(props, 'BottomTab');
+      setOtpLoading(true);
+      if (res?.status == 400) {
+        throw new Error(res?.message);
+      }
     } catch (error: any) {
       console.log('error in onSignupPress', UTILS?.returnError(error));
-      Alert.alert('', error?.message);
+      Alert.alert('', UTILS?.returnError(error));
     } finally {
       setLoading(false);
     }
@@ -293,6 +328,25 @@ export const onAddAvailability = (
 //         }
 //     }
 // }
+export const onUpdatePassword = (
+  values: any,
+  setLoading: (bool: boolean) => void,
+  props: any,
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      setLoading(true);
+      const res = await postData(URLS.auth.update_password, values);
+      console.log('res of onUpdatePassword=>', res);
+      Alert.alert('Password Changed Successfully');
+    } catch (error: any) {
+      console.log('error in onSignupPress', UTILS.returnError(error));
+      Alert.alert('', error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+};
 // export const onUpdatePassword = (values: any, setLoading: (bool: boolean) => void, props: any) => {
 //     return async (dispatch: AppDispatch, getState: () => RootState) => {
 //         try {
@@ -331,6 +385,47 @@ export const onLogin = (
 };
 export const onVerifyOtp = (values: any) => {
   return postData(URLS.auth.login, values);
+};
+
+export const onForgot = async (values: any) => {
+  try {
+    const res = await postData(URLS.auth.forget_password, values);
+    console.log('res of onforgot=>', res);
+    return res;
+  } catch (error: any) {
+    console.log('error in forgot password', error);
+    Alert.alert('', error?.message);
+  }
+};
+export const onVerifyOtpRenewpassword = (
+  values: any,
+  props: any,
+  onClose: any,
+  isSignup?: boolean,
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const res = await postData(URLS.auth.otp_verify, values);
+      console.log('res of onforgot=>', res);
+      UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
+      dispatch(setUserInfo(res?.user));
+      console.log('res===>>>>> onverifyotp', res);
+      if (isSignup) {
+        UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
+        dispatch(setUserInfo(res?.user));
+        props?.navigation?.pop(2);
+      } else {
+        props?.navigation?.navigate('RenewPasswordScreen', {
+          email: values?.email,
+        });
+      }
+    } catch (error: any) {
+      console.log('error in forgot password', error);
+      Alert.alert('', error?.message);
+    } finally {
+      onClose();
+    }
+  };
 };
 export const onLogoutPress = (props: any) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {

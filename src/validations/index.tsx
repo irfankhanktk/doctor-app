@@ -6,33 +6,34 @@
 import * as yup from 'yup';
 
 export const signinFormValidation = yup.object().shape({
-  email: yup
-    .string()
-    .email('invalid_email')
-    .required('req_email'),
+  email: yup.string().email('invalid_email').required('req_email'),
   password: yup
     .string()
     .required('error_pass_enter')
     .min(8, 'error_pass_short'),
 });
+export const forgotemailFormValidation = yup.object().shape({
+  email: yup.string().email('invalid_email').required('req_email'),
+});
+export const renewpasswordFormValidation = yup.object().shape({
+  password: yup.string().required('req_pass').min(8, 'weak_pass'),
+  confirm_password: yup
+    .string()
+    .required('req_pass')
+    .oneOf([yup.ref('password')], 'miss_match_pass'),
+});
 export const signupFormValidation = yup.object().shape({
   name: yup.string().required('req_name'),
   // last_name: yup.string().required('req_first_name'),
-  email: yup
-    .string()
-    .email('invalid_email')
-    .required('req_email'),
+  email: yup.string().email('invalid_email').required('req_email'),
   phone: yup
     .number()
-    .typeError("invalid_phone")
-    .positive("invalid_phone")
-    .integer("invalid_phone")
+    .typeError('invalid_phone')
+    .positive('invalid_phone')
+    .integer('invalid_phone')
     .min(8, 'invalid_phone')
     .required('Phone is required'),
-  password: yup
-    .string()
-    .required('req_pass')
-    .min(8, 'weak_pass'),
+  password: yup.string().required('req_pass').min(8, 'weak_pass'),
   confirm_password: yup
     .string()
     .required('req_pass')
@@ -47,27 +48,18 @@ export const signupFormValidation = yup.object().shape({
 export const updateProfileFormValidation = yup.object().shape({
   first_name: yup.string().required('req_first_name'),
   // last_name: yup.string().required('req_first_name'),
-  email: yup
-    .string()
-    .email('invalid_email')
-    .required('req_email'),
+  email: yup.string().email('invalid_email').required('req_email'),
   phone: yup
     .number()
-    .typeError("invalid_phone")
-    .positive("invalid_phone")
-    .integer("invalid_phone")
+    .typeError('invalid_phone')
+    .positive('invalid_phone')
+    .integer('invalid_phone')
     .min(8, 'invalid_phone')
     .required('Phone is required'),
 });
 export const updatePasswordValidation = yup.object().shape({
-  email: yup
-    .string()
-    .email('invalid_email')
-    .required('req_email'),
-  old_password: yup
-    .string()
-    .required('req_pass')
-    .min(8, 'weak_pass'),
+  email: yup.string().email('invalid_email').required('req_email'),
+  old_password: yup.string().required('req_pass').min(8, 'weak_pass'),
   new_password: yup
     .string()
     .required('New Password is required')
