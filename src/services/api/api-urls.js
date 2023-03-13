@@ -5,8 +5,11 @@ export const URLS = {
     auth: {
         signup: 'doctor/signup',
         login: 'doctor/login',
-        // update_password: 'user/updatePassword',
-        update_profile: 'doctor/updateProfile',
+        update_password: 'doctor/updatePassword',
+        change_password: 'doctor/changePassword',
+        otp_verify: 'doctor/otpVerify',
+        forget_password: 'doctor/forgetPassword',
+        update_profile: 'user/updateProfile',
     },
     availability: {
         add: 'doctor/addDoctorAvailability',
@@ -22,9 +25,12 @@ export const URLS = {
         details: 'doctor/appointmentDetail',
         home_counter: 'doctor/counterAppointments',
         status_change: 'doctor/appointmentStatus',
-        complete_appoinment: 'doctor/doctorCompleteAppointment'
+        complete_appoinment: 'doctor/doctorCompleteAppointment',
     },
     categories: {
-        getAll: 'doctor/allSpecialization'
-    }
+        getAll: 'doctor/allSpecialization',
+    },
+    notification: {
+        get_notification: 'doctor/getNotification',
+    },
 };
