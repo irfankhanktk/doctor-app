@@ -16,8 +16,8 @@ export const URLS = {
         getDoctorHospitals: 'doctor/getDoctorHospital',
         getDoctorHospitalDetails: 'doctor/getDoctorHospitalDetail',
         edithospitalAvailabilityDetails: 'doctor/editHospitalAvailability',
-        delete: 'doctor/deleteDoctorAvailability', //need availability_id
-        change: 'doctor/appointmentStatus',
+        delete: 'doctor/deleteDoctorAvailability',//need availability_id
+        change: 'doctor/appointmentStatus'
     },
     all_hospitals: 'doctor/allHospital',
     appointment: {

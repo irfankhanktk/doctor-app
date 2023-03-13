@@ -1,15 +1,15 @@
-import {APPOINTMNETSTATUS, STORAGEKEYS} from 'config/constants';
-import {goBack, navigate} from 'navigation/navigation-ref';
-import {Alert} from 'react-native';
-import {AppDispatch, RootState} from 'store';
-import {getData, postData} from '.';
+import { APPOINTMNETSTATUS, STORAGEKEYS } from 'config/constants';
+import { goBack, navigate } from 'navigation/navigation-ref';
+import { Alert } from 'react-native';
+import { AppDispatch, RootState } from 'store';
+import { getData, postData } from '.';
 import {
   setHospitals,
   setSpecCategories,
 } from '../../store/reducers/doctor-reducer';
-import {setNotifications, setUserInfo} from '../../store/reducers/user-reducer';
-import {UTILS} from '../../utils';
-import {URLS} from './api-urls';
+import { setNotifications, setUserInfo } from '../../store/reducers/user-reducer';
+import { UTILS } from '../../utils';
+import { URLS } from './api-urls';
 
 // export const getNearByHospitals = async (lat: any, long: any) => {
 //     try {
@@ -328,40 +328,24 @@ export const onAddAvailability = (
 //         }
 //     }
 // }
-export const onUpdatePassword = (
-  values: any,
-  setLoading: (bool: boolean) => void,
-  props: any,
-) => {
+export const onUpdateProfile = (values: any, setLoading: (bool: boolean) => void, props: any) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
-      setLoading(true);
-      const res = await postData(URLS.auth.update_password, values);
-      console.log('res of onUpdatePassword=>', res);
-      Alert.alert('Password Changed Successfully');
+      setLoading(true)
+      const res = await postData(URLS.auth.update_profile, values);
+      console.log('res of onUpdateProfile=>', res);
+
+      UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
+      dispatch(setUserInfo(res?.user));
+      goBack();
     } catch (error: any) {
-      console.log('error in onSignupPress', UTILS.returnError(error));
-      Alert.alert('', error?.message);
+      console.log('error in onUpdateProfile', error);
+      Alert.alert('', error?.message,);
     } finally {
       setLoading(false);
     }
-  };
-};
-// export const onUpdatePassword = (values: any, setLoading: (bool: boolean) => void, props: any) => {
-//     return async (dispatch: AppDispatch, getState: () => RootState) => {
-//         try {
-//             setLoading(true)
-//             const res = await postData(URLS.auth.update_password, values);
-//             console.log('res of onUpdatePassword=>', res);
-//             Alert.alert('Password Changed Successfully')
-//         } catch (error: any) {
-//             console.log('error in onSignupPress', UTILS.returnError(error));
-//             Alert.alert('', error?.message,);
-//         } finally {
-//             setLoading(false);
-//         }
-//     }
-// }
+  }
+}
 export const onLogin = (
   values: any,
   setLoading: (bool: boolean) => void,
