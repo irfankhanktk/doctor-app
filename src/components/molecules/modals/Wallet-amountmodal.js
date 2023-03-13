@@ -65,6 +65,7 @@ const WalletAmount = ({
             // value={values.email}
           />
           <PrimaryButton
+            // loading={}
             // disabled={value?.length !== 6}
             onPress={() => onSubmit()}
             title={t('submit')}
