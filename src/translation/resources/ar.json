@@ -103,5 +103,10 @@
    "renew_password": "تجديد كلمة السر",
    "set_password": "ضبط كلمة السر",
    "no_patients": "ليس لديك مرضى حتى الآن",
-   "no_availability": "غير متوفر"
+   "no_availability": "غير متوفر",
+   "wallet":"محفظة",
+  "add_amount":"أضف المبلغ",
+  "history":"تاريخ",
+  "submit":"يُقدِّم",
+  "per_patient":"لكل مريض"
 }

@@ -15,6 +15,7 @@ import AppointmentDetails from 'screens/appointment-details';
 import AppointmentsList from 'screens/appointments-list';
 import UserTab from 'screens/user-tab';
 import Home from 'screens/home-screen';
+import WalletScreen from 'screens/Wallet';
 
 export const TabBar = props => {
   const _renderIcon = (routeName, selectedTab) => {
@@ -26,6 +27,12 @@ export const TabBar = props => {
         break;
 
       case 'title2':
+        icon = 'wallet';
+        break;
+      case 'title3':
+        icon = 'receipt';
+        break;
+      case 'title4':
         icon = 'ios-person-sharp';
         break;
     }
@@ -81,18 +88,18 @@ export const TabBar = props => {
           position="LEFT"
           component={() => <Home {...props} />}
         />
-        {/* <CurvedBottomBar.Screen
+        <CurvedBottomBar.Screen
           name="title2"
-          position="RIGHT"
-          component={() => <UserTab {...props} />}
-        /> */}
-        {/* <CurvedBottomBar.Screen
+          position="LEFT"
+          component={() => <WalletScreen {...props} />}
+        />
+        <CurvedBottomBar.Screen
           name="title3"
           component={() => <AppointmentsList {...props} />}
           position="RIGHT"
-        /> */}
+        />
         <CurvedBottomBar.Screen
-          name="title2"
+          name="title4"
           component={() => <UserTab {...props} />}
           position="RIGHT"
         />

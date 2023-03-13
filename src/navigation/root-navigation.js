@@ -27,6 +27,7 @@ import {TabBar} from './curvedtabs';
 import Checkout from 'screens/checkout';
 import Notifications from 'screens/notifications';
 import RenewPasswordScreen from 'screens/Renew_Password';
+import WalletScreen from 'screens/Wallet';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -73,6 +74,7 @@ export const RootNavigator = () => {
         <Stack.Screen name="LanguageScreen" component={LanguageScreen} />
         <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
         <Stack.Screen name="AppointmentsList" component={AppointmentsList} />
+        <Stack.Screen name="WalletScreen" component={WalletScreen} />
         <Stack.Screen
           name="AppointmentDetails"
           component={AppointmentDetails}

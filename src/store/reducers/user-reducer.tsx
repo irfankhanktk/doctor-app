@@ -8,12 +8,14 @@ type Props = {
     longitude: number;
   };
   notifications: any[];
+  wallet: any;
 };
 const initialState: Props = {
   userInfo: null,
   language: 'en',
   location: undefined,
   notifications: [],
+  wallet: {},
 };
 
 export const userSlice = createSlice({
@@ -35,6 +37,9 @@ export const userSlice = createSlice({
     setNotifications: (state, action) => {
       state.notifications = action.payload;
     },
+    setWallet: (state, action) => {
+      state.wallet = action.payload;
+    },
     // demoAsync: (state, action) => {
     //   state.userInfo = action.payload
     // },
@@ -47,6 +52,7 @@ export const {
   setLanguage,
   setLocation,
   setNotifications,
+  setWallet,
   // demoAsync
 } = userSlice.actions;
 

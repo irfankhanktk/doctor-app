@@ -104,6 +104,12 @@
   "renew_password": "Renew Password",
   "set_password": "Set Password",
   "no_patients": "You have no Patients yet",
-  "no_availability": "No Availability"
+  "no_availability": "No Availability",
+  "wallet":"Wallet",
+  "add_amount":"Add Amount",
+  "history":"History",
+  "submit":"Submit",
+  "per_patient":"Per Patient"
+
   
 }

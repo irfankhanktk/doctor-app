@@ -46,7 +46,7 @@ export const signupFormValidation = yup.object().shape({
   experience: yup.string().required('req_experience'),
 });
 export const updateProfileFormValidation = yup.object().shape({
-  first_name: yup.string().required('req_first_name'),
+  name: yup.string().required('req_name'),
   // last_name: yup.string().required('req_first_name'),
   email: yup.string().email('invalid_email').required('req_email'),
   phone: yup
@@ -56,7 +56,26 @@ export const updateProfileFormValidation = yup.object().shape({
     .integer('invalid_phone')
     .min(8, 'invalid_phone')
     .required('Phone is required'),
+
+  doc_cat_id: yup.string().required('req_cat'),
+  zip_code: yup.string().required('req_zip_code'),
+  city: yup.string().required('req_city'),
+  state: yup.string().required('req_state'),
+  price: yup.string().required('req_price'),
+  experience: yup.string().required('req_experience'),
 });
+// export const updateProfileFormValidation = yup.object().shape({
+//   first_name: yup.string().required('req_first_name'),
+//   // last_name: yup.string().required('req_first_name'),
+//   email: yup.string().email('invalid_email').required('req_email'),
+//   phone: yup
+//     .number()
+//     .typeError('invalid_phone')
+//     .positive('invalid_phone')
+//     .integer('invalid_phone')
+//     .min(8, 'invalid_phone')
+//     .required('Phone is required'),
+// });
 export const updatePasswordValidation = yup.object().shape({
   email: yup.string().email('invalid_email').required('req_email'),
   old_password: yup.string().required('req_pass').min(8, 'weak_pass'),

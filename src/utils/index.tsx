@@ -1,16 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 import moment from 'moment';
-import { Alert, Linking, PermissionsAndroid, Platform, Share, ToastAndroid } from 'react-native';
+import {
+  Alert,
+  Linking,
+  PermissionsAndroid,
+  Platform,
+  Share,
+  ToastAndroid,
+} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import ImagePicker from 'react-native-image-crop-picker';
 import uuid from 'react-native-uuid';
-import { NavigationProps } from '../types/navigation-types';
+import {NavigationProps} from '../types/navigation-types';
 // Initialize the module (needs to be done only once)
 export const horizontalAnimation: any = {
   headerShown: false,
   gestureDirection: 'horizontal',
-  cardStyleInterpolator: ({ current, layouts }: any) => {
+  cardStyleInterpolator: ({current, layouts}: any) => {
     return {
       cardStyle: {
         transform: [
@@ -52,20 +59,18 @@ export const UTILS = {
           {
             name: routeName,
             params: params,
-          }
+          },
         ],
-      })
+      }),
     );
   },
   dialPhone: async (phoneNumber: string) => {
     try {
       const isSupported = await Linking.canOpenURL(`tel:${phoneNumber}`);
       console.log('isSupported=>', isSupported);
-      if (isSupported)
-        Linking.openURL(`tel:${phoneNumber}`)
+      if (isSupported) Linking.openURL(`tel:${phoneNumber}`);
     } catch (error) {
       console.log('error =>', error);
-
     }
   },
   getItem: async (key: string) => {
@@ -108,7 +113,8 @@ export const UTILS = {
       if (error.response.data?.errors) {
         return `${error.response.data?.errors}`;
       }
-      return `${error.response.status}`
+      console.log(error.response.data);
+      return `${error.response.status}`;
     } else if (error.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -126,7 +132,8 @@ export const UTILS = {
     }
     return error?.message || error?.code;
   },
-  capitalizeFirst: (str: string) => str?.charAt(0)?.toUpperCase() + str?.slice(1),
+  capitalizeFirst: (str: string) =>
+    str?.charAt(0)?.toUpperCase() + str?.slice(1),
   returnStringify: (data: object) => JSON.stringify(data),
   _share: async (description = '', url: string) => {
     try {
@@ -151,8 +158,8 @@ export const UTILS = {
     }
   },
   get_current_location: async (
-    onSuccess = (position: any) => { },
-    onError = (error: any) => { },
+    onSuccess = (position: any) => {},
+    onError = (error: any) => {},
   ) => {
     try {
       const flag = await UTILS.requestLocationPermission();
@@ -184,24 +191,26 @@ export const UTILS = {
       city: null,
       area: null,
       country: null,
-      country_short_name: null
+      country_short_name: null,
     };
     addressObject.results?.forEach((element: any) => {
       element?.address_components?.forEach((item: any) => {
-        if (item.types.some((el: any) => el === 'administrative_area_level_1')) {
-          returnAddress = { ...returnAddress, province: item.long_name };
+        if (
+          item.types.some((el: any) => el === 'administrative_area_level_1')
+        ) {
+          returnAddress = {...returnAddress, province: item.long_name};
         } else if (
           item.types.some((el: any) => el === 'administrative_area_level_2')
         ) {
-          returnAddress = { ...returnAddress, district: item.long_name };
+          returnAddress = {...returnAddress, district: item.long_name};
         } else if (
           item.types.some((el: any) => el === 'administrative_area_level_3')
         ) {
-          returnAddress = { ...returnAddress, tehsil: item.long_name };
+          returnAddress = {...returnAddress, tehsil: item.long_name};
         } else if (item.types.some((el: any) => el === 'locality')) {
-          returnAddress = { ...returnAddress, city: item.long_name };
+          returnAddress = {...returnAddress, city: item.long_name};
         } else if (item.types.some((el: any) => el === 'sublocality')) {
-          returnAddress = { ...returnAddress, area: item.long_name };
+          returnAddress = {...returnAddress, area: item.long_name};
         } else if (item.types.some((el: any) => el === 'street_address')) {
           returnAddress = {
             ...returnAddress,
@@ -303,7 +312,6 @@ export const UTILS = {
   },
   _returnImageGallery: async () => {
     try {
-
       let image = await ImagePicker.openPicker({
         width: 1000,
         height: 800,
@@ -327,5 +335,4 @@ export const UTILS = {
   },
   getMinutesDiff: (a: string, b: string) => moment(b).diff(a, 'm'),
   getUUID: () => uuid?.v4()?.toString(),
-
 };

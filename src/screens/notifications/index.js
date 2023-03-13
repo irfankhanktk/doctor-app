@@ -15,6 +15,7 @@ import Regular from 'typography/regular-text';
 import Medium from 'typography/medium-text';
 import Bold from 'typography/bold-text';
 import {Row} from 'components/atoms/row';
+import moment from 'moment';
 
 const Notifications = props => {
   const dispatch = useAppDispatch();
@@ -77,38 +78,26 @@ const Notifications = props => {
     //     arrayFormat[item?.end_time_id]
     //   }`}
     // />
-    <View
-      key={index}
-      style={{
-        // width: width - 40,
-        padding: mvs(10),
-        borderColor: colors.border,
-        // borderWidth: 0.4,
-        borderRadius: mvs(10),
-        backgroundColor: colors.white,
-        ...colors.shadow,
-      }}>
+    <View key={index} style={styles.rendercontainer}>
       <Row style={{justifyContent: 'flex-start'}}>
         <Image
           source={IMG.notificationcardicon}
-          style={{width: mvs(35), height: mvs(35), resizeMode: 'contain'}}
+          style={styles.notificationicon}
         />
-        <View
-          style={{
-            // justifyContent: 'space-between
-            // alignItems: 'center',
-            // alignSelf: 'center',
-            flex: 1,
-            alignItems: 'flex-start',
-            paddingHorizontal: mvs(5),
-          }}>
+        <View style={styles.titleandtextview}>
           <Row>
-            <Bold label={item.title} />
-            {/* <Bold label={item.time} /> */}
+            <Medium label={item.title} />
           </Row>
-          <Medium label={item.text} numberOfLines={3} />
+          <Regular label={item.text} numberOfLines={3} />
         </View>
       </Row>
+
+      <Regular
+        label={moment(item.created_at).format('DD MMM, YYYY  hh:mm a')}
+        style={{alignSelf: 'flex-end'}}
+        fontSize={mvs(12)}
+        color={colors.primary}
+      />
     </View>
   );
   const itemSeparatorComponent = () => {
