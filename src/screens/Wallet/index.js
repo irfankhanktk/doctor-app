@@ -69,7 +69,7 @@ const WalletScreen = props => {
 
   const getWalletHistory = async () => {
     try {
-      dispatch(getWallet({user_id: userInfo?.id}, setLoading));
+      dispatch(getWallet({doctor_id: userInfo?.id}, setLoading));
     } catch (error) {
       console.log('error=>', error);
     }

@@ -59,7 +59,7 @@ const WalletAmount = ({
             label={t('add_amount')}
             placeholder={t('add_amount')}
             onChangeText={str =>
-              setValue({user_id: userInfo?.id, amount: parseInt(str)})
+              setValue({doctor_id: userInfo?.id, amount: parseInt(str)})
             }
             // onBlur={() => setFieldTouched('email', true)}
             // value={values.email}

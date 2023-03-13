@@ -34,7 +34,7 @@ export const URLS = {
     get_notification: 'doctor/getNotification',
   },
   wallet: {
-    get_wallet: 'user/getWallet',
-    add_amount: 'user/addDeposit',
+    get_wallet: 'doctor/getWallet',
+    add_amount: 'doctor/addDeposit',
   },
 };
