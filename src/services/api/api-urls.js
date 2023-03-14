@@ -32,6 +32,7 @@ export const URLS = {
   },
   notification: {
     get_notification: 'doctor/getNotification',
+    read_notification: 'doctor/readNotification',
   },
   wallet: {
     get_wallet: 'doctor/getWallet',

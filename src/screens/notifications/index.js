@@ -1,61 +1,59 @@
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {Loader} from 'components/atoms/loader';
+import { Loader } from 'components/atoms/loader';
 import AppointmentCard from 'components/molecules/appointment-card';
-import {EmptyList} from 'components/molecules/empty-list';
-import {colors} from 'config/colors';
-import {mvs, width} from 'config/metrices';
-import {useAppDispatch, useAppSelector} from 'hooks/use-store';
-import React, {useEffect} from 'react';
-import {FlatList, View, Img, TouchableOpacity, Image} from 'react-native';
-import {getAppointmentsList, getNotifications} from 'services/api/api-actions';
+import { EmptyList } from 'components/molecules/empty-list';
+import { colors } from 'config/colors';
+import { mvs, width } from 'config/metrices';
+import { useAppDispatch, useAppSelector } from 'hooks/use-store';
+import React, { useEffect } from 'react';
+import { FlatList, View, Img, TouchableOpacity, Image } from 'react-native';
+import { getAppointmentsList, getNotifications, onReadNotifications, readNotifications } from 'services/api/api-actions';
 import i18n from 'translation';
 import styles from './styles';
 import * as IMG from 'assets/images';
 import Regular from 'typography/regular-text';
 import Medium from 'typography/medium-text';
 import Bold from 'typography/bold-text';
-import {Row} from 'components/atoms/row';
+import { Row } from 'components/atoms/row';
 import moment from 'moment';
+import { useIsFocused } from '@react-navigation/native';
 
 const Notifications = props => {
   const dispatch = useAppDispatch();
-  const {userInfo, notifications} = useAppSelector(s => s.user);
-  const {t} = i18n;
+  const { userInfo, notifications } = useAppSelector(s => s.user);
+  const { t } = i18n;
   const [loading, setLoading] = React.useState(true);
+  const isFocus = useIsFocused();
 
   const loadNotifications = async () => {
     try {
-      dispatch(getNotifications({doctor_id: userInfo?.id}, setLoading));
+      dispatch(getNotifications({ doctor_id: userInfo?.id }, setLoading));
+    } catch (error) {
+      console.log('error=>', error);
+    }
+  };
+  const readNotifications = async () => {
+    try {
+      const unreadNoti = notifications?.filter(x => !x?.is_read)?.map(x => x?.id);
+      if (!unreadNoti?.length) return;
+      await onReadNotifications({
+        doctor_id: userInfo?.id,
+        ids: unreadNoti
+      });
     } catch (error) {
       console.log('error=>', error);
     }
   };
   useEffect(() => {
+    if (!isFocus)
+      readNotifications();
+  }, [isFocus]);
+  useEffect(() => {
     loadNotifications();
   }, []);
-  // const {userInfo} = useAppSelector(s => s?.user);
-  // React.useEffect(() => {
-  //   (async () => {
-  //     const formDate = '';
-  //     const res = await getAppointmentsList(userInfo?.id, formDate, setLoading);
-  //     setAppointments(res?.listOfAppointments || []);
-  //     setArrayFormat(res?.arrayFormat || []);
-  //   })();
-  // }, []);
-  const renderAppointmentItem = ({item, index}) => (
-    // <AppointmentCard
-    //   onPress={() =>
-    //     props?.navigation?.navigate('AppointmentDetails', {
-    //       id: item?.id,
-    //     })
-    //   }
-    //   item={item}
-    //   slotTime={`${arrayFormat[item?.start_time_id]} - ${
-    //     arrayFormat[item?.end_time_id]
-    //   }`}
-    // />
-    <View key={index} style={styles.rendercontainer}>
-      <Row style={{justifyContent: 'flex-start'}}>
+  const renderAppointmentItem = ({ item, index }) => (
+    <View key={index} style={[styles.rendercontainer, { backgroundColor: item?.is_read ? colors.white : colors?.blueHalf }]}>
+      <Row style={{ justifyContent: 'flex-start' }}>
         <Image
           source={IMG.notificationcardicon}
           style={styles.notificationicon}
@@ -67,17 +65,16 @@ const Notifications = props => {
           <Regular label={item.text} numberOfLines={3} />
         </View>
       </Row>
-
       <Regular
         label={moment(item.created_at).format('DD MMM, YYYY  hh:mm a')}
-        style={{alignSelf: 'flex-end'}}
+        style={{ alignSelf: 'flex-end' }}
         fontSize={mvs(12)}
         color={colors.primary}
       />
     </View>
   );
   const itemSeparatorComponent = () => {
-    return <View style={{paddingVertical: mvs(5)}}></View>;
+    return <View style={{ paddingVertical: mvs(5) }}></View>;
   };
   return (
     <View style={styles.container}>
@@ -92,7 +89,7 @@ const Notifications = props => {
           data={notifications}
           renderItem={renderAppointmentItem}
           ItemSeparatorComponent={itemSeparatorComponent()}
-          // keyExtractor={(item, index) => index?.toString()}
+          keyExtractor={(_, index) => index?.toString()}
         />
       )}
     </View>

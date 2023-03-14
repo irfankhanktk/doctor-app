@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {mvs} from '../../config/metrices';
-import {colors} from '../../config/colors';
+import { StyleSheet } from 'react-native';
+import { mvs } from '../../config/metrices';
+import { colors } from '../../config/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,13 +17,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   rendercontainer: {
-    // width: width - 40,
     padding: mvs(10),
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.border,
     backgroundColor: colors.white,
-    // borderWidth: 0.4,
     borderRadius: mvs(10),
-    ...colors.shadow,
   },
   notificationicon: {
     width: mvs(35),

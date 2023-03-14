@@ -1,19 +1,19 @@
-import {APPOINTMNETSTATUS, STORAGEKEYS} from 'config/constants';
-import {goBack, navigate} from 'navigation/navigation-ref';
-import {Alert} from 'react-native';
-import {AppDispatch, RootState} from 'store';
-import {getData, postData} from '.';
+import { STORAGEKEYS } from 'config/constants';
+import { goBack } from 'navigation/navigation-ref';
+import { Alert } from 'react-native';
+import { AppDispatch, RootState } from 'store';
+import { getData, postData } from '.';
 import {
   setHospitals,
-  setSpecCategories,
+  setSpecCategories
 } from '../../store/reducers/doctor-reducer';
 import {
   setNotifications,
   setUserInfo,
-  setWallet,
+  setWallet
 } from '../../store/reducers/user-reducer';
-import {UTILS} from '../../utils';
-import {URLS} from './api-urls';
+import { UTILS } from '../../utils';
+import { URLS } from './api-urls';
 
 // export const getNearByHospitals = async (lat: any, long: any) => {
 //     try {
@@ -205,6 +205,17 @@ export const getDoctorAvailability = async (doctor_id: string) => {
     return res;
   } catch (error: any) {
     console.log('error in getDoctorAvailability', UTILS.returnError(error));
+    Alert.alert('', UTILS.returnError(error));
+    throw UTILS.returnError(error);
+  }
+};
+export const onReadNotifications = async (values: any) => {
+  try {
+    const res = await postData(URLS.notification.read_notification, values);
+    console.log('res of readNotifications=>', res);
+    return res;
+  } catch (error: any) {
+    console.log('error in readNotifications', UTILS.returnError(error));
     Alert.alert('', UTILS.returnError(error));
     throw UTILS.returnError(error);
   }
