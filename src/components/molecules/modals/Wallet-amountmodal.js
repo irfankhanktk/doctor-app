@@ -21,15 +21,19 @@ const WalletAmount = ({
   onClose = item => {},
 }) => {
   const {t} = i18n;
+  const [loading, setLoading] = React.useState(false);
   const onSubmit = async () => {
     try {
+      setLoading(true);
       const res = await onAddAmount(value);
 
       console.log('res===>>>>> addamount', res);
       isSubmited();
       onClose();
+      setLoading(false);
     } catch (error) {
       console.log('error=>', error);
+      setLoading(false);
     }
   };
   return (
@@ -65,7 +69,7 @@ const WalletAmount = ({
             // value={values.email}
           />
           <PrimaryButton
-            // loading={}
+            loading={loading}
             // disabled={value?.length !== 6}
             onPress={() => onSubmit()}
             title={t('submit')}

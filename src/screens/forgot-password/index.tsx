@@ -51,12 +51,15 @@ const ForgotPassword = (props: props) => {
 
   const onSubmit = async () => {
     try {
+      setLoading(true);
       const res = await onForgot(values);
+      setLoading(false);
 
       console.log('res===>>>>> forgot', res);
       setOtpModalVisible(true);
     } catch (error) {
       console.log('error=>', error);
+      setLoading(false);
     }
   };
   return (

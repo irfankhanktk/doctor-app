@@ -48,13 +48,16 @@ const RenewPasswordScreen = props => {
     });
   const onSubmit = async () => {
     try {
+      setLoading(true);
       const res = await onChangePassword({...values, email});
+      setLoading(false);
       Alert.alert('Password is Changed Successfully');
       navigate('Login');
       console.log('res===>>>>> onchangepassword', res);
       // setOtpModalVisible(true);
     } catch (error) {
       console.log('error=>', error);
+      setLoading(false);
     }
   };
 

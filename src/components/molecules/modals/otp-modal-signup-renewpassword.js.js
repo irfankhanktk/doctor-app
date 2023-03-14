@@ -1,4 +1,5 @@
 import {CrossModal} from 'assets/icons';
+import {Loader} from 'components/atoms/loader';
 import {ModalWrapper} from 'components/atoms/modal-wrapper';
 import {colors} from 'config/colors';
 import {useAppDispatch} from 'hooks/use-store';
@@ -24,9 +25,16 @@ const OtpModalRenewPassword = ({
   ...props
 }) => {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = React.useState(false);
   const verifyOtp = () => {
     dispatch(
-      onVerifyOtpRenewpassword({email, otp: value}, props, onClose, isSignup),
+      onVerifyOtpRenewpassword(
+        {email, otp: value},
+        props,
+        onClose,
+        setLoading,
+        isSignup,
+      ),
     );
   };
   return (
@@ -38,7 +46,7 @@ const OtpModalRenewPassword = ({
       <View style={styles.container}>
         <View style={styles.header} />
         <TouchableOpacity onPress={() => onClose()} style={styles.cross}>
-          <CrossModal />
+          <CrossModal height={mvs(30)} width={mvs(30)} />
         </TouchableOpacity>
         <Medium
           numberOfLines={2}
@@ -74,7 +82,11 @@ const OtpModalRenewPassword = ({
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Icon color={colors.primary} size={25} name={'arrowright'} />
+          {loading ? (
+            <Loader />
+          ) : (
+            <Icon color={colors.primary} size={25} name={'arrowright'} />
+          )}
         </TouchableOpacity>
       </View>
     </ModalWrapper>

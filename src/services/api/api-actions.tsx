@@ -74,8 +74,9 @@ export const onChangePassword = async (values: any) => {
     console.log('res of onChangepassword=>', res);
     return res;
   } catch (error: any) {
-    console.log('error in change password', error);
-    Alert.alert('', error?.message);
+    console.log('error in change password', UTILS.returnError(error));
+    Alert.alert('', UTILS.returnError(error));
+    throw UTILS.returnError(error);
   }
 };
 export const onChangeAppoinmentStatus = async (
@@ -107,7 +108,7 @@ export const onCompleteAppoinment = async (
     const res = await postData(URLS.appointment.complete_appoinment, values);
     setLoading(false);
   } catch (error: any) {
-    console.log('error in onCompleteAppoinment', error);
+    console.log('error in onCompleteAppoinment', UTILS.returnError(error));
     setLoading(false);
     Alert.alert('', UTILS.returnError(error));
     throw UTILS.returnError(error);
@@ -121,7 +122,7 @@ export const getAllHospitals = () => {
       console.log('res of getAllHospitals=>', res);
       dispatch(setHospitals(res?.allHospitals || []));
     } catch (error: any) {
-      console.log('error in getAllHospitals', error);
+      console.log('error in getAllHospitals', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));
     }
   };
@@ -134,7 +135,7 @@ export const getAllCategories = () => {
       console.log('res of getAllCategories=>', res);
       dispatch(setSpecCategories(res?.allSpecialization || []));
     } catch (error: any) {
-      console.log('error in getAllCategories', error);
+      console.log('error in getAllCategories', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));
     }
   };
@@ -148,7 +149,7 @@ export const getHomeData = async (doctor_id: string) => {
     // dispatch(setHospitals(res?.allHospitals || []));
     return res;
   } catch (error: any) {
-    console.log('error in getHomeData', error);
+    console.log('error in getHomeData', UTILS.returnError(error));
     Alert.alert('', UTILS.returnError(error));
   }
 };
@@ -165,7 +166,7 @@ export const onDeleteAvailbility = async (
     Alert.alert('Delete', res?.message);
     goBack();
   } catch (error: any) {
-    console.log('error in onDeleteAvailbility', error);
+    console.log('error in onDeleteAvailbility', UTILS.returnError(error));
     Alert.alert('', UTILS.returnError(error));
   } finally {
     setLoading(false);
@@ -186,7 +187,10 @@ export const onEditHospitalAvailbilityDetails = async (
     console.log('res of onEditHospitalAvailbilityDetails=>', res);
     return res;
   } catch (error: any) {
-    console.log('error in onEditHospitalAvailbilityDetails', error);
+    console.log(
+      'error in onEditHospitalAvailbilityDetails',
+      UTILS.returnError(error),
+    );
     Alert.alert('', UTILS.returnError(error));
     throw UTILS.returnError(error);
   }
@@ -200,9 +204,9 @@ export const getDoctorAvailability = async (doctor_id: string) => {
     console.log('res of getDoctorAvailability=>', res);
     return res;
   } catch (error: any) {
-    console.log('error in getDoctorAvailability', error);
+    console.log('error in getDoctorAvailability', UTILS.returnError(error));
     Alert.alert('', UTILS.returnError(error));
-    throw error;
+    throw UTILS.returnError(error);
   }
 };
 export const getDoctorAvailabilityDetails = async (
@@ -217,9 +221,12 @@ export const getDoctorAvailabilityDetails = async (
     console.log('res of getDoctorAvailabilityDetails=>', res);
     return res;
   } catch (error: any) {
-    console.log('error in getDoctorAvailabilityDetails', error);
+    console.log(
+      'error in getDoctorAvailabilityDetails',
+      UTILS.returnError(error),
+    );
     Alert.alert('', UTILS.returnError(error));
-    throw error;
+    throw UTILS.returnError(error);
   }
 };
 ///Notifications///
@@ -235,7 +242,7 @@ export const getNotifications = (
       dispatch(setNotifications(res?.notifications || []));
       console.log('res of notification=>', res);
     } catch (error: any) {
-      console.log('error in notification', error);
+      console.log('error in notification', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));
     } finally {
       setLoading(false);
@@ -276,7 +283,7 @@ export const getWallet = (values: any, setLoading: (bool: boolean) => void) => {
       dispatch(setWallet(res || {}));
       console.log('res of wallet=>', res);
     } catch (error: any) {
-      console.log('error in wallet', error);
+      console.log('error in wallet', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));
     } finally {
       setLoading(false);
@@ -291,8 +298,8 @@ export const onAddAmount = async (values: any) => {
     console.log('res of addamount=>', res);
     return res;
   } catch (error: any) {
-    console.log('error in addamount', error);
-    Alert.alert('', error?.message);
+    console.log('error in addamount', UTILS.returnError(error));
+    Alert.alert('', UTILS.returnError(error));
   }
 };
 export const onSignup = (
@@ -337,8 +344,8 @@ export const onAddAvailability = (
       // UTILS.resetStack(props, 'Home');
       // navigate('AddAvailability', values)
     } catch (error: any) {
-      console.log('error in onSignupPress', error);
-      Alert.alert('', error?.message);
+      console.log('error in onSignupPress', UTILS.returnError(error));
+      Alert.alert('', UTILS.returnError(error));
     } finally {
       setLoading(false);
     }
@@ -378,7 +385,7 @@ export const onUpdateProfile = (
       goBack();
     } catch (error: any) {
       console.log('error in onUpdateProfile', UTILS.returnError(error));
-      Alert.alert('', error?.message);
+      Alert.alert('', UTILS.returnError(error));
     } finally {
       setLoading(false);
     }
@@ -415,19 +422,22 @@ export const onForgot = async (values: any) => {
     console.log('res of onforgot=>', res);
     return res;
   } catch (error: any) {
-    console.log('error in forgot password', error);
-    Alert.alert('', error?.message);
+    console.log('error in forgot password', UTILS.returnError(error));
+    Alert.alert('', UTILS.returnError(error));
   }
 };
 export const onVerifyOtpRenewpassword = (
   values: any,
   props: any,
   onClose: any,
+  setLoading: (bool: boolean) => void,
   isSignup?: boolean,
 ) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
+      setLoading(true);
       const res = await postData(URLS.auth.otp_verify, values);
+      setLoading(false);
       console.log('res of onforgot=>', res);
       UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
       dispatch(setUserInfo(res?.user));
@@ -442,8 +452,9 @@ export const onVerifyOtpRenewpassword = (
         });
       }
     } catch (error: any) {
-      console.log('error in forgot password', error);
-      Alert.alert('', error?.message);
+      console.log('error in forgot password', UTILS.returnError(error));
+
+      Alert.alert('', UTILS.returnError(error));
     } finally {
       onClose();
     }
@@ -457,8 +468,8 @@ export const onLogoutPress = (props: any) => {
       dispatch(setUserInfo(null));
       UTILS.resetStack(props, 'Splash');
     } catch (error: any) {
-      console.log('error in onDeleteTask', error);
-      Alert.alert('', error);
+      console.log('error in onDeleteTask', UTILS.returnError(error));
+      Alert.alert('', UTILS.returnError(error));
     }
   };
 };

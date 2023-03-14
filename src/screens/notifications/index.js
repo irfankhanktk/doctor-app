@@ -22,31 +22,7 @@ const Notifications = props => {
   const {userInfo, notifications} = useAppSelector(s => s.user);
   const {t} = i18n;
   const [loading, setLoading] = React.useState(true);
-  const [arrayFormat, setArrayFormat] = React.useState([]);
-  const [appointments, setAppointments] = React.useState([
-    {
-      id: '1',
-      title: 'New Notifications',
-      time: '24 dec, 2023',
-      description:
-        'Lorem ipmsoum jfdghsjkfb asjhfjk Lorem ipmsoum jfdghsjkfb asjhfjk Lorem ipmsoum jfdghsjkfb asjhfjk  ',
-      icon: IMG.notificationcardicon,
-    },
-    {
-      id: '2',
-      title: 'New Notifications',
-      time: '24 dec, 2023',
-      description: 'Lorem ipmsoum jfdghsjkfb asjhfjk ',
-      icon: IMG.notificationcardicon,
-    },
-    {
-      id: '3',
-      title: 'New Notifications',
-      time: '24 dec, 2023',
-      description: 'Lorem ipmsoum jfdghsjkfb asjhfjk ',
-      icon: IMG.notificationcardicon,
-    },
-  ]);
+
   const loadNotifications = async () => {
     try {
       dispatch(getNotifications({doctor_id: userInfo?.id}, setLoading));
