@@ -77,8 +77,8 @@ export const TabBar = props => {
                 flex: 1,
                 justifyContent: 'center',
               }}
-              onPress={() => navigate('AddAvailability')}>
-              <Ionicons name={'search'} color="white" size={25} />
+              onPress={() => navigate('WalletScreen')}>
+              <Ionicons name={'wallet'} color="white" size={25} />
             </TouchableOpacity>
           </Animated.View>
         )}
@@ -88,16 +88,16 @@ export const TabBar = props => {
           position="LEFT"
           component={() => <Home {...props} />}
         />
-        <CurvedBottomBar.Screen
+        {/* <CurvedBottomBar.Screen
           name="title2"
           position="LEFT"
           component={() => <WalletScreen {...props} />}
-        />
-        <CurvedBottomBar.Screen
+        /> */}
+        {/* <CurvedBottomBar.Screen
           name="title3"
           component={() => <AppointmentsList {...props} />}
           position="RIGHT"
-        />
+        /> */}
         <CurvedBottomBar.Screen
           name="title4"
           component={() => <UserTab {...props} />}

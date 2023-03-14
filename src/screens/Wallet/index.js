@@ -39,21 +39,6 @@ const WalletScreen = props => {
   const {t} = i18n;
   const [otpModalVisible, setOtpModalVisible] = React.useState(false);
 
-  const [walletData, setWalletData] = React.useState([
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-    {city: 'Riyadh', date: ' 24 feb', amount: 'SR 24.35'},
-  ]);
-
   React.useEffect(() => {
     getWalletHistory();
   }, []);
@@ -90,13 +75,13 @@ const WalletScreen = props => {
     <View style={styles.container}>
       <Header1x2x
         title={t('wallet')}
-        wallettext={`SR ` + wallet?.wallet?.balance}
+        wallettext={`SR ${loading ? '--' : wallet?.wallet?.balance ?? ''}`}
       />
       <View style={styles.walletcard}>
         <Feather name="shopping-bag" size={mvs(35)} color={'#000'} />
         {/* <Medium label={'SR 49.73'} fontSize={mvs(20)} color={'#000'} /> */}
         <Medium
-          label={`SR ` + wallet?.wallet?.balance}
+          label={`SR ${loading ? '--' : wallet?.wallet?.balance ?? ''}`}
           fontSize={mvs(20)}
           color={'#000'}
         />
