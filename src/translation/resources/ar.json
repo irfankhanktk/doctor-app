@@ -71,6 +71,7 @@
    "start_time": "وقت البدء",
    "end_time": "وقت النهاية",
    "add_availability": "إضافة التوافر",
+  "availability_details": "إضافة التوافر",
    "checkbox_text": "احفظ هذه البطاقة لسرعة الخروج في المرة القادمة",
    "card_desc": "من خلال حفظ بطاقتك ، فإنك تمنحنا مدفوعاتك  طريقة الطلبات المستقبلية. يمكنك سحب الموافقة في أي وقت.",
    "appoinment_no": "رقم التعيين",
@@ -108,5 +109,10 @@
   "add_amount":"أضف المبلغ",
   "history":"تاريخ",
   "submit":"يُقدِّم",
-  "per_patient":"لكل مريض"
+  "per_patient":"لكل مريض",
+  "choose_pres_img":"اختر صورة وصفة طبية",
+  "req_short_description":"الوصف مطلوب",
+  "short_description":"وصف قصير"
+
+
 }

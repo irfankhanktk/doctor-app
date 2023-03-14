@@ -52,13 +52,6 @@ const UserTab = (props: props) => {
               />
             </TouchableOpacity>
           )}
-
-          {/* <TabItem title={'sdsd'} onPress={()=>{console.log("PRESSED")}}>
-            <FontAwesome name="key" size={mvs(22)} color={colors.primary} />
-          </TabItem> */}
-
-          {/* <TabItem title={"hello"}/> */}
-
           <TouchableOpacity
             style={styles.itemtabs}
             onPress={() => props?.navigation?.navigate('LanguageScreen')}>

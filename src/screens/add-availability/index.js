@@ -1,16 +1,13 @@
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import { Loader } from 'components/atoms/loader';
 import { Row } from 'components/atoms/row';
 import { colors } from 'config/colors';
 import { arrayFormat, weekDays } from 'config/constants';
 import { mvs } from 'config/metrices';
-import { useFormik } from 'formik';
 import React from 'react';
-import { Platform, ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { onAddAvailability, onEditHospitalAvailbilityDetails } from 'services/api/api-actions';
+import { onAddAvailability } from 'services/api/api-actions';
 import i18n from 'translation';
-import { signupFormValidation } from 'validations';
 import { PlusButton, PrimaryButton } from '../../components/atoms/buttons';
 import { InputWithIcon } from '../../components/atoms/inputs';
 import { KeyboardAvoidScrollview } from '../../components/atoms/keyboard-avoid-scrollview';
@@ -45,14 +42,12 @@ const AddAvailability = (props) => {
     <View style={styles.container}>
       <Header1x2x title={t('add_availability')} />
       <KeyboardAvoidScrollview contentContainerStyle={styles.contentContainerStyle}>
-        {/* <PrimaryButton onPress={() => setPayload([...payload, obj])}
-          title='Add Hospital'
-        /> */}
         {payload?.map((item, index) => {
           let copy = [...payload];
           let days = copy[index].days;
           return (
-            <View style={{ marginTop: mvs(20), paddingBottom: mvs(60), borderBottomWidth: payload?.length - 1 === index ? 0 : 3 }}
+            <View
+              style={{ marginTop: mvs(20), paddingBottom: mvs(60), borderBottomWidth: payload?.length - 1 === index ? 0 : 3 }}
               key={index}>
               {payload?.length > 1 && <TouchableOpacity onPress={() => {
                 copy?.splice(index, 1);
@@ -84,7 +79,7 @@ const AddAvailability = (props) => {
                     return (
                       <PrimaryButton
                         key={weekIndex}
-                        containerStyle={[styles.primaryButton, { backgroundColor: bool ? colors.primary : colors.blueHalf,}]}
+                        containerStyle={[styles.primaryButton, { backgroundColor: bool ? colors.primary : colors.blueHalf, }]}
                         onPress={() => {
                           console.log('days?.length ', days?.length);
                           if (bool) {
@@ -105,7 +100,8 @@ const AddAvailability = (props) => {
                 </ScrollView>
                 {
                   days?.map((day, dayIndex) => (
-                    <View key={dayIndex}>
+                    <View
+                      key={dayIndex}>
                       <Medium label={`${day?.day}`} color={colors.primary} fontSize={mvs(16)} />
                       <Row>
                         <View style={{ width: '49%' }}>
@@ -136,7 +132,6 @@ const AddAvailability = (props) => {
                         </View>
                       </Row>
                     </View>
-
                   ))
                 }
               </View>
@@ -145,7 +140,6 @@ const AddAvailability = (props) => {
         <View style={styles.save}>
           <PrimaryButton
             loading={loading}
-            // disabled={Object.keys(errors)?.length > 0 || Object.keys(touched)?.length === 0}
             title={t('save')}
             onPress={() => dispatch(onAddAvailability({ doctor_id: userInfo?.id, availability: payload }, setLoading, props))}
             containerStyle={styles.button}

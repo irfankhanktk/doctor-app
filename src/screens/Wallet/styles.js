@@ -1,6 +1,6 @@
-import {Platform, StyleSheet} from 'react-native';
-import {colors} from '../../config/colors';
-import {mvs, width} from '../../config/metrices';
+import { Platform, StyleSheet } from 'react-native';
+import { colors } from '../../config/colors';
+import { mvs, width } from '../../config/metrices';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   contentContainerStyle: {
-    flexGrow: 1,
+    flex: 1,
     paddingVertical: mvs(34),
     paddingHorizontal: mvs(20),
     marginTop: mvs(14),
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     shadowColor: '#000',
+    backgroundColor: colors.white,
     shadowOffset: {
       width: 0,
       height: 1,

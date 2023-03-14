@@ -1,42 +1,27 @@
-import {PrimaryButton} from 'components/atoms/buttons';
+import { PrimaryButton } from 'components/atoms/buttons';
 
-import {PrimaryPhoneInput} from 'components/atoms/inputs';
-import {mvs} from 'config/metrices';
-import React, {useEffect} from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
-import Medium from 'typography/medium-text';
-import Regular from 'typography/regular-text';
-import {KeyboardAvoidScrollview} from '../../components/atoms/keyboard-avoid-scrollview/index';
-import styles from './styles';
-import PrimaryInput from '../../components/atoms/inputs';
-import {useFormik} from 'formik';
-import {
-  addmountformvalidation,
-  forgotemailFormValidation,
-  signinFormValidation,
-  signupFormValidation,
-} from 'validations';
-import {useAppDispatch, useAppSelector} from 'hooks/use-store';
-import {navigate} from 'navigation/navigation-ref';
-import {getWallet, onLogin} from 'services/api/api-actions';
-import {OtpInput} from 'components/molecules/otp-input';
-import OtpModal from 'components/molecules/modals/otp-modal';
-import i18n from 'translation';
-import messaging from '@react-native-firebase/messaging';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {colors} from 'config/colors';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Loader } from 'components/atoms/loader';
+import Header1x2x from 'components/atoms/walletheader/header-1x-2x';
 import WalletAmount from 'components/molecules/modals/Wallet-amountmodal';
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
+import { useAppDispatch, useAppSelector } from 'hooks/use-store';
+import moment from 'moment';
+import React, { useEffect } from 'react';
+import { FlatList, View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {Loader} from 'components/atoms/loader';
-import moment from 'moment';
-import Header1x2x from 'components/atoms/walletheader/header-1x-2x';
+import { getWallet } from 'services/api/api-actions';
+import i18n from 'translation';
+import Medium from 'typography/medium-text';
+import Regular from 'typography/regular-text';
+import { KeyboardAvoidScrollview } from '../../components/atoms/keyboard-avoid-scrollview/index';
+import styles from './styles';
 
 const WalletScreen = props => {
   const dispatch = useAppDispatch();
-  const {userInfo, wallet} = useAppSelector(s => s.user);
-  const {t} = i18n;
+  const { userInfo, wallet } = useAppSelector(s => s.user);
+  const { t } = i18n;
   const [otpModalVisible, setOtpModalVisible] = React.useState(false);
 
   React.useEffect(() => {
@@ -54,13 +39,13 @@ const WalletScreen = props => {
 
   const getWalletHistory = async () => {
     try {
-      dispatch(getWallet({doctor_id: userInfo?.id}, setLoading));
+      dispatch(getWallet({ doctor_id: userInfo?.id }, setLoading));
     } catch (error) {
       console.log('error=>', error);
     }
   };
   const itemSeparatorComponent = () => {
-    return <View style={{paddingVertical: mvs(5)}}></View>;
+    return <View style={{ paddingVertical: mvs(5) }}></View>;
   };
   const verifyOtp = () => {
     try {
@@ -79,18 +64,12 @@ const WalletScreen = props => {
       />
       <View style={styles.walletcard}>
         <Feather name="shopping-bag" size={mvs(35)} color={'#000'} />
-        {/* <Medium label={'SR 49.73'} fontSize={mvs(20)} color={'#000'} /> */}
         <Medium
           label={`SR ${loading ? '--' : wallet?.wallet?.balance ?? ''}`}
           fontSize={mvs(20)}
           color={'#000'}
         />
         <PrimaryButton
-          // disabled={
-          //   Object.keys(errors).length > 0 ||
-          //   Object.keys(touched).length === 0
-          // }
-          // loading={loading}
           onPress={() => setOtpModalVisible(true)}
           containerStyle={{
             width: mvs(120),
@@ -104,48 +83,24 @@ const WalletScreen = props => {
         {loading ? (
           <Loader />
         ) : (
-          <KeyboardAvoidScrollview
-            contentContainerStyle={styles.contentContainerStyle}>
-            {/* <TouchableOpacity
-            onPress={() => props?.navigation?.navigate('WalletHistory')}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-            }}>
-            <MaterialCommunityIcons
-              name="history"
-              size={mvs(20)}
-              style={{padding: 2}}
-              color={colors.primary}
-            />
-            <Medium
-              fontSize={mvs(16)}
-              label={t('History')}
-              style={{
-                color: colors.primary,
-                textDecorationLine: 'underline',
-              }}
-            />
-          </TouchableOpacity> */}
-
+          <View
+            style={styles.contentContainerStyle}>
             <Medium
               label={t('history')}
               fontSize={mvs(20)}
-              style={{marginLeft: mvs(14)}}
+              style={{ marginLeft: mvs(14) }}
             />
-
-            <View style={{padding: mvs(5)}}>
+            <View style={{ padding: mvs(5) }}>
               <FlatList
                 data={wallet?.tansactions}
-                renderItem={({item, index}) => (
+                renderItem={({ item, index }) => (
                   <View key={index} style={styles.historycontainer}>
                     <View style={styles.cardcontainer}>
                       <MaterialIcons
                         name="payments"
                         size={mvs(40)}
                         color={colors.primary}
-                        style={{marginRight: mvs(15)}}
+                        style={{ marginRight: mvs(15) }}
                       />
                       {/* <Regular label={item.city} color={colors.green} /> */}
                       <Regular
@@ -158,11 +113,11 @@ const WalletScreen = props => {
                     <Regular
                       label={`SR ${item.amount}`}
                       color={colors.red}
-                      style={{marginHorizontal: mvs(10)}}
+                      style={{ marginHorizontal: mvs(10) }}
                     />
                   </View>
                 )}
-                contentContainerStyle={{paddingBottom: mvs(100)}}
+                contentContainerStyle={{ paddingBottom: mvs(100) }}
                 ItemSeparatorComponent={itemSeparatorComponent()}
               />
             </View>
@@ -190,11 +145,8 @@ const WalletScreen = props => {
             }}
           /> */}
             {/* <PrimaryPhoneInput value={phone} onChangeText={setPhone} getCallingCode={(code) => { }} /> */}
-          </KeyboardAvoidScrollview>
+          </View>
         )}
-
-        {/* <View style={styles.button}>
-        </View> */}
       </View>
     </View>
   );

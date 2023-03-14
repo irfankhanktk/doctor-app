@@ -1,6 +1,6 @@
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {Loader} from 'components/atoms/loader';
-import {Row} from 'components/atoms/row';
+import { Loader } from 'components/atoms/loader';
+import { Row } from 'components/atoms/row';
 import DescriptionCard from 'components/molecules/description-card';
 import Hospital from 'components/molecules/hospital';
 import DoctorAppointmentDetails from 'components/molecules/popular-patient-card';
@@ -8,16 +8,16 @@ import DoctorAppointmentDetails from 'components/molecules/popular-patient-card'
 // import MyMap from 'components/molecules/map';
 import moment from 'moment';
 import React from 'react';
-import {ScrollView, View} from 'react-native';
-import {getAppointmentDetails} from 'services/api/api-actions';
+import { ScrollView, View } from 'react-native';
+import { getAppointmentDetails } from 'services/api/api-actions';
 import i18n from 'translation';
 import Bold from 'typography/bold-text';
 import Medium from 'typography/medium-text';
 import styles from './styles';
 
 const AppointmentDetails = props => {
-  const {params} = props?.route;
-  const {t} = i18n;
+  const { params } = props?.route;
+  const { t } = i18n;
   const [loading, setLoading] = React.useState(true);
   const [appointmentDetails, setAppointmentDetails] = React.useState(null);
   const [arrayFormat, setArrayFormat] = React.useState([]);
@@ -55,15 +55,14 @@ const AppointmentDetails = props => {
               <Row>
                 <Medium label={t('time')} />
                 <Medium
-                  label={`${arrayFormat[appointmentDetails?.start_time_id]} - ${
-                    arrayFormat[appointmentDetails?.end_time_id]
-                  }`}
+                  label={`${arrayFormat[appointmentDetails?.start_time_id]} - ${arrayFormat[appointmentDetails?.end_time_id]
+                    }`}
                 />
               </Row>
             </View>
             <Bold label={t('reason')} />
             <DescriptionCard
-              description={appointmentDetails?.doctor?.short_description}
+              description={appointmentDetails?.reason}
             />
             <Hospital
               style={styles.hospital}

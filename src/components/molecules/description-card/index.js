@@ -10,7 +10,7 @@ const DescriptionCard = ({ description, style, onPress }) => {
       <Regular
         style={{ lineHeight: mvs(16) }}
         numberOfLines={3} color={colors.white}
-        fontSize={mvs(12)} label={description || 'Short description of doctor will be here'} />
+        fontSize={mvs(12)} label={description || 'Short description will be here'} />
       <View style={styles.dotContainer}>
         <View style={styles.dot} />
       </View>

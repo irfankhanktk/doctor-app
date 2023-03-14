@@ -10,17 +10,21 @@ import { APPOINTMNETSTATUS } from 'config/constants';
 import { mvs } from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
-import { Alert, ScrollView, View } from 'react-native';
+import { Image } from 'react-native';
+import { Alert, ScrollView, View, TouchableOpacity } from 'react-native';
 import { getAppointmentDetails, onChangeAppoinmentStatus, onCompleteAppoinment } from 'services/api/api-actions';
 import i18n from 'translation';
 import Bold from 'typography/bold-text';
 import Medium from 'typography/medium-text';
+import Regular from 'typography/regular-text';
+import { UTILS } from '../../utils';
 import styles from './styles';
 
 const Checkout = (props) => {
   const { params } = props?.route;
   const { t } = i18n;
   const [loading, setLoading] = React.useState(false);
+  const [image, setImage] = React.useState('');
   const [isOtpModal, setIsOtpModal] = React.useState(false);
   const [value, setValue] = React.useState('');
   const [statusLoading, setStatusLoading] = React.useState(false);
@@ -66,6 +70,20 @@ const Checkout = (props) => {
               disabledCard={true}
 
             />
+            <Medium label={'Prescription Image'} style={{ marginTop: mvs(20), fontSize: mvs(18) }}>
+              <Regular label={' (optional)'} fontSize={mvs(12)} />
+            </Medium>
+            <TouchableOpacity onPress={async () => {
+              try {
+                const res = await UTILS._returnImageGallery();
+                setImage(res)
+              } catch (error) {
+                console.log('error', error);
+              }
+            }} style={styles.img}>
+              {!image ? <Regular label={t('choose_pres_img')} /> :
+                <Image source={{ uri: image?.uri }} style={styles.imgStyle} />}
+            </TouchableOpacity>
             <Row style={{ alignItems: 'center', marginTop: mvs(30) }}>
               <Bold label={'Total '} color={colors.primary}>
                 <Bold label={`${appointmentDetails?.price}`} fontSize={mvs(18)} />
@@ -75,7 +93,6 @@ const Checkout = (props) => {
                 onPress={async () => {
                   try {
                     await onChangeAppoinmentStatus(appointmentDetails?.id, APPOINTMNETSTATUS.completed, setStatusLoading);
-                    // Alert.alert('OTP', 'Confirmation code is sent to Patient through Email')
                     setIsOtpModal(true);
                   } catch (error) {
                     console.log('error=>>>:', error);
@@ -86,6 +103,7 @@ const Checkout = (props) => {
       </View>
       <OtpModal
         disabled={statusLoading}
+        loading={statusLoading}
         email={appointmentDetails?.patient?.email}
         visible={isOtpModal}
         value={value}

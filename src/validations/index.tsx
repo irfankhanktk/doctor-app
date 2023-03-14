@@ -41,6 +41,7 @@ export const signupFormValidation = yup.object().shape({
   doc_cat_id: yup.string().required('req_cat'),
   zip_code: yup.string().required('req_zip_code'),
   city: yup.string().required('req_city'),
+  short_description: yup.string().required('req_short_description'),
   state: yup.string().required('req_state'),
   price: yup.string().required('req_price'),
   experience: yup.string().required('req_experience'),

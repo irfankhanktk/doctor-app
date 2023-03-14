@@ -1,20 +1,20 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import React from 'react';
-import {Alert, Linking, View} from 'react-native';
+import { Alert, Linking, View } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import {onSignup} from 'services/api/api-actions';
+import { onSignup } from 'services/api/api-actions';
 import i18n from 'translation';
-import {UTILS} from '../../utils';
-import {signupFormValidation} from 'validations';
-import {PrimaryButton} from '../../components/atoms/buttons';
+import { UTILS } from '../../utils';
+import { signupFormValidation } from 'validations';
+import { PrimaryButton } from '../../components/atoms/buttons';
 import PrimaryInput, {
   InputWithIcon,
   PrimaryPhoneInput,
 } from '../../components/atoms/inputs';
-import {KeyboardAvoidScrollview} from '../../components/atoms/keyboard-avoid-scrollview';
-import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
+import { KeyboardAvoidScrollview } from '../../components/atoms/keyboard-avoid-scrollview';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import Medium from '../../typography/medium-text';
 import styles from './styles';
@@ -27,11 +27,11 @@ type props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
 const Signup = (props: props) => {
   const [otpModalVisible, setOtpModalVisible] = React.useState(false);
   const [value, setValue] = React.useState('');
-  const {navigation} = props;
-  const {t} = i18n;
-  const {doctor, user} = useAppSelector(s => s);
-  const {location} = user;
-  const {spec_categories} = doctor;
+  const { navigation } = props;
+  const { t } = i18n;
+  const { doctor, user } = useAppSelector(s => s);
+  const { location } = user;
+  const { spec_categories } = doctor;
   console.log('location=>>>', location);
 
   const dispatch = useAppDispatch();
@@ -50,6 +50,7 @@ const Signup = (props: props) => {
     map_lat: '',
     map_lng: '',
     price: '',
+    short_description: '',
     experience: 0,
     min_day_before_booking: 0,
     min_day_stays: 0,
@@ -57,13 +58,13 @@ const Signup = (props: props) => {
     // bio: null,
   };
   const [loading, setLoading] = React.useState(false);
-  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
+  const { values, errors, touched, setFieldValue, setFieldTouched, isValid } =
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: true,
       validationSchema: signupFormValidation,
-      onSubmit: () => {},
+      onSubmit: () => { },
     });
 
   console.log('errors=>', errors);
@@ -83,37 +84,6 @@ const Signup = (props: props) => {
         console.warn(error);
       });
   }, []);
-  // const onSubmit = async () => {
-  //   try {
-  //     if (!location) {
-  //       Alert.alert('Location', 'It seems you have not authorized location', [
-  //         {
-  //           text: 'Cancel',
-  //           onPress: () => console.log('Cancel Pressed'),
-  //           style: 'cancel',
-  //         },
-  //         {text: 'Setting', onPress: () => Linking.openSettings()},
-  //       ]);
-  //       return;
-  //     }
-  //     messaging()
-  //       .getToken()
-  //       .then(fcmToken => {
-  //         console.log('fcmToken=>', fcmToken);
-  //         dispatch(
-  //           onSignup(
-  //             {...values, token: fcmToken},
-  //             setLoading,
-  //             props,
-  //             setOtpModalVisible,
-  //           ),
-  //         );
-  //       })
-  //       .catch(error => console.log(error));
-  //   } catch (error) {
-  //     console.log('error=>', error);
-  //   }
-  // };
 
   return (
     <View style={styles.container}>
@@ -121,6 +91,7 @@ const Signup = (props: props) => {
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
+          isRequired
           error={touched?.name && errors?.name ? t(errors?.name) : ''}
           label={t('name')}
           placeholder={t('name')}
@@ -129,6 +100,7 @@ const Signup = (props: props) => {
           value={values.name}
         />
         <PrimaryInput
+          isRequired
           keyboardType={'email-address'}
           error={touched?.email && errors?.email ? t(errors?.email) : ''}
           label={t('email')}
@@ -138,6 +110,7 @@ const Signup = (props: props) => {
           value={values.email}
         />
         <PrimaryPhoneInput
+          isRequired
           error={errors?.phone && touched?.phone ? `${t(errors?.phone)}` : ''}
           label={t('phone')}
           placeholder={t('phone_no')}
@@ -149,6 +122,7 @@ const Signup = (props: props) => {
           value={values.phone}
         />
         <PrimaryInput
+          isRequired
           isPassword
           error={
             touched?.password && errors?.password
@@ -162,6 +136,7 @@ const Signup = (props: props) => {
           value={values.password}
         />
         <PrimaryInput
+          isRequired
           isPassword
           error={
             touched?.confirm_password && errors?.confirm_password
@@ -175,7 +150,8 @@ const Signup = (props: props) => {
           value={values.confirm_password}
         />
         <InputWithIcon
-          label={'choose_category'}
+          isRequired
+          label={t('choose_category')}
           error={
             errors?.doc_cat_id && touched?.doc_cat_id ? errors?.doc_cat_id : ''
           }
@@ -190,6 +166,7 @@ const Signup = (props: props) => {
           }
         />
         <PrimaryInput
+          isRequired
           keyboardType={'numeric'}
           error={
             touched?.zip_code && errors?.zip_code ? t(errors?.zip_code) : ''
@@ -201,6 +178,7 @@ const Signup = (props: props) => {
           value={`${values.zip_code}`}
         />
         <PrimaryInput
+          isRequired
           error={touched?.city && errors?.city ? t(errors?.city) : ''}
           label={t('city')}
           placeholder={t('city')}
@@ -209,6 +187,7 @@ const Signup = (props: props) => {
           value={`${values.city}`}
         />
         <PrimaryInput
+          isRequired
           error={touched?.state && errors?.state ? t(errors?.state) : ''}
           label={t('state')}
           placeholder={t('state')}
@@ -217,6 +196,7 @@ const Signup = (props: props) => {
           value={`${values.state}`}
         />
         <PrimaryInput
+          isRequired
           error={touched?.country && errors?.country ? t(errors?.country) : ''}
           label={t('country')}
           placeholder={t('country')}
@@ -225,6 +205,7 @@ const Signup = (props: props) => {
           value={`${values.country}`}
         />
         <PrimaryInput
+          isRequired
           keyboardType={'numeric'}
           error={touched?.price && errors?.price ? t(errors?.price) : ''}
           label={t('price')}
@@ -234,6 +215,7 @@ const Signup = (props: props) => {
           value={`${values.price}`}
         />
         <PrimaryInput
+          isRequired
           keyboardType={'numeric'}
           error={
             touched?.experience && errors?.experience
@@ -245,6 +227,19 @@ const Signup = (props: props) => {
           onChangeText={str => setFieldValue('experience', str)}
           onBlur={() => setFieldTouched('experience', true)}
           value={`${values.experience}`}
+        />
+        <PrimaryInput
+          isRequired
+          error={
+            touched?.short_description && errors?.short_description
+              ? t(errors?.short_description)
+              : ''
+          }
+          label={t('short_description')}
+          placeholder={t('short_description')}
+          onChangeText={str => setFieldValue('short_description', str)}
+          onBlur={() => setFieldTouched('short_description', true)}
+          value={`${values.short_description}`}
         />
         <PrimaryInput
           keyboardType={'numeric'}
@@ -292,7 +287,7 @@ const Signup = (props: props) => {
                 console.log('fcmToken=>', fcmToken);
                 dispatch(
                   onSignup(
-                    {...values, token: fcmToken},
+                    { ...values, token: fcmToken },
                     setLoading,
                     props,
                     setOtpModalVisible,

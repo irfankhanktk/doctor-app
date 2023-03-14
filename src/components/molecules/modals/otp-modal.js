@@ -1,23 +1,25 @@
-import {CrossModal} from 'assets/icons';
-import {ModalWrapper} from 'components/atoms/modal-wrapper';
-import {colors} from 'config/colors';
-import {t} from 'i18next';
-import {navigate} from 'navigation/navigation-ref';
+import { CrossModal } from 'assets/icons';
+import { Loader } from 'components/atoms/loader';
+import { ModalWrapper } from 'components/atoms/modal-wrapper';
+import { colors } from 'config/colors';
+import { t } from 'i18next';
+import { navigate } from 'navigation/navigation-ref';
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Medium from 'typography/medium-text';
-import {mvs} from '../../../config/metrices';
-import {OtpInput} from '../otp-input';
+import { mvs } from '../../../config/metrices';
+import { OtpInput } from '../otp-input';
 const OtpModal = ({
   disabled,
+  loading,
   style = {},
   email,
   visible = false,
   value,
   setValue,
-  onClose = item => {},
-  onPress = () => {},
+  onClose = item => { },
+  onPress = () => { },
 }) => {
   return (
     <ModalWrapper
@@ -62,7 +64,9 @@ const OtpModal = ({
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Icon color={colors.primary} size={25} name={'arrowright'} />
+          {loading ?
+            <Loader />
+            : <Icon color={colors.primary} size={25} name={'arrowright'} />}
         </TouchableOpacity>
       </View>
     </ModalWrapper>
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
     paddingVertical: mvs(15),
     borderRadius: mvs(20),
   },
-  otp: {paddingHorizontal: mvs(20), marginTop: mvs(20)},
+  otp: { paddingHorizontal: mvs(20), marginTop: mvs(20) },
   header: {
     height: mvs(3),
     borderRadius: mvs(5),
@@ -104,5 +108,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: mvs(30),
     marginBottom: mvs(20),
   },
-  cross: {padding: mvs(20), alignSelf: 'flex-end', position: 'absolute'},
+  cross: { padding: mvs(20), alignSelf: 'flex-end', position: 'absolute' },
 });

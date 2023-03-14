@@ -22,6 +22,16 @@ const styles = StyleSheet.create({
         backgroundColor: colors.secondary,
         marginBottom: mvs(20)
     },
+    img: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.lightGray,
+        height: mvs(150),
+        borderRadius: mvs(10),
+
+
+    },
+    imgStyle: { height: '100%', width: '100%', resizeMode: 'contain' },
     appoinmentDetails: { color: colors.primary, fontSize: mvs(18), marginHorizontal: mvs(15) }
 });
 export default styles;
