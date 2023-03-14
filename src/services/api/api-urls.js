@@ -13,11 +13,12 @@ export const URLS = {
   },
   availability: {
     add: 'doctor/addDoctorAvailability',
-    getDoctorHospitals: 'doctor/getDoctorHospital',
-    getDoctorHospitalDetails: 'doctor/getDoctorHospitalDetail',
-    edithospitalAvailabilityDetails: 'doctor/editHospitalAvailability',
+    get_doctor_hospitals: 'doctor/getDoctorHospital',
+    get_doctor_hospital_details: 'doctor/getDoctorHospitalDetail',
+    edit_hospital_availability_details: 'doctor/editHospitalAvailability',
     delete: 'doctor/deleteDoctorAvailability', //need availability_id
-    change: 'doctor/appointmentStatus',
+    // change: 'doctor/appointmentStatus',
+    update_doctor_availability: 'doctor/updateDoctorAvailability',
   },
   all_hospitals: 'doctor/allHospital',
   appointment: {

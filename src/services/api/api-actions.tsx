@@ -178,7 +178,7 @@ export const onEditHospitalAvailbilityDetails = async (
 ) => {
   try {
     const res = await postData(
-      URLS.availability.edithospitalAvailabilityDetails,
+      URLS.availability.edit_hospital_availability_details,
       {
         hospital_id,
         doctor_id,
@@ -198,7 +198,7 @@ export const onEditHospitalAvailbilityDetails = async (
 //
 export const getDoctorAvailability = async (doctor_id: string) => {
   try {
-    const res = await postData(URLS.availability.getDoctorHospitals, {
+    const res = await postData(URLS.availability.get_doctor_hospitals, {
       doctor_id,
     });
     console.log('res of getDoctorAvailability=>', res);
@@ -220,12 +220,26 @@ export const onReadNotifications = async (values: any) => {
     throw UTILS.returnError(error);
   }
 };
+export const updateDoctorAvailabilityDaysTime = async (values: any) => {
+  try {
+    const res = await postData(URLS.availability.update_doctor_availability, values);
+    console.log('res of updateDoctorAvailabilityDaysTime=>', res);
+    return res;
+  } catch (error: any) {
+    console.log(
+      'error in updateDoctorAvailabilityDaysTime',
+      UTILS.returnError(error),
+    );
+    Alert.alert('', UTILS.returnError(error));
+    throw UTILS.returnError(error);
+  }
+};
 export const getDoctorAvailabilityDetails = async (
   doctor_id: string,
   hospital_id: string,
 ) => {
   try {
-    const res = await postData(URLS.availability.getDoctorHospitalDetails, {
+    const res = await postData(URLS.availability.get_doctor_hospital_details, {
       doctor_id,
       hospital_id,
     });
