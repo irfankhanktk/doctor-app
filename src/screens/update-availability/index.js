@@ -2,12 +2,13 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import { Loader } from 'components/atoms/loader';
 import { Row } from 'components/atoms/row';
 import { colors } from 'config/colors';
-import { arrayFormat, weekDays } from 'config/constants';
+import { arrayFormat } from 'config/constants';
 import { mvs } from 'config/metrices';
+import { goBack } from 'navigation/navigation-ref';
 import React from 'react';
-import { Platform, ScrollView, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
-import { onAddAvailability, onEditHospitalAvailbilityDetails } from 'services/api/api-actions';
+import { Alert } from 'react-native';
+import { Platform, View } from 'react-native';
+import { onAddAvailability, onEditHospitalAvailbilityDetails, updateDoctorAvailabilityDaysTime } from 'services/api/api-actions';
 import i18n from 'translation';
 import { PrimaryButton } from '../../components/atoms/buttons';
 import { InputWithIcon } from '../../components/atoms/inputs';
@@ -23,19 +24,17 @@ const UpdateAvailability = (props) => {
   const { doctor, user } = useAppSelector(s => s);
   const { userInfo } = user;
   const { hospitals } = doctor;
-
   const [payload, setPayload] = React.useState({})
   const [loading, setLoading] = React.useState(false);
   const [screenLoading, setScreenLoading] = React.useState(true);
   const hospital_id = props?.route?.params?.hospital_id;
-  console.log('payload=>', payload);
   React.useEffect(() => {
     (async () => {
       try {
         setScreenLoading(true);
         const res = await onEditHospitalAvailbilityDetails(hospital_id, userInfo?.id);
-
         setPayload(res?.hospital);
+
       } catch (error) {
         console.log('error=>', error);
       } finally {
@@ -43,6 +42,19 @@ const UpdateAvailability = (props) => {
       }
     })()
   }, [hospital_id])
+
+  const onSubmit = async () => {
+    try {
+      setLoading(true)
+      const res = await updateDoctorAvailabilityDaysTime(payload);
+      Alert.alert('success', 'Availability updated Successfully')
+      goBack();
+    } catch (error) {
+      console.log('error=>', error);
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -109,7 +121,7 @@ const UpdateAvailability = (props) => {
           loading={loading}
           // disabled={Object.keys(errors)?.length > 0 || Object.keys(touched)?.length === 0}
           title={t('save')}
-          onPress={() => dispatch(onAddAvailability({ doctor_id: userInfo?.id, availability: payload }, setLoading, props))}
+          onPress={onSubmit}
           containerStyle={styles.button}
         />
       </View>
