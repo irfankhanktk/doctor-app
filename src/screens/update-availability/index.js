@@ -28,11 +28,13 @@ const UpdateAvailability = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [screenLoading, setScreenLoading] = React.useState(true);
   const hospital_id = props?.route?.params?.hospital_id;
+  console.log('payload=>', payload);
   React.useEffect(() => {
     (async () => {
       try {
         setScreenLoading(true);
         const res = await onEditHospitalAvailbilityDetails(hospital_id, userInfo?.id);
+
         setPayload(res?.hospital);
       } catch (error) {
         console.log('error=>', error);
@@ -52,17 +54,6 @@ const UpdateAvailability = (props) => {
             marginTop: mvs(20),
             paddingBottom: mvs(20),
           }}>
-            {/* <InputWithIcon
-              editable={true}
-              items={hospitals}
-              placeholder={t('hospital')}
-              onChangeText={(str) => {
-              }}
-              id={hospital_id}
-              value={hospitals?.find(h => h?.id === hospital_id)?.title}
-            /> */}
-            {/* <Medium label={`${hospitals?.find(h => h?.id === hospital_id)?.title}`} color={colors.primary} fontSize={mvs(16)} /> */}
-
             <View style={{}}>
               {
                 payload?.days?.map((day, dayIndex) => (

@@ -23,11 +23,10 @@ const Notifications = props => {
   const { userInfo, notifications } = useAppSelector(s => s.user);
   const { t } = i18n;
   const [loading, setLoading] = React.useState(true);
-  const isFocus = useIsFocused();
 
   const loadNotifications = async () => {
     try {
-      dispatch(getNotifications({ doctor_id: userInfo?.id }, setLoading));
+      dispatch(getNotifications({ doctor_id: userInfo?.id }, setLoading, readNotifications));
     } catch (error) {
       console.log('error=>', error);
     }
@@ -44,10 +43,7 @@ const Notifications = props => {
       console.log('error=>', error);
     }
   };
-  useEffect(() => {
-    if (!isFocus)
-      readNotifications();
-  }, [isFocus]);
+
   useEffect(() => {
     loadNotifications();
   }, []);

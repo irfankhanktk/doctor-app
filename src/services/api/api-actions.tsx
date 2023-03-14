@@ -244,12 +244,13 @@ export const getDoctorAvailabilityDetails = async (
 export const getNotifications = (
   values: any,
   setLoading: (bool: boolean) => void,
+  readNotifications: () => void,
 ) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       setLoading(true);
       const res = await postData(URLS.notification.get_notification, values);
-
+      readNotifications()
       dispatch(setNotifications(res?.notifications || []));
       console.log('res of notification=>', res);
     } catch (error: any) {
