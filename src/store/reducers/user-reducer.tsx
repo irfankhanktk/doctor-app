@@ -9,6 +9,7 @@ type Props = {
   };
   notifications: any[];
   wallet: any;
+  unreadNotification: number;
 };
 const initialState: Props = {
   userInfo: null,
@@ -16,6 +17,7 @@ const initialState: Props = {
   location: undefined,
   notifications: [],
   wallet: {},
+  unreadNotification: 0,
 };
 
 export const userSlice = createSlice({
@@ -36,6 +38,9 @@ export const userSlice = createSlice({
     },
     setNotifications: (state, action) => {
       state.notifications = action.payload;
+      state.unreadNotification = action.payload?.filter(
+        (x: any) => !x?.is_read,
+      )?.length;
     },
     setWallet: (state, action) => {
       state.wallet = action.payload;

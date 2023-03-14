@@ -17,12 +17,20 @@ import {Row} from '../row';
 import {SearchInput} from '../inputs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {navigate} from 'navigation/navigation-ref';
+import Regular from 'typography/regular-text';
 type props = {
   style?: StyleProp<TextStyle>;
   title?: string;
+  unreadNotification?: number;
   back?: boolean;
 };
-const AppHeader = ({style, title, back, ...props}: props) => {
+const AppHeader = ({
+  style,
+  title,
+  unreadNotification,
+  back,
+  ...props
+}: props) => {
   return (
     <View style={[styles.container, style]}>
       <Row style={{alignItems: 'center'}}>
@@ -44,6 +52,15 @@ const AppHeader = ({style, title, back, ...props}: props) => {
             color={colors.white}
             style={{marginVertical: mvs(12)}}
           />
+          {unreadNotification ? (
+            <View style={styles.notificationbadge}>
+              <Regular
+                label={unreadNotification}
+                fontSize={mvs(10)}
+                style={{lineHeight: mvs(14), color: colors.white}}
+              />
+            </View>
+          ) : null}
         </TouchableOpacity>
       </Row>
     </View>
@@ -67,5 +84,20 @@ const styles = StyleSheet.create({
   },
   back: {
     marginRight: mvs(20),
+  },
+  notificationbadge: {
+    backgroundColor: colors.red,
+    // borderWidth: 1,
+    borderColor: colors.white,
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    top: mvs(6),
+    right: mvs(-3),
+    // padding: mvs(3),
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: mvs(15),
+    width: mvs(15),
+    borderRadius: mvs(7.5),
   },
 });
