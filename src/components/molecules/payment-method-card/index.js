@@ -1,20 +1,26 @@
 import * as IMG from 'assets/images';
-import { Row } from 'components/atoms/row';
-import { navigate } from 'navigation/navigation-ref';
+import {Row} from 'components/atoms/row';
+import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Regular from 'typography/regular-text';
-import { colors } from '../../../config/colors';
-import { mvs } from '../../../config/metrices';
+import {colors} from '../../../config/colors';
+import {mvs} from '../../../config/metrices';
 import Medium from '../../../typography/medium-text';
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const PaymentMethodCard = ({
-  disabledCard,
+  disableWallet,
   selectedMethod = 'cash',
-  onChange = (method) => { },
+  onChange = method => {},
   style,
-  onPress
+  onPress,
 }) => {
   return (
     <View style={[styles.container, style]}>
@@ -28,31 +34,45 @@ const PaymentMethodCard = ({
       </Row>
       <View style={[styles.paymentContainer]}>
         <Row>
-          <TouchableOpacity onPress={() => onChange('cash')} style={styles.cardContainer}>
-            <Image source={IMG.cash}
-              style={styles.cardImg} />
-            {selectedMethod === 'cash' && <View
-              style={styles.tick}>
-              <AntDesign name={'check'} color={colors.white} />
-            </View>}
+          <TouchableOpacity
+            onPress={() => onChange('cash')}
+            style={styles.cardContainer}>
+            <Image source={IMG.cash} style={styles.cardImg} />
+            {selectedMethod === 'cash' && (
+              <View style={styles.tick}>
+                <AntDesign name={'check'} color={colors.white} />
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            disabled={disableWallet}
+            onPress={() => onChange('wallet')}
+            style={{...styles.cardContainer, marginHorizontal: mvs(5)}}>
+            <FontAwesome5 name="wallet" size={mvs(40)} color={colors.primary} />
+            {selectedMethod === 'wallet' && (
+              <View style={styles.tick}>
+                <AntDesign name={'check'} color={colors.white} />
+              </View>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
-            disabled={disabledCard}
-            onPress={() => onChange('card')} style={styles.cardContainer}>
-            <Image source={IMG.master}
-              style={styles.cardImg} />
-            {selectedMethod === 'card' && <View
-              style={styles.tick}>
-              <AntDesign name={'check'} color={colors.white} />
-            </View>}
+            disabled={true}
+            onPress={() => onChange('card')}
+            style={styles.cardContainer}>
+            <Image source={IMG.master} style={styles.cardImg} />
+            {selectedMethod === 'card' && (
+              <View style={styles.tick}>
+                <AntDesign name={'check'} color={colors.white} />
+              </View>
+            )}
           </TouchableOpacity>
         </Row>
-
       </View>
       <Medium
         label={'choose payment method'}
         color={colors.primary}
-        style={{ fontSize: mvs(13), marginTop: mvs(10) }}
+        style={{fontSize: mvs(13), marginTop: mvs(10)}}
       />
     </View>
   );
@@ -65,11 +85,10 @@ const styles = StyleSheet.create({
     ...colors.shadow,
     borderRadius: mvs(10),
     padding: mvs(15),
-
   },
   payment: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.border
+    borderColor: colors.border,
   },
   cardImg: {
     height: mvs(50),
@@ -82,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: mvs(35),
     padding: mvs(5),
-    right: mvs(5)
+    right: mvs(5),
   },
   cardContainer: {
     borderWidth: 1,
@@ -91,7 +110,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: mvs(5),
-    width: '45%'
+    // width: '45%',
+    flex: 1,
   },
   paymentContainer: {
     marginTop: mvs(15),
@@ -100,16 +120,16 @@ const styles = StyleSheet.create({
     height: mvs(100),
     width: mvs(100),
     borderTopRightRadius: mvs(10),
-    borderTopLeftRadius: mvs(10)
+    borderTopLeftRadius: mvs(10),
   },
   profile: {
     marginHorizontal: mvs(10),
     flex: 1,
     // justifyContent: 'center'
   },
-  title: { justifyContent: 'center', textAlign: 'center' },
+  title: {justifyContent: 'center', textAlign: 'center'},
   heart: {
     position: 'absolute',
     alignSelf: 'flex-end',
-  }
+  },
 });
