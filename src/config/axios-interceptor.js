@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {URLS} from 'services/api/api-urls';
-import {UTILS} from '../utils';
-import {STORAGEKEYS} from './constants';
+import { URLS } from 'services/api/api-urls';
+import { UTILS } from '../utils';
+import { STORAGEKEYS } from './constants';
 const CancelToken = axios.CancelToken;
 source = CancelToken.source();
 client = axios.create({

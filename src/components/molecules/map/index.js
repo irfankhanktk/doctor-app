@@ -3,8 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 const styles = StyleSheet.create({
     container: {
-        height: mvs(239),
-        width: '100%',
+        flex: 1,
+        // height: mvs(239),
+        // width: '100%',
         marginTop: mvs(20),
         borderRadius: mvs(20),
         overflow: 'hidden',

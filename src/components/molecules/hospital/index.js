@@ -8,11 +8,11 @@ import { mvs } from '../../../config/metrices';
 const Hospital = ({
   item,
   style,
-  onPress
+  onPress = () => { }
 }) => {
   return (
 
-    <TouchableOpacity style={[styles.container, style]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container, style]}>
       <Image source={item?.banner_image_id ? { uri: item?.banner_image_id } : IMG.ExperimentsChe} style={styles.img} />
       <View style={styles.bottom}>
         <Regular label={item?.title} color={colors.white} />

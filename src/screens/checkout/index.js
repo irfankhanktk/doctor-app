@@ -1,17 +1,17 @@
-import {PrimaryButton} from 'components/atoms/buttons';
+import { PrimaryButton } from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {Loader} from 'components/atoms/loader';
-import {Row} from 'components/atoms/row';
+import { Loader } from 'components/atoms/loader';
+import { Row } from 'components/atoms/row';
 import OtpModal from 'components/molecules/modals/otp-modal';
 import PatientCheckoutCard from 'components/molecules/patient-checkout-card';
 import PaymentMethodCard from 'components/molecules/payment-method-card';
-import {colors} from 'config/colors';
-import {APPOINTMNETSTATUS} from 'config/constants';
-import {mvs} from 'config/metrices';
+import { colors } from 'config/colors';
+import { APPOINTMNETSTATUS } from 'config/constants';
+import { mvs } from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
-import {Image} from 'react-native';
-import {Alert, ScrollView, View, TouchableOpacity} from 'react-native';
+import { Image } from 'react-native';
+import { Alert, ScrollView, View, TouchableOpacity } from 'react-native';
 import {
   getAppointmentDetails,
   onChangeAppoinmentStatus,
@@ -21,12 +21,12 @@ import i18n from 'translation';
 import Bold from 'typography/bold-text';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-import {UTILS} from '../../utils';
+import { UTILS } from '../../utils';
 import styles from './styles';
 
 const Checkout = props => {
-  const {params} = props?.route;
-  const {t} = i18n;
+  const { params } = props?.route;
+  const { t } = i18n;
   const [loading, setLoading] = React.useState(false);
   const [image, setImage] = React.useState('');
   const [isOtpModal, setIsOtpModal] = React.useState(false);
@@ -60,9 +60,8 @@ const Checkout = props => {
             </Row>
             <PatientCheckoutCard
               name={appointmentDetails?.patient?.name}
-              address={`${appointmentDetails?.patient?.city || ''} ${
-                appointmentDetails?.patient?.country || ''
-              }`}
+              address={`${appointmentDetails?.patient?.city || ''} ${appointmentDetails?.patient?.country || ''
+                }`}
               image={appointmentDetails?.patient?.banner_image_id}
               experience={appointmentDetails?.patient?.experience}
             />
@@ -71,9 +70,8 @@ const Checkout = props => {
               <Row>
                 <Medium label={t('time')} />
                 <Medium
-                  label={`${arrayFormat[appointmentDetails?.start_time_id]} - ${
-                    arrayFormat[appointmentDetails?.end_time_id]
-                  }`}
+                  label={`${arrayFormat[appointmentDetails?.start_time_id]} - ${arrayFormat[appointmentDetails?.end_time_id]
+                    }`}
                 />
               </Row>
             </View>
@@ -88,7 +86,7 @@ const Checkout = props => {
             />
             <Medium
               label={'Prescription Image'}
-              style={{marginTop: mvs(20), fontSize: mvs(18)}}>
+              style={{ marginTop: mvs(20), fontSize: mvs(18) }}>
               <Regular label={' (optional)'} fontSize={mvs(12)} />
             </Medium>
             <TouchableOpacity
@@ -104,10 +102,10 @@ const Checkout = props => {
               {!image ? (
                 <Regular label={t('choose_pres_img')} />
               ) : (
-                <Image source={{uri: image?.uri}} style={styles.imgStyle} />
+                <Image source={{ uri: image?.uri }} style={styles.imgStyle} />
               )}
             </TouchableOpacity>
-            <Row style={{alignItems: 'center', marginTop: mvs(30)}}>
+            <Row style={{ alignItems: 'center', marginTop: mvs(30) }}>
               <Bold label={'Total '} color={colors.primary}>
                 <Bold
                   label={`${appointmentDetails?.price}`}
@@ -129,7 +127,7 @@ const Checkout = props => {
                   }
                 }}
                 title={'Generate Otp'}
-                containerStyle={{width: '49%'}}
+                containerStyle={{ width: '49%' }}
               />
             </Row>
           </ScrollView>
@@ -151,6 +149,7 @@ const Checkout = props => {
                 amount: appointmentDetails?.price || 100,
                 payment_method: selectedMethod,
                 otp: value,
+                image,
               },
               setStatusLoading,
             );

@@ -326,7 +326,7 @@ export const UTILS = {
           Platform.OS === 'android'
             ? image?.path
             : image?.path.replace('file://', ''),
-        name: image?.filename,
+        name: image?.filename || `${new Date().getTime()}`,
         type: image?.mime,
       };
     } catch (error: any) {

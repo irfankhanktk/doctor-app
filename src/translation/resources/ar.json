@@ -112,7 +112,8 @@
   "per_patient":"لكل مريض",
   "choose_pres_img":"اختر صورة وصفة طبية",
   "req_short_description":"الوصف مطلوب",
-  "short_description":"وصف قصير"
-
-
+  "short_description":"وصف قصير",
+  "prescription":"روشتة",
+  "hospital":"مستشفى",
+  "hospital_details":"تفاصيل المستشفى"
 }

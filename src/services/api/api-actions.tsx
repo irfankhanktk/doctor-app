@@ -1,8 +1,8 @@
-import {STORAGEKEYS} from 'config/constants';
-import {goBack} from 'navigation/navigation-ref';
-import {Alert} from 'react-native';
-import {AppDispatch, RootState} from 'store';
-import {getData, postData} from '.';
+import { STORAGEKEYS } from 'config/constants';
+import { goBack } from 'navigation/navigation-ref';
+import { Alert } from 'react-native';
+import { AppDispatch, RootState } from 'store';
+import { getData, postData, postFormData } from '.';
 import {
   setHospitals,
   setSpecCategories,
@@ -12,8 +12,8 @@ import {
   setUserInfo,
   setWallet,
 } from '../../store/reducers/user-reducer';
-import {UTILS} from '../../utils';
-import {URLS} from './api-urls';
+import { UTILS } from '../../utils';
+import { URLS } from './api-urls';
 
 // export const getNearByHospitals = async (lat: any, long: any) => {
 //     try {
@@ -105,7 +105,7 @@ export const onCompleteAppoinment = async (
 ) => {
   try {
     setLoading(true);
-    const res = await postData(URLS.appointment.complete_appoinment, values);
+    const res = await postFormData(URLS.appointment.complete_appoinment, values);
     setLoading(false);
   } catch (error: any) {
     console.log('error in onCompleteAppoinment', UTILS.returnError(error));

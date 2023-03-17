@@ -8,12 +8,13 @@ import DoctorAppointmentDetails from 'components/molecules/popular-patient-card'
 // import MyMap from 'components/molecules/map';
 import moment from 'moment';
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Image, Platform, ScrollView, View } from 'react-native';
 import { getAppointmentDetails } from 'services/api/api-actions';
 import i18n from 'translation';
 import Bold from 'typography/bold-text';
 import Medium from 'typography/medium-text';
 import styles from './styles';
+import { mvs } from 'config/metrices';
 
 const AppointmentDetails = props => {
   const { params } = props?.route;
@@ -64,16 +65,26 @@ const AppointmentDetails = props => {
             <DescriptionCard
               description={appointmentDetails?.reason}
             />
+            {appointmentDetails?.image ? <>
+              <Bold label={t('prescription')} />
+              <Image
+                source={{ uri: appointmentDetails?.image }}
+                style={{
+                  height: mvs(150),
+                  width: '100%',
+                  marginBottom: mvs(20),
+                  borderRadius: mvs(10),
+                }} />
+            </> : null}
+            <Bold label={t('hospital')} />
             <Hospital
+              onPress={() => props?.navigation?.navigate('HospitalDetails', { hospital: appointmentDetails?.hospital })}
               style={styles.hospital}
               item={appointmentDetails?.hospital}
             />
-            {/* <MyMap
-              coord={!appointmentDetails ? '' : {
-                latitude: appointmentDetails?.hospital?.map_lat * 1,
-                longitude: appointmentDetails?.hospital?.map_lng * 1,
-              }}
-            /> */}
+            <View style={{ position: 'absolute', width: '100%', bottom: 0, paddingBottom: mvs(Platform.OS === 'ios' ? 40 : 20) }}>
+
+            </View>
           </ScrollView>
         )}
       </View>

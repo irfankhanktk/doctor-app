@@ -113,7 +113,10 @@
   "per_patient":"Per Patient",
   "choose_pres_img":"Choose prescription image",
   "req_short_description":"Description is required",
-  "short_description":"Short Description"
+  "short_description":"Short Description",
+  "prescription":"Prescription",
+  "hospital":"Hospital",
+  "hospital_details":"Hospital details"
 
   
 }
