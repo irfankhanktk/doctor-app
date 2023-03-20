@@ -116,7 +116,15 @@
   "short_description":"Short Description",
   "prescription":"Prescription",
   "hospital":"Hospital",
-  "hospital_details":"Hospital details"
+  "hospital_details":"Hospital details",
+  "short_Presciption":"Short Prescription",
+ "prescription_details":"Add Prescription Details",
+ "prescription_image":"Prescription Image",
+ "optional":"optional",
+ "days":"Days",
+ "prescription_card_heading":"Prescription Details"
+
+
 
   
 }

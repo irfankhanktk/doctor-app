@@ -115,5 +115,11 @@
   "short_description":"وصف قصير",
   "prescription":"روشتة",
   "hospital":"مستشفى",
-  "hospital_details":"تفاصيل المستشفى"
+  "hospital_details":"تفاصيل المستشفى",
+  "short_Presciption":"وصفة طبية قصيرة",
+  "prescription_details":"إضافة وصفة طبية قصيرة",
+  "prescription_image":"صورة الوصفة الطبية",
+  "optional":"خياري",
+  "days":"أيام",
+  "prescription_card_heading":"تفاصيل الوصفة"
 }
