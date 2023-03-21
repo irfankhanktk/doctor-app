@@ -4,6 +4,7 @@ import {Image, StyleSheet, View} from 'react-native';
 import {colors} from '../../../config/colors';
 import {mvs} from '../../../config/metrices';
 import Medium from '../../../typography/medium-text';
+import RatingStar from '../rating-star';
 
 const PopularPatientCard = ({
   name = 'Dr. Shruti Kedia',
@@ -25,6 +26,7 @@ const PopularPatientCard = ({
       </View>
       <View style={styles.profile}>
         <Medium label={name} fontSize={mvs(20)} />
+        <RatingStar rate={'3'} width={mvs(100)} onPress={onPress} />
         {/* <Medium label={subTitle} fontSize={mvs(14)} color={colors.primary} /> */}
       </View>
     </View>

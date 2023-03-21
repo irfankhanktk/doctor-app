@@ -9,15 +9,21 @@ import DoctorAppointmentDetails from 'components/molecules/popular-patient-card'
 import moment from 'moment';
 import React from 'react';
 import {Image, Platform, ScrollView, View} from 'react-native';
-import {getAppointmentDetails} from 'services/api/api-actions';
+import {
+  getAppointmentDetails,
+  onChangeAppoinmentStatus,
+} from 'services/api/api-actions';
 import i18n from 'translation';
 import Bold from 'typography/bold-text';
 import Medium from 'typography/medium-text';
 import styles from './styles';
-import {mvs} from 'config/metrices';
+import {mvs, width} from 'config/metrices';
 import {colors} from 'config/colors';
-
+import {PrimaryButton} from 'components/atoms/buttons';
+import {APPOINTMNETSTATUS} from 'config/constants';
+import {navigate} from 'navigation/navigation-ref';
 const AppointmentDetails = props => {
+  const [statusLoading, setStatusLoading] = React.useState(false);
   const {params} = props?.route;
   const {t} = i18n;
   const [loading, setLoading] = React.useState(true);
@@ -40,7 +46,29 @@ const AppointmentDetails = props => {
       time: 'morning and eveving',
     },
   ]);
-
+  const onPressStatus = async status => {
+    try {
+      console.log('status=>', status);
+      if (status === APPOINTMNETSTATUS.completed) {
+        navigate('Checkout', {
+          id: appointmentDetails?.id,
+        });
+      } else {
+        setStatusLoading(true);
+        await onChangeAppoinmentStatus(
+          appointmentDetails?.id,
+          status,
+          () => {},
+        );
+        props?.navigation?.pop(2);
+      }
+    } catch (error) {
+      console.log('Error ', error);
+    } finally {
+      setStatusLoading(false);
+    }
+  };
+  console.log('id', appointmentDetails?.id);
   React.useEffect(() => {
     (async () => {
       const res = await getAppointmentDetails(params?.id, setLoading);
@@ -136,6 +164,35 @@ const AppointmentDetails = props => {
                 paddingBottom: mvs(Platform.OS === 'ios' ? 40 : 20),
               }}></View>
           </ScrollView>
+        )}
+        {!loading && appointmentDetails?.status != 'completed' && (
+          <PrimaryButton
+            loading={statusLoading}
+            disabled={
+              appointmentDetails?.status === 'completed' || statusLoading
+            }
+            onPress={() => {
+              onPressStatus(
+                appointmentDetails?.status === APPOINTMNETSTATUS?.confirmed
+                  ? APPOINTMNETSTATUS?.completed
+                  : appointmentDetails?.status === APPOINTMNETSTATUS?.waiting
+                  ? APPOINTMNETSTATUS?.confirmed
+                  : APPOINTMNETSTATUS?.completed,
+              );
+            }}
+            containerStyle={{
+              marginVertical: mvs(10),
+              width: width - mvs(40),
+              alignSelf: 'center',
+            }}
+            title={t(
+              appointmentDetails?.status === APPOINTMNETSTATUS?.confirmed
+                ? 'checkout'
+                : appointmentDetails?.status === 'completed'
+                ? 'completed'
+                : 'confirm',
+            )}
+          />
         )}
       </View>
     </View>
