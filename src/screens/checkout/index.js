@@ -155,7 +155,7 @@ const Checkout = props => {
                       copy[index] = item;
                       setAddPresciprtion(copy);
                     }}
-                    onBlur={() => setFieldTouched('days', true)}
+                    onBlur={() => ('days', true)}
                     value={addPrescription[index]?.days}
                   />
                   <PrimaryInput
@@ -167,7 +167,7 @@ const Checkout = props => {
                       copy[index] = item;
                       setAddPresciprtion(copy);
                     }}
-                    onBlur={() => setFieldTouched('time', true)}
+                    onBlur={() => ('time', true)}
                     value={addPrescription[index]?.time}
                   />
                 </View>
@@ -239,7 +239,9 @@ const Checkout = props => {
                 payment_method: selectedMethod,
                 otp: value,
                 image,
+                // medicine_receipt: [...addPrescription],
               },
+              addPrescription,
               setStatusLoading,
             );
             Alert.alert(

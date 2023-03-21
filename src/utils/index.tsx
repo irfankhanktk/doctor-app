@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 import moment from 'moment';
 import {
   Alert,
@@ -12,12 +12,12 @@ import {
 import Geolocation from 'react-native-geolocation-service';
 import ImagePicker from 'react-native-image-crop-picker';
 import uuid from 'react-native-uuid';
-import { NavigationProps } from '../types/navigation-types';
+import {NavigationProps} from '../types/navigation-types';
 // Initialize the module (needs to be done only once)
 export const horizontalAnimation: any = {
   headerShown: false,
   gestureDirection: 'horizontal',
-  cardStyleInterpolator: ({ current, layouts }: any) => {
+  cardStyleInterpolator: ({current, layouts}: any) => {
     return {
       cardStyle: {
         transform: [
@@ -158,8 +158,8 @@ export const UTILS = {
     }
   },
   get_current_location: async (
-    onSuccess = (position: any) => { },
-    onError = (error: any) => { },
+    onSuccess = (position: any) => {},
+    onError = (error: any) => {},
   ) => {
     try {
       const flag = await UTILS.requestLocationPermission();
@@ -198,19 +198,19 @@ export const UTILS = {
         if (
           item.types.some((el: any) => el === 'administrative_area_level_1')
         ) {
-          returnAddress = { ...returnAddress, province: item.long_name };
+          returnAddress = {...returnAddress, province: item.long_name};
         } else if (
           item.types.some((el: any) => el === 'administrative_area_level_2')
         ) {
-          returnAddress = { ...returnAddress, district: item.long_name };
+          returnAddress = {...returnAddress, district: item.long_name};
         } else if (
           item.types.some((el: any) => el === 'administrative_area_level_3')
         ) {
-          returnAddress = { ...returnAddress, tehsil: item.long_name };
+          returnAddress = {...returnAddress, tehsil: item.long_name};
         } else if (item.types.some((el: any) => el === 'locality')) {
-          returnAddress = { ...returnAddress, city: item.long_name };
+          returnAddress = {...returnAddress, city: item.long_name};
         } else if (item.types.some((el: any) => el === 'sublocality')) {
-          returnAddress = { ...returnAddress, area: item.long_name };
+          returnAddress = {...returnAddress, area: item.long_name};
         } else if (item.types.some((el: any) => el === 'street_address')) {
           returnAddress = {
             ...returnAddress,

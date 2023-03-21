@@ -1,8 +1,8 @@
-import { STORAGEKEYS } from 'config/constants';
-import { goBack } from 'navigation/navigation-ref';
-import { Alert } from 'react-native';
-import { AppDispatch, RootState } from 'store';
-import { getData, postData, postFormData } from '.';
+import {STORAGEKEYS} from 'config/constants';
+import {goBack} from 'navigation/navigation-ref';
+import {Alert} from 'react-native';
+import {AppDispatch, RootState} from 'store';
+import {getData, postArrrayFormData, postData, postFormData} from '.';
 import {
   setHospitals,
   setSpecCategories,
@@ -12,8 +12,8 @@ import {
   setUserInfo,
   setWallet,
 } from '../../store/reducers/user-reducer';
-import { UTILS } from '../../utils';
-import { URLS } from './api-urls';
+import {UTILS} from '../../utils';
+import {URLS} from './api-urls';
 
 // export const getNearByHospitals = async (lat: any, long: any) => {
 //     try {
@@ -101,12 +101,26 @@ export const onChangeAppoinmentStatus = async (
 };
 export const onCompleteAppoinment = async (
   values: any,
+  medicine_receipt: any[],
   setLoading: (bool: any) => void,
 ) => {
   try {
     setLoading(true);
-    const res = await postFormData(URLS.appointment.complete_appoinment, values);
+    const formData = new FormData();
+    formData.append('appointment_id', values.appointment_id);
+    formData.append('amount', values.amount);
+    formData.append('payment_method', values.payment_method);
+    formData.append('otp', values.otp);
+    formData.append('image', values.image);
+
+    // medicine_receipt.forEach(tag => formData.append('medicine_receipt[]', tag));
+    formData.append('medicine_receipt', JSON.stringify(medicine_receipt));
+    const res = await postArrrayFormData(
+      URLS.appointment.complete_appoinment,
+      formData,
+    );
     setLoading(false);
+    console.log('res of compleete appointment', res?.data);
   } catch (error: any) {
     console.log('error in onCompleteAppoinment', UTILS.returnError(error));
     setLoading(false);
@@ -222,7 +236,10 @@ export const onReadNotifications = async (values: any) => {
 };
 export const updateDoctorAvailabilityDaysTime = async (values: any) => {
   try {
-    const res = await postData(URLS.availability.update_doctor_availability, values);
+    const res = await postData(
+      URLS.availability.update_doctor_availability,
+      values,
+    );
     console.log('res of updateDoctorAvailabilityDaysTime=>', res);
     return res;
   } catch (error: any) {

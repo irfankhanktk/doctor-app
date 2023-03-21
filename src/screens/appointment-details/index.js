@@ -82,13 +82,13 @@ const AppointmentDetails = props => {
             </View>
             <View>
               <Bold label={t('prescription_card_heading')} />
-              {prescriptionData?.map((item, index) => {
+              {appointmentDetails?.medicine_receipt?.map((item, index) => {
                 return (
                   <View style={styles.prescriptioncard}>
                     {/* <Bold label={item?.description} /> */}
                     <Row>
                       <Medium label={'Medicine Name:'} />
-                      <Medium label={item?.description} />
+                      <Medium label={item?.presciption} />
                     </Row>
                     <Row>
                       <Medium label={'Days:'} />
@@ -106,7 +106,7 @@ const AppointmentDetails = props => {
             <DescriptionCard description={appointmentDetails?.reason} />
             {appointmentDetails?.image ? (
               <>
-                <Bold label={t('prescription')} />
+                <Bold label={t('prescription_image')} />
                 <Image
                   source={{uri: appointmentDetails?.image}}
                   style={{
