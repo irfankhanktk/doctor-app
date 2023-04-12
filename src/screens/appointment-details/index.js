@@ -108,28 +108,31 @@ const AppointmentDetails = props => {
                 />
               </Row>
             </View>
-            <View>
-              <Bold label={t('prescription_card_heading')} />
-              {appointmentDetails?.medicine_receipt?.map((item, index) => {
-                return (
-                  <View style={styles.prescriptioncard}>
-                    {/* <Bold label={item?.description} /> */}
-                    <Row>
-                      <Medium label={'Medicine Name:'} />
-                      <Medium label={item?.presciption} />
-                    </Row>
-                    <Row>
-                      <Medium label={'Days:'} />
-                      <Medium label={item?.days} />
-                    </Row>
-                    <Row>
-                      <Medium label={'Time:'} />
-                      <Medium label={item?.time} />
-                    </Row>
-                  </View>
-                );
-              })}
-            </View>
+
+            {appointmentDetails?.medicine_receipt && (
+              <View>
+                <Bold label={t('prescription_card_heading')} />
+                {appointmentDetails?.medicine_receipt?.map((item, index) => {
+                  return (
+                    <View style={styles.prescriptioncard}>
+                      {/* <Bold label={item?.description} /> */}
+                      <Row>
+                        <Medium label={'Medicine Name:'} />
+                        <Medium label={item?.presciption} />
+                      </Row>
+                      <Row>
+                        <Medium label={'Days:'} />
+                        <Medium label={item?.days} />
+                      </Row>
+                      <Row>
+                        <Medium label={'Time:'} />
+                        <Medium label={item?.time} />
+                      </Row>
+                    </View>
+                  );
+                })}
+              </View>
+            )}
             <Bold label={t('reason')} />
             <DescriptionCard description={appointmentDetails?.reason} />
             {appointmentDetails?.image ? (

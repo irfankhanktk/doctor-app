@@ -91,6 +91,7 @@ export const onChangeAppoinmentStatus = async (
       appointment_id,
       status,
     });
+
     setLoading(false);
   } catch (error: any) {
     // console.log('error in onChangeAppoinmentStatus', error);
@@ -380,7 +381,8 @@ export const onAddAvailability = (
 
       const res = await postData(URLS.availability.add, values);
       console.log('res of onAddAvailability=>', res);
-
+      Alert.alert('', 'Availability Added Successfully');
+      goBack();
       // UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
       // dispatch(setUserInfo(res?.user));
 
