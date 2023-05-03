@@ -1,22 +1,22 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {useFormik} from 'formik';
-import {t} from 'i18next';
+import { useFormik } from 'formik';
+import { t } from 'i18next';
 import React from 'react';
-import {View} from 'react-native';
-import {onSignup, onUpdatePassword} from 'services/api/api-actions';
-import {signupFormValidation, updatePasswordValidation} from 'validations';
-import {PrimaryButton} from '../../components/atoms/buttons';
+import { View } from 'react-native';
+import { onSignup, onUpdatePassword } from 'services/api/api-actions';
+import { signupFormValidation, updatePasswordValidation } from 'validations';
+import { PrimaryButton } from '../../components/atoms/buttons';
 import PrimaryInput from '../../components/atoms/inputs';
-import {KeyboardAvoidScrollview} from '../../components/atoms/keyboard-avoid-scrollview';
-import {useAppDispatch} from '../../hooks/use-store';
+import { KeyboardAvoidScrollview } from '../../components/atoms/keyboard-avoid-scrollview';
+import { useAppDispatch } from '../../hooks/use-store';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import Medium from '../../typography/medium-text';
 import styles from './styles';
 type props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
 
 const UpdatePassword = (props: props) => {
-  const {navigation} = props;
+  const { navigation } = props;
   const dispatch = useAppDispatch();
   const initialValues = {
     email: '',
@@ -24,17 +24,17 @@ const UpdatePassword = (props: props) => {
     old_password: '',
   };
   const [loading, setLoading] = React.useState(false);
-  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
+  const { values, errors, touched, setFieldValue, setFieldTouched, isValid } =
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: true,
       validationSchema: updatePasswordValidation,
-      onSubmit: () => {},
+      onSubmit: () => { },
     });
   return (
     <View style={styles.container}>
-      <Header1x2x isSearch={false} title={t('sign_up')} />
+      <Header1x2x isSearch={false} title={t('update_password')} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
