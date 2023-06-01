@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native'
-import { colors } from '../../../config/colors'
-import { mvs } from '../../../config/metrices'
+import { colors } from 'config/colors'
+import { mvs } from 'config/metrices'
 import Regular from '../../../typography/regular-text'
 import { Loader } from '../loader'
 import Icon from 'react-native-vector-icons/FontAwesome5';

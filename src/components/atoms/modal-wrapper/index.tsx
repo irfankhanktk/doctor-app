@@ -1,9 +1,9 @@
-import { CrossModal } from 'assets/icons'
+import { CrossModal } from 'assets/doctor/icons'
 import { colors } from 'config/colors'
 import React from 'react'
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
 import Modal from 'react-native-modal'
-import { mvs } from '../../../config/metrices'
+import { mvs } from 'config/metrices'
 type props = {
     style?: StyleProp<ViewStyle>
     headerStyle?: StyleProp<ViewStyle>

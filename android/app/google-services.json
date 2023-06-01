@@ -45,7 +45,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:91601287529:android:790cc118468f32aa1a65f8",
         "android_client_info": {
-          "package_name": "com.doctorapp"
+          "package_name": "com.bookingapp.doctor"
         }
       },
       "oauth_client": [

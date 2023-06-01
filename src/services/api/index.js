@@ -1,4 +1,4 @@
-import {UTILS} from '../../utils';
+import {UTILS} from 'utils';
 import {URLS} from 'services/api/api-urls';
 import axios from 'axios';
 export const postData = async (url, data) => {

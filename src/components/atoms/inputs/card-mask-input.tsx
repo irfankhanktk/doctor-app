@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   I18nManager,
   KeyboardTypeOptions,
@@ -13,12 +13,12 @@ import {
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaskInput from 'react-native-mask-input';
-import {useAppSelector} from 'hooks/use-store';
+import { useAppSelector } from 'hooks/use-store';
 import PhoneInput from 'react-native-phone-number-input';
 import Regular from 'typography/regular-text';
-import {colors} from '../../../config/colors';
-import {mvs} from '../../../config/metrices';
-type Item = {label: string; value: string};
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
+type Item = { label: string; value: string };
 type props = {
   onChangeText: (text: string) => void;
   onPress?: () => void;
@@ -47,7 +47,7 @@ type props = {
 };
 const CardMaskInput = (props: props) => {
   const [secure, setSecure] = useState(true);
-  const {language} = useAppSelector(s => s.user);
+  const { language } = useAppSelector(s => s.user);
   const {
     onChangeText,
     value,
@@ -62,8 +62,8 @@ const CardMaskInput = (props: props) => {
     keyboardType,
     error,
     editable = true,
-    onBlur = () => {},
-    onPressIn = () => {},
+    onBlur = () => { },
+    onPressIn = () => { },
     mask = [],
   } = props;
   return (
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: mvs(10),
     overflow: 'hidden',
   },
-  textContainerStyle: {backgroundColor: colors.white},
+  textContainerStyle: { backgroundColor: colors.white },
   textInput: {
     color: colors.black,
     textAlignVertical: 'center',

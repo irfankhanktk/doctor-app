@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { mvs } from '../../../config/metrices'
+import { mvs } from 'config/metrices'
 type props = {
     keyboardShouldPersistTaps?: 'always' | 'never' | 'handled'
     contentContainerStyle?: StyleProp<ViewStyle>

@@ -4,7 +4,7 @@ import { colors } from 'config/colors';
 import * as React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Home from 'screens/home-screen';
-import AddAvailability from 'screens/add-availability';
+import AddAvailability from 'screens/doctor/add-availability';
 import UserTab from 'screens/user-tab';
 import TabParamList from '../types/navigation-types/bottom-tab';
 const Tab = createBottomTabNavigator();

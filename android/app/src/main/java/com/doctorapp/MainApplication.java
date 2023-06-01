@@ -1,4 +1,4 @@
-package com.doctorapp;
+package com.bookingapp.doctor;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

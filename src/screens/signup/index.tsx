@@ -4,22 +4,22 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { Alert, Linking, View } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import { onSignup } from 'services/api/api-actions';
+import { onSignup } from 'services/api/doctor/api-actions';
 import i18n from 'translation';
-import { UTILS } from '../../utils';
+import { UTILS } from 'utils';
 import { signupFormValidation } from 'validations';
-import { PrimaryButton } from '../../components/atoms/buttons';
+import { PrimaryButton } from 'components/atoms/buttons';
 import PrimaryInput, {
   InputWithIcon,
   PrimaryPhoneInput,
-} from '../../components/atoms/inputs';
-import { KeyboardAvoidScrollview } from '../../components/atoms/keyboard-avoid-scrollview';
-import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
+} from 'components/atoms/inputs';
+import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
+import { useAppDispatch, useAppSelector } from 'hooks/use-store';
 import RootStackParamList from '../../types/navigation-types/root-stack';
-import Medium from '../../typography/medium-text';
+import Medium from 'typography/medium-text';
 import styles from './styles';
 import messaging from '@react-native-firebase/messaging';
-import OtpModalRenewPassword from 'components/molecules/modals/otp-modal-signup-renewpassword.js';
+import OtpModalRenewPassword from 'components/molecules/doctor/modals/otp-modal-signup-renewpassword.js';
 Geocoder.init('AIzaSyCbFQqjZgQOWRMuQ_RpXU0kGAUIfJhDw98');
 
 type props = NativeStackScreenProps<RootStackParamList, 'Signup'>;

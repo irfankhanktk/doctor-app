@@ -13,8 +13,8 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import PhoneInput from 'react-native-phone-number-input';
 import Regular from 'typography/regular-text';
-import { mvs } from '../../../config/metrices';
-import { colors } from '../../../config/colors';
+import { mvs } from 'config/metrices';
+import { colors } from 'config/colors';
 import Medium from 'typography/medium-text';
 import { Row } from '../row';
 import { useAppSelector } from 'hooks/use-store';

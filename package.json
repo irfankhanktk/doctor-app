@@ -24,7 +24,7 @@
     "apk-release": "cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets",
     "release": "cd android && ./gradlew :app:assembleRelease",
     "apk-release-app": "cd android && ./gradlew :app:assembleRelease -x bundleReleaseJsAndAssets",
-    "bundle": "cd android && ./gradlew bundleRelease -x bundleReleaseJsAndAssets"
+    "bundle": "cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@notifee/react-native": "^7.4.0",

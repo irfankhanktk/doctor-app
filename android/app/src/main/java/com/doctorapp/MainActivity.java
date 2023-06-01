@@ -1,4 +1,4 @@
-package com.doctorapp;
+package com.bookingapp.doctor;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

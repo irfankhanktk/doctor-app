@@ -1,7 +1,7 @@
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
-import AppointmentCard from 'components/molecules/appointment-card';
-import {EmptyList} from 'components/molecules/empty-list';
+import AppointmentCard from 'components/molecules/doctor/appointment-card';
+import {EmptyList} from 'components/molecules/doctor/empty-list';
 import {colors} from 'config/colors';
 import {mvs, width} from 'config/metrices';
 import {useAppDispatch, useAppSelector} from 'hooks/use-store';
@@ -12,10 +12,10 @@ import {
   getNotifications,
   onReadNotifications,
   readNotifications,
-} from 'services/api/api-actions';
+} from 'services/api/doctor/api-actions';
 import i18n from 'translation';
 import styles from './styles';
-import * as IMG from 'assets/images';
+import * as IMG from 'assets/doctor/images';
 import Regular from 'typography/regular-text';
 import Medium from 'typography/medium-text';
 import Bold from 'typography/bold-text';

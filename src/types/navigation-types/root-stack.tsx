@@ -8,6 +8,7 @@ type RootStackParamList = {
   AddAvailability: undefined;
   AvailabilityList: undefined;
   AvailabilityDetails: undefined;
+  DoctorStack: undefined;
 
   Home: undefined;
   Login: undefined;

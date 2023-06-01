@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {mvs, width} from '../../config/metrices';
-import {colors} from '../../config/colors';
+import { StyleSheet } from 'react-native';
+import { mvs, width } from 'config/metrices';
+import { colors } from 'config/colors';
 
 const styles = StyleSheet.create({
   container: {

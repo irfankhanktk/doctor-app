@@ -1,19 +1,16 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { SplashIcon } from 'assets/doctor/icons';
+import { splash_bg } from 'assets/doctor/images';
 import React from 'react';
 import { ImageBackground, View } from 'react-native';
-import Config from 'react-native-config';
-import { STORAGEKEYS } from '../../config/constants';
-import RootStackParamList from '../../types/navigation-types/root-stack';
-import Regular from '../../typography/regular-text';
-import { UTILS } from '../../utils';
-import { useAppDispatch, useAppSelector } from './../../hooks/use-store';
-import styles from './styles';
-import { setLanguage, setLocation, setUserInfo } from '../../store/reducers/user-reducer';
 import i18n from 'translation';
-import { SplashIcon } from 'assets/icons';
-import { splash_bg } from 'assets/images';
-import { getAllHospitals } from 'services/api/api-actions';
-import { getAllCategories } from '../../services/api/api-actions';
+import { STORAGEKEYS } from '../../config/constants';
+import { getAllCategories } from '../../services/api/doctor/api-actions';
+import { setLanguage, setLocation, setUserInfo } from '../../store/reducers/user-reducer';
+import RootStackParamList from '../../types/navigation-types/root-stack';
+import { UTILS } from 'utils';
+import { useAppDispatch } from 'hooks/use-store';
+import styles from './styles';
 type props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const Splash = (props: props) => {
@@ -27,7 +24,7 @@ const Splash = (props: props) => {
 
     (async () => {
       try {
-        let screen: 'Login' | 'BottomTab' = 'Login';
+        let screen: 'Login' | 'DoctorStack' = 'Login';
         UTILS.get_current_location((position) => {
           dispatch(setLocation({
             latitude: position?.coords?.latitude,
@@ -45,7 +42,7 @@ const Splash = (props: props) => {
         UTILS.getItem(STORAGEKEYS.user).then((data: any) => {
           if (data) {
             const user = JSON.parse(data);
-            screen = 'BottomTab';
+            screen = 'DoctorStack';
             dispatch(setUserInfo(user));
           }
           setTimeout(() => {

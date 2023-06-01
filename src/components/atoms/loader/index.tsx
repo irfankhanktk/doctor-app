@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ActivityIndicator, ColorValue } from 'react-native'
 import React from 'react'
-import { colors } from '../../../config/colors'
+import { colors } from 'config/colors'
 type props = {
     size?: number | "small" | "large" | undefined
     color?: ColorValue | undefined

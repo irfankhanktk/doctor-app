@@ -3,15 +3,15 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import { useFormik } from 'formik';
 import React from 'react';
 import { View } from 'react-native';
-import { onUpdateProfile } from 'services/api/api-actions';
+import { onUpdateProfile } from 'services/api/doctor/api-actions';
 import i18n from 'translation';
 import { updateProfileFormValidation } from 'validations';
-import { PrimaryButton } from '../../components/atoms/buttons';
+import { PrimaryButton } from 'components/atoms/buttons';
 import PrimaryInput, {
   PrimaryPhoneInput
-} from '../../components/atoms/inputs';
-import { KeyboardAvoidScrollview } from '../../components/atoms/keyboard-avoid-scrollview';
-import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
+} from 'components/atoms/inputs';
+import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
+import { useAppDispatch, useAppSelector } from 'hooks/use-store';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import styles from './styles';
 type props = NativeStackScreenProps<RootStackParamList, 'UpdateProfile'>;

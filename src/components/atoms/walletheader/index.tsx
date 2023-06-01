@@ -8,15 +8,15 @@ import {
 } from 'react-native';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
-import {colors} from '../../../config/colors';
-import {mvs} from '../../../config/metrices';
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
 import Bold from '../../../typography/bold-text';
 type props = {
   style?: StyleProp<TextStyle>;
   title?: string;
   back?: boolean;
 };
-const AppHeader = ({style, title, back, ...props}: props) => {
+const AppHeader = ({ style, title, back, ...props }: props) => {
   return (
     <View style={[styles.container, style]}>
       <Medium fontSize={mvs(20)} label={title} style={[styles.title]} />

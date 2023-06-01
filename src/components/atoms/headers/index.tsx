@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
-import {colors} from '../../../config/colors';
-import {mvs} from '../../../config/metrices';
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
 import Bold from '../../../typography/bold-text';
-import {login_bg} from 'assets/images';
-import {Row} from '../row';
-import {SearchInput} from '../inputs';
+import { login_bg } from 'assets/doctor/images';
+import { Row } from '../row';
+import { SearchInput } from '../inputs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {navigate} from 'navigation/navigation-ref';
+import { navigate } from 'navigation/navigation-ref';
 import Regular from 'typography/regular-text';
 type props = {
   style?: StyleProp<TextStyle>;
@@ -33,7 +33,7 @@ const AppHeader = ({
 }: props) => {
   return (
     <View style={[styles.container, style]}>
-      <Row style={{alignItems: 'center'}}>
+      <Row style={{ alignItems: 'center' }}>
         <Row
           style={{
             alignItems: 'center',
@@ -41,7 +41,7 @@ const AppHeader = ({
           }}>
           <Image
             source={login_bg}
-            style={{height: mvs(40), width: mvs(40), borderRadius: mvs(69 / 2)}}
+            style={{ height: mvs(40), width: mvs(40), borderRadius: mvs(69 / 2) }}
           />
           <Medium fontSize={mvs(20)} label={title} style={[styles.title]} />
         </Row>
@@ -50,14 +50,14 @@ const AppHeader = ({
             name="notifications-sharp"
             size={mvs(25)}
             color={colors.white}
-            style={{marginVertical: mvs(12)}}
+            style={{ marginVertical: mvs(12) }}
           />
           {unreadNotification ? (
             <View style={styles.notificationbadge}>
               <Regular
                 label={unreadNotification}
                 fontSize={mvs(10)}
-                style={{lineHeight: mvs(14), color: colors.white}}
+                style={{ lineHeight: mvs(14), color: colors.white }}
               />
             </View>
           ) : null}

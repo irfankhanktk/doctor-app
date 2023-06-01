@@ -4,7 +4,7 @@ import { COLLECTIONS, STORAGEKEYS } from "../../config/constants";
 import { AppDispatch, RootState } from "../../store";
 import { reset, setUserInfo } from "../../store/reducers/user-reducer";
 import { Task } from "../../types/entities-types";
-import { UTILS } from "../../utils";
+import { UTILS } from "utils";
 import { getData } from './index';
 
 export const onLoginPress = (email: string, password: string, props: any) => {

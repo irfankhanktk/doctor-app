@@ -1,8 +1,8 @@
 import React from 'react';
 import { ColorValue, StyleProp, StyleSheet, Text, TextStyle } from 'react-native';
 import fonts from '../assets/fonts';
-import { colors } from '../config/colors';
-import { mvs } from '../config/metrices';
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
 type FcProps = {
   label?: string | number;
   numberOfLines?: number;

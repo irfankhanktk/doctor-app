@@ -6,9 +6,9 @@ import React from 'react';
 import {Alert, TouchableOpacity, View} from 'react-native';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-import {KeyboardAvoidScrollview} from '../../components/atoms/keyboard-avoid-scrollview/index';
+import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview/index';
 import styles from './styles';
-import PrimaryInput from '../../components/atoms/inputs';
+import PrimaryInput from 'components/atoms/inputs';
 import {useFormik} from 'formik';
 import {
   forgotemailFormValidation,
@@ -18,12 +18,12 @@ import {
 } from 'validations';
 import {useAppDispatch} from 'hooks/use-store';
 import {navigate} from 'navigation/navigation-ref';
-import {onChangePassword, onLogin} from 'services/api/api-actions';
-import {OtpInput} from 'components/molecules/otp-input';
-import OtpModal from 'components/molecules/modals/otp-modal';
+import {onChangePassword, onLogin} from 'services/api/doctor/api-actions';
+import {OtpInput} from 'components/molecules/doctor/otp-input';
+import OtpModal from 'components/molecules/doctor/modals/otp-modal';
 import i18n from 'translation';
 import messaging from '@react-native-firebase/messaging';
-import {onForgot} from 'services/api/api-actions';
+import {onForgot} from 'services/api/doctor/api-actions';
 const RenewPasswordScreen = props => {
   const dispatch = useAppDispatch();
 
