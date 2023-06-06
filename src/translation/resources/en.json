@@ -122,10 +122,31 @@
  "prescription_image":"Prescription Image",
  "optional":"optional",
  "days":"Days",
- "prescription_card_heading":"Prescription Details"
+ "prescription_card_heading":"Prescription Details",
 
 
 
+"add_room":"Add Room",
+"add_hotel":"Add Hotel",
+"title":"Title",
+"title_required":"Title is required",
+"content":"Content",
+"content_required":"Content is required",
+"youtube_video_link":"Youtube link video",
+"youtube_video":"Youtube Video",
+"link_required":"YouTube link is required",
+"invalid_link":"Invalid YouTube link",
+"banner_image":"Banner Image",
+"gallery":"Gallery",
+"hotle_policy":"HOTEL POLICY",
+"hotel_rating_standard":"Hotel rating standard",
+"hotel_rating_required":"Hotel rating is required",
+"policy":"Policy",
+"eg_title":"Eg: What kind of foowear is most suitable ?",
+"policy_title":"Policy title is required",
+"policy_content":"Policy content is required",
+"featured_image":"Featured Image",
+"select_image":"Please select an image"
 
-  
+
 }

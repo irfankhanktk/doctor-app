@@ -14,6 +14,13 @@ import Signup from 'screens/signup';
 import Splash from 'screens/splash';
 import {horizontalAnimation} from '../utils';
 import {DoctorStack} from './doctor/doctor-stack';
+import AllHotels from 'screens/hotel/all-hotels';
+import HotelDetails from 'screens/hotel/hotel-details';
+import RoomScreen from 'screens/hotel/room-screen';
+import AddRoom from 'screens/hotel/add-room';
+import AddHotel from 'screens/hotel/add-hotel';
+import AddHotelLocation from 'screens/hotel/add-hotel-location';
+import AddHotelPrice from 'screens/hotel/add-hotel-price';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -26,9 +33,17 @@ export const RootNavigator = () => {
         barStyle={'light-content'}
       />
       <Stack.Navigator
-        initialRouteName="Splash"
+        initialRouteName="AllHotels"
         screenOptions={horizontalAnimation}>
         <Stack.Group>
+          <Stack.Screen name="AllHotels" component={AllHotels} />
+          <Stack.Screen name="HotelDetails" component={HotelDetails} />
+          <Stack.Screen name="RoomScreen" component={RoomScreen} />
+          <Stack.Screen name="AddRoom" component={AddRoom} />
+          <Stack.Screen name="AddHotel" component={AddHotel} />
+          <Stack.Screen name="AddHotelLocation" component={AddHotelLocation} />
+          <Stack.Screen name="AddHotelPrice" component={AddHotelPrice} />
+
           <Stack.Screen name="Splash" component={Splash} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={Signup} />

@@ -2,11 +2,12 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
 import Hospital from 'components/molecules/doctor/hospital';
 // import Hospital from 'components/molecules/doctor/hospital';
-import MyMap from 'components/molecules/doctor/map';
+
 import React from 'react';
 import {ScrollView, View} from 'react-native';
 import i18n from 'translation';
 import styles from './styles';
+import MyMap from 'components/molecules/map';
 
 const HospitalDetails = props => {
   const {hospital} = props?.route.params;

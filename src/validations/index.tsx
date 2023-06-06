@@ -85,3 +85,21 @@ export const updatePasswordValidation = yup.object().shape({
     .required('New Password is required')
     .min(8, 'New weak_pass'),
 });
+export const addHotelValidation = yup.object().shape({
+  title: yup.string().required('title_required'),
+  content: yup.string().required('content_required'),
+  hotel_rating: yup.string().required('hotel_rating_required'),
+  video_link: yup.string().required('link_required').url('invalid_link'),
+  policy: yup.array().of(
+    yup.object().shape({
+      title: yup.string().required('policy_title'),
+      content: yup.string().required('policy_content'),
+    })
+  ),
+  banner_image: yup.string().required('select_image'),
+   gallery: yup.array().of(
+    yup.string().required('select_image')
+  ),
+  featured_image: yup.string().required('select_image'),
+  
+});

@@ -121,5 +121,32 @@
   "prescription_image":"صورة الوصفة الطبية",
   "optional":"خياري",
   "days":"أيام",
-  "prescription_card_heading":"تفاصيل الوصفة"
+  "prescription_card_heading":"تفاصيل الوصفة",
+
+
+  "add_room" :"أضف غرفة",
+  "add_hotel":"إضافة فندق",
+  "title":"عنوان",
+  "title_required":"العنوان مطلوب",
+  "content":"محتوى",
+  "content_required":"المحتوى مطلوب",
+  "youtube_video_link":"يوتيوب رابط الفيديو",
+  "youtube_video":"فيديو يوتيوب",
+  "link_required":"مطلوب رابط يوتيوب",
+"invalid_link":"رابط يوتيوب غير صالح",
+"banner_image":"صورة بانر",
+"gallery":"صالة عرض",
+"hotle_policy":"سياسة الفندق",
+"hotel_rating_standard":"معيار تصنيف الفندق",
+"hotel_rating_required":"تصنيف الفندق مطلوب",
+"policy":"سياسة",
+"eg_title":"على سبيل المثال: ما هو نوع الأحذية الأنسب؟",
+"policy_title":"عنوان السياسة مطلوب",
+"policy_content":"محتوى السياسة مطلوب",
+"featured_image":"صورة مميزة",
+"select_image":"الرجاء تحديد صورة"
+
+
+
+
 }

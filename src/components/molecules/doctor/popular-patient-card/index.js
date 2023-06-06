@@ -4,7 +4,6 @@ import {Image, StyleSheet, View} from 'react-native';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
 import Medium from 'typography/medium-text';
-import RatingStar from '../rating-star';
 
 const PopularPatientCard = ({
   name = 'Dr. Shruti Kedia',
