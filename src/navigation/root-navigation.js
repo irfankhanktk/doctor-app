@@ -21,12 +21,8 @@ import AddRoom from 'screens/hotel/add-room';
 import AddHotel from 'screens/hotel/add-hotel';
 import AddHotelLocation from 'screens/hotel/add-hotel-location';
 import AddHotelPrice from 'screens/hotel/add-hotel-price';
-<<<<<<< HEAD
 import LanguageScreen from 'screens/language-screen';
 import HotelStack from './hotel/hotel-stack';
-=======
-import AddHotelAttributes from 'screens/hotel/add-hotel-attributes';
->>>>>>> 5a1be121adcfa513d3f4b15838527da42f43b238
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
