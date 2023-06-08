@@ -17,7 +17,8 @@ import {PrimaryButton} from 'components/atoms/buttons';
 import {colors} from 'config/colors';
 import ExtraPriceBottomSheetModal from 'components/molecules/hotel/dropdown-picker/extraPriceType';
 import BuyerFeeBottomSheetModal from 'components/molecules/hotel/dropdown-picker/buyerFeeType';
-const AddHotelPrice = () => {
+const AddHotelPrice = props => {
+  const {navigation} = props;
   // const index = 0;
   const [index, setIndex] = React.useState(0);
   const [buyerFeeIndex, setBuyerFeeIndex] = React.useState(0);
@@ -60,7 +61,7 @@ const AddHotelPrice = () => {
     });
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddHotelLocation');
+      navigation?.navigate('AddHotelAttributes');
       // if (isValid && Object.keys(touched).length > 0) {
       //   try {
       //     Alert.alert('onsubmit');
@@ -422,7 +423,11 @@ const AddHotelPrice = () => {
             />
           </>
         ) : null}
-        <PrimaryButton title={'Next'} containerStyle={styles.nextButton} />
+        <PrimaryButton
+          title={'Next'}
+          onPress={onSubmit}
+          containerStyle={styles.nextButton}
+        />
       </KeyboardAvoidScrollview>
       <ExtraPriceBottomSheetModal
         visible={extraPrice}
