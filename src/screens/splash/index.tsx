@@ -24,7 +24,7 @@ const Splash = (props: props) => {
 
     (async () => {
       try {
-        let screen: 'Login' | 'DoctorStack' = 'Login';
+        let screen: any = 'Login';
         UTILS.get_current_location((position) => {
           dispatch(setLocation({
             latitude: position?.coords?.latitude,
@@ -42,7 +42,7 @@ const Splash = (props: props) => {
         UTILS.getItem(STORAGEKEYS.user).then((data: any) => {
           if (data) {
             const user = JSON.parse(data);
-            screen = 'DoctorStack';
+            screen = 'HotelStack';
             dispatch(setUserInfo(user));
           }
           setTimeout(() => {

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CommonActions} from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 import moment from 'moment';
 import {
   Alert,
@@ -12,12 +12,30 @@ import {
 import Geolocation from 'react-native-geolocation-service';
 import ImagePicker from 'react-native-image-crop-picker';
 import uuid from 'react-native-uuid';
-import {NavigationProps} from '../types/navigation-types';
+import { NavigationProps } from '../types/navigation-types';
 // Initialize the module (needs to be done only once)
+const getErrorList = (data: any) => {
+  const { message, errors } = data;
+  let concatenatedMessages: any = null;
+  console.log('errors=>>::', errors);
+
+  if (typeof errors === 'object' && Object.keys(errors)?.length) {
+
+    concatenatedMessages = errors
+      ? Object.values(message)?.flat()?.join(", ")
+      : null;
+  } else if (typeof message === 'string') return message;
+  concatenatedMessages = message
+    ? Object.values(message)?.flat()?.join(", ")
+    : null;
+
+  console.log(concatenatedMessages);
+  return concatenatedMessages;
+}
 export const horizontalAnimation: any = {
   headerShown: false,
   gestureDirection: 'horizontal',
-  cardStyleInterpolator: ({current, layouts}: any) => {
+  cardStyleInterpolator: ({ current, layouts }: any) => {
     return {
       cardStyle: {
         transform: [
@@ -104,22 +122,30 @@ export const UTILS = {
     return formData;
   },
   returnError: (error: any) => {
-    if (error.response) {
+    if (error?.response?.request) {
+      let { _response } = error?.response?.request;
+      console.log("FACTORY ERRORS :: ", JSON.parse(_response));
+      const temp = JSON.parse(_response);
+      const resp = getErrorList(temp);
+      console.log('ASDFGFDSDF:::', resp);
+      return (resp)
+    }
+    else if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
       console.log('=>>>>>>::::', error.response.data?.errors);
       console.log(error.response.status);
       // console.log(error.response.headers);
+      console.log('error data ==>', error?.response.data);
       if (error.response.data?.errors) {
-        return `${error.response.data?.errors}`;
+        return `${error?.response?.data?.errors}`;
       }
-      console.log(error.response.data);
-      return `${error.response.status}`;
-    } else if (error.request) {
+      return `${error?.response?.data?.message || error?.response?.status}`;
+    } else if (error?.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.log(error.request);
+      console.log(error?.request);
     } else {
       // Something happened in setting up the request that triggered an Error
       console.log('Error', error.message);
@@ -158,8 +184,8 @@ export const UTILS = {
     }
   },
   get_current_location: async (
-    onSuccess = (position: any) => {},
-    onError = (error: any) => {},
+    onSuccess = (position: any) => { },
+    onError = (error: any) => { },
   ) => {
     try {
       const flag = await UTILS.requestLocationPermission();
@@ -198,19 +224,19 @@ export const UTILS = {
         if (
           item.types.some((el: any) => el === 'administrative_area_level_1')
         ) {
-          returnAddress = {...returnAddress, province: item.long_name};
+          returnAddress = { ...returnAddress, province: item.long_name };
         } else if (
           item.types.some((el: any) => el === 'administrative_area_level_2')
         ) {
-          returnAddress = {...returnAddress, district: item.long_name};
+          returnAddress = { ...returnAddress, district: item.long_name };
         } else if (
           item.types.some((el: any) => el === 'administrative_area_level_3')
         ) {
-          returnAddress = {...returnAddress, tehsil: item.long_name};
+          returnAddress = { ...returnAddress, tehsil: item.long_name };
         } else if (item.types.some((el: any) => el === 'locality')) {
-          returnAddress = {...returnAddress, city: item.long_name};
+          returnAddress = { ...returnAddress, city: item.long_name };
         } else if (item.types.some((el: any) => el === 'sublocality')) {
-          returnAddress = {...returnAddress, area: item.long_name};
+          returnAddress = { ...returnAddress, area: item.long_name };
         } else if (item.types.some((el: any) => el === 'street_address')) {
           returnAddress = {
             ...returnAddress,

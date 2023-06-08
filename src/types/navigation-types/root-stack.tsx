@@ -1,6 +1,7 @@
 
 type RootStackParamList = {
   Splash: undefined;
+  HotelStack: undefined;
   RenewPassword: undefined;
   ForgotPassword: undefined;
   BottomTab: undefined;

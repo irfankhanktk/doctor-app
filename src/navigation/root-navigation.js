@@ -21,6 +21,8 @@ import AddRoom from 'screens/hotel/add-room';
 import AddHotel from 'screens/hotel/add-hotel';
 import AddHotelLocation from 'screens/hotel/add-hotel-location';
 import AddHotelPrice from 'screens/hotel/add-hotel-price';
+import LanguageScreen from 'screens/language-screen';
+import HotelStack from './hotel/hotel-stack';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -33,17 +35,9 @@ export const RootNavigator = () => {
         barStyle={'light-content'}
       />
       <Stack.Navigator
-        initialRouteName="AllHotels"
+        initialRouteName="Splash"
         screenOptions={horizontalAnimation}>
         <Stack.Group>
-          <Stack.Screen name="AllHotels" component={AllHotels} />
-          <Stack.Screen name="HotelDetails" component={HotelDetails} />
-          <Stack.Screen name="RoomScreen" component={RoomScreen} />
-          <Stack.Screen name="AddRoom" component={AddRoom} />
-          <Stack.Screen name="AddHotel" component={AddHotel} />
-          <Stack.Screen name="AddHotelLocation" component={AddHotelLocation} />
-          <Stack.Screen name="AddHotelPrice" component={AddHotelPrice} />
-
           <Stack.Screen name="Splash" component={Splash} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={Signup} />
@@ -51,12 +45,14 @@ export const RootNavigator = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="WalletScreen" component={WalletScreen} />
+          <Stack.Screen name="LanguageScreen" component={LanguageScreen} />
           <Stack.Screen
             name="RenewPasswordScreen"
             component={RenewPasswordScreen}
           />
         </Stack.Group>
         <Stack.Screen name="DoctorStack" component={DoctorStack} />
+        <Stack.Screen name="HotelStack" component={HotelStack} />
       </Stack.Navigator>
     </View>
   );
