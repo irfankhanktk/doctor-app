@@ -243,7 +243,7 @@ const AddHotel = props => {
             )}
             <PrimaryInput
               label={t('title')}
-              placeholder="Policy Title"
+              placeholder={t('policy_title')}
               onChangeText={str => setFieldValue(`policy.[0].title`, str)}
               onBlur={() => setFieldTouched(`policy.[0].title`, true)}
               value={values.policy[index].title}

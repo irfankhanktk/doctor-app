@@ -144,7 +144,26 @@
 "policy_title":"عنوان السياسة مطلوب",
 "policy_content":"محتوى السياسة مطلوب",
 "featured_image":"صورة مميزة",
-"select_image":"الرجاء تحديد صورة"
+"select_image":"الرجاء تحديد صورة",
+"add_price":"أضف السعر",
+"check_in":"حان وقت تسجيل الوصول",
+"check_out":"حان وقت المغادرة",
+"check_in_content":"على سبيل المثال: 12:00 صباحًا",
+"check_out_content":"على سبيل المثال: 11:00 صباحًا",
+"min_advance_reservation":"الحد الأدنى للحجز المسبق",
+"min_day_stay":"الحد الأدنى لمتطلبات الإقامة ليوم واحد",
+"hotel_price":"سعر الفندق",
+"enable_price":"تمكين سعر إضافي",
+"enable_extra":"تفعيل رسوم الخدمة",
+"extra_price_name":"اسم السعر الخارجي",
+"fee_name":"اسم الرسم",
+"fee_desc":"وصف الرسم",
+"fee_description":"وصف الرسم",
+"type":"يكتب",
+"select":"-- اختر صنف --",
+"per_person":"السعر للشخص الواحد"
+
+
 
 
 

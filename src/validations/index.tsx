@@ -103,3 +103,11 @@ export const addHotelValidation = yup.object().shape({
   featured_image: yup.string().required('select_image'),
   
 });
+export const addPriceHotelValidation = yup.object().shape({
+  email: yup.string().email('invalid_email').required('req_email'),
+  old_password: yup.string().required('req_pass').min(8, 'weak_pass'),
+  new_password: yup
+    .string()
+    .required('New Password is required')
+    .min(8, 'New weak_pass'),
+});

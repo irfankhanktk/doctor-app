@@ -146,7 +146,24 @@
 "policy_title":"Policy title is required",
 "policy_content":"Policy content is required",
 "featured_image":"Featured Image",
-"select_image":"Please select an image"
+"select_image":"Please select an image",
+"add_price":"Add Price",
+"check_in":"Time for check in",
+"check_out":"Time for check out",
+"check_in_content":"Eg: 12:00AM",
+"check_out_content":"Eg: 11:00AM",
+"min_advance_reservation":"Minimum advance reservations",
+"min_day_stay":"Minimum day stay requirements",
+"hotel_price":"Hotel Price",
+"enable_price":"Enable extra price",
+"enable_extra":"Enable service fee",
+"extra_price_name":"Extera price name",
+"fee_name":"Fee name",
+"fee_desc":"Fee desc",
+"fee_description":"Fee description",
+"type":"Type",
+"select":"-- Select Type --",
+"per_person":"Price per person"
 
 
 }
