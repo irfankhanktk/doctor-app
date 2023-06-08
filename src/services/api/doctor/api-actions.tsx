@@ -442,8 +442,9 @@ export const onLogin = (
       const res = await postData(URLS.auth.login, values);
       console.log('res of onLogin=>', res);
       UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.doctor));
+      UTILS.setItem(STORAGEKEYS.token, res?.doctor?.token);
       dispatch(setUserInfo(res?.doctor));
-      UTILS.resetStack(props, 'DoctorStack');
+      UTILS.resetStack(props, 'HotelStack');
     } catch (error: any) {
       console.log('error in login', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));

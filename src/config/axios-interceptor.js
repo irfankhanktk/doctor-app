@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { URLS } from 'services/api/api-urls';
-import { UTILS } from '../utils';
-import { STORAGEKEYS } from './constants';
+import {URLS} from 'services/api/api-urls';
+import {UTILS} from '../utils';
+import {STORAGEKEYS} from './constants';
 const CancelToken = axios.CancelToken;
 source = CancelToken.source();
 client = axios.create({
@@ -10,14 +10,13 @@ client = axios.create({
 function newAbortSignal(timeoutMs) {
   const abortController = new AbortController();
   setTimeout(() => abortController.abort(), timeoutMs || 0);
-
   return abortController.signal;
 }
 //Axios Interceptors
 client.interceptors.request.use(
   async config => {
-    // const token = await UTILS.getItem(STORAGEKEYS.token);
-
+    let token = await UTILS.getItem(STORAGEKEYS.token);
+    console.log('token->>>', token);
     config.headers = {
       Accept: 'application/json',
       'Cache-Control': 'no-cache',
@@ -26,7 +25,7 @@ client.interceptors.request.use(
     // config.signal = newAbortSignal(15000),
     config.params = config.params || {};
     config.cancelToken = source.token || {};
-    // config.headers['Authorization'] = `Bearer ${token}`;
+    config.headers['Authorization'] = `Bearer ${token}`;
     return config;
   },
   error => {
