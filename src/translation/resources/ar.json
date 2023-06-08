@@ -161,7 +161,8 @@
 "fee_description":"وصف الرسم",
 "type":"يكتب",
 "select":"-- اختر صنف --",
-"per_person":"السعر للشخص الواحد"
+"per_person":"السعر للشخص الواحد",
+"attributes":"صفات"
 
 
 

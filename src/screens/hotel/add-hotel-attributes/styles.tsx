@@ -4,7 +4,7 @@ import { mvs } from 'config/metrices';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container1: {
+  container: {
     flex: 1,
     backgroundColor: colors.white,
   },

@@ -163,7 +163,8 @@
 "fee_description":"Fee description",
 "type":"Type",
 "select":"-- Select Type --",
-"per_person":"Price per person"
+"per_person":"Price per person",
+"attributes":"Attributes"
 
 
 }

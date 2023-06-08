@@ -8,7 +8,7 @@ import {useAppDispatch} from 'hooks/use-store';
 import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
 import {ImageBackground, TouchableOpacity, View} from 'react-native';
-import {onLogin} from 'services/api/doctor/api-actions';
+
 import i18n from 'translation';
 import Bold from 'typography/bold-text';
 import Medium from 'typography/medium-text';
@@ -16,6 +16,7 @@ import {signinFormValidation} from 'validations';
 import PrimaryInput from 'components/atoms/inputs';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview/index';
 import styles from './styles';
+import {onLogin} from 'services/api/auth-api-actions';
 const LoginScreen = props => {
   const dispatch = useAppDispatch();
   const {t} = i18n;
