@@ -4,7 +4,8 @@ export const URLS = {
   image_url: `${IP}/`,
   auth: {
     signup: 'doctor/signup',
-    login: 'doctor/login',
+    login: 'auth/login',
+    get_user_info: 'user/userInfo',
     update_password: 'doctor/updatePassword',
     change_password: 'doctor/changePassword',
     otp_verify: 'doctor/otpVerify',

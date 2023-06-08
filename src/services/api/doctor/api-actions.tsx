@@ -341,29 +341,7 @@ export const onAddAmount = async (values: any) => {
     Alert.alert('', UTILS.returnError(error));
   }
 };
-export const onSignup = (
-  values: any,
-  setLoading: (bool: boolean) => void,
-  props: any,
-  setOtpLoading: (bool: boolean) => void,
-) => {
-  return async (dispatch: AppDispatch, getState: () => RootState) => {
-    try {
-      setLoading(true);
-      const res = await postData(URLS.auth.signup, values);
-      console.log('res of onSignupPress=>', res);
-      setOtpLoading(true);
-      if (res?.status == 400) {
-        throw new Error(res?.message);
-      }
-    } catch (error: any) {
-      console.log('error in onSignupPress', UTILS?.returnError(error));
-      Alert.alert('', UTILS?.returnError(error));
-    } finally {
-      setLoading(false);
-    }
-  };
-};
+
 export const onAddAvailability = (
   values: any,
   setLoading: (bool: boolean) => void,
@@ -431,28 +409,7 @@ export const onUpdateProfile = (
     }
   };
 };
-export const onLogin = (
-  values: any,
-  setLoading: (bool: boolean) => void,
-  props: any,
-) => {
-  return async (dispatch: AppDispatch, getState: () => RootState) => {
-    try {
-      setLoading(true);
-      const res = await postData(URLS.auth.login, values);
-      console.log('res of onLogin=>', res);
-      UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.doctor));
-      UTILS.setItem(STORAGEKEYS.token, res?.doctor?.token);
-      dispatch(setUserInfo(res?.doctor));
-      UTILS.resetStack(props, 'HotelStack');
-    } catch (error: any) {
-      console.log('error in login', UTILS.returnError(error));
-      Alert.alert('', UTILS.returnError(error));
-    } finally {
-      setLoading(false);
-    }
-  };
-};
+
 export const onVerifyOtp = (values: any) => {
   return postData(URLS.auth.login, values);
 };
