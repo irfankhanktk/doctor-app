@@ -168,7 +168,9 @@
 "room_name":"Room Name",
 "number_of_rooms":"Number of room",
 "number_of_beds":"Number of beds",
-"room_size":"Room Size"
+"room_size":"Room Size",
+"max_adults":"Max Adults",
+"max_children":"Max Children"
 
 
 }

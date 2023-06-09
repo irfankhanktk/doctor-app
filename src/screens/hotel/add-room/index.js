@@ -244,6 +244,35 @@ const AddRoom = props => {
               : undefined
           }
         />
+        <PrimaryInput
+          label={t('max_adults')}
+          placeholder={t('1')}
+          onChangeText={str => setFieldValue('max_adult', str)}
+          onBlur={() => setFieldTouched('max_adult', true)}
+          value={values.max_adult}
+          error={
+            touched?.max_adult && errors?.max_adult
+              ? `${t(errors?.max_adult)}`
+              : undefined
+          }
+        />
+        <PrimaryInput
+          label={t('max_children')}
+          placeholder={t('0')}
+          onChangeText={str => setFieldValue('max_children', str)}
+          onBlur={() => setFieldTouched('max_children', true)}
+          value={values.max_children}
+          error={
+            touched?.max_children && errors?.max_children
+              ? `${t(errors?.max_children)}`
+              : undefined
+          }
+        />
+        <PrimaryButton
+          containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
+          onPress={() => onSubmit()}
+          title="Add Room"
+        />
       </KeyboardAvoidScrollview>
     </View>
   );

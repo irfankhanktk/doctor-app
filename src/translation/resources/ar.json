@@ -166,7 +166,9 @@
 "room_name":"اسم الغرفة",
 "number_of_rooms":"عدد الغرف",
 "number_of_beds":"عدد الأسرة",
-"room_size":"حجم الغرفة"
+"room_size":"حجم الغرفة",
+"max_adults":"ماكس الكبار",
+"max_children":"ماكس للأطفال"
 
 
 
