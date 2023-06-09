@@ -4,8 +4,8 @@ import {
   Image,
   ImageBackground,
   FlatList,
-  Text,
   TouchableOpacity,
+  SectionList,
 } from 'react-native';
 import styles from './styles';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
@@ -19,10 +19,23 @@ import {mvs} from 'config/metrices';
 import {colors} from 'config/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {UTILS} from 'utils';
+import {Checkbox} from 'components/atoms/checkbox';
+import {Row} from 'components/atoms/row';
+import Bold from 'typography/bold-text';
 
 const AddRoom = props => {
   const {navigation} = props;
-  const [addImage, setAddImage] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const attributes = [
+    {
+      title: 'PROPERTY TYPE',
+      data: [
+        {id: 1, name: 'Homestays'},
+        {id: 2, name: 'Hotels'},
+        {id: 3, name: 'Apartments'},
+      ],
+    },
+  ];
   const initialValues = {
     room_name: '',
     content: '',
@@ -96,7 +109,41 @@ const AddRoom = props => {
       console.log('upload image error', error);
     }
   };
+  const handleCheckboxSelect = item => {
+    const selectedIndex = selectedTypes.findIndex(
+      selectedItem => selectedItem.id === item.id,
+    );
 
+    if (selectedIndex !== -1) {
+      // Item is already selected, remove it from the selectedTypes array
+      const updatedSelectedTypes = [...selectedTypes];
+      updatedSelectedTypes.splice(selectedIndex, 1);
+      setSelectedTypes(updatedSelectedTypes);
+    } else {
+      // Item is not selected, add it to the selectedTypes array
+      setSelectedTypes([...selectedTypes, item]);
+    }
+  };
+
+  const renderItem = ({item}) => {
+    const isSelected = selectedTypes.some(
+      selectedItem => selectedItem.id === item.id,
+    );
+
+    return (
+      <Row style={{justifyContent: 'flex-start', padding: mvs(10)}}>
+        <Checkbox
+          checked={isSelected}
+          onPress={() => handleCheckboxSelect(item)}
+        />
+
+        <Regular
+          style={{marginLeft: mvs(10), fontSize: mvs(16)}}
+          label={item?.name}
+        />
+      </Row>
+    );
+  };
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('add_room')} back={true} />
@@ -189,82 +236,123 @@ const AddRoom = props => {
             touched?.price && errors?.price ? `${t(errors?.price)}` : undefined
           }
         />
-        <PrimaryInput
-          keyboardType="numeric"
-          label={t('number_of_rooms')}
-          placeholder={t('1')}
-          onChangeText={str => setFieldValue('number_of_rooms', str)}
-          onBlur={() => setFieldTouched('number_of_rooms', true)}
-          value={values.number_of_rooms}
-          error={
-            touched?.number_of_rooms && errors?.number_of_rooms
-              ? `${t(errors?.number_of_rooms)}`
-              : undefined
-          }
-        />
-        <PrimaryInput
-          error={
-            touched?.minimum_day_stay && errors?.minimum_day_stay
-              ? `${t(errors?.minimum_day_stay)}`
-              : undefined
-          }
-          label={t('min_day_stay')}
-          placeholder={t('Ex: 2')}
-          onChangeText={str => setFieldValue('minimum_day_stay', str)}
-          onBlur={() => setFieldTouched('minimum_day_stay', true)}
-          value={values.minimum_day_stay}
-        />
+
+        <Row>
+          <PrimaryInput
+            mainContainer={{width: '48%'}}
+            keyboardType="numeric"
+            label={t('number_of_rooms')}
+            placeholder={t('1')}
+            onChangeText={str => setFieldValue('number_of_rooms', str)}
+            onBlur={() => setFieldTouched('number_of_rooms', true)}
+            value={values.number_of_rooms}
+            error={
+              touched?.number_of_rooms && errors?.number_of_rooms
+                ? `${t(errors?.number_of_rooms)}`
+                : undefined
+            }
+          />
+          <PrimaryInput
+            mainContainer={{width: '48%'}}
+            error={
+              touched?.minimum_day_stay && errors?.minimum_day_stay
+                ? `${t(errors?.minimum_day_stay)}`
+                : undefined
+            }
+            label={t('min_day_stay')}
+            placeholder={t('Ex: 2')}
+            onChangeText={str => setFieldValue('minimum_day_stay', str)}
+            onBlur={() => setFieldTouched('minimum_day_stay', true)}
+            value={values.minimum_day_stay}
+          />
+        </Row>
         <Regular
           label={'(Optional)'}
           fontSize={12}
           style={{alignSelf: 'flex-end'}}
         />
-        <PrimaryInput
-          keyboardType="numeric"
-          label={t('number_of_beds')}
-          placeholder={t('1')}
-          onChangeText={str => setFieldValue('number_of_beds', str)}
-          onBlur={() => setFieldTouched('number_of_beds', true)}
-          value={values.number_of_beds}
-          error={
-            touched?.number_of_beds && errors?.number_of_beds
-              ? `${t(errors?.number_of_beds)}`
-              : undefined
-          }
+        <Row>
+          <PrimaryInput
+            mainContainer={{width: '48%'}}
+            keyboardType="numeric"
+            label={t('number_of_beds')}
+            placeholder={t('1')}
+            onChangeText={str => setFieldValue('number_of_beds', str)}
+            onBlur={() => setFieldTouched('number_of_beds', true)}
+            value={values.number_of_beds}
+            error={
+              touched?.number_of_beds && errors?.number_of_beds
+                ? `${t(errors?.number_of_beds)}`
+                : undefined
+            }
+          />
+          <PrimaryInput
+            mainContainer={{width: '48%'}}
+            label={t('room_size')}
+            placeholder={t('room_size')}
+            onChangeText={str => setFieldValue('room_size', str)}
+            onBlur={() => setFieldTouched('room_size', true)}
+            value={values.room_size}
+            error={
+              touched?.room_size && errors?.room_size
+                ? `${t(errors?.room_size)}`
+                : undefined
+            }
+          />
+        </Row>
+        <Row>
+          <PrimaryInput
+            mainContainer={{width: '48%'}}
+            label={t('max_adults')}
+            placeholder={t('1')}
+            onChangeText={str => setFieldValue('max_adult', str)}
+            onBlur={() => setFieldTouched('max_adult', true)}
+            value={values.max_adult}
+            error={
+              touched?.max_adult && errors?.max_adult
+                ? `${t(errors?.max_adult)}`
+                : undefined
+            }
+          />
+          <PrimaryInput
+            mainContainer={{width: '48%'}}
+            label={t('max_children')}
+            placeholder={t('0')}
+            onChangeText={str => setFieldValue('max_children', str)}
+            onBlur={() => setFieldTouched('max_children', true)}
+            value={values.max_children}
+            error={
+              touched?.max_children && errors?.max_children
+                ? `${t(errors?.max_children)}`
+                : undefined
+            }
+          />
+        </Row>
+
+        <SectionList
+          sections={attributes}
+          keyExtractor={(item, index) => item + index}
+          renderItem={renderItem}
+          renderSectionHeader={({section: {title}}) => (
+            <Row style={{justifyContent: 'flex-start'}}>
+              <Bold fontSize={mvs(18)} label={'ATTRIBUTE:'} />
+              <Bold
+                style={{marginLeft: mvs(10), fontSize: mvs(18)}}
+                label={title}
+              />
+            </Row>
+          )}
         />
         <PrimaryInput
-          label={t('room_size')}
-          placeholder={t('room_size')}
-          onChangeText={str => setFieldValue('room_size', str)}
-          onBlur={() => setFieldTouched('room_size', true)}
-          value={values.room_size}
+          labelStyle={{marginTop: mvs(20)}}
+          label={t('Import Url')}
+          placeholder={t('')}
+          onChangeText={str => setFieldValue('import_url', str)}
+          onBlur={() => setFieldTouched('import_url', true)}
+          value={values.import_url}
           error={
-            touched?.room_size && errors?.room_size
-              ? `${t(errors?.room_size)}`
-              : undefined
-          }
-        />
-        <PrimaryInput
-          label={t('max_adults')}
-          placeholder={t('1')}
-          onChangeText={str => setFieldValue('max_adult', str)}
-          onBlur={() => setFieldTouched('max_adult', true)}
-          value={values.max_adult}
-          error={
-            touched?.max_adult && errors?.max_adult
-              ? `${t(errors?.max_adult)}`
-              : undefined
-          }
-        />
-        <PrimaryInput
-          label={t('max_children')}
-          placeholder={t('0')}
-          onChangeText={str => setFieldValue('max_children', str)}
-          onBlur={() => setFieldTouched('max_children', true)}
-          value={values.max_children}
-          error={
-            touched?.max_children && errors?.max_children
-              ? `${t(errors?.max_children)}`
+            touched?.import_url && errors?.import_url
+              ? `${t(errors?.import_url)}`
               : undefined
           }
         />

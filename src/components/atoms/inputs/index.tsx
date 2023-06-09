@@ -40,6 +40,7 @@ type props = {
   style?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  mainContainer?:StyleProp<ViewStyle>;
   errorStyle?: StyleProp<ViewStyle>;
   secureTextEntry?: boolean | undefined;
   ref?: React.LegacyRef<PhoneInput> | undefined;
@@ -135,13 +136,14 @@ const PrimaryInput = (props: props) => {
     isPassword,
     keyboardType,
     error,
+    mainContainer,
     editable = true,
     onBlur = () => { },
     onPressIn = () => { },
     isRequired = false,
   } = props;
   return (
-    <>
+    <View style={[mainContainer]}>
       <Regular label={label} style={[styles.labelStyle, labelStyle]}>
         {isRequired ? <Regular color={colors.red} label={' *'} /> : null}
       </Regular>
@@ -178,7 +180,7 @@ const PrimaryInput = (props: props) => {
         label={error ? error : ''}
         style={[styles.errorLabel, errorStyle]}
       />
-    </>
+    </View>
   );
 };
 export default React.memo(PrimaryInput);
@@ -355,10 +357,9 @@ const styles = StyleSheet.create({
   Container: {
     borderWidth: mvs(0.7),
     borderColor: colors.primary,
-    height: mvs(60),
+    height: mvs(50),
     paddingTop: mvs(7),
-    // marginBottom: mvs(5),
-    borderRadius: mvs(15),
+    borderRadius: mvs(10),
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: mvs(10),

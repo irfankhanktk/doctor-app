@@ -153,7 +153,7 @@
 "check_in_content":"Eg: 12:00AM",
 "check_out_content":"Eg: 11:00AM",
 "min_advance_reservation":"Minimum advance reservations",
-"min_day_stay":"Minimum day stay requirements",
+"min_day_stay":"No. Day stay",
 "hotel_price":"Hotel Price",
 "enable_price":"Enable extra price",
 "enable_extra":"Enable service fee",
@@ -166,11 +166,12 @@
 "per_person":"Price per person",
 "attributes":"Attributes",
 "room_name":"Room Name",
-"number_of_rooms":"Number of room",
+"number_of_rooms":"No. of room",
 "number_of_beds":"Number of beds",
 "room_size":"Room Size",
 "max_adults":"Max Adults",
-"max_children":"Max Children"
+"max_children":"Max Children",
+"room_amenities":"Room Amenities"
 
 
 }
