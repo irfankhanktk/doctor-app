@@ -162,7 +162,11 @@
 "type":"يكتب",
 "select":"-- اختر صنف --",
 "per_person":"السعر للشخص الواحد",
-"attributes":"صفات"
+"attributes":"صفات",
+"room_name":"اسم الغرفة",
+"number_of_rooms":"عدد الغرف",
+"number_of_beds":"عدد الأسرة",
+"room_size":"حجم الغرفة"
 
 
 

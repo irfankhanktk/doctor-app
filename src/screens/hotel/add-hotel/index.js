@@ -85,19 +85,29 @@ const AddHotel = props => {
     const updatedPolicies = values.policy.filter((_, i) => i !== index);
     setFieldValue('policy', updatedPolicies);
   };
+  // const onImageRemove = index => {
+  //   let copy = [...addImage];
+  //   copy = copy.filter((e, i) => {
+  //     return i != index;
+  //   });
+  //   setAddImage(copy);
+  // };
   const onImageRemove = index => {
-    let copy = [...addImage];
+    let copy = [...values.gallery];
     copy = copy.filter((e, i) => {
       return i != index;
     });
-    setAddImage(copy);
+    // setAddImage(copy);
+    setFieldValue('gallery', copy);
   };
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
+      console.log('res========>', res);
       const uri = res.uri;
       if (v == 'gallery') {
         setFieldValue('gallery', [...values?.gallery, uri]);
+        // setAddImage([...addImage, uri]);
       } else if (v == 'bannerImage') {
         setFieldValue('banner_image', uri);
       } else {
@@ -177,12 +187,13 @@ const AddHotel = props => {
             <View style={[styles.ImageContainer, {marginHorizontal: mvs(3)}]}>
               <Entypo name="camera" size={20} color={'black'} />
               {/* <Text style={styles.headerText}>Add image{'\n'}(0 up to 8)</Text> */}
-              <Text style={styles.headerText}>Add images</Text>
+
+              <Regular style={styles.headerText} label={'Add images'} />
             </View>
           </TouchableOpacity>
           <FlatList
             horizontal={true}
-            data={addImage}
+            data={values?.gallery}
             renderItem={({item, index}) => {
               return (
                 <View style={styles.ImageContainer}>
@@ -202,7 +213,7 @@ const AddHotel = props => {
           />
         </View>
         {errors?.gallery && touched?.gallery && (
-          <Text style={styles.errorLabel}>{t(errors?.gallery)}</Text>
+          <Regular style={styles.errorLabel} label={t(errors?.gallery)} />
         )}
         <Bold
           label={t('hotle_policy')}

@@ -164,7 +164,11 @@
 "type":"Type",
 "select":"-- Select Type --",
 "per_person":"Price per person",
-"attributes":"Attributes"
+"attributes":"Attributes",
+"room_name":"Room Name",
+"number_of_rooms":"Number of room",
+"number_of_beds":"Number of beds",
+"room_size":"Room Size"
 
 
 }
