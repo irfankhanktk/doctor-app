@@ -61,7 +61,7 @@ const AllHotels = props => {
   return (
     <View style={styles.container}>
       <Header1x2x
-        style={{height: mvs(60)}}
+        style={{height: mvs(70)}}
         isSearch={false}
         title={t('hotels')}
         back={true}
@@ -69,26 +69,7 @@ const AllHotels = props => {
       {/* <ImageBackground source={IMG.Hotels_Bg} style={styles.bg}>
         <HotelsHeader isSearch={true} back={true} />
       </ImageBackground> */}
-      <Row
-        style={{
-          alignItems: 'center',
-          marginHorizontal: mvs(20),
-          marginTop: mvs(15),
-        }}>
-        <Medium label={t('all_hotels')} fontSize={mvs(20)} />
-        <TouchableOpacity onPress={() => props?.navigation?.navigate('Hotels')}>
-          <Row>
-            <Regular label={t('hotel_filter')} />
-            <Ionicons
-              size={mvs(20)}
-              name={'filter'}
-              color={colors.primary}
-              style={{marginLeft: mvs(5)}}
-            />
-          </Row>
-          {/* <Medium label={'Filter'} fontSize={mvs(20)} style={{ marginHorizontal: mvs(20), marginTop: mvs(15), }} /> */}
-        </TouchableOpacity>
-      </Row>
+
       {loading ? (
         <Loader />
       ) : (
@@ -110,7 +91,10 @@ const AllHotels = props => {
           />
         </View>
       )}
-      <PlusButton onPress={() => props?.navigation?.navigate('AddHotel')} />
+      <PlusButton
+        containerStyle={{bottom: mvs(70)}}
+        onPress={() => props?.navigation?.navigate('AddHotel')}
+      />
     </View>
   );
 };

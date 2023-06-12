@@ -58,10 +58,20 @@ const styles = StyleSheet.create({
     height: mvs(250),
     marginTop: 0,
     backgroundColor: colors.primary,
+    justifyContent:'flex-end'
   },
   hotelrow: {
     marginTop: mvs(10),
     flexDirection: 'row',
   },
+  goBackBtn:{
+    backgroundColor: colors.white,
+    padding: mvs(5),
+    borderRadius: mvs(7),
+    position: 'absolute',
+    zIndex: 1,
+    top: mvs(15),
+    left: mvs(20),
+  }
 });
 export default styles;

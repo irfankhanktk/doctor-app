@@ -1,6 +1,3 @@
-import * as IMG from 'assets/hotel/images';
-import {PrimaryButton} from 'components/atoms/buttons';
-import PrimaryInput from 'components/atoms/inputs';
 import {Row} from 'components/atoms/row';
 
 import {DATE_FORMAT} from 'config/constants';
@@ -8,37 +5,33 @@ import {mvs} from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
 import {
-  Image,
+  I18nManager,
   ImageBackground,
-  Platform,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
 import i18n from 'translation';
-import Bold from 'typography/bold-text';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 
 import {colors} from '../../../config/colors';
 import styles from './styles';
 
-import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
 import {useAppSelector} from 'hooks/use-store';
 import {navigate} from 'navigation/navigation-ref';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/AntDesign';
 
-import HtmlView from './../../../components/atoms/render-html/index';
-import MyMap from 'components/molecules/map';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
 import RoomModal from 'components/molecules/hotel/modals/room-detail-modal';
-import RatingStar from 'components/molecules/rating-star';
+import MyMap from 'components/molecules/map';
 import {getHotelDetails} from 'services/api/hotel/api-actions';
+import HtmlView from './../../../components/atoms/render-html/index';
 const HotelDetails = props => {
+  const {navigation} = props;
   const [text, setText] = React.useState('');
 
   const [roomModal, setRoomModal] = React.useState(false);
@@ -61,7 +54,7 @@ const HotelDetails = props => {
   });
   const {hotel_id} = props?.route?.params || {};
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     getDetails();
@@ -71,7 +64,7 @@ const HotelDetails = props => {
       const res = await getHotelDetails(hotel_id);
       setLoading(false);
       setHotelDetails(res);
-      console.log('res of hotel detaiols', res);
+      // console.log('res of hotel detaiols', res);
     } catch (error) {
       setLoading(false);
     }
@@ -83,36 +76,27 @@ const HotelDetails = props => {
         <Loader />
       ) : (
         <>
+          <TouchableOpacity
+            style={styles.goBackBtn}
+            onPress={() => navigation?.goBack()}>
+            <Icon
+              name={I18nManager.isRTL ? 'right' : 'left'}
+              size={mvs(20)}
+              color={colors.black}
+            />
+          </TouchableOpacity>
           <ImageBackground
             source={{uri: hotelDetails?.row?.image_id}}
             style={styles.hotelsimgbackground}>
-            {/* <Header1x2x
-              style={{height: mvs(200)}}
-              isSearch={false}
-              title={t('hotel_details')}
-              back={true}
-            /> */}
             <Row>
               <Row
                 style={{
-                  // backgroundColor: 'red',
                   alignSelf: 'center',
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginHorizontal: mvs(10),
                   paddingVertical: mvs(5),
                 }}>
-                <TouchableOpacity
-                  style={{
-                    // marginHorizontal: mvs(20),
-                    alignSelf: 'flex-start',
-                  }}>
-                  <Ionicons
-                    name={'heart'}
-                    size={mvs(30)}
-                    color={colors.white}
-                  />
-                </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => setVideoModal(true)}
                   style={{
