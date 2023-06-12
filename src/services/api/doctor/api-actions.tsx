@@ -146,7 +146,6 @@ export const getAllCategories = () => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       const res = await getData(URLS.categories.getAll);
-      console.log('res of getAllCategories=>', res);
       dispatch(setSpecCategories(res?.allSpecialization || []));
     } catch (error: any) {
       console.log('error in getAllCategories', UTILS.returnError(error));

@@ -9,7 +9,6 @@ import React from 'react';
 import {FlatList, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
-// import {getHotels, getLocations} from 'services/api/hotel-api-actions';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
@@ -17,28 +16,26 @@ import {colors} from 'config/colors';
 import styles from './styles';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
 // import {EmptyList} from 'components/molecules/hotel/empty-list';
+import {getAllHotels} from 'services/api/hotel/api-actions';
 
 const AllHotels = props => {
   const [cartModal, setCardModal] = React.useState(false);
+
   const [loading, setLoading] = React.useState(false);
   const [pageLoading, setPageLoading] = React.useState(false);
-  // const dispatch = useAppDispatch();
-  // const {hotel} = useSelector(s => s);
+  const dispatch = useAppDispatch();
+  const {hotel} = useSelector(s => s);
+  const {hotels} = hotel;
   // const {locations, hotel_filter, hotels} = hotel;
   const [filterModal, setFilterModal] = React.useState(false);
   const [allHotels, setAllHotels] = React.useState([]);
   const [page, setPage] = React.useState(1);
-  const [hotels, setHotels] = React.useState([{id: 1}]);
   const {t} = i18n;
-  const getHomeHotels = bool => {
-    if (bool) {
-    }
-    // dispatch();
-    // getHotels(page > 1 ? setPageLoading : setLoading, bool ? 1 : page),
+  const getHomeHotels = () => {
+    dispatch(getAllHotels());
   };
   React.useEffect(() => {
-    // getHomeHotels(true);
-    // }, [hotel_filter]);
+    getHomeHotels();
   }, []);
 
   const renderHotelItem = ({item}) => (
@@ -46,7 +43,7 @@ const AllHotels = props => {
       item={item}
       onPress={() =>
         props?.navigation?.navigate('HotelDetails', {
-          slug: item?.slug,
+          hotel_id: item?.id,
         })
       }
       onPressCart={() => setCardModal(true)}
@@ -98,9 +95,9 @@ const AllHotels = props => {
         <View style={styles.container}>
           <FlatList
             contentContainerStyle={styles.contentContainerStyle}
-            // ListEmptyComponent={!loading && <EmptyList />}
+            ListEmptyComponent={!loading && <EmptyList />}
             showsVerticalScrollIndicator={false}
-            data={hotels}
+            data={hotels || []}
             renderItem={renderHotelItem}
             keyExtractor={(item, index) => index?.toString()}
             onEndReached={() => {

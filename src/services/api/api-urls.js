@@ -40,4 +40,23 @@ export const URLS = {
     get_wallet: 'doctor/getWallet',
     add_amount: 'doctor/addDeposit',
   },
+  // hotel vendor module
+  hotel_vendor: {
+    get_hotel_list: 'user/hotel?',
+    add_update_hotel: 'user/hotel/store/', //-1 for add new otherwise will update hotel
+    delete_hotel: 'user/hotel/del/', //id for delete
+    get_hotel_for_edit: 'user/hotel/edit/',
+    change_hotel_status: 'user/hotel/bulkEdit/', // 5 hotel id '1/?action=' make-publish or make-hide
+    get_hotel_attributes: 'user/hotel/create',
+    room: {
+      add_update_room: 'user/hotel/room/', //  '9/store/-1' //-1 for add new otherwise will update hotel-room
+      get_room_attributes: 'user/hotel/room/', // '9/create',//
+      delete_room: 'user/hotel/room/', // '9/del/1' hotel id and room id
+      get_room_for_edit: 'user/hotel/room/', // '9/create'
+      change_room_status: 'user/hotel/room/', // '9/bulkEdit/34?action=' make-publish or make-hide
+      get_hotel_rooms: 'user/hotel/room/', // '9/index'
+      get_room_availability: 'user/hotel/', // 9/availability/loadDates?id=35&start=2023-05-29&end=2023-07-10
+      store_room_availability: '',
+    },
+  },
 };

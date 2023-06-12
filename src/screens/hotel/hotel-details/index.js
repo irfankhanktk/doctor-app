@@ -37,6 +37,7 @@ import MyMap from 'components/molecules/map';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
 import RoomModal from 'components/molecules/hotel/modals/room-detail-modal';
 import RatingStar from 'components/molecules/rating-star';
+import {getHotelDetails} from 'services/api/hotel/api-actions';
 const HotelDetails = props => {
   const [text, setText] = React.useState('');
 
@@ -58,44 +59,24 @@ const HotelDetails = props => {
     rooms: '1',
     adults: '0',
   });
-  const {slug} = props?.route?.params || {};
+  const {hotel_id} = props?.route?.params || {};
 
   const [loading, setLoading] = React.useState(false);
-  const [submitReviewLoading, setSubmitReviewLoading] = React.useState(false);
 
   React.useEffect(() => {
-    // getDetails();
+    getDetails();
   }, []);
   const getDetails = async () => {
     try {
-      // const res = await getHotelDetails(slug);
-      // setLoading(false);
-      // setHotelDetails(res);
-      // console.log('res of hotel detaiols', res);
+      const res = await getHotelDetails(hotel_id);
+      setLoading(false);
+      setHotelDetails(res);
+      console.log('res of hotel detaiols', res);
     } catch (error) {
       setLoading(false);
     }
   };
 
-  const SubmitReviewHotel = async () => {
-    try {
-      setSubmitReviewLoading(true);
-      const res = await addHotelReview({
-        object_id: hotelDetails?.row?.id,
-        user_id: userInfo?.id,
-        review_title: 'hotel',
-        ...submitReview,
-      });
-      getDetails();
-      console.log('res--rsubmitreview-->>>', res);
-    } catch (error) {
-      // Alert.alert(UTILS?.returnError(error));
-      // setLoading(false);
-      console.log('error =>>>', error);
-    } finally {
-      setSubmitReviewLoading(false);
-    }
-  };
   return (
     <View style={styles.container}>
       {loading ? (
@@ -103,14 +84,14 @@ const HotelDetails = props => {
       ) : (
         <>
           <ImageBackground
-            source={IMG.Hotels_Bg}
+            source={{uri: hotelDetails?.row?.image_id}}
             style={styles.hotelsimgbackground}>
-            <Header1x2x
+            {/* <Header1x2x
               style={{height: mvs(200)}}
               isSearch={false}
               title={t('hotel_details')}
               back={true}
-            />
+            /> */}
             <Row>
               <Row
                 style={{
@@ -230,12 +211,15 @@ const HotelDetails = props => {
                 style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('hotel_policies')}
               />
-
+              {console.log(
+                'hotelDetails?.row?.policy=>>>',
+                hotelDetails?.row?.policy,
+              )}
               <View>
                 {hotelDetails?.row?.policy?.map(ele => (
                   <>
-                    <Medium label={ele?.title} />
-                    <Regular label={ele?.content} />
+                    <Medium label={`${ele?.title}`} />
+                    <Regular label={`${ele?.content}`} />
                   </>
                 ))}
               </View>
@@ -255,15 +239,15 @@ const HotelDetails = props => {
                 label={t('location')}
               />
               <MyMap
-              // coord={{
-              //   latitude: (hotelDetails?.row?.map_lat || 19.229727) * 1,
-              //   longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
-              // }}
+                coord={{
+                  latitude: (hotelDetails?.row?.map_lat || 19.229727) * 1,
+                  longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
+                }}
               />
-              <Medium
+              {/* <Medium
                 style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('review')}
-              />
+              /> 
               <Row>
                 <Row
                   style={{
@@ -284,8 +268,8 @@ const HotelDetails = props => {
                   />
                   <Icon name={'star'} size={mvs(15)} color={colors.yellow} />
                 </Row>
-              </Row>
-              <ScrollView
+              </Row> 
+            <ScrollView
                 contentContainerStyle={{marginVertical: mvs(10)}}
                 horizontal
                 showsHorizontalScrollIndicator={false}>
@@ -312,23 +296,7 @@ const HotelDetails = props => {
                     </View>
                   </Row>
                 ))}
-              </ScrollView>
-
-              {/* <Medium
-                style={{marginTop: mvs(12), fontSize: mvs(18)}}
-                label={t('related_hotels')}
-              /> */}
-              <View
-                style={{
-                  marginBottom: mvs(Platform.OS == 'android' ? 20 : 40),
-                }}></View>
-              <View style={{flex: 1, justifyContent: 'flex-end'}}>
-                <PrimaryButton
-                  onPress={() => setCardModal(true)}
-                  title={t(`book_now`)}
-                  containerStyle={styles.searchContainer}
-                />
-              </View>
+              </ScrollView> */}
             </ScrollView>
           </View>
 

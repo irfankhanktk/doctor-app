@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userSlice from './reducers/user-reducer'
 import docSlice from './reducers/doctor-reducer'
+import hotelSlice from './reducers/hotel-reducer'
 
 export const store = configureStore({
   reducer: {
     doctor: docSlice,
     user: userSlice,
-
+    hotel: hotelSlice,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
