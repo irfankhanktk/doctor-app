@@ -22,8 +22,7 @@ export const putData = async (url, data) => {
 export const postFormData = async (url, data) => {
   console.log('url==>', url);
 
-  // data = UTILS.getFormData(data);
-  console.log('data=::=>', data?._parts);
+  data = UTILS.getFormData(data);
   const token = await AsyncStorage.getItem(STORAGEKEYS.token);
   return axios
     .post(URLS.base_url + url, data, {

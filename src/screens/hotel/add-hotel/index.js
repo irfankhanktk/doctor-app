@@ -112,13 +112,8 @@ const AddHotel = props => {
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
-      console.log('res=>>>', res);
-      const formData = new FormData();
-      formData.append('file', {...res});
-      formData.append('type', 'image');
-      const file_resp = await postFileData(formData);
-
-      console.log('file_resp:::========>', file_resp?.data);
+      const file_resp = await postFileData({file: res, type: 'image'});
+      console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
       if (v == 'gallery') {
         setFieldValue('gallery', [...values?.gallery, uri]);
