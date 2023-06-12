@@ -24,18 +24,21 @@ import {mvs} from 'config/metrices';
 import Bold from 'typography/bold-text';
 import {Row} from 'components/atoms/row';
 import {UTILS} from 'utils';
+import {getHotelAttributes, postFileData} from 'services/api/hotel/api-actions';
+import {useDispatch} from 'react-redux';
 
 const AddHotel = props => {
   const {navigation} = props;
   const [addImage, setAddImage] = useState([]);
+  const [loading, setLoading] = React.useState(false);
   const initialValues = {
     title: '',
     content: '',
-    video_link: '',
-    banner_image: '',
+    video: '',
+    banner_image_id: '',
     gallery: [],
-    hotel_rating: '',
-    featured_image: '',
+    star_rate: '',
+    image_id: '',
     policy: [
       {
         title: '',
@@ -43,7 +46,7 @@ const AddHotel = props => {
       },
     ],
   };
-
+  const dispatch = useDispatch();
   const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
     useFormik({
       initialValues: initialValues,
@@ -52,27 +55,33 @@ const AddHotel = props => {
       validationSchema: addHotelValidation,
       onSubmit: () => {},
     });
+
+  React.useEffect(() => {
+    dispatch(getHotelAttributes());
+  }, []);
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddHotelLocation');
-      // if (isValid && Object.keys(touched).length > 0) {
-      //   try {
-      //     Alert.alert('onsubmit');
-
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // } else {
-      //   setFieldTouched('title', true);
-      //   setFieldTouched('content', true);
-      //   setFieldTouched('video_link', true);
-      //   setFieldTouched('banner_image', true);
-      //   setFieldTouched('hotel_rating', true);
-      //   setFieldTouched('featured_image', true);
-      //   setFieldTouched('gallery[0]', true);
-      //   setFieldTouched(`policy.[0].content`, true);
-      //   setFieldTouched(`policy.[0].title`, true);
-      // }
+      navigation?.navigate('AddHotelLocation', {values});
+      return;
+      console.log('valuess->>', values);
+      console.log('errors->>', errors);
+      if (isValid && Object.keys(touched).length > 0) {
+        try {
+          navigation?.navigate('AddHotelLocation', {values});
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        setFieldTouched('title', true);
+        setFieldTouched('content', true);
+        setFieldTouched('video', true);
+        setFieldTouched('banner_image_id', true);
+        setFieldTouched('star_rate', true);
+        setFieldTouched('image_id', true);
+        setFieldTouched('gallery[0]', true);
+        setFieldTouched(`policy.[0].content`, true);
+        setFieldTouched(`policy.[0].title`, true);
+      }
     } catch (error) {
       console.log('error=>', error);
     }
@@ -103,18 +112,25 @@ const AddHotel = props => {
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
-      console.log('res========>', res);
+      console.log('res=>>>', res);
+      const formData = new FormData();
+      formData.append('file', {...res});
+      formData.append('type', 'image');
+      const file_resp = await postFileData(formData);
+
+      console.log('file_resp:::========>', file_resp?.data);
       const uri = res.uri;
       if (v == 'gallery') {
         setFieldValue('gallery', [...values?.gallery, uri]);
         // setAddImage([...addImage, uri]);
       } else if (v == 'bannerImage') {
-        setFieldValue('banner_image', uri);
+        setFieldValue('banner_image_id', uri);
       } else {
-        setFieldValue('featured_image', uri);
+        setFieldValue('image_id', uri);
       }
     } catch (error) {
       console.log('upload image error', error);
+      Alert.alert('Error', UTILS?.returnError(error));
     }
   };
   return (
@@ -146,15 +162,13 @@ const AddHotel = props => {
         />
         <PrimaryInput
           error={
-            touched?.video_link && errors?.video_link
-              ? `${t(errors?.video_link)}`
-              : undefined
+            touched?.video && errors?.video ? `${t(errors?.video)}` : undefined
           }
           label={t('youtube_video')}
-          placeholder={t('youtube_video_link')}
-          onChangeText={str => setFieldValue('video_link', str)}
-          onBlur={() => setFieldTouched('video_link', true)}
-          value={values.video_link}
+          placeholder={t('youtube_video')}
+          onChangeText={str => setFieldValue('video', str)}
+          onBlur={() => setFieldTouched('video', true)}
+          value={values.video}
         />
         <Regular color={colors.primary} label={t('banner_image')} />
         <ImageBackground
@@ -169,12 +183,15 @@ const AddHotel = props => {
             textStyle={styles.buttonTextStyle}
           />
           <Image
-            source={{uri: values.banner_image}}
+            source={{uri: values.banner_image_id}}
             style={{width: '100%', height: '100%'}}
           />
         </ImageBackground>
-        {errors.banner_image && touched.banner_image && (
-          <Regular label={t(errors?.banner_image)} style={styles.errorLabel} />
+        {errors.banner_image_id && touched.banner_image_id && (
+          <Regular
+            label={t(errors?.banner_image_id)}
+            style={styles.errorLabel}
+          />
         )}
 
         <Regular
@@ -222,15 +239,15 @@ const AddHotel = props => {
         />
         <PrimaryInput
           error={
-            touched?.hotel_rating && errors?.hotel_rating
-              ? `${t(errors?.hotel_rating)}`
+            touched?.star_rate && errors?.star_rate
+              ? `${t(errors?.star_rate)}`
               : undefined
           }
           label={t('hotel_rating_standard')}
           placeholder={t('hotel_rating_standard')}
-          onChangeText={str => setFieldValue('hotel_rating', str)}
-          onBlur={() => setFieldTouched('hotel_rating', true)}
-          value={values.hotel_rating}
+          onChangeText={str => setFieldValue('star_rate', str)}
+          onBlur={() => setFieldTouched('star_rate', true)}
+          value={values.star_rate}
         />
         <Row style={{backgroundColor: colors.lightGray}}>
           <Bold label={t('policy')} color={colors.primary} fontSize={mvs(18)} />
@@ -304,15 +321,12 @@ const AddHotel = props => {
             textStyle={styles.buttonTextStyle}
           />
           <Image
-            source={{uri: values?.featured_image}}
+            source={{uri: values?.image_id}}
             style={{width: '100%', height: '100%'}}
           />
         </ImageBackground>
-        {errors?.featured_image && touched?.featured_image && (
-          <Regular
-            label={`${t(errors?.featured_image)}`}
-            style={styles.errorLabel}
-          />
+        {errors?.image_id && touched?.image_id && (
+          <Regular label={`${t(errors?.image_id)}`} style={styles.errorLabel} />
         )}
 
         <PrimaryButton

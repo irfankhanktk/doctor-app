@@ -6,7 +6,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
 import {PrimaryButton} from 'components/atoms/buttons';
+import {UTILS} from 'utils';
 const AddHotelLocation = props => {
+  const {values} = props?.route?.params || {};
+  console.log('values in map=>>', values);
   const {navigation} = props;
   const dispatch = useDispatch();
   // const {hotel} = useSelector(s => s);
@@ -15,6 +18,7 @@ const AddHotelLocation = props => {
   // console.log('marker cordinate check===>', markerCoordinates);
   const handleLongPress = event => {
     const {coordinate} = event.nativeEvent;
+    // UTILS._returnAddress();
     setMarkerCoordinates(coordinate);
   };
 
@@ -66,7 +70,23 @@ const AddHotelLocation = props => {
       <View style={styles.nextButton}>
         <PrimaryButton
           title="Next"
-          onPress={() => navigation.navigate('AddHotelPrice')}
+          onPress={async () => {
+            try {
+              const addressComponent = await UTILS._returnAddress(
+                markerCoordinates?.latitude,
+                markerCoordinates?.longitude,
+              );
+              console.log('addressComponent->>', addressComponent);
+              navigation.navigate('AddHotelPrice', {
+                ...values,
+                address: addressComponent?.fulladdress,
+                map_lat: markerCoordinates?.latitude,
+                map_lng: markerCoordinates?.longitude,
+              });
+            } catch (error) {
+              console.log('error in map location ::', error);
+            }
+          }}
         />
       </View>
     </View>

@@ -88,20 +88,20 @@ export const updatePasswordValidation = yup.object().shape({
 export const addHotelValidation = yup.object().shape({
   title: yup.string().required('title_required'),
   content: yup.string().required('content_required'),
-  hotel_rating: yup.string().required('hotel_rating_required'),
-  video_link: yup.string().required('link_required').url('invalid_link'),
+  star_rate: yup.string().required('hotel_rating_required'),
+  video: yup.string().required('link_required').url('invalid_link'),
   policy: yup.array().of(
     yup.object().shape({
       title: yup.string().required('policy_title'),
       content: yup.string().required('policy_content'),
     })
   ),
-  banner_image: yup.string().required('select_image'),
-   gallery: yup.array().of(
+  banner_image_id: yup.string().required('select_image'),
+  gallery: yup.array().of(
     yup.string().required('select_image')
   ),
-  featured_image: yup.string().required('select_image'),
-  
+  image_id: yup.string().required('select_image'),
+
 });
 export const addPriceHotelValidation = yup.object().shape({
   email: yup.string().email('invalid_email').required('req_email'),

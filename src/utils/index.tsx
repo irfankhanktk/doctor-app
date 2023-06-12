@@ -13,6 +13,9 @@ import Geolocation from 'react-native-geolocation-service';
 import ImagePicker from 'react-native-image-crop-picker';
 import uuid from 'react-native-uuid';
 import { NavigationProps } from '../types/navigation-types';
+import Geocoder from 'react-native-geocoding';
+Geocoder.init('AIzaSyCbFQqjZgQOWRMuQ_RpXU0kGAUIfJhDw98');
+
 // Initialize the module (needs to be done only once)
 const getErrorList = (data: any) => {
   const { message, errors } = data;
@@ -201,8 +204,8 @@ export const UTILS = {
     }
   },
 
-  _returnAddress: (addressObject: any) => {
-    // console.log('addressObject:', addressObject.results[0]);
+  _returnAddress: async (latitude: any, longitude: any) => {
+    const addressObject = await Geocoder.from(latitude || '', longitude || '')
     let returnAddress = {
       street_number: null,
       street_address: null,
@@ -343,16 +346,18 @@ export const UTILS = {
         // height: 800,
         cropping: true,
         includeBase64: false,
-        compressImageQuality: 0.5,
-        compressImageMaxWidth: 1500,
-        compressImageMaxHeight: 1000,
+        // compressImageQuality: 0.5,
+        // compressImageMaxWidth: 1500,
+        // compressImageMaxHeight: 1000,
       });
+      const dotIndex = image?.path?.lastIndexOf('.');
+      const extension = image?.path.substring(dotIndex + 1);
       return {
         uri:
           Platform.OS === 'android'
             ? image?.path
             : image?.path.replace('file://', ''),
-        name: image?.filename || `${new Date().getTime()}`,
+        name: image?.filename || `${new Date().getTime()}.${extension}`,
         type: image?.mime,
       };
     } catch (error: any) {

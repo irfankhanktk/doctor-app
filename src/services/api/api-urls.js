@@ -58,5 +58,6 @@ export const URLS = {
       get_room_availability: 'user/hotel/', // 9/availability/loadDates?id=35&start=2023-05-29&end=2023-07-10
       store_room_availability: '',
     },
+    store_file: 'hotel/store',
   },
 };

@@ -71,19 +71,22 @@ const Signup = (props: props) => {
   console.log('errors=>', errors);
   console.log('values=>', values);
   React.useEffect(() => {
-    Geocoder.from(location?.latitude || '', location?.longitude || '')
-      .then(async json => {
-        var addressComponent = UTILS._returnAddress(json);
+    (async () => {
+      try {
+
+        const addressComponent = await UTILS._returnAddress(location?.latitude, location?.longitude);
         // console.log('addressComponent=>', addressComponent);
         setFieldValue('map_lat', location?.latitude);
         setFieldValue('map_lng', location?.longitude);
         setFieldValue('city', addressComponent?.city);
         setFieldValue('state', addressComponent?.province);
         setFieldValue('country', addressComponent?.country);
-      })
-      .catch(error => {
-        console.warn(error);
-      });
+      } catch (error) {
+        console.log('error in location address', error);
+
+      }
+    })()
+
   }, []);
 
   return (

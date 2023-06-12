@@ -18,17 +18,19 @@ import {colors} from 'config/colors';
 import ExtraPriceBottomSheetModal from 'components/molecules/hotel/dropdown-picker/extraPriceType';
 import BuyerFeeBottomSheetModal from 'components/molecules/hotel/dropdown-picker/buyerFeeType';
 const AddHotelPrice = props => {
-  const {navigation} = props;
+  const {navigation, route} = props;
+
   // const index = 0;
   const [index, setIndex] = React.useState(0);
   const [buyerFeeIndex, setBuyerFeeIndex] = React.useState(0);
   const [extraPrice, setExteraPrice] = React.useState(false);
   const [buyerFeeType, setBuyerFeeType] = React.useState(false);
   const initialValues = {
-    check_in: '',
-    check_out: '',
-    minimum_advance_reservation: '',
-    minimum_day_stay: '',
+    ...route?.params,
+    check_in_time: '',
+    check_out_time: '',
+    min_day_before_booking: '',
+    min_day_stays: '',
     price: '',
     enable_extra_price: '0',
     extra_price: [
@@ -40,7 +42,7 @@ const AddHotelPrice = props => {
       },
     ],
     enable_service_fee: '0',
-    buyer_fees: [
+    service_fee: [
       {
         name: '',
         desc: '',
@@ -50,7 +52,6 @@ const AddHotelPrice = props => {
       },
     ],
   };
-
   const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
     useFormik({
       initialValues: initialValues,
@@ -61,7 +62,7 @@ const AddHotelPrice = props => {
     });
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddHotelAttributes');
+      navigation?.navigate('AddHotelAttributes', {...values});
       // if (isValid && Object.keys(touched).length > 0) {
       //   try {
       //     Alert.alert('onsubmit');
@@ -83,23 +84,25 @@ const AddHotelPrice = props => {
   };
   const handleAddExtraPrice = () => {
     setFieldValue('extra_price', [
-      ...values.extra_price,
+      ...values?.extra_price,
       {name: '', price: '', type: '', per_person: '0'},
     ]);
   };
   const handleRemoveExteraPrice = index => {
-    const updatedExteraPrice = values.extra_price.filter((_, i) => i !== index);
+    const updatedExteraPrice = values?.extra_price.filter(
+      (_, i) => i !== index,
+    );
     setFieldValue('extra_price', updatedExteraPrice);
   };
   const handleAddService = () => {
-    setFieldValue('buyer_fees', [
-      ...values.buyer_fees,
+    setFieldValue('service_fee', [
+      ...values?.service_fee,
       {name: '', desc: '', price: '', type: '', per_person: '0'},
     ]);
   };
   const handleRemoveService = index => {
-    const updatedService = values.buyer_fees.filter((_, i) => i !== index);
-    setFieldValue('buyer_fees', updatedService);
+    const updatedService = values?.service_fee.filter((_, i) => i !== index);
+    setFieldValue('service_fee', updatedService);
   };
 
   console.log('values me check===>', values);
@@ -110,42 +113,39 @@ const AddHotelPrice = props => {
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
           error={
-            touched?.check_in && errors?.check_in
-              ? `${t(errors?.check_in)}`
+            touched?.check_in_time && errors?.check_in_time
+              ? `${t(errors?.check_in_time)}`
               : undefined
           }
-          label={t('check_in')}
-          placeholder={t('check_in_content')}
-          onChangeText={str => setFieldValue('check_in', str)}
-          onBlur={() => setFieldTouched('check_in', true)}
-          value={values.check_in}
+          label={t('check_in_time')}
+          placeholder={t('check_in_time_content')}
+          onChangeText={str => setFieldValue('check_in_time', str)}
+          onBlur={() => setFieldTouched('check_in_time', true)}
+          value={values?.check_in_time}
         />
         <PrimaryInput
           error={
-            touched?.check_out && errors?.check_out
-              ? `${t(errors?.check_out)}`
+            touched?.check_out_time && errors?.check_out_time
+              ? `${t(errors?.check_out_time)}`
               : undefined
           }
           label={t('check_out')}
           placeholder={t('check_out_content')}
-          onChangeText={str => setFieldValue('check_out', str)}
-          onBlur={() => setFieldTouched('check_out', true)}
-          value={values.check_out}
+          onChangeText={str => setFieldValue('check_out_time', str)}
+          onBlur={() => setFieldTouched('check_out_time', true)}
+          value={values?.check_out_time}
         />
         <PrimaryInput
           error={
-            touched?.minimum_advance_reservation &&
-            errors?.minimum_advance_reservation
-              ? `${t(errors?.minimum_advance_reservation)}`
+            touched?.min_day_before_booking && errors?.min_day_before_booking
+              ? `${t(errors?.min_day_before_booking)}`
               : undefined
           }
           label={t('min_advance_reservation')}
           placeholder={t('0')}
-          onChangeText={str =>
-            setFieldValue('minimum_advance_reservation', str)
-          }
-          onBlur={() => setFieldTouched('minimum_advance_reservation', true)}
-          value={values.minimum_advance_reservation}
+          onChangeText={str => setFieldValue('min_day_before_booking', str)}
+          onBlur={() => setFieldTouched('min_day_before_booking', true)}
+          value={values?.min_day_before_booking}
         />
         <Regular
           label={'(Optional)'}
@@ -155,15 +155,15 @@ const AddHotelPrice = props => {
 
         <PrimaryInput
           error={
-            touched?.minimum_day_stay && errors?.minimum_day_stay
-              ? `${t(errors?.minimum_day_stay)}`
+            touched?.min_day_stays && errors?.min_day_stays
+              ? `${t(errors?.min_day_stays)}`
               : undefined
           }
           label={t('min_day_stay')}
           placeholder={t('Ex: 2')}
-          onChangeText={str => setFieldValue('minimum_day_stay', str)}
-          onBlur={() => setFieldTouched('minimum_day_stay', true)}
-          value={values.minimum_day_stay}
+          onChangeText={str => setFieldValue('min_day_stays', str)}
+          onBlur={() => setFieldTouched('min_day_stays', true)}
+          value={values?.min_day_stays}
         />
         <Regular
           label={'(Optional)'}
@@ -178,21 +178,21 @@ const AddHotelPrice = props => {
           placeholder={t('hotel_price')}
           onChangeText={str => setFieldValue('price', str)}
           onBlur={() => setFieldTouched('price', true)}
-          value={values.price}
+          value={values?.price}
         />
         <Row style={{justifyContent: 'flex-start'}}>
           <Checkbox
-            checked={values.enable_extra_price === '1'}
+            checked={values?.enable_extra_price === '1'}
             onPress={() =>
               setFieldValue(
                 'enable_extra_price',
-                values.enable_extra_price === '1' ? '0' : '1',
+                values?.enable_extra_price === '1' ? '0' : '1',
               )
             }
           />
           <Regular label={t('enable_price')} style={{marginLeft: mvs(10)}} />
         </Row>
-        {values.enable_extra_price === '1' ? (
+        {values?.enable_extra_price === '1' ? (
           <>
             {values?.extra_price.map((extra_price, index) => (
               <View style={styles.policyContainer} key={index}>
@@ -214,7 +214,7 @@ const AddHotelPrice = props => {
                     setFieldValue(`extra_price.${index}.name`, str)
                   }
                   onBlur={() => setFieldTouched(`extra_price.[0].name`, true)}
-                  value={values.extra_price[index].name}
+                  value={values?.extra_price[index].name}
                   error={
                     touched?.extra_price &&
                     touched?.extra_price[index] &&
@@ -232,7 +232,7 @@ const AddHotelPrice = props => {
                     setFieldValue(`extra_price.${index}.price`, str)
                   }
                   onBlur={() => setFieldTouched(`extra_price.[0].price`, true)}
-                  value={values.extra_price[index].price}
+                  value={values?.extra_price[index].price}
                   error={
                     touched?.extra_price &&
                     touched?.extra_price[index] &&
@@ -255,7 +255,7 @@ const AddHotelPrice = props => {
                       setFieldValue(`extra_price.${index}.type`, str)
                     }
                     onBlur={() => setFieldTouched(`extra_price.[0].type`, true)}
-                    value={values.extra_price[index].type}
+                    value={values?.extra_price[index].type}
                     error={
                       touched?.extra_price &&
                       touched?.extra_price[index] &&
@@ -268,11 +268,11 @@ const AddHotelPrice = props => {
                 </TouchableOpacity>
                 <Row style={{justifyContent: 'flex-start'}}>
                   <Checkbox
-                    checked={values.extra_price[index].per_person === '1'}
+                    checked={values?.extra_price[index].per_person === '1'}
                     onPress={() =>
                       setFieldValue(
                         `extra_price.[${index}].per_person`,
-                        values.extra_price[index].per_person === '1'
+                        values?.extra_price[index].per_person === '1'
                           ? '0'
                           : '1',
                       )
@@ -295,22 +295,22 @@ const AddHotelPrice = props => {
         ) : null}
         <Row style={{justifyContent: 'flex-start', marginTop: mvs(10)}}>
           <Checkbox
-            checked={values.enable_service_fee === '1'}
+            checked={values?.enable_service_fee === '1'}
             onPress={() =>
               setFieldValue(
                 'enable_service_fee',
-                values.enable_service_fee === '1' ? '0' : '1',
+                values?.enable_service_fee === '1' ? '0' : '1',
               )
             }
           />
 
           <Regular label={t('enable_extra')} style={{marginLeft: mvs(10)}} />
         </Row>
-        {values.enable_service_fee === '1' ? (
+        {values?.enable_service_fee === '1' ? (
           <>
-            {values?.buyer_fees.map((buyer_fees, index) => (
+            {values?.service_fee?.map((service_fee, index) => (
               <View style={styles.enableServiceContainer} key={index}>
-                {values?.buyer_fees?.length !== 1 && (
+                {values?.service_fee?.length !== 1 && (
                   <TouchableOpacity
                     style={{alignSelf: 'flex-end'}}
                     onPress={() => handleRemoveService(index)}>
@@ -326,17 +326,17 @@ const AddHotelPrice = props => {
                   label={t('name')}
                   placeholder={t('fee_name')}
                   onChangeText={str =>
-                    setFieldValue(`buyer_fees.${index}.name`, str)
+                    setFieldValue(`service_fee.${index}.name`, str)
                   }
-                  onBlur={() => setFieldTouched(`buyer_fees.[0].name`, true)}
-                  value={values.buyer_fees[index].name}
+                  onBlur={() => setFieldTouched(`service_fee.[0].name`, true)}
+                  value={values?.service_fee[index]?.name}
                   error={
-                    touched?.buyer_fees &&
-                    touched?.buyer_fees[index] &&
-                    errors?.buyer_fees &&
-                    errors?.buyer_fees[index] &&
-                    `${t(errors.buyer_fees[0].name)}` &&
-                    `${t(errors?.buyer_fees[0]?.name)}`
+                    touched?.service_fee &&
+                    touched?.service_fee[index] &&
+                    errors?.service_fee &&
+                    errors?.service_fee[index] &&
+                    `${t(errors.service_fee[0].name)}` &&
+                    `${t(errors?.service_fee[0]?.name)}`
                   }
                 />
 
@@ -344,34 +344,34 @@ const AddHotelPrice = props => {
                   label={t('fee_description')}
                   placeholder={t('fee_desc')}
                   onChangeText={str =>
-                    setFieldValue(`buyer_fees.${index}.desc`, str)
+                    setFieldValue(`service_fee.${index}.desc`, str)
                   }
-                  onBlur={() => setFieldTouched(`buyer_fees.[0].desc`, true)}
-                  value={values.buyer_fees[index].desc}
+                  onBlur={() => setFieldTouched(`service_fee.[0].desc`, true)}
+                  value={values?.service_fee[index].desc}
                   error={
-                    touched?.buyer_fees &&
-                    touched?.buyer_fees[index] &&
-                    errors?.buyer_fees &&
-                    errors?.buyer_fees[0] &&
-                    `${t(errors.buyer_fees[0]?.desc)}` &&
-                    `${t(errors?.buyer_fees[0]?.desc)}`
+                    touched?.service_fee &&
+                    touched?.service_fee[index] &&
+                    errors?.service_fee &&
+                    errors?.service_fee[0] &&
+                    `${t(errors.service_fee[0]?.desc)}` &&
+                    `${t(errors?.service_fee[0]?.desc)}`
                   }
                 />
                 <PrimaryInput
                   label={t('price')}
                   placeholder={t('0')}
                   onChangeText={str =>
-                    setFieldValue(`buyer_fees.${index}.price`, str)
+                    setFieldValue(`service_fee.${index}.price`, str)
                   }
-                  onBlur={() => setFieldTouched(`buyer_fees.[0].price`, true)}
-                  value={values.buyer_fees[index].price}
+                  onBlur={() => setFieldTouched(`service_fee.[0].price`, true)}
+                  value={values?.service_fee[index].price}
                   error={
-                    touched?.buyer_fees &&
-                    touched?.buyer_fees[index] &&
-                    errors?.buyer_fees &&
-                    errors?.buyer_fees[0] &&
-                    `${t(errors.buyer_fees[0]?.price)}` &&
-                    `${t(errors?.buyer_fees[0]?.price)}`
+                    touched?.service_fee &&
+                    touched?.service_fee[index] &&
+                    errors?.service_fee &&
+                    errors?.service_fee[0] &&
+                    `${t(errors.service_fee[0]?.price)}` &&
+                    `${t(errors?.service_fee[0]?.price)}`
                   }
                 />
                 <TouchableOpacity
@@ -384,27 +384,29 @@ const AddHotelPrice = props => {
                     placeholder={t('select')}
                     editable={false}
                     onChangeText={str =>
-                      setFieldValue(`buyer_fees.${index}.type`, str)
+                      setFieldValue(`service_fee.${index}.type`, str)
                     }
-                    onBlur={() => setFieldTouched(`buyer_fees.[0].type`, true)}
-                    value={values.buyer_fees[index].type}
+                    onBlur={() => setFieldTouched(`service_fee.[0].type`, true)}
+                    value={values?.service_fee[index].type}
                     error={
-                      touched?.buyer_fees &&
-                      touched?.buyer_fees[index] &&
-                      errors?.buyer_fees &&
-                      errors?.buyer_fees[0] &&
-                      `${t(errors.buyer_fees[0]?.type)}` &&
-                      `${t(errors?.buyer_fees[0]?.type)}`
+                      touched?.service_fee &&
+                      touched?.service_fee[index] &&
+                      errors?.service_fee &&
+                      errors?.service_fee[0] &&
+                      `${t(errors.service_fee[0]?.type)}` &&
+                      `${t(errors?.service_fee[0]?.type)}`
                     }
                   />
                 </TouchableOpacity>
                 <Row style={{justifyContent: 'flex-start'}}>
                   <Checkbox
-                    checked={values.buyer_fees[index].per_person === '1'}
+                    checked={values?.service_fee[index].per_person === '1'}
                     onPress={() =>
                       setFieldValue(
-                        `buyer_fees.[${index}].per_person`,
-                        values.buyer_fees[index].per_person === '1' ? '0' : '1',
+                        `service_fee.[${index}].per_person`,
+                        values?.service_fee[index].per_person === '1'
+                          ? '0'
+                          : '1',
                       )
                     }
                   />
@@ -436,18 +438,18 @@ const AddHotelPrice = props => {
           setExteraPrice(false);
           setIndex(0);
         }}
-        value={values.extra_price[index].type}
+        value={values?.extra_price[index].type}
       />
       <BuyerFeeBottomSheetModal
         visible={buyerFeeType}
         onChangeText={str =>
-          setFieldValue(`buyer_fees.[${buyerFeeIndex}].type`, str)
+          setFieldValue(`service_fee.[${buyerFeeIndex}].type`, str)
         }
         onClose={() => {
           setBuyerFeeType(false);
           setBuyerFeeIndex(0);
         }}
-        value={values.buyer_fees[buyerFeeIndex].type}
+        value={values?.service_fee[buyerFeeIndex].type}
       />
     </View>
   );
