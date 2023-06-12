@@ -168,7 +168,8 @@
 "number_of_beds":"عدد الأسرة",
 "room_size":"حجم الغرفة",
 "max_adults":"ماكس الكبار",
-"max_children":"ماكس للأطفال"
+"max_children":"ماكس للأطفال",
+"room_amenities":"وسائل الراحة في الغرفة"
 
 
 
