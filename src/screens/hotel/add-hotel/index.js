@@ -29,14 +29,13 @@ import {useDispatch} from 'react-redux';
 
 const AddHotel = props => {
   const {navigation} = props;
-  const [addImage, setAddImage] = useState([]);
   const [loading, setLoading] = React.useState(false);
   const initialValues = {
     title: '',
     content: '',
     video: '',
     banner_image_id: '',
-    gallery: [{url: ''}],
+    gallery: [],
     star_rate: '',
     image_id: '',
     policy: [
@@ -61,8 +60,6 @@ const AddHotel = props => {
   }, []);
   const onSubmit = async () => {
     try {
-      // navigation?.navigate('AddHotelLocation', {values});
-      // return;
       console.log('valuess->>', values);
       console.log('errors->>', errors);
       if (isValid && Object.keys(touched).length > 0) {
@@ -94,13 +91,7 @@ const AddHotel = props => {
     const updatedPolicies = values.policy.filter((_, i) => i !== index);
     setFieldValue('policy', updatedPolicies);
   };
-  // const onImageRemove = index => {
-  //   let copy = [...addImage];
-  //   copy = copy.filter((e, i) => {
-  //     return i != index;
-  //   });
-  //   setAddImage(copy);
-  // };
+
   const onImageRemove = index => {
     let copy = [...values.gallery];
     copy = copy.filter((e, i) => {
@@ -115,16 +106,15 @@ const AddHotel = props => {
       const file_resp = await postFileData({file: res, type: 'image'});
       console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
-      if (v == 'gallery') {
-        setFieldTouched('gallery[0].url', true);
-        setFieldValue('gallery', [...values?.gallery, file_resp?.data]);
-        // setAddImage([...addImage, uri]);
+
+      if (v === 'gallery' && file_resp?.data) {
+        setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
+          ...file_resp?.data,
+        });
       } else if (v == 'bannerImage') {
-        setFieldTouched('banner_image_id.url', true);
         setFieldValue('banner_image_id', file_resp?.data);
       } else {
         setFieldValue('image_id', file_resp?.data);
-        setFieldTouched('image_id.url', true);
       }
     } catch (error) {
       console.log('upload image error', error);
@@ -284,15 +274,17 @@ const AddHotel = props => {
             <PrimaryInput
               label={t('title')}
               placeholder={t('policy_title')}
-              onChangeText={str => setFieldValue(`policy.[0].title`, str)}
-              onBlur={() => setFieldTouched(`policy.[0].title`, true)}
+              onChangeText={str =>
+                setFieldValue(`policy.[${index}].title`, str)
+              }
+              onBlur={() => setFieldTouched(`policy.[${index}].title`, true)}
               value={values.policy[index].title}
               error={
                 touched?.policy &&
                 touched?.policy[index] &&
                 errors?.policy &&
                 errors?.policy[index] &&
-                `${t(errors.policy[0].title)}` &&
+                `${t(errors.policy[0]?.title)}` &&
                 `${t(errors?.policy[0]?.title)}`
               }
             />
@@ -303,8 +295,8 @@ const AddHotel = props => {
               onChangeText={str =>
                 setFieldValue(`policy.${index}.content`, str)
               }
-              onBlur={() => setFieldTouched(`policy.[0].content`, true)}
-              value={values.policy[index].content}
+              onBlur={() => setFieldTouched(`policy.${index}.content`, true)}
+              value={values?.policy[index].content}
               error={
                 touched?.policy &&
                 touched?.policy[index] &&

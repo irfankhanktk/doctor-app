@@ -7,10 +7,11 @@ import { setHotelAttributes, setHotels } from '../../../store/reducers/hotel-red
 import { UTILS } from 'utils';
 import { URLS } from '../api-urls';
 import React from 'react';
-export const getAllHotels = () => {
+export const getAllHotels = (setLoading:(bool:boolean)=>void) => {
     
     return async (dispatch: AppDispatch, getState: () => RootState) => {
         try {
+            setLoading(true)
             const res = await getData(`${URLS.hotel_vendor.get_hotel_list}per_page=200`);
             // console.log('res-::hotel>>>', res);
             
@@ -18,6 +19,8 @@ export const getAllHotels = () => {
         } catch (error: any) {
             console.log('error in getAllHospitals', UTILS.returnError(error));
             Alert.alert('', UTILS.returnError(error));
+        }finally{
+            setLoading(false)
         }
     };
 };

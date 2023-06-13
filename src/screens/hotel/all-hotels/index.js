@@ -21,18 +21,17 @@ import {getAllHotels} from 'services/api/hotel/api-actions';
 const AllHotels = props => {
   const [cartModal, setCardModal] = React.useState(false);
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [pageLoading, setPageLoading] = React.useState(false);
   const dispatch = useAppDispatch();
   const {hotel} = useSelector(s => s);
   const {hotels} = hotel;
   // const {locations, hotel_filter, hotels} = hotel;
-  const [filterModal, setFilterModal] = React.useState(false);
-  const [allHotels, setAllHotels] = React.useState([]);
+
   const [page, setPage] = React.useState(1);
   const {t} = i18n;
   const getHomeHotels = () => {
-    dispatch(getAllHotels());
+    dispatch(getAllHotels(setLoading));
   };
   React.useEffect(() => {
     getHomeHotels();

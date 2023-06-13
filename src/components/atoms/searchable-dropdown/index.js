@@ -15,7 +15,7 @@ import Regular from 'typography/regular-text';
 import {Row} from '../row';
 
 const SearchableDropDown = ({
-  items = [{title: 'item 1'}, {title: 'item 2'}, {title: 'item 3'}],
+  items = [{title: 'Pakistan'}, {title: 'Lahore'}, {title: 'item 3'}],
   selectedItem = {},
   onChangeItem = item => {},
 }) => {

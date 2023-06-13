@@ -12,8 +12,9 @@ const AddHotelLocation = props => {
   console.log('values in map=>>', values);
   const {navigation} = props;
   const dispatch = useDispatch();
-  // const {hotel} = useSelector(s => s);
-  // const {locations} = hotel;
+  const {hotel} = useSelector(s => s);
+  const {address} = hotel;
+  // console.log('address ====>', hotel);
   const [markerCoordinates, setMarkerCoordinates] = useState(null);
   // console.log('marker cordinate check===>', markerCoordinates);
   const handleLongPress = event => {
@@ -62,7 +63,7 @@ const AddHotelLocation = props => {
       </TouchableOpacity>
       <View style={styles.searchContainer}>
         <SearchableDropDown
-          // items={locations}
+          items={address}
           selectedItem={selectedItem}
           onChangeItem={setSelectedItem}
         />

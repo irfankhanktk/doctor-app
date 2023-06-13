@@ -31,36 +31,14 @@ const AddHotelAttributes = props => {
     ...ele,
     data: ele?.terms || [],
   }));
-  //  [
-  //   {
-  //     title: 'PROPERTY TYPE',
-  //     data: [
-  //       {id: 1, name: 'Homestays'},
-  //       {id: 2, name: 'Hotels'},
-  //       {id: 3, name: 'Apartments'},
-  //     ],
-  //   },
-  //   {
-  //     title: 'FACILITIES',
-  //     data: [
-  //       {id: 4, name: 'Wake-up call'},
-  //       {id: 5, name: 'Bicycle hire'},
-  //       {id: 6, name: 'Car hire'},
-  //     ],
-  //   },
-  //   {
-  //     title: 'HOTEL SERVICE',
-  //     data: [
-  //       {id: 7, name: 'Hotel transport'},
-  //       {id: 8, name: 'Fiesta Restaurant'},
-  //       {id: 9, name: 'Havana Lobby bar'},
-  //     ],
-  //   },
-  // ];
+
   const onSubmit = async () => {
     try {
       const res = await onAddOrUpdateHotel({
         ...route?.params,
+        gallery: route?.params?.gallery?.map(x => x?.data?.id)?.join(),
+        banner_image_id: route?.params?.banner_image_id?.data?.id,
+        image_id: route?.params?.image_id?.data?.id,
         terms: selectedTypes?.map(x => x?.id),
       });
       console.log('res=>>>add update hotel>>', res);
