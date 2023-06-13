@@ -59,5 +59,6 @@ export const URLS = {
       store_room_availability: '',
     },
     store_file: 'hotel/store',
+    locations: 'locations',
   },
 };

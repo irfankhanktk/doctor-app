@@ -7,14 +7,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
 import {PrimaryButton} from 'components/atoms/buttons';
 import {UTILS} from 'utils';
+import {getLocations} from 'services/api/hotel/api-actions';
 const AddHotelLocation = props => {
   const {values} = props?.route?.params || {};
   console.log('values in map=>>', values);
   const {navigation} = props;
   const dispatch = useDispatch();
   const {hotel} = useSelector(s => s);
-  const {address} = hotel;
-  // console.log('address ====>', hotel);
+  const {locations} = hotel;
   const [markerCoordinates, setMarkerCoordinates] = useState(null);
   // console.log('marker cordinate check===>', markerCoordinates);
   const handleLongPress = event => {
@@ -35,6 +35,9 @@ const AddHotelLocation = props => {
   const handleRegionChange = region => {
     mapRef?.current?.animateToRegion(region, 1000);
   };
+  React.useEffect(() => {
+    dispatch(getLocations());
+  }, []);
   return (
     <View style={styles.container}>
       <MapView
@@ -63,7 +66,7 @@ const AddHotelLocation = props => {
       </TouchableOpacity>
       <View style={styles.searchContainer}>
         <SearchableDropDown
-          items={address}
+          items={locations}
           selectedItem={selectedItem}
           onChangeItem={setSelectedItem}
         />
