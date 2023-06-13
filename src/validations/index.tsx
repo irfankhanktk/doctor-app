@@ -96,13 +96,28 @@ export const addHotelValidation = yup.object().shape({
       content: yup.string().required('policy_content'),
     })
   ),
-  banner_image_id: yup.string().required('select_image'),
-  gallery: yup.array().of(
-    yup.string().required('select_image')
-  ),
-  image_id: yup.string().required('select_image'),
-
+  banner_image_id: yup
+    .object()
+    .shape({
+      url: yup.string().required('select_image'),
+    })
+    .required('select_image'),
+  gallery: yup
+    .array()
+    .of(
+      yup.object().shape({
+        url: yup.string().required('select_image'),
+      })
+    )
+    .required('select_image'),
+  image_id: yup
+    .object()
+    .shape({
+      url: yup.string().required('select_image'),
+    })
+    .required('select_image'),
 });
+
 export const addPriceHotelValidation = yup.object().shape({
   email: yup.string().email('invalid_email').required('req_email'),
   old_password: yup.string().required('req_pass').min(8, 'weak_pass'),

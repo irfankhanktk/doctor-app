@@ -36,7 +36,7 @@ const AddHotel = props => {
     content: '',
     video: '',
     banner_image_id: '',
-    gallery: [],
+    gallery: [{url: ''}],
     star_rate: '',
     image_id: '',
     policy: [
@@ -61,8 +61,8 @@ const AddHotel = props => {
   }, []);
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddHotelLocation', {values});
-      return;
+      // navigation?.navigate('AddHotelLocation', {values});
+      // return;
       console.log('valuess->>', values);
       console.log('errors->>', errors);
       if (isValid && Object.keys(touched).length > 0) {
@@ -75,12 +75,12 @@ const AddHotel = props => {
         setFieldTouched('title', true);
         setFieldTouched('content', true);
         setFieldTouched('video', true);
-        setFieldTouched('banner_image_id', true);
         setFieldTouched('star_rate', true);
-        setFieldTouched('image_id', true);
-        setFieldTouched('gallery[0]', true);
-        setFieldTouched(`policy.[0].content`, true);
-        setFieldTouched(`policy.[0].title`, true);
+        setFieldTouched('banner_image_id.url', true);
+        setFieldTouched('image_id.url', true);
+        setFieldTouched('gallery[0].url', true);
+        setFieldTouched(`policy[0].content`, true);
+        setFieldTouched(`policy[0].title`, true);
       }
     } catch (error) {
       console.log('error=>', error);
@@ -116,12 +116,15 @@ const AddHotel = props => {
       console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
       if (v == 'gallery') {
-        setFieldValue('gallery', [...values?.gallery, uri]);
+        setFieldTouched('gallery[0].url', true);
+        setFieldValue('gallery', [...values?.gallery, file_resp?.data]);
         // setAddImage([...addImage, uri]);
       } else if (v == 'bannerImage') {
-        setFieldValue('banner_image_id', uri);
+        setFieldTouched('banner_image_id.url', true);
+        setFieldValue('banner_image_id', file_resp?.data);
       } else {
-        setFieldValue('image_id', uri);
+        setFieldValue('image_id', file_resp?.data);
+        setFieldTouched('image_id.url', true);
       }
     } catch (error) {
       console.log('upload image error', error);
@@ -177,14 +180,16 @@ const AddHotel = props => {
             containerStyle={styles.buttonContainerStyle}
             textStyle={styles.buttonTextStyle}
           />
-          <Image
-            source={{uri: values.banner_image_id}}
-            style={{width: '100%', height: '100%'}}
-          />
+          {values.banner_image_id?.url ? (
+            <Image
+              source={{uri: values.banner_image_id?.url}}
+              style={{width: '100%', height: '100%'}}
+            />
+          ) : null}
         </ImageBackground>
-        {errors.banner_image_id && touched.banner_image_id && (
+        {errors.banner_image_id?.url && touched.banner_image_id?.url && (
           <Regular
-            label={t(errors?.banner_image_id)}
+            label={t(errors?.banner_image_id?.url)}
             style={styles.errorLabel}
           />
         )}
@@ -207,26 +212,38 @@ const AddHotel = props => {
             horizontal={true}
             data={values?.gallery}
             renderItem={({item, index}) => {
+              if (!item?.url) return null;
               return (
-                <View style={styles.ImageContainer}>
-                  <Image
-                    source={{uri: item || null}}
-                    resizeMode="contain"
-                    style={styles.image}
-                  />
-                  <TouchableOpacity
-                    onPress={() => onImageRemove(index)}
-                    style={styles.removeContainer}>
-                    <Text style={styles.txtRemove}>Remove</Text>
-                  </TouchableOpacity>
-                </View>
+                <>
+                  <View style={styles.ImageContainer}>
+                    <Image
+                      source={{uri: item?.url || null}}
+                      resizeMode="contain"
+                      style={styles.image}
+                    />
+
+                    <TouchableOpacity
+                      onPress={() => onImageRemove(index)}
+                      style={styles.removeContainer}>
+                      <Text style={styles.txtRemove}>Remove</Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
               );
             }}
           />
         </View>
-        {errors?.gallery && touched?.gallery && (
-          <Regular style={styles.errorLabel} label={t(errors?.gallery)} />
-        )}
+        {errors?.gallery &&
+          errors?.gallery[0] &&
+          errors?.gallery[0]?.url &&
+          touched?.gallery &&
+          touched?.gallery[0] &&
+          touched?.gallery[0]?.url && (
+            <Regular
+              style={styles.errorLabel}
+              label={t(errors?.gallery[0]?.url)}
+            />
+          )}
         <Bold
           label={t('hotle_policy')}
           color={colors.primary}
@@ -315,13 +332,18 @@ const AddHotel = props => {
             containerStyle={styles.buttonContainerStyle}
             textStyle={styles.buttonTextStyle}
           />
-          <Image
-            source={{uri: values?.image_id}}
-            style={{width: '100%', height: '100%'}}
-          />
+          {values?.image_id?.url ? (
+            <Image
+              source={{uri: values?.image_id?.url}}
+              style={{width: '100%', height: '100%'}}
+            />
+          ) : null}
         </ImageBackground>
-        {errors?.image_id && touched?.image_id && (
-          <Regular label={`${t(errors?.image_id)}`} style={styles.errorLabel} />
+        {errors?.image_id?.url && touched?.image_id?.url && (
+          <Regular
+            label={`${t(errors?.image_id?.url)}`}
+            style={styles.errorLabel}
+          />
         )}
 
         <PrimaryButton

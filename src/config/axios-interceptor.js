@@ -18,7 +18,7 @@ client.interceptors.request.use(
     let token = await UTILS.getItem(STORAGEKEYS.token);
     console.log('token->>>', token);
     config.headers = {
-      Accept: '*/*',
+      Accept: 'application/json',
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',
     };
