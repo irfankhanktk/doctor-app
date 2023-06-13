@@ -21,6 +21,7 @@ const AddHotelLocation = props => {
     const {coordinate} = event.nativeEvent;
     // UTILS._returnAddress();
     setMarkerCoordinates(coordinate);
+    handleRegionChange(coordinate);
   };
 
   const [selectedItem, setSelectedItem] = React.useState(null);
@@ -68,7 +69,10 @@ const AddHotelLocation = props => {
         <SearchableDropDown
           items={locations}
           selectedItem={selectedItem}
-          onChangeItem={setSelectedItem}
+          onChangeItem={item => {
+            console.log('item::', item);
+            setSelectedItem(item);
+          }}
         />
       </View>
       <View style={styles.nextButton}>
