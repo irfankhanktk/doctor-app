@@ -1,5 +1,5 @@
-import {PrimaryButton} from 'components/atoms/buttons';
-import {Row} from 'components/atoms/row';
+import { PrimaryButton } from 'components/atoms/buttons';
+import { Row } from 'components/atoms/row';
 import React from 'react';
 import {
   ImageBackground,
@@ -13,20 +13,20 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-import {colors} from 'config/colors';
-import {mvs} from 'config/metrices';
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
 const HotelCard = ({
   item,
   style,
-  onPress = () => {},
-  onPressCart = () => {},
+  onPress = () => { },
+  onPressEdit = () => { },
 }) => {
-  const {t} = i18n;
+  const { t } = i18n;
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <ImageBackground
-        source={{uri: `${item?.image_id}`}}
+        source={{ uri: `${item?.image_id}` }}
         imageStyle={styles.imgStyle}
         style={styles.bg}>
         <LinearGradient
@@ -39,15 +39,16 @@ const HotelCard = ({
           <Row style={styles.row}>
             <View>
               <Medium label={item?.title} color={colors.white} />
-              <Row style={{justifyContent: 'flex-start'}}>
+              <Row style={{ justifyContent: 'flex-start' }}>
                 {/* <SpecialistLocation /> */}
                 <Entypo
                   name="location"
                   color={colors.red}
                   size={mvs(18)}
-                  style={{marginRight: mvs(10)}}
+                  style={{ marginRight: mvs(10) }}
                 />
                 <Regular
+                  style={{ flex: 1 }}
                   fontSize={mvs(12)}
                   label={item?.address}
                   color={colors.white}
@@ -55,7 +56,7 @@ const HotelCard = ({
               </Row>
             </View>
             <PrimaryButton
-              onPress={onPressCart}
+              onPress={onPressEdit}
               containerStyle={styles.btn}
               textStyle={styles.btnTxt}
               title={`${item?.price} / ${t('night')}`}
@@ -73,9 +74,9 @@ const HotelCard = ({
         />
       </Row>
       {item?.is_featured ? (
-        <View style={styles.heartContainer}>
+        <TouchableOpacity onPress={onPressEdit} style={styles.heartContainer}>
           <Icon name={'hearto'} color={colors.white} size={mvs(19)} />
-        </View>
+        </TouchableOpacity>
       ) : null}
     </TouchableOpacity>
   );
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
 
     ...colors.shadow,
   },
-  row: {alignItems: 'flex-end'},
+  row: { alignItems: 'flex-end' },
   bg: {
     width: '100%',
     height: '100%',
@@ -102,8 +103,8 @@ const styles = StyleSheet.create({
     borderRadius: mvs(10),
     ...colors.shadow,
   },
-  btnTxt: {color: colors.primary, fontSize: mvs(12), lineHeight: mvs(16)},
-  imgStyle: {borderRadius: mvs(15)},
+  btnTxt: { color: colors.primary, fontSize: mvs(12), lineHeight: mvs(16) },
+  imgStyle: { borderRadius: mvs(15) },
   rowRating: {
     position: 'absolute',
     padding: mvs(15),
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: mvs(15),
     // borderBottomLeftRadius: mvs(15),
   },
-  rateTxt: {marginLeft: mvs(10), lineHeight: mvs(16)},
+  rateTxt: { marginLeft: mvs(10), lineHeight: mvs(16) },
   grd: {
     height: mvs(80),
     padding: mvs(15),

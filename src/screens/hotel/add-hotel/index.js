@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,27 +9,32 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import {t} from 'i18next';
+import { t } from 'i18next';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
+import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
 import PrimaryInput from 'components/atoms/inputs';
-import {useFormik} from 'formik';
-import {addHotelValidation} from 'validations';
+import { useFormik } from 'formik';
+import { addHotelValidation } from 'validations';
 import Regular from 'typography/regular-text';
-import {colors} from 'config/colors';
-import {PrimaryButton} from 'components/atoms/buttons';
+import { colors } from 'config/colors';
+import { PrimaryButton } from 'components/atoms/buttons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {mvs} from 'config/metrices';
+import { mvs } from 'config/metrices';
 import Bold from 'typography/bold-text';
-import {Row} from 'components/atoms/row';
-import {UTILS} from 'utils';
-import {getHotelAttributes, postFileData} from 'services/api/hotel/api-actions';
-import {useDispatch} from 'react-redux';
+import { Row } from 'components/atoms/row';
+import { UTILS } from 'utils';
+import { getHotelAttributes, getHotelForEdit, postFileData } from 'services/api/hotel/api-actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from 'components/atoms/loader';
+import { setHotelForEdit } from 'store/reducers/hotel-reducer';
 
 const AddHotel = props => {
-  const {navigation} = props;
-  const [loading, setLoading] = React.useState(false);
+  const { navigation, route } = props;
+  const { hotel } = useSelector(s => s);
+  const { edit_hotel } = hotel;
+  console.log('edit_hotel::::', edit_hotel);
+  const [loading, setLoading] = React.useState(true);
   const initialValues = {
     title: '',
     content: '',
@@ -46,17 +51,39 @@ const AddHotel = props => {
     ],
   };
   const dispatch = useDispatch();
-  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
+  const { values, errors, touched, setFieldValue, setFieldTouched, isValid } =
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: false,
       validationSchema: addHotelValidation,
-      onSubmit: () => {},
+      onSubmit: () => { },
     });
-
+  React.useEffect(() => {
+    if (route?.params?.id) {
+      dispatch(getHotelForEdit(route?.params?.id, setLoading));
+    } else {
+      setLoading(false);
+    }
+  }, [route?.params?.id])
+  React.useEffect(() => {
+    if (edit_hotel && route?.params?.id) {
+      console.log('edit_hotel?.row?.popp->>', edit_hotel?.row?.policy);
+      setFieldValue('title', edit_hotel?.row?.title);
+      setFieldValue('content', edit_hotel?.row?.content);
+      setFieldValue('policy', [...edit_hotel?.row?.policy]);
+      setFieldValue('video', edit_hotel?.row?.video);
+      setFieldValue('star_rate', `${edit_hotel?.row?.star_rate}`);
+      setFieldValue('banner_image_id', edit_hotel?.row?.banner_image_id);
+      setFieldValue('image_id', edit_hotel?.row?.image_id);
+      setFieldValue('gallery', edit_hotel?.row?.gallery);
+    }
+  }, [edit_hotel])
   React.useEffect(() => {
     dispatch(getHotelAttributes());
+  }, []);
+  React.useEffect(() => {
+    dispatch(setHotelForEdit(null));
   }, []);
   const onSubmit = async () => {
     try {
@@ -64,7 +91,7 @@ const AddHotel = props => {
       console.log('errors->>', errors);
       if (isValid && Object.keys(touched).length > 0) {
         try {
-          navigation?.navigate('AddHotelLocation', {values});
+          navigation?.navigate('AddHotelLocation', { values });
         } catch (error) {
           console.log(error);
         }
@@ -85,7 +112,7 @@ const AddHotel = props => {
   };
 
   const handleAddPolicy = () => {
-    setFieldValue('policy', [...values.policy, {title: '', content: ''}]);
+    setFieldValue('policy', [...values.policy, { title: '', content: '' }]);
   };
   const handleRemovePolicy = index => {
     const updatedPolicies = values.policy.filter((_, i) => i !== index);
@@ -103,7 +130,7 @@ const AddHotel = props => {
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
-      const file_resp = await postFileData({file: res, type: 'image'});
+      const file_resp = await postFileData({ file: res, type: 'image' });
       console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
 
@@ -124,7 +151,8 @@ const AddHotel = props => {
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('add_hotel')} back={true} />
-      <KeyboardAvoidScrollview
+
+      {loading ? <Loader /> : <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
           error={
@@ -172,8 +200,8 @@ const AddHotel = props => {
           />
           {values.banner_image_id?.url ? (
             <Image
-              source={{uri: values.banner_image_id?.url}}
-              style={{width: '100%', height: '100%'}}
+              source={{ uri: values.banner_image_id?.url }}
+              style={{ width: '100%', height: '100%' }}
             />
           ) : null}
         </ImageBackground>
@@ -191,7 +219,7 @@ const AddHotel = props => {
         />
         <View style={styles.galleryContainer}>
           <TouchableOpacity onPress={() => openGallery('gallery')}>
-            <View style={[styles.ImageContainer, {marginHorizontal: mvs(3)}]}>
+            <View style={[styles.ImageContainer, { marginHorizontal: mvs(3) }]}>
               <Entypo name="camera" size={20} color={'black'} />
               {/* <Text style={styles.headerText}>Add image{'\n'}(0 up to 8)</Text> */}
 
@@ -201,13 +229,13 @@ const AddHotel = props => {
           <FlatList
             horizontal={true}
             data={values?.gallery}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               if (!item?.url) return null;
               return (
                 <>
                   <View style={styles.ImageContainer}>
                     <Image
-                      source={{uri: item?.url || null}}
+                      source={{ uri: item?.url || null }}
                       resizeMode="contain"
                       style={styles.image}
                     />
@@ -237,7 +265,7 @@ const AddHotel = props => {
         <Bold
           label={t('hotle_policy')}
           color={colors.primary}
-          style={{marginTop: mvs(20)}}
+          style={{ marginTop: mvs(20) }}
         />
         <PrimaryInput
           error={
@@ -251,7 +279,7 @@ const AddHotel = props => {
           onBlur={() => setFieldTouched('star_rate', true)}
           value={values.star_rate}
         />
-        <Row style={{backgroundColor: colors.lightGray}}>
+        <Row style={{ backgroundColor: colors.lightGray }}>
           <Bold label={t('policy')} color={colors.primary} fontSize={mvs(18)} />
           <TouchableOpacity onPress={handleAddPolicy}>
             <Entypo name={'plus'} color={colors.primary} size={25} />
@@ -262,7 +290,7 @@ const AddHotel = props => {
           <View style={styles.policyContainer} key={index}>
             {values?.policy?.length !== 1 && (
               <TouchableOpacity
-                style={{alignSelf: 'flex-end'}}
+                style={{ alignSelf: 'flex-end' }}
                 onPress={() => handleRemovePolicy(index)}>
                 <MaterialCommunityIcons
                   name={'delete'}
@@ -309,7 +337,7 @@ const AddHotel = props => {
           </View>
         ))}
         <Regular
-          style={{marginTop: mvs(10)}}
+          style={{ marginTop: mvs(10) }}
           color={colors.primary}
           label={t('featured_image')}
         />
@@ -326,8 +354,8 @@ const AddHotel = props => {
           />
           {values?.image_id?.url ? (
             <Image
-              source={{uri: values?.image_id?.url}}
-              style={{width: '100%', height: '100%'}}
+              source={{ uri: values?.image_id?.url }}
+              style={{ width: '100%', height: '100%' }}
             />
           ) : null}
         </ImageBackground>
@@ -339,11 +367,11 @@ const AddHotel = props => {
         )}
 
         <PrimaryButton
-          containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
+          containerStyle={{ marginTop: mvs(30), marginBottom: mvs(20) }}
           onPress={() => onSubmit()}
           title="Next"
         />
-      </KeyboardAvoidScrollview>
+      </KeyboardAvoidScrollview>}
     </View>
   );
 };

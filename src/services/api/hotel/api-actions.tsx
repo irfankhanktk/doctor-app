@@ -3,7 +3,7 @@ import { goBack } from 'navigation/navigation-ref';
 import { Alert } from 'react-native';
 import { AppDispatch, RootState } from 'store';
 import { getData, postData, postFormData, postImage } from '../';
-import { setHotelAttributes, setHotels, setLocations } from '../../../store/reducers/hotel-reducer';
+import { setHotelAttributes, setHotelForEdit, setHotels, setLocations } from '../../../store/reducers/hotel-reducer';
 import { UTILS } from 'utils';
 import { URLS } from '../api-urls';
 import React from 'react';
@@ -48,7 +48,21 @@ export const getLocations = () => {
         }
     };
 };
-export const getHotelDetails = (hotel_id: string) => getData(`${URLS.hotel_vendor.get_hotel_for_edit}${hotel_id}`);
+export const getHotelForEdit = (hotel_id: any, setLoading: (bool: boolean) => void) => {
+    return async (dispatch: AppDispatch, getState: () => RootState) => {
+        try {
+            setLoading(true);
+            const res = await getData(`${URLS.hotel_vendor.get_hotel_for_edit}${hotel_id}`);
+            console.log('res of getHotelForEdit=>', res);
+            dispatch(setHotelForEdit(res));
+        } catch (error) {
+            console.log('error', UTILS.returnError(error));
+            Alert.alert('Error', UTILS.returnError(error));
+        } finally {
+            setLoading(false);
+        }
+    };
+};
 export const postFileData = (data: any) => postFormData(`${URLS.hotel_vendor.store_file}`, data);
 export const onAddOrUpdateHotel = (data: any) => postData(`${URLS.hotel_vendor.add_update_hotel}${data?.id || -1}`, data);
 

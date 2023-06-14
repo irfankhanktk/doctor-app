@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 type Props = {
   hotels: any,
+  edit_hotel: any,
   hotel_attributes: any,
   locations: any[],
 };
 const initialState: Props = {
   hotels: {},
+  edit_hotel: null,
   hotel_attributes: null,
   locations: [],
 };
@@ -17,6 +19,9 @@ export const hotelSlice = createSlice({
   reducers: {
     setHotels: (state, action) => {
       state.hotels = action.payload;
+    },
+    setHotelForEdit: (state, action) => {
+      state.edit_hotel = action.payload;
     },
     setHotelAttributes: (state, action) => {
       state.hotel_attributes = action.payload;
@@ -34,6 +39,7 @@ export const {
   setHotels,
   setHotelAttributes,
   setLocations,
+  setHotelForEdit,
   reset,
 } = hotelSlice.actions;
 

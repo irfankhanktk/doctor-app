@@ -1,39 +1,42 @@
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import {t} from 'i18next';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
-import {useFormik} from 'formik';
-import {addPriceHotelValidation} from 'validations';
+import { t } from 'i18next';
+import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
+import { useFormik } from 'formik';
+import { addPriceHotelValidation } from 'validations';
 import PrimaryInput from 'components/atoms/inputs';
 import Regular from 'typography/regular-text';
-import {Checkbox} from 'components/atoms/checkbox';
+import { Checkbox } from 'components/atoms/checkbox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {Row} from 'components/atoms/row';
-import {mvs} from 'config/metrices';
-import {PrimaryButton} from 'components/atoms/buttons';
-import {colors} from 'config/colors';
+import { Row } from 'components/atoms/row';
+import { mvs } from 'config/metrices';
+import { PrimaryButton } from 'components/atoms/buttons';
+import { colors } from 'config/colors';
 import ExtraPriceBottomSheetModal from 'components/molecules/hotel/dropdown-picker/extraPriceType';
 import BuyerFeeBottomSheetModal from 'components/molecules/hotel/dropdown-picker/buyerFeeType';
+import { useSelector } from 'react-redux';
 const AddHotelPrice = props => {
-  const {navigation, route} = props;
+  const { navigation, route } = props;
 
   // const index = 0;
   const [index, setIndex] = React.useState(0);
   const [buyerFeeIndex, setBuyerFeeIndex] = React.useState(0);
   const [extraPrice, setExteraPrice] = React.useState(false);
   const [buyerFeeType, setBuyerFeeType] = React.useState(false);
+  const { hotel } = useSelector(s => s);
+  const { edit_hotel } = hotel;
   const initialValues = {
     ...route?.params,
-    check_in_time: '',
-    check_out_time: '',
-    min_day_before_booking: '',
-    min_day_stays: '',
-    price: '',
-    enable_extra_price: '0',
-    extra_price: [
+    check_in_time: edit_hotel?.row?.check_in_time || '',
+    check_out_time: edit_hotel?.row?.check_out_time || '',
+    min_day_before_booking: `${edit_hotel?.row?.min_day_before_booking || ''}`,
+    min_day_stays: `${edit_hotel?.row?.min_day_stays || ''}`,
+    price: `${edit_hotel?.row?.price || ''}`,
+    enable_extra_price: `${edit_hotel?.row?.enable_extra_price || '0'}`,
+    extra_price: edit_hotel?.row?.extra_price || [
       {
         name: '',
         price: '',
@@ -41,8 +44,8 @@ const AddHotelPrice = props => {
         per_person: '0',
       },
     ],
-    enable_service_fee: '0',
-    service_fee: [
+    enable_service_fee: `${edit_hotel?.row?.enable_service_fee || '0'}`,
+    service_fee: edit_hotel?.row?.service_fee || [
       {
         name: '',
         desc: '',
@@ -52,17 +55,17 @@ const AddHotelPrice = props => {
       },
     ],
   };
-  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
+  const { values, errors, touched, setFieldValue, setFieldTouched, isValid } =
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: false,
       validationSchema: addPriceHotelValidation,
-      onSubmit: () => {},
+      onSubmit: () => { },
     });
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddHotelAttributes', {...values});
+      navigation?.navigate('AddHotelAttributes', { ...values });
       // if (isValid && Object.keys(touched).length > 0) {
       //   try {
       //     Alert.alert('onsubmit');
@@ -85,7 +88,7 @@ const AddHotelPrice = props => {
   const handleAddExtraPrice = () => {
     setFieldValue('extra_price', [
       ...values?.extra_price,
-      {name: '', price: '', type: '', per_person: '0'},
+      { name: '', price: '', type: '', per_person: '0' },
     ]);
   };
   const handleRemoveExteraPrice = index => {
@@ -97,7 +100,7 @@ const AddHotelPrice = props => {
   const handleAddService = () => {
     setFieldValue('service_fee', [
       ...values?.service_fee,
-      {name: '', desc: '', price: '', type: '', per_person: '0'},
+      { name: '', desc: '', price: '', type: '', per_person: '0' },
     ]);
   };
   const handleRemoveService = index => {
@@ -150,7 +153,7 @@ const AddHotelPrice = props => {
         <Regular
           label={'(Optional)'}
           fontSize={12}
-          style={{alignSelf: 'flex-end'}}
+          style={{ alignSelf: 'flex-end' }}
         />
 
         <PrimaryInput
@@ -168,7 +171,7 @@ const AddHotelPrice = props => {
         <Regular
           label={'(Optional)'}
           fontSize={12}
-          style={{alignSelf: 'flex-end'}}
+          style={{ alignSelf: 'flex-end' }}
         />
         <PrimaryInput
           error={
@@ -180,7 +183,7 @@ const AddHotelPrice = props => {
           onBlur={() => setFieldTouched('price', true)}
           value={values?.price}
         />
-        <Row style={{justifyContent: 'flex-start'}}>
+        <Row style={{ justifyContent: 'flex-start' }}>
           <Checkbox
             checked={values?.enable_extra_price === '1'}
             onPress={() =>
@@ -190,7 +193,7 @@ const AddHotelPrice = props => {
               )
             }
           />
-          <Regular label={t('enable_price')} style={{marginLeft: mvs(10)}} />
+          <Regular label={t('enable_price')} style={{ marginLeft: mvs(10) }} />
         </Row>
         {values?.enable_extra_price === '1' ? (
           <>
@@ -198,7 +201,7 @@ const AddHotelPrice = props => {
               <View style={styles.policyContainer} key={index}>
                 {values?.extra_price?.length !== 1 && (
                   <TouchableOpacity
-                    style={{alignSelf: 'flex-end'}}
+                    style={{ alignSelf: 'flex-end' }}
                     onPress={() => handleRemoveExteraPrice(index)}>
                     <MaterialCommunityIcons
                       name={'delete'}
@@ -266,7 +269,7 @@ const AddHotelPrice = props => {
                     }
                   />
                 </TouchableOpacity>
-                <Row style={{justifyContent: 'flex-start'}}>
+                <Row style={{ justifyContent: 'flex-start' }}>
                   <Checkbox
                     checked={values?.extra_price[index].per_person === '1'}
                     onPress={() =>
@@ -280,7 +283,7 @@ const AddHotelPrice = props => {
                   />
                   <Regular
                     label={t('per_person')}
-                    style={{marginLeft: mvs(10)}}
+                    style={{ marginLeft: mvs(10) }}
                   />
                 </Row>
               </View>
@@ -289,11 +292,11 @@ const AddHotelPrice = props => {
               title={'Add Item'}
               onPress={handleAddExtraPrice}
               containerStyle={styles.addItem}
-              textStyle={{fontSize: mvs(12)}}
+              textStyle={{ fontSize: mvs(12) }}
             />
           </>
         ) : null}
-        <Row style={{justifyContent: 'flex-start', marginTop: mvs(10)}}>
+        <Row style={{ justifyContent: 'flex-start', marginTop: mvs(10) }}>
           <Checkbox
             checked={values?.enable_service_fee === '1'}
             onPress={() =>
@@ -304,7 +307,7 @@ const AddHotelPrice = props => {
             }
           />
 
-          <Regular label={t('enable_extra')} style={{marginLeft: mvs(10)}} />
+          <Regular label={t('enable_extra')} style={{ marginLeft: mvs(10) }} />
         </Row>
         {values?.enable_service_fee === '1' ? (
           <>
@@ -312,7 +315,7 @@ const AddHotelPrice = props => {
               <View style={styles.enableServiceContainer} key={index}>
                 {values?.service_fee?.length !== 1 && (
                   <TouchableOpacity
-                    style={{alignSelf: 'flex-end'}}
+                    style={{ alignSelf: 'flex-end' }}
                     onPress={() => handleRemoveService(index)}>
                     <MaterialCommunityIcons
                       name={'delete'}
@@ -398,7 +401,7 @@ const AddHotelPrice = props => {
                     }
                   />
                 </TouchableOpacity>
-                <Row style={{justifyContent: 'flex-start'}}>
+                <Row style={{ justifyContent: 'flex-start' }}>
                   <Checkbox
                     checked={values?.service_fee[index].per_person === '1'}
                     onPress={() =>
@@ -412,7 +415,7 @@ const AddHotelPrice = props => {
                   />
                   <Regular
                     label={t('per_person')}
-                    style={{marginLeft: mvs(10)}}
+                    style={{ marginLeft: mvs(10) }}
                   />
                 </Row>
               </View>
@@ -421,7 +424,7 @@ const AddHotelPrice = props => {
               title={'Add Item'}
               onPress={handleAddService}
               containerStyle={styles.addItem}
-              textStyle={{fontSize: mvs(12)}}
+              textStyle={{ fontSize: mvs(12) }}
             />
           </>
         ) : null}
