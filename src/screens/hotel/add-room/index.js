@@ -22,10 +22,22 @@ import {UTILS} from 'utils';
 import {Checkbox} from 'components/atoms/checkbox';
 import {Row} from 'components/atoms/row';
 import Bold from 'typography/bold-text';
+import {
+  getRoomAttributes,
+  onAddOrUpdateRoom,
+} from 'services/api/hotel/api-actions';
+import {useDispatch, useSelector} from 'react-redux';
 
 const AddRoom = props => {
   const {navigation} = props;
+  const dispatch = useDispatch();
+  const {hotel} = useSelector(s => s);
+
+  console.log('hotel data check=====>', hotel);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  React.useEffect(() => {
+    dispatch(getRoomAttributes());
+  }, []);
   const attributes = [
     {
       title: 'PROPERTY TYPE',
@@ -37,19 +49,19 @@ const AddRoom = props => {
     },
   ];
   const initialValues = {
-    room_name: '',
+    title: '',
     content: '',
     video_link: '',
     gallery: [],
-    featured_image: '',
+    image_id: '',
     price: '',
-    number_of_rooms: 1,
-    minimum_day_stay: '',
-    number_of_beds: '',
-    room_size: '',
-    max_adult: '',
-    max_children: '',
-    import_url: '',
+    number: 1,
+    min_day_stays: '',
+    beds: '',
+    size: '',
+    adults: '',
+    children: '',
+    ican_import_url: '',
   };
 
   const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
@@ -62,7 +74,15 @@ const AddRoom = props => {
     });
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddHotelLocation');
+      const res = await onAddOrUpdateRoom({
+        values,
+        id: edit_hotel?.row?.id || null,
+        gallery: gallery?.map(x => x?.data?.id)?.join(),
+        image_id: image_id?.data?.id,
+        terms: selectedTypes?.map(x => x?.id),
+      });
+      console.log('res=>>>add hotel room >>', res);
+      // navigation?.navigate('AddHotelLocation');
       // if (isValid && Object.keys(touched).length > 0) {
       //   try {
       //     Alert.alert('onsubmit');
@@ -76,7 +96,7 @@ const AddRoom = props => {
       //   setFieldTouched('video_link', true);
       //   setFieldTouched('banner_image', true);
       //   setFieldTouched('hotel_rating', true);
-      //   setFieldTouched('featured_image', true);
+      //   setFieldTouched('image_id', true);
       //   setFieldTouched('gallery[0]', true);
       //   setFieldTouched(`policy.[0].content`, true);
       //   setFieldTouched(`policy.[0].title`, true);
@@ -103,7 +123,7 @@ const AddRoom = props => {
       if (v == 'gallery') {
         setFieldValue('gallery', [...values?.gallery, uri]);
       } else {
-        setFieldValue('featured_image', uri);
+        setFieldValue('image_id', uri);
       }
     } catch (error) {
       console.log('upload image error', error);
@@ -152,13 +172,11 @@ const AddRoom = props => {
         <PrimaryInput
           label={t('room_name')}
           placeholder={t('room_name')}
-          onChangeText={str => setFieldValue('room_name', str)}
-          onBlur={() => setFieldTouched('room_name', true)}
-          value={values.room_name}
+          onChangeText={str => setFieldValue('title', str)}
+          onBlur={() => setFieldTouched('title', true)}
+          value={values.title}
           error={
-            touched?.room_name && errors?.room_name
-              ? `${t(errors?.room_name)}`
-              : undefined
+            touched?.title && errors?.title ? `${t(errors?.title)}` : undefined
           }
         />
         <Regular
@@ -178,15 +196,12 @@ const AddRoom = props => {
             textStyle={styles.buttonTextStyle}
           />
           <Image
-            source={{uri: values?.featured_image}}
+            source={{uri: values?.image_id}}
             style={{width: '100%', height: '100%'}}
           />
         </ImageBackground>
-        {errors?.featured_image && touched?.featured_image && (
-          <Regular
-            label={`${t(errors?.featured_image)}`}
-            style={styles.errorLabel}
-          />
+        {errors?.image_id && touched?.image_id && (
+          <Regular label={`${t(errors?.image_id)}`} style={styles.errorLabel} />
         )}
         <Regular
           color={colors.primary}
@@ -241,29 +256,29 @@ const AddRoom = props => {
           <PrimaryInput
             mainContainer={{width: '48%'}}
             keyboardType="numeric"
-            label={t('number_of_rooms')}
+            label={t('number')}
             placeholder={t('1')}
-            onChangeText={str => setFieldValue('number_of_rooms', str)}
-            onBlur={() => setFieldTouched('number_of_rooms', true)}
-            value={values.number_of_rooms}
+            onChangeText={str => setFieldValue('number', str)}
+            onBlur={() => setFieldTouched('number', true)}
+            value={values.number}
             error={
-              touched?.number_of_rooms && errors?.number_of_rooms
-                ? `${t(errors?.number_of_rooms)}`
+              touched?.number && errors?.number
+                ? `${t(errors?.number)}`
                 : undefined
             }
           />
           <PrimaryInput
             mainContainer={{width: '48%'}}
             error={
-              touched?.minimum_day_stay && errors?.minimum_day_stay
-                ? `${t(errors?.minimum_day_stay)}`
+              touched?.min_day_stays && errors?.min_day_stays
+                ? `${t(errors?.min_day_stays)}`
                 : undefined
             }
             label={t('min_day_stay')}
             placeholder={t('Ex: 2')}
-            onChangeText={str => setFieldValue('minimum_day_stay', str)}
-            onBlur={() => setFieldTouched('minimum_day_stay', true)}
-            value={values.minimum_day_stay}
+            onChangeText={str => setFieldValue('min_day_stays', str)}
+            onBlur={() => setFieldTouched('min_day_stays', true)}
+            value={values.min_day_stays}
           />
         </Row>
         <Regular
@@ -277,26 +292,22 @@ const AddRoom = props => {
             keyboardType="numeric"
             label={t('number_of_beds')}
             placeholder={t('1')}
-            onChangeText={str => setFieldValue('number_of_beds', str)}
-            onBlur={() => setFieldTouched('number_of_beds', true)}
-            value={values.number_of_beds}
+            onChangeText={str => setFieldValue('beds', str)}
+            onBlur={() => setFieldTouched('beds', true)}
+            value={values.beds}
             error={
-              touched?.number_of_beds && errors?.number_of_beds
-                ? `${t(errors?.number_of_beds)}`
-                : undefined
+              touched?.beds && errors?.beds ? `${t(errors?.beds)}` : undefined
             }
           />
           <PrimaryInput
             mainContainer={{width: '48%'}}
             label={t('room_size')}
-            placeholder={t('room_size')}
-            onChangeText={str => setFieldValue('room_size', str)}
-            onBlur={() => setFieldTouched('room_size', true)}
-            value={values.room_size}
+            placeholder={t('size')}
+            onChangeText={str => setFieldValue('size', str)}
+            onBlur={() => setFieldTouched('size', true)}
+            value={values.size}
             error={
-              touched?.room_size && errors?.room_size
-                ? `${t(errors?.room_size)}`
-                : undefined
+              touched?.size && errors?.size ? `${t(errors?.size)}` : undefined
             }
           />
         </Row>
@@ -305,12 +316,12 @@ const AddRoom = props => {
             mainContainer={{width: '48%'}}
             label={t('max_adults')}
             placeholder={t('1')}
-            onChangeText={str => setFieldValue('max_adult', str)}
-            onBlur={() => setFieldTouched('max_adult', true)}
-            value={values.max_adult}
+            onChangeText={str => setFieldValue('adults', str)}
+            onBlur={() => setFieldTouched('adults', true)}
+            value={values.adults}
             error={
-              touched?.max_adult && errors?.max_adult
-                ? `${t(errors?.max_adult)}`
+              touched?.adults && errors?.adults
+                ? `${t(errors?.adults)}`
                 : undefined
             }
           />
@@ -318,12 +329,12 @@ const AddRoom = props => {
             mainContainer={{width: '48%'}}
             label={t('max_children')}
             placeholder={t('0')}
-            onChangeText={str => setFieldValue('max_children', str)}
-            onBlur={() => setFieldTouched('max_children', true)}
-            value={values.max_children}
+            onChangeText={str => setFieldValue('children', str)}
+            onBlur={() => setFieldTouched('children', true)}
+            value={values.children}
             error={
-              touched?.max_children && errors?.max_children
-                ? `${t(errors?.max_children)}`
+              touched?.children && errors?.children
+                ? `${t(errors?.children)}`
                 : undefined
             }
           />
@@ -347,12 +358,12 @@ const AddRoom = props => {
           labelStyle={{marginTop: mvs(20)}}
           label={t('Import Url')}
           placeholder={t('')}
-          onChangeText={str => setFieldValue('import_url', str)}
-          onBlur={() => setFieldTouched('import_url', true)}
-          value={values.import_url}
+          onChangeText={str => setFieldValue('ican_import_url', str)}
+          onBlur={() => setFieldTouched('ican_import_url', true)}
+          value={values.ican_import_url}
           error={
-            touched?.import_url && errors?.import_url
-              ? `${t(errors?.import_url)}`
+            touched?.ican_import_url && errors?.ican_import_url
+              ? `${t(errors?.ican_import_url)}`
               : undefined
           }
         />

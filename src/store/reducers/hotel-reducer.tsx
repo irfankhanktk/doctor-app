@@ -4,12 +4,14 @@ type Props = {
   hotels: any,
   edit_hotel: any,
   hotel_attributes: any,
+  room_attributes: any,
   locations: any[],
 };
 const initialState: Props = {
   hotels: {},
   edit_hotel: null,
   hotel_attributes: null,
+  room_attributes: null,
   locations: [],
 };
 
@@ -26,6 +28,9 @@ export const hotelSlice = createSlice({
     setHotelAttributes: (state, action) => {
       state.hotel_attributes = action.payload;
     },
+    setRoomAttributes: (state, action) => {
+      state.room_attributes = action.payload;
+    },
     setLocations: (state, action) => {
       state.locations = action.payload;
     },
@@ -38,6 +43,7 @@ export const hotelSlice = createSlice({
 export const {
   setHotels,
   setHotelAttributes,
+  setRoomAttributes,
   setLocations,
   setHotelForEdit,
   reset,

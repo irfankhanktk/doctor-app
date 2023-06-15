@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,31 +9,35 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import { t } from 'i18next';
+import {t} from 'i18next';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
+import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import PrimaryInput from 'components/atoms/inputs';
-import { useFormik } from 'formik';
-import { addHotelValidation } from 'validations';
+import {useFormik} from 'formik';
+import {addHotelValidation} from 'validations';
 import Regular from 'typography/regular-text';
-import { colors } from 'config/colors';
-import { PrimaryButton } from 'components/atoms/buttons';
+import {colors} from 'config/colors';
+import {PrimaryButton} from 'components/atoms/buttons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { mvs } from 'config/metrices';
+import {mvs} from 'config/metrices';
 import Bold from 'typography/bold-text';
-import { Row } from 'components/atoms/row';
-import { UTILS } from 'utils';
-import { getHotelAttributes, getHotelForEdit, postFileData } from 'services/api/hotel/api-actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from 'components/atoms/loader';
-import { setHotelForEdit } from 'store/reducers/hotel-reducer';
+import {Row} from 'components/atoms/row';
+import {UTILS} from 'utils';
+import {
+  getHotelAttributes,
+  getHotelForEdit,
+  postFileData,
+} from 'services/api/hotel/api-actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {Loader} from 'components/atoms/loader';
+import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 
 const AddHotel = props => {
-  const { navigation, route } = props;
-  const { hotel } = useSelector(s => s);
-  const { edit_hotel } = hotel;
-  console.log('edit_hotel::::', edit_hotel);
+  const {navigation, route} = props;
+  const {hotel} = useSelector(s => s);
+  const {edit_hotel} = hotel;
+  // console.log('edit_hotel::::', edit_hotel);
   const [loading, setLoading] = React.useState(true);
   const initialValues = {
     title: '',
@@ -51,13 +55,13 @@ const AddHotel = props => {
     ],
   };
   const dispatch = useDispatch();
-  const { values, errors, touched, setFieldValue, setFieldTouched, isValid } =
+  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: false,
       validationSchema: addHotelValidation,
-      onSubmit: () => { },
+      onSubmit: () => {},
     });
   React.useEffect(() => {
     if (route?.params?.id) {
@@ -65,10 +69,10 @@ const AddHotel = props => {
     } else {
       setLoading(false);
     }
-  }, [route?.params?.id])
+  }, [route?.params?.id]);
   React.useEffect(() => {
     if (edit_hotel && route?.params?.id) {
-      console.log('edit_hotel?.row?.popp->>', edit_hotel?.row?.policy);
+      // console.log('edit_hotel?.row?.popp->>', edit_hotel?.row?.policy);
       setFieldValue('title', edit_hotel?.row?.title);
       setFieldValue('content', edit_hotel?.row?.content);
       setFieldValue('policy', [...edit_hotel?.row?.policy]);
@@ -78,7 +82,7 @@ const AddHotel = props => {
       setFieldValue('image_id', edit_hotel?.row?.image_id);
       setFieldValue('gallery', edit_hotel?.row?.gallery);
     }
-  }, [edit_hotel])
+  }, [edit_hotel]);
   React.useEffect(() => {
     dispatch(getHotelAttributes());
   }, []);
@@ -91,7 +95,7 @@ const AddHotel = props => {
       console.log('errors->>', errors);
       if (isValid && Object.keys(touched).length > 0) {
         try {
-          navigation?.navigate('AddHotelLocation', { values });
+          navigation?.navigate('AddHotelLocation', {values});
         } catch (error) {
           console.log(error);
         }
@@ -112,7 +116,7 @@ const AddHotel = props => {
   };
 
   const handleAddPolicy = () => {
-    setFieldValue('policy', [...values.policy, { title: '', content: '' }]);
+    setFieldValue('policy', [...values.policy, {title: '', content: ''}]);
   };
   const handleRemovePolicy = index => {
     const updatedPolicies = values.policy.filter((_, i) => i !== index);
@@ -130,7 +134,7 @@ const AddHotel = props => {
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
-      const file_resp = await postFileData({ file: res, type: 'image' });
+      const file_resp = await postFileData({file: res, type: 'image'});
       console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
 
@@ -152,226 +156,238 @@ const AddHotel = props => {
     <View style={styles.container1}>
       <Header1x2x title={t('add_hotel')} back={true} />
 
-      {loading ? <Loader /> : <KeyboardAvoidScrollview
-        contentContainerStyle={styles.contentContainerStyle}>
-        <PrimaryInput
-          error={
-            touched?.title && errors?.title ? `${t(errors?.title)}` : undefined
-          }
-          label={t('title')}
-          placeholder={t('title')}
-          onChangeText={str => setFieldValue('title', str)}
-          onBlur={() => setFieldTouched('title', true)}
-          value={values.title}
-        />
-        <PrimaryInput
-          error={
-            touched?.content && errors?.content
-              ? `${t(errors?.content)}`
-              : undefined
-          }
-          label={t('content')}
-          placeholder={t('content')}
-          onChangeText={str => setFieldValue('content', str)}
-          onBlur={() => setFieldTouched('content', true)}
-          value={values.content}
-        />
-        <PrimaryInput
-          error={
-            touched?.video && errors?.video ? `${t(errors?.video)}` : undefined
-          }
-          label={t('youtube_video')}
-          placeholder={t('youtube_video')}
-          onChangeText={str => setFieldValue('video', str)}
-          onBlur={() => setFieldTouched('video', true)}
-          value={values.video}
-        />
-        <Regular color={colors.primary} label={t('banner_image')} />
-        <ImageBackground
-          // source={{
-          //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-          // }}
-          style={styles.bannerImageContainer}>
-          <PrimaryButton
-            title={'Upload Image'}
-            onPress={() => openGallery('bannerImage')}
-            containerStyle={styles.buttonContainerStyle}
-            textStyle={styles.buttonTextStyle}
+      {loading ? (
+        <Loader />
+      ) : (
+        <KeyboardAvoidScrollview
+          contentContainerStyle={styles.contentContainerStyle}>
+          <PrimaryInput
+            error={
+              touched?.title && errors?.title
+                ? `${t(errors?.title)}`
+                : undefined
+            }
+            label={t('title')}
+            placeholder={t('title')}
+            onChangeText={str => setFieldValue('title', str)}
+            onBlur={() => setFieldTouched('title', true)}
+            value={values.title}
           />
-          {values.banner_image_id?.url ? (
-            <Image
-              source={{ uri: values.banner_image_id?.url }}
-              style={{ width: '100%', height: '100%' }}
+          <PrimaryInput
+            error={
+              touched?.content && errors?.content
+                ? `${t(errors?.content)}`
+                : undefined
+            }
+            label={t('content')}
+            placeholder={t('content')}
+            onChangeText={str => setFieldValue('content', str)}
+            onBlur={() => setFieldTouched('content', true)}
+            value={values.content}
+          />
+          <PrimaryInput
+            error={
+              touched?.video && errors?.video
+                ? `${t(errors?.video)}`
+                : undefined
+            }
+            label={t('youtube_video')}
+            placeholder={t('youtube_video')}
+            onChangeText={str => setFieldValue('video', str)}
+            onBlur={() => setFieldTouched('video', true)}
+            value={values.video}
+          />
+          <Regular color={colors.primary} label={t('banner_image')} />
+          <ImageBackground
+            // source={{
+            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
+            // }}
+            style={styles.bannerImageContainer}>
+            <PrimaryButton
+              title={'Upload Image'}
+              onPress={() => openGallery('bannerImage')}
+              containerStyle={styles.buttonContainerStyle}
+              textStyle={styles.buttonTextStyle}
             />
-          ) : null}
-        </ImageBackground>
-        {errors.banner_image_id?.url && touched.banner_image_id?.url && (
-          <Regular
-            label={t(errors?.banner_image_id?.url)}
-            style={styles.errorLabel}
-          />
-        )}
-
-        <Regular
-          color={colors.primary}
-          label={t('Gallery')}
-          style={styles.galleryText}
-        />
-        <View style={styles.galleryContainer}>
-          <TouchableOpacity onPress={() => openGallery('gallery')}>
-            <View style={[styles.ImageContainer, { marginHorizontal: mvs(3) }]}>
-              <Entypo name="camera" size={20} color={'black'} />
-              {/* <Text style={styles.headerText}>Add image{'\n'}(0 up to 8)</Text> */}
-
-              <Regular style={styles.headerText} label={'Add images'} />
-            </View>
-          </TouchableOpacity>
-          <FlatList
-            horizontal={true}
-            data={values?.gallery}
-            renderItem={({ item, index }) => {
-              if (!item?.url) return null;
-              return (
-                <>
-                  <View style={styles.ImageContainer}>
-                    <Image
-                      source={{ uri: item?.url || null }}
-                      resizeMode="contain"
-                      style={styles.image}
-                    />
-
-                    <TouchableOpacity
-                      onPress={() => onImageRemove(index)}
-                      style={styles.removeContainer}>
-                      <Text style={styles.txtRemove}>Remove</Text>
-                    </TouchableOpacity>
-                  </View>
-                </>
-              );
-            }}
-          />
-        </View>
-        {errors?.gallery &&
-          errors?.gallery[0] &&
-          errors?.gallery[0]?.url &&
-          touched?.gallery &&
-          touched?.gallery[0] &&
-          touched?.gallery[0]?.url && (
+            {values.banner_image_id?.url ? (
+              <Image
+                source={{uri: values.banner_image_id?.url}}
+                style={{width: '100%', height: '100%'}}
+              />
+            ) : null}
+          </ImageBackground>
+          {errors.banner_image_id?.url && touched.banner_image_id?.url && (
             <Regular
+              label={t(errors?.banner_image_id?.url)}
               style={styles.errorLabel}
-              label={t(errors?.gallery[0]?.url)}
             />
           )}
-        <Bold
-          label={t('hotle_policy')}
-          color={colors.primary}
-          style={{ marginTop: mvs(20) }}
-        />
-        <PrimaryInput
-          error={
-            touched?.star_rate && errors?.star_rate
-              ? `${t(errors?.star_rate)}`
-              : undefined
-          }
-          label={t('hotel_rating_standard')}
-          placeholder={t('hotel_rating_standard')}
-          onChangeText={str => setFieldValue('star_rate', str)}
-          onBlur={() => setFieldTouched('star_rate', true)}
-          value={values.star_rate}
-        />
-        <Row style={{ backgroundColor: colors.lightGray }}>
-          <Bold label={t('policy')} color={colors.primary} fontSize={mvs(18)} />
-          <TouchableOpacity onPress={handleAddPolicy}>
-            <Entypo name={'plus'} color={colors.primary} size={25} />
-          </TouchableOpacity>
-        </Row>
 
-        {values?.policy.map((policy, index) => (
-          <View style={styles.policyContainer} key={index}>
-            {values?.policy?.length !== 1 && (
-              <TouchableOpacity
-                style={{ alignSelf: 'flex-end' }}
-                onPress={() => handleRemovePolicy(index)}>
-                <MaterialCommunityIcons
-                  name={'delete'}
-                  color={colors.primary}
-                  size={25}
-                />
-              </TouchableOpacity>
-            )}
-            <PrimaryInput
-              label={t('title')}
-              placeholder={t('policy_title')}
-              onChangeText={str =>
-                setFieldValue(`policy.[${index}].title`, str)
-              }
-              onBlur={() => setFieldTouched(`policy.[${index}].title`, true)}
-              value={values.policy[index].title}
-              error={
-                touched?.policy &&
-                touched?.policy[index] &&
-                errors?.policy &&
-                errors?.policy[index] &&
-                `${t(errors.policy[0]?.title)}` &&
-                `${t(errors?.policy[0]?.title)}`
-              }
-            />
+          <Regular
+            color={colors.primary}
+            label={t('Gallery')}
+            style={styles.galleryText}
+          />
+          <View style={styles.galleryContainer}>
+            <TouchableOpacity onPress={() => openGallery('gallery')}>
+              <View style={[styles.ImageContainer, {marginHorizontal: mvs(3)}]}>
+                <Entypo name="camera" size={20} color={'black'} />
+                {/* <Text style={styles.headerText}>Add image{'\n'}(0 up to 8)</Text> */}
 
-            <PrimaryInput
-              label={t('content')}
-              placeholder={t('content')}
-              onChangeText={str =>
-                setFieldValue(`policy.${index}.content`, str)
-              }
-              onBlur={() => setFieldTouched(`policy.${index}.content`, true)}
-              value={values?.policy[index].content}
-              error={
-                touched?.policy &&
-                touched?.policy[index] &&
-                errors?.policy &&
-                errors?.policy[0] &&
-                `${t(errors.policy[0]?.content)}` &&
-                `${t(errors?.policy[0]?.content)}`
-              }
+                <Regular style={styles.headerText} label={'Add images'} />
+              </View>
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true}
+              data={values?.gallery}
+              renderItem={({item, index}) => {
+                if (!item?.url) return null;
+                return (
+                  <>
+                    <View style={styles.ImageContainer}>
+                      <Image
+                        source={{uri: item?.url || null}}
+                        resizeMode="contain"
+                        style={styles.image}
+                      />
+
+                      <TouchableOpacity
+                        onPress={() => onImageRemove(index)}
+                        style={styles.removeContainer}>
+                        <Text style={styles.txtRemove}>Remove</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </>
+                );
+              }}
             />
           </View>
-        ))}
-        <Regular
-          style={{ marginTop: mvs(10) }}
-          color={colors.primary}
-          label={t('featured_image')}
-        />
-        <ImageBackground
-          // source={{
-          //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-          // }}
-          style={styles.bannerImageContainer}>
-          <PrimaryButton
-            title={'Upload Image'}
-            onPress={() => openGallery('featureImage')}
-            containerStyle={styles.buttonContainerStyle}
-            textStyle={styles.buttonTextStyle}
+          {errors?.gallery &&
+            errors?.gallery[0] &&
+            errors?.gallery[0]?.url &&
+            touched?.gallery &&
+            touched?.gallery[0] &&
+            touched?.gallery[0]?.url && (
+              <Regular
+                style={styles.errorLabel}
+                label={t(errors?.gallery[0]?.url)}
+              />
+            )}
+          <Bold
+            label={t('hotle_policy')}
+            color={colors.primary}
+            style={{marginTop: mvs(20)}}
           />
-          {values?.image_id?.url ? (
-            <Image
-              source={{ uri: values?.image_id?.url }}
-              style={{ width: '100%', height: '100%' }}
+          <PrimaryInput
+            error={
+              touched?.star_rate && errors?.star_rate
+                ? `${t(errors?.star_rate)}`
+                : undefined
+            }
+            label={t('hotel_rating_standard')}
+            placeholder={t('hotel_rating_standard')}
+            onChangeText={str => setFieldValue('star_rate', str)}
+            onBlur={() => setFieldTouched('star_rate', true)}
+            value={values.star_rate}
+          />
+          <Row style={{backgroundColor: colors.lightGray}}>
+            <Bold
+              label={t('policy')}
+              color={colors.primary}
+              fontSize={mvs(18)}
             />
-          ) : null}
-        </ImageBackground>
-        {errors?.image_id?.url && touched?.image_id?.url && (
-          <Regular
-            label={`${t(errors?.image_id?.url)}`}
-            style={styles.errorLabel}
-          />
-        )}
+            <TouchableOpacity onPress={handleAddPolicy}>
+              <Entypo name={'plus'} color={colors.primary} size={25} />
+            </TouchableOpacity>
+          </Row>
 
-        <PrimaryButton
-          containerStyle={{ marginTop: mvs(30), marginBottom: mvs(20) }}
-          onPress={() => onSubmit()}
-          title="Next"
-        />
-      </KeyboardAvoidScrollview>}
+          {values?.policy.map((policy, index) => (
+            <View style={styles.policyContainer} key={index}>
+              {values?.policy?.length !== 1 && (
+                <TouchableOpacity
+                  style={{alignSelf: 'flex-end'}}
+                  onPress={() => handleRemovePolicy(index)}>
+                  <MaterialCommunityIcons
+                    name={'delete'}
+                    color={colors.primary}
+                    size={25}
+                  />
+                </TouchableOpacity>
+              )}
+              <PrimaryInput
+                label={t('title')}
+                placeholder={t('policy_title')}
+                onChangeText={str =>
+                  setFieldValue(`policy.[${index}].title`, str)
+                }
+                onBlur={() => setFieldTouched(`policy.[${index}].title`, true)}
+                value={values.policy[index].title}
+                error={
+                  touched?.policy &&
+                  touched?.policy[index] &&
+                  errors?.policy &&
+                  errors?.policy[index] &&
+                  `${t(errors.policy[0]?.title)}` &&
+                  `${t(errors?.policy[0]?.title)}`
+                }
+              />
+
+              <PrimaryInput
+                label={t('content')}
+                placeholder={t('content')}
+                onChangeText={str =>
+                  setFieldValue(`policy.${index}.content`, str)
+                }
+                onBlur={() => setFieldTouched(`policy.${index}.content`, true)}
+                value={values?.policy[index].content}
+                error={
+                  touched?.policy &&
+                  touched?.policy[index] &&
+                  errors?.policy &&
+                  errors?.policy[0] &&
+                  `${t(errors.policy[0]?.content)}` &&
+                  `${t(errors?.policy[0]?.content)}`
+                }
+              />
+            </View>
+          ))}
+          <Regular
+            style={{marginTop: mvs(10)}}
+            color={colors.primary}
+            label={t('featured_image')}
+          />
+          <ImageBackground
+            // source={{
+            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
+            // }}
+            style={styles.bannerImageContainer}>
+            <PrimaryButton
+              title={'Upload Image'}
+              onPress={() => openGallery('featureImage')}
+              containerStyle={styles.buttonContainerStyle}
+              textStyle={styles.buttonTextStyle}
+            />
+            {values?.image_id?.url ? (
+              <Image
+                source={{uri: values?.image_id?.url}}
+                style={{width: '100%', height: '100%'}}
+              />
+            ) : null}
+          </ImageBackground>
+          {errors?.image_id?.url && touched?.image_id?.url && (
+            <Regular
+              label={`${t(errors?.image_id?.url)}`}
+              style={styles.errorLabel}
+            />
+          )}
+
+          <PrimaryButton
+            containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
+            onPress={() => onSubmit()}
+            title="Next"
+          />
+        </KeyboardAvoidScrollview>
+      )}
     </View>
   );
 };
