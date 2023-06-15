@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -6,56 +6,60 @@ import {
   FlatList,
   TouchableOpacity,
   SectionList,
+  Alert,
 } from 'react-native';
 import styles from './styles';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {t} from 'i18next';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
+import { t } from 'i18next';
+import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
 import PrimaryInput from 'components/atoms/inputs';
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import Regular from 'typography/regular-text';
-import {PrimaryButton} from 'components/atoms/buttons';
-import {mvs} from 'config/metrices';
-import {colors} from 'config/colors';
+import { PrimaryButton } from 'components/atoms/buttons';
+import { mvs } from 'config/metrices';
+import { colors } from 'config/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {UTILS} from 'utils';
-import {Checkbox} from 'components/atoms/checkbox';
-import {Row} from 'components/atoms/row';
+import { UTILS } from 'utils';
+import { Checkbox } from 'components/atoms/checkbox';
+import { Row } from 'components/atoms/row';
 import Bold from 'typography/bold-text';
 import {
   getRoomAttributes,
+  getRoomForEdit,
   onAddOrUpdateRoom,
+  postFileData,
 } from 'services/api/hotel/api-actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addHotelValidation, addRoomValidation } from 'validations';
+import { Loader } from 'components/atoms/loader';
 
 const AddRoom = props => {
-  const {navigation} = props;
+  const { navigation, route } = props;
+  const { hotel_id, room_id } = route?.params || {};
   const dispatch = useDispatch();
-  const {hotel} = useSelector(s => s);
-
-  console.log('hotel data check=====>', hotel);
+  const { hotel } = useSelector(s => s);
+  const [attributes, setAttributes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  React.useEffect(() => {
-    dispatch(getRoomAttributes());
-  }, []);
-  const attributes = [
-    {
-      title: 'PROPERTY TYPE',
-      data: [
-        {id: 1, name: 'Homestays'},
-        {id: 2, name: 'Hotels'},
-        {id: 3, name: 'Apartments'},
-      ],
-    },
-  ];
+
+  // [
+  //   {
+  //     title: 'PROPERTY TYPE',
+  //     data: [
+  //       { id: 1, name: 'Homestays' },
+  //       { id: 2, name: 'Hotels' },
+  //       { id: 3, name: 'Apartments' },
+  //     ],
+  //   },
+  // ];
   const initialValues = {
     title: '',
     content: '',
-    video_link: '',
+    // video_link: '',
     gallery: [],
     image_id: '',
     price: '',
-    number: 1,
+    number: '1',
     min_day_stays: '',
     beds: '',
     size: '',
@@ -64,43 +68,79 @@ const AddRoom = props => {
     ican_import_url: '',
   };
 
-  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
+  const { values, errors, touched, setFieldValue, setFieldTouched, isValid } =
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: false,
-      // validationSchema: addHotelValidation,
-      onSubmit: () => {},
+      validationSchema: addRoomValidation,
+      onSubmit: () => { },
     });
+  React.useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        if (room_id) {
+          const res = await getRoomForEdit(hotel_id, room_id);
+          console.log('res:::room for edit', res);
+          setAttributes(res?.attributes || []);
+          setFieldValue('title', res?.row?.title);
+          // setFieldValue('content', true);
+          setFieldValue('ican_import_url', res?.row?.ican_import_url);
+          // setFieldValue('image_id',  res?.row?.image_id);
+          setFieldValue('beds', `${res?.row?.beds}`);
+          setFieldValue('number', `${res?.row?.number}`);
+          setFieldValue('size', `${res?.row?.size}`);
+          setFieldValue('adults', `${res?.row?.adults}`);
+          setFieldValue('price', `${res?.row?.price}`);
+          setFieldValue('min_day_stays', `${res?.row?.min_day_stays}`);
+          setFieldValue('children', `${res?.row?.children}`);
+          // setFieldValue('gallery',  res?.row?.gallery);
+        } else {
+          const res = await getRoomAttributes(hotel_id);
+          setAttributes(res?.attributes || []);
+        }
+      } catch (error) {
+        console.log(error);
+        Alert.alert('Error', UTILS.returnError(error));
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
   const onSubmit = async () => {
     try {
-      const res = await onAddOrUpdateRoom({
-        values,
-        id: edit_hotel?.row?.id || null,
-        gallery: gallery?.map(x => x?.data?.id)?.join(),
-        image_id: image_id?.data?.id,
-        terms: selectedTypes?.map(x => x?.id),
-      });
-      console.log('res=>>>add hotel room >>', res);
-      // navigation?.navigate('AddHotelLocation');
-      // if (isValid && Object.keys(touched).length > 0) {
-      //   try {
-      //     Alert.alert('onsubmit');
-
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // } else {
-      //   setFieldTouched('title', true);
-      //   setFieldTouched('content', true);
-      //   setFieldTouched('video_link', true);
-      //   setFieldTouched('banner_image', true);
-      //   setFieldTouched('hotel_rating', true);
-      //   setFieldTouched('image_id', true);
-      //   setFieldTouched('gallery[0]', true);
-      //   setFieldTouched(`policy.[0].content`, true);
-      //   setFieldTouched(`policy.[0].title`, true);
-      // }
+      if (isValid && Object.keys(touched).length > 0) {
+        try {
+          const res = await onAddOrUpdateRoom(
+            {
+              ...values,
+              id: room_id || null,
+              gallery: values?.gallery?.map(x => x?.data?.id)?.join(),
+              image_id: values?.image_id?.data?.id,
+              terms: selectedTypes?.map(x => x?.id),
+            },
+            hotel_id,
+          );
+          console.log('res=>>>add hotel room >>', res);
+          navigation?.navigate('AddHotelLocation');
+          Alert.alert('onsubmit');
+        } catch (error) {
+          console.log(error);
+          Alert.alert('Error', UTILS.returnError(error));
+        }
+      } else {
+        setFieldTouched('title', true);
+        // setFieldTouched('content', true);
+        setFieldTouched('ican_import_url', true);
+        setFieldTouched('image_id', true);
+        setFieldTouched('beds', true);
+        setFieldTouched('number', true);
+        setFieldTouched('size', true);
+        setFieldTouched('adults', true);
+        setFieldTouched('price', true);
+        setFieldTouched('gallery[0]', true);
+      }
     } catch (error) {
       console.log('error=>', error);
     }
@@ -117,16 +157,20 @@ const AddRoom = props => {
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
-      console.log('gallery uri check===>', res);
+      const file_resp = await postFileData({ file: res, type: 'image' });
+      console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
 
-      if (v == 'gallery') {
-        setFieldValue('gallery', [...values?.gallery, uri]);
+      if (v === 'gallery' && file_resp?.data) {
+        setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
+          ...file_resp?.data,
+        });
       } else {
-        setFieldValue('image_id', uri);
+        setFieldValue('image_id', file_resp?.data);
       }
     } catch (error) {
       console.log('upload image error', error);
+      Alert.alert('Error', UTILS?.returnError(error));
     }
   };
   const handleCheckboxSelect = item => {
@@ -145,29 +189,30 @@ const AddRoom = props => {
     }
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     const isSelected = selectedTypes.some(
       selectedItem => selectedItem.id === item.id,
     );
 
     return (
-      <Row style={{justifyContent: 'flex-start', padding: mvs(10)}}>
+      <Row style={{ justifyContent: 'flex-start', padding: mvs(10) }}>
         <Checkbox
           checked={isSelected}
           onPress={() => handleCheckboxSelect(item)}
         />
 
         <Regular
-          style={{marginLeft: mvs(10), fontSize: mvs(16)}}
+          style={{ marginLeft: mvs(10), fontSize: mvs(16) }}
           label={item?.name}
         />
       </Row>
     );
   };
+
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('add_room')} back={true} />
-      <KeyboardAvoidScrollview
+      {loading ? <Loader /> : <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
           label={t('room_name')}
@@ -180,7 +225,7 @@ const AddRoom = props => {
           }
         />
         <Regular
-          style={{marginTop: mvs(10)}}
+          style={{ marginTop: mvs(10) }}
           color={colors.primary}
           label={t('featured_image')}
         />
@@ -196,12 +241,15 @@ const AddRoom = props => {
             textStyle={styles.buttonTextStyle}
           />
           <Image
-            source={{uri: values?.image_id}}
-            style={{width: '100%', height: '100%'}}
+            source={{ uri: values?.image_id?.url }}
+            style={{ width: '100%', height: '100%' }}
           />
         </ImageBackground>
-        {errors?.image_id && touched?.image_id && (
-          <Regular label={`${t(errors?.image_id)}`} style={styles.errorLabel} />
+        {errors?.image_id?.url && touched?.image_id?.url && (
+          <Regular
+            label={`${t(errors?.image_id?.url)}`}
+            style={styles.errorLabel}
+          />
         )}
         <Regular
           color={colors.primary}
@@ -210,7 +258,7 @@ const AddRoom = props => {
         />
         <View style={styles.galleryContainer}>
           <TouchableOpacity onPress={() => openGallery('gallery')}>
-            <View style={[styles.ImageContainer, {marginHorizontal: mvs(3)}]}>
+            <View style={[styles.ImageContainer, { marginHorizontal: mvs(3) }]}>
               <Entypo name="camera" size={20} color={'black'} />
               {/* <Text style={styles.headerText}>Add image{'\n'}(0 up to 8)</Text> */}
               <Regular style={styles.headerText} label={'Add images'} />
@@ -219,11 +267,11 @@ const AddRoom = props => {
           <FlatList
             horizontal={true}
             data={values?.gallery}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <View style={styles.ImageContainer}>
                   <Image
-                    source={{uri: item}}
+                    source={{ uri: item?.url }}
                     resizeMode="contain"
                     style={styles.image}
                   />
@@ -237,11 +285,19 @@ const AddRoom = props => {
             }}
           />
         </View>
-        {errors?.gallery && touched?.gallery && (
-          <Regular style={styles.errorLabel} label={t(errors?.gallery)} />
-        )}
+        {errors?.gallery &&
+          errors?.gallery[0] &&
+          errors?.gallery[0]?.url &&
+          touched?.gallery &&
+          touched?.gallery[0] &&
+          touched?.gallery[0]?.url && (
+            <Regular
+              style={styles.errorLabel}
+              label={t(errors?.gallery[0]?.url)}
+            />
+          )}
         <PrimaryInput
-          labelStyle={{marginTop: mvs(25)}}
+          labelStyle={{ marginTop: mvs(25) }}
           label={t('price')}
           placeholder={t('price')}
           onChangeText={str => setFieldValue('price', str)}
@@ -254,7 +310,7 @@ const AddRoom = props => {
 
         <Row>
           <PrimaryInput
-            mainContainer={{width: '48%'}}
+            mainContainer={{ width: '48%' }}
             keyboardType="numeric"
             label={t('number')}
             placeholder={t('1')}
@@ -268,7 +324,7 @@ const AddRoom = props => {
             }
           />
           <PrimaryInput
-            mainContainer={{width: '48%'}}
+            mainContainer={{ width: '48%' }}
             error={
               touched?.min_day_stays && errors?.min_day_stays
                 ? `${t(errors?.min_day_stays)}`
@@ -284,11 +340,11 @@ const AddRoom = props => {
         <Regular
           label={'(Optional)'}
           fontSize={12}
-          style={{alignSelf: 'flex-end'}}
+          style={{ alignSelf: 'flex-end' }}
         />
         <Row>
           <PrimaryInput
-            mainContainer={{width: '48%'}}
+            mainContainer={{ width: '48%' }}
             keyboardType="numeric"
             label={t('number_of_beds')}
             placeholder={t('1')}
@@ -300,7 +356,7 @@ const AddRoom = props => {
             }
           />
           <PrimaryInput
-            mainContainer={{width: '48%'}}
+            mainContainer={{ width: '48%' }}
             label={t('room_size')}
             placeholder={t('size')}
             onChangeText={str => setFieldValue('size', str)}
@@ -313,7 +369,7 @@ const AddRoom = props => {
         </Row>
         <Row>
           <PrimaryInput
-            mainContainer={{width: '48%'}}
+            mainContainer={{ width: '48%' }}
             label={t('max_adults')}
             placeholder={t('1')}
             onChangeText={str => setFieldValue('adults', str)}
@@ -326,7 +382,7 @@ const AddRoom = props => {
             }
           />
           <PrimaryInput
-            mainContainer={{width: '48%'}}
+            mainContainer={{ width: '48%' }}
             label={t('max_children')}
             placeholder={t('0')}
             onChangeText={str => setFieldValue('children', str)}
@@ -342,20 +398,21 @@ const AddRoom = props => {
 
         <SectionList
           sections={attributes}
-          keyExtractor={(item, index) => item + index}
+          keyExtractor={(_, index) => index?.toString()}
           renderItem={renderItem}
-          renderSectionHeader={({section: {title}}) => (
-            <Row style={{justifyContent: 'flex-start'}}>
-              <Bold fontSize={mvs(18)} label={'ATTRIBUTE:'} />
+          renderSectionHeader={({ section: { name } }) => (
+            <Row style={{ justifyContent: 'flex-start' }}>
+              {/* <Bold fontSize={mvs(18)} label={'ATTRIBUTE:'} /> */}
               <Bold
-                style={{marginLeft: mvs(10), fontSize: mvs(18)}}
-                label={title}
+                style={{ marginLeft: mvs(10), fontSize: mvs(18) }}
+                label={name}
               />
             </Row>
           )}
         />
+
         <PrimaryInput
-          labelStyle={{marginTop: mvs(20)}}
+          labelStyle={{ marginTop: mvs(20) }}
           label={t('Import Url')}
           placeholder={t('')}
           onChangeText={str => setFieldValue('ican_import_url', str)}
@@ -368,11 +425,11 @@ const AddRoom = props => {
           }
         />
         <PrimaryButton
-          containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
+          containerStyle={{ marginTop: mvs(30), marginBottom: mvs(20) }}
           onPress={() => onSubmit()}
           title="Add Room"
         />
-      </KeyboardAvoidScrollview>
+      </KeyboardAvoidScrollview>}
     </View>
   );
 };

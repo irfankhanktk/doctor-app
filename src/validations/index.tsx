@@ -117,6 +117,30 @@ export const addHotelValidation = yup.object().shape({
     })
     .required('select_image'),
 });
+export const addRoomValidation = yup.object().shape({
+  title: yup.string().required('title_required'),
+  // content: yup.string().required('content_required'),
+  number: yup.string().required('number_required'),
+  price: yup.string().required('price_required'),
+  beds: yup.string().required('beds_required'),
+  size: yup.string().required('size_required'),
+  adults: yup.string().required('adults_required'),
+  ican_import_url: yup.string().required('link_required').url('invalid_link'),
+  gallery: yup
+    .array()
+    .of(
+      yup.object().shape({
+        url: yup.string().required('select_image'),
+      })
+    )
+    .required('select_image'),
+  image_id: yup
+    .object()
+    .shape({
+      url: yup.string().required('select_image'),
+    })
+    .required('select_image'),
+});
 
 export const addPriceHotelValidation = yup.object().shape({
   email: yup.string().email('invalid_email').required('req_email'),

@@ -52,7 +52,7 @@ export const URLS = {
       add_update_room: 'user/hotel/room/', //  '9/store/-1' //-1 for add new otherwise will update hotel-room
       get_room_attributes: 'user/hotel/room/', // '9/create',//
       delete_room: 'user/hotel/room/', // '9/del/1' hotel id and room id
-      get_room_for_edit: 'user/hotel/room/', // '9/create'
+      get_room_for_edit: 'user/hotel/room/', // '13/edit/45'
       change_room_status: 'user/hotel/room/', // '9/bulkEdit/34?action=' make-publish or make-hide
       get_hotel_rooms: 'user/hotel/room/', // '9/index'
       get_room_availability: 'user/hotel/', // 9/availability/loadDates?id=35&start=2023-05-29&end=2023-07-10
@@ -60,5 +60,6 @@ export const URLS = {
     },
     store_file: 'hotel/store',
     locations: 'locations',
+    hotel_details: 'hotel/'//hotel slug
   },
 };

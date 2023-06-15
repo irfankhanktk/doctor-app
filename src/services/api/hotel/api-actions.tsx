@@ -65,17 +65,9 @@ export const getHotelForEdit = (hotel_id: any, setLoading: (bool: boolean) => vo
 };
 export const postFileData = (data: any) => postFormData(`${URLS.hotel_vendor.store_file}`, data);
 export const onAddOrUpdateHotel = (data: any) => postData(`${URLS.hotel_vendor.add_update_hotel}${data?.id || -1}`, data);
-
-export const getRoomAttributes = () => {
-    return async (dispatch: AppDispatch, getState: () => RootState) => {
-        try {
-            const res = await getData(`${URLS.hotel_vendor.room.get_room_attributes}14/create`);
-            console.log('res-::room attributes>>>', res);
-            dispatch(setRoomAttributes(res));
-        } catch (error: any) {
-            console.log('error in getRoomAttributes', UTILS.returnError(error));
-            Alert.alert('', UTILS.returnError(error));
-        }
-    };
-};
-export const onAddOrUpdateRoom = (data: any) => postData(`${URLS.hotel_vendor.room.add_update_room}${data?.id || -1}`, data);
+export const getHotelDetails = (slug: any) => getData(`${URLS.hotel_vendor.hotel_details}${slug}`);
+//room endpoints
+export const getRoomAttributes = (hotel_id: any) => getData(`${URLS.hotel_vendor.room.get_room_attributes}${hotel_id}/create`);
+export const onAddOrUpdateRoom = (data: any, hotel_id: any) => postData(`${URLS.hotel_vendor.room.add_update_room}${hotel_id}/store/${data?.id || -1}`, data);
+export const getHotelRooms = (hotel_id: any) => getData(`${URLS.hotel_vendor.room.get_hotel_rooms}${hotel_id}/index `);
+export const getRoomForEdit = (hotel_id: any, room_id: any) => getData(`${URLS.hotel_vendor.room.get_room_for_edit}${hotel_id}/edit/${room_id}`);
