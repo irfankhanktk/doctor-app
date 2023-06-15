@@ -1,32 +1,32 @@
-import { Row } from 'components/atoms/row';
-import { mvs } from 'config/metrices';
+import {Row} from 'components/atoms/row';
+import {mvs} from 'config/metrices';
 import React from 'react';
 
-import { PlusButton, PrimaryButton } from 'components/atoms/buttons';
-import { Loader } from 'components/atoms/loader';
-import { colors } from 'config/colors';
-import { Alert, ScrollView, TouchableOpacity, View } from 'react-native';
+import {PlusButton, PrimaryButton} from 'components/atoms/buttons';
+import {Loader} from 'components/atoms/loader';
+import {colors} from 'config/colors';
+import {Alert, ScrollView, TouchableOpacity, View} from 'react-native';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 import styles from './styles';
 
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
-import { useAppDispatch, useAppSelector } from 'hooks/use-store';
-import { t } from 'i18next';
-import { navigate } from 'navigation/navigation-ref';
+import {useAppDispatch, useAppSelector} from 'hooks/use-store';
+import {t} from 'i18next';
+import {navigate} from 'navigation/navigation-ref';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import {addToCart, getRooms} from 'services/api/hotel-api-actions';
 // import {setRooms} from 'store/reducers/hotel-reducer';
 
-import { Checkbox } from 'components/atoms/checkbox';
+import {Checkbox} from 'components/atoms/checkbox';
 import HotelRoom from 'components/molecules/hotel/hotel-room';
 import RoomSelectionModal from 'components/molecules/hotel/modals/room-selection-modal';
-import { getHotelRooms } from 'services/api/hotel/api-actions';
-import { UTILS } from 'utils';
+import {deleteHotelRoom, getHotelRooms} from 'services/api/hotel/api-actions';
+import {UTILS} from 'utils';
 const RoomScreen = props => {
-  const { user, hotel } = useAppSelector(s => s);
-  const { userInfo } = user;
+  const {user, hotel} = useAppSelector(s => s);
+  const {userInfo} = user;
   const dispatch = useAppDispatch();
   const initialValues = userInfo ?? {};
   const [loading, setLoading] = React.useState(false);
@@ -35,33 +35,41 @@ const RoomScreen = props => {
   const [roomSelectedmodal, setRoomSelectedModal] = React.useState(false);
   const [selectedRoom, setSelectedRoom] = React.useState({});
   const [rooms, setRooms] = React.useState([]);
-
-  const { hotel_id } = props?.route?.params;
-  const { hotelDetails } = props?.route?.params;
+  console.log('roooms me check====>', rooms);
+  const {hotel_id} = props?.route?.params;
+  const {hotelDetails} = props?.route?.params;
   const [extraPrices, setExtraPrices] = React.useState(
     hotelDetails?.booking_data?.extra_price || [],
   );
   const [filterModal, setFilterModal] = React.useState(false);
   const getRooms = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await getHotelRooms(hotel_id);
       setRooms(res?.rows?.data);
     } catch (error) {
-      Alert.alert('Error', UTILS.returnError(error))
+      Alert.alert('Error', UTILS.returnError(error));
     } finally {
-      setLoading(false)
+      setLoading(false);
+    }
+  };
+  const onDeleteRoom = async (hotel_id, room_id) => {
+    try {
+      await deleteHotelRoom(hotel_id, room_id);
+      Alert.alert('Room delete successfully');
+    } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
+    } finally {
     }
   };
   React.useEffect(() => {
     getRooms();
   }, []);
 
-
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('Available_Rooms')} back={true} />
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <Row
           style={{
             alignItems: 'center',
@@ -78,7 +86,7 @@ const RoomScreen = props => {
                 size={mvs(20)}
                 name={'filter'}
                 color={colors.primary}
-                style={{ marginLeft: mvs(5) }}
+                style={{marginLeft: mvs(5)}}
               />
             </Row>
             {/* <Medium label={'Filter'} fontSize={mvs(20)} style={{ marginHorizontal: mvs(20), marginTop: mvs(15), }} /> */}
@@ -93,17 +101,23 @@ const RoomScreen = props => {
               paddingBottom: mvs(20),
               flexGrow: 1,
             }}
-            style={{ paddingVertical: mvs(20), flexGrow: 1 }}>
+            style={{paddingVertical: mvs(20), flexGrow: 1}}>
             {rooms?.map(ele => (
               <HotelRoom
                 selectedRoomNumber={ele?.selectedRoomNumber}
-                hotel_img={{ uri: `${ele?.image}` }}
+                hotel_img={{uri: `${ele?.image_id}`}}
                 roomtitle={ele?.title}
                 beds={ele?.beds}
                 size={ele?.size}
                 adults={ele?.adults}
                 children={ele?.children}
-                onPressEditRoom={() => props?.navigation?.navigate('AddRoom', { hotel_id, room_id: ele?.id })}
+                onPressEditRoom={() =>
+                  props?.navigation?.navigate('AddRoom', {
+                    hotel_id,
+                    room_id: ele?.id,
+                  })
+                }
+                onPressDeleteRoom={() => onDeleteRoom(hotel_id, ele?.id)}
                 onPressroom={() => setVideoModal(true)}
                 onPressselectedRoom={() => {
                   setRoomSelectedModal(true);
@@ -133,7 +147,7 @@ const RoomScreen = props => {
           const copy = [...rooms];
           const newRooms = copy?.map(room =>
             room?.id === selectedRoom?.id
-              ? { ...room, selectedRoomNumber: number }
+              ? {...room, selectedRoomNumber: number}
               : room,
           );
 
@@ -155,7 +169,7 @@ const RoomScreen = props => {
           <Medium label={t('extra_price')} />
           {extraPrices?.map((item, index) => (
             <Row>
-              <Row style={{ justifyContent: 'flex-start' }}>
+              <Row style={{justifyContent: 'flex-start'}}>
                 <Checkbox
                   checked={item?.selected}
                   onPress={() => {
@@ -165,7 +179,7 @@ const RoomScreen = props => {
                     setExtraPrices(copy);
                   }}
                 />
-                <Medium label={item?.name} style={{ marginLeft: mvs(10) }} />
+                <Medium label={item?.name} style={{marginLeft: mvs(10)}} />
               </Row>
               <Medium label={`$${item?.price} `} />
             </Row>
@@ -188,17 +202,18 @@ const RoomScreen = props => {
               color={colors.primary}
             />
             <Medium
-              label={`$${rooms?.reduce(
-                (acc, room) =>
-                  acc + (room?.selectedRoomNumber || 0) * room?.price * 1,
-                0,
-              ) *
-                1 +
+              label={`$${
+                rooms?.reduce(
+                  (acc, room) =>
+                    acc + (room?.selectedRoomNumber || 0) * room?.price * 1,
+                  0,
+                ) *
+                  1 +
                 extraPrices
                   ?.filter(x => x?.selected)
                   ?.reduce((acc, extras) => acc + extras?.price * 1, 0) *
-                1
-                }`}
+                  1
+              }`}
               fontSize={mvs(20)}
               color={colors.primary}
             />
@@ -213,7 +228,11 @@ const RoomScreen = props => {
           />
         </View>
       )}
-      <PlusButton onPress={() => props?.navigation?.navigate('AddRoom', { hotel_id, room_id: null })} />
+      <PlusButton
+        onPress={() =>
+          props?.navigation?.navigate('AddRoom', {hotel_id, room_id: null})
+        }
+      />
     </View>
   );
 };

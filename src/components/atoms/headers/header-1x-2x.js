@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {I18nManager, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  I18nManager,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Medium from 'typography/medium-text';
 import {colors} from 'config/colors';

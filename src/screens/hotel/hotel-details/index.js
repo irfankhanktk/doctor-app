@@ -1,7 +1,7 @@
-import { Row } from 'components/atoms/row';
+import {Row} from 'components/atoms/row';
 
-import { DATE_FORMAT } from 'config/constants';
-import { mvs } from 'config/metrices';
+import {DATE_FORMAT} from 'config/constants';
+import {mvs} from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
 import {
@@ -10,28 +10,30 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 
-import { colors } from '../../../config/colors';
+import {colors} from '../../../config/colors';
 import styles from './styles';
 
-import { Loader } from 'components/atoms/loader';
-import { useAppSelector } from 'hooks/use-store';
-import { navigate } from 'navigation/navigation-ref';
+import {Loader} from 'components/atoms/loader';
+import {useAppSelector} from 'hooks/use-store';
+import {navigate} from 'navigation/navigation-ref';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
 import RoomModal from 'components/molecules/hotel/modals/room-detail-modal';
 import MyMap from 'components/molecules/map';
-import { getHotelDetails } from 'services/api/hotel/api-actions';
+import {deleteHotel, getHotelDetails} from 'services/api/hotel/api-actions';
 import HtmlView from './../../../components/atoms/render-html/index';
+import {PrimaryButton} from 'components/atoms/buttons';
 const HotelDetails = props => {
-  const { navigation } = props;
+  const {navigation} = props;
   const [text, setText] = React.useState('');
 
   const [roomModal, setRoomModal] = React.useState(false);
@@ -41,10 +43,10 @@ const HotelDetails = props => {
     rate_number: '4',
     review_content: '',
   });
-  const { userInfo } = useAppSelector(s => s?.user);
+  const {userInfo} = useAppSelector(s => s?.user);
   const [selectedRoom, setSelectedRoom] = React.useState({});
   console.log('userinfo-===>', userInfo);
-  const { t } = i18n;
+  const {t} = i18n;
   const [filter, setFilter] = React.useState({
     checkin: moment().format(DATE_FORMAT.yyyy_mm_dd),
     checkout: moment().format(DATE_FORMAT.yyyy_mm_dd),
@@ -52,7 +54,7 @@ const HotelDetails = props => {
     rooms: '1',
     adults: '0',
   });
-  const { hotel_id, slug } = props?.route?.params || {};
+  const {hotel_id, slug} = props?.route?.params || {};
 
   const [loading, setLoading] = React.useState(true);
 
@@ -69,24 +71,38 @@ const HotelDetails = props => {
       setLoading(false);
     }
   };
-
+  const deleteHotelPress = async () => {
+    try {
+      await deleteHotel(hotel_id);
+      Alert.alert('Delete hotel successfully');
+    } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
+    }
+  };
   return (
     <View style={styles.container}>
       {loading ? (
         <Loader />
       ) : (
         <>
-          <TouchableOpacity
-            style={styles.goBackBtn}
-            onPress={() => navigation?.goBack()}>
-            <Icon
-              name={I18nManager.isRTL ? 'right' : 'left'}
-              size={mvs(20)}
-              color={colors.black}
-            />
-          </TouchableOpacity>
+          <Row style={styles.headerContainer}>
+            <TouchableOpacity
+              style={styles.goBackBtn}
+              onPress={() => navigation?.goBack()}>
+              <Icon
+                name={I18nManager.isRTL ? 'right' : 'left'}
+                size={mvs(20)}
+                color={colors.black}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.editBtn}
+              onPress={() => navigate('AddHotel', {id: hotel_id})}>
+              <Entypo name="edit" color={colors.black} size={mvs(18)} />
+            </TouchableOpacity>
+          </Row>
           <ImageBackground
-            source={{ uri: hotelDetails?.row?.image_id }}
+            source={{uri: hotelDetails?.row?.image_id}}
             style={styles.hotelsimgbackground}>
             <Row>
               <Row
@@ -100,11 +116,7 @@ const HotelDetails = props => {
                 <TouchableOpacity
                   onPress={() => setVideoModal(true)}
                   style={{
-                    // paddingHorizontal: mvs(15),
                     marginHorizontal: mvs(20),
-                    // backgroundColor: colors.black,
-                    // opacity: 0.6,
-                    // alignSelf: 'flex-end',
                   }}>
                   <Entypo name="video" color={colors.white} size={mvs(30)} />
                 </TouchableOpacity>
@@ -139,22 +151,22 @@ const HotelDetails = props => {
                 flexGrow: 1,
               }}>
               <Medium style={styles.text} label={hotelDetails?.row?.title} />
-              <Row style={{ justifyContent: 'flex-start' }}>
+              <Row style={{justifyContent: 'flex-start'}}>
                 {/* <SpecialistLocation /> */}
                 <Entypo
                   name="location"
                   color={colors.black}
                   size={mvs(18)}
-                  style={{ marginRight: mvs(10) }}
+                  style={{marginRight: mvs(10)}}
                 />
                 <Medium
                   label={hotelDetails?.row?.address}
-                  style={{ marginHorizontal: mvs(10) }}
+                  style={{marginHorizontal: mvs(10)}}
                 />
               </Row>
               <Medium
                 label={t('description')}
-                style={{ marginTop: mvs(12), fontSize: mvs(18) }}
+                style={{marginTop: mvs(12), fontSize: mvs(18)}}
               />
               <HtmlView html={hotelDetails?.row?.content} />
               {/* <Medium
@@ -180,7 +192,7 @@ const HotelDetails = props => {
                 ))}
               </ScrollView> */}
               <Medium
-                style={{ marginTop: mvs(12), fontSize: mvs(18) }}
+                style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('rules')}
               />
               <Row>
@@ -192,7 +204,7 @@ const HotelDetails = props => {
                 <Regular label={hotelDetails?.row?.check_out_time} />
               </Row>
               <Medium
-                style={{ marginTop: mvs(12), fontSize: mvs(18) }}
+                style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('hotel_policies')}
               />
               {console.log(
@@ -208,7 +220,7 @@ const HotelDetails = props => {
                 ))}
               </View>
               <Medium
-                style={{ marginTop: mvs(12), fontSize: mvs(18) }}
+                style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('services')}
               />
               <Row>
@@ -219,7 +231,7 @@ const HotelDetails = props => {
                 ))}
               </Row>
               <Medium
-                style={{ marginTop: mvs(12), fontSize: mvs(18) }}
+                style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('location')}
               />
               <MyMap
@@ -227,6 +239,11 @@ const HotelDetails = props => {
                   latitude: (hotelDetails?.row?.map_lat || 19.229727) * 1,
                   longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
                 }}
+              />
+              <PrimaryButton
+                containerStyle={{marginTop: mvs(20), marginBottom: mvs(20)}}
+                title="Delete Hotel"
+                onPress={() => deleteHotelPress()}
               />
               {/* <Medium
                 style={{marginTop: mvs(12), fontSize: mvs(18)}}

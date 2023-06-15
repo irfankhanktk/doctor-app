@@ -172,7 +172,8 @@
 "max_adults":"Max Adults",
 "max_children":"Max Children",
 "room_amenities":"Room Amenities",
-"check_room":"Check Room"
-
+"check_room":"Check Room",
+"all_rooms":"All Rooms",
+"Available_Rooms":"Available Rooms"
 
 }

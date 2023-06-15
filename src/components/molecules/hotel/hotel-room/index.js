@@ -1,8 +1,8 @@
-import { Row } from 'components/atoms/row';
-import { colors } from 'config/colors';
-import { mvs } from 'config/metrices';
+import {Row} from 'components/atoms/row';
+import {colors} from 'config/colors';
+import {mvs} from 'config/metrices';
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -10,12 +10,13 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 
-import { t } from 'i18next';
+import {t} from 'i18next';
 const HotelRoom = ({
-  onPress = () => { },
-  onPressroom = () => { },
-  onPressselectedRoom = () => { },
-  onPressEditRoom = () => { },
+  onPress = () => {},
+  onPressroom = () => {},
+  onPressselectedRoom = () => {},
+  onPressEditRoom = () => {},
+  onPressDeleteRoom = () => {},
   roomtitle,
   beds,
   adults,
@@ -24,50 +25,38 @@ const HotelRoom = ({
   hotel_img,
   selectedRoomNumber,
 }) => {
+  console.log('hotel img', hotel_img);
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <Image source={hotel_img} style={styles.img} />
-
-      <TouchableOpacity onPress={onPressEditRoom}>
-        <Entypo name={'edit'} size={mvs(20)} />
-      </TouchableOpacity>
 
       <View style={styles.rightContainer}>
         <Medium label={roomtitle} fontSize={mvs(12)} />
         <Row>
           <Row style={styles.iconContainer}>
-
             <Regular label={'Bed'} fontSize={mvs(12)} />
             <Regular label={beds} fontSize={mvs(12)} />
-
           </Row>
           <Row style={styles.iconContainer}>
-
             <Regular label={'Area'} fontSize={mvs(12)} />
 
-            <Regular
-              label={size}
-              fontSize={mvs(12)}
-            />
+            <Regular label={size} fontSize={mvs(12)} />
           </Row>
         </Row>
         <Row>
           <Row style={styles.iconContainer}>
-
             <Regular label={'Adults'} fontSize={mvs(12)} />
 
             <Regular label={adults} fontSize={mvs(12)} />
           </Row>
           <Row style={styles.iconContainer}>
-
             <Regular label={'Child'} fontSize={mvs(12)} />
 
             <Regular label={children} fontSize={mvs(12)} />
-
           </Row>
         </Row>
 
-        <Row style={{ flex: 1, alignItems: 'flex-end' }}>
+        <Row style={{flex: 1, alignItems: 'flex-end'}}>
           <Ionicons name={'time-outline'} size={mvs(15)} />
           <Ionicons name={'wifi'} size={mvs(15)} />
           <MaterialIcons name={'dry-cleaning'} size={mvs(15)} />
@@ -82,7 +71,6 @@ const HotelRoom = ({
               paddingVertical: mvs(2),
               borderRadius: mvs(2),
               backgroundColor: colors.primary,
-
               opacity: 0.6,
               alignSelf: 'center',
             }}>
@@ -99,7 +87,7 @@ const HotelRoom = ({
                 name="video"
                 color={colors.white}
                 size={mvs(20)}
-                style={{ marginLeft: mvs(10) }}
+                style={{marginLeft: mvs(10)}}
               />
             </Row>
           </TouchableOpacity>
@@ -126,13 +114,40 @@ const HotelRoom = ({
                 name="ios-chevron-down-circle"
                 color={colors.white}
                 size={mvs(14)}
-                style={{ marginLeft: mvs(10) }}
+                style={{marginLeft: mvs(10)}}
               />
             </Row>
           </TouchableOpacity>
         </Row>
+        <Row>
+          <TouchableOpacity
+            style={{
+              width: '49%',
+              flexDirection: 'row',
+              backgroundColor: colors.primary,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: mvs(5),
+            }}
+            onPress={onPressEditRoom}>
+            <Regular style={{right: 10}} color={colors.white} label={'Edit'} />
+            <Entypo color={colors.white} name={'edit'} size={mvs(20)} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: '49%',
+              flexDirection: 'row',
+              backgroundColor: colors.primary,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: mvs(5),
+            }}
+            onPress={onPressDeleteRoom}>
+            <Regular color={colors.white} label={'Delete'} />
+            <Entypo color={colors.white} name={'edit'} size={mvs(20)} />
+          </TouchableOpacity>
+        </Row>
       </View>
-
     </TouchableOpacity>
   );
 };
@@ -152,6 +167,7 @@ const styles = StyleSheet.create({
     height: mvs(120),
     width: mvs(100),
     borderRadius: mvs(10),
+    backgroundColor: 'red',
   },
   iconContainer: {
     alignItems: 'center',

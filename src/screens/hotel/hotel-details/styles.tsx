@@ -68,10 +68,24 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     padding: mvs(5),
     borderRadius: mvs(7),
-    position: 'absolute',
-    zIndex: 1,
-    top: mvs(15),
-    left: mvs(20),
-  }
+  },
+  editBtn:{
+    backgroundColor: colors.white,
+    padding: mvs(5),
+    borderRadius: mvs(7),
+    flexDirection:'row'
+    
+  },
+  headerContainer:
+  {
+  position: 'absolute',
+  zIndex: 1,
+  top: mvs(15),
+  paddingHorizontal:mvs(20),
+
+  
+  width:'100%'
+}
+  
 });
 export default styles;
