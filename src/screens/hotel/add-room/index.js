@@ -87,7 +87,7 @@ const AddRoom = props => {
           setFieldValue('title', res?.row?.title);
           // setFieldValue('content', true);
           setFieldValue('ican_import_url', res?.row?.ican_import_url);
-          // setFieldValue('image_id',  res?.row?.image_id);
+          setFieldValue('image_id', res?.row?.image_id);
           setFieldValue('beds', `${res?.row?.beds}`);
           setFieldValue('number', `${res?.row?.number}`);
           setFieldValue('size', `${res?.row?.size}`);
@@ -95,7 +95,7 @@ const AddRoom = props => {
           setFieldValue('price', `${res?.row?.price}`);
           setFieldValue('min_day_stays', `${res?.row?.min_day_stays}`);
           setFieldValue('children', `${res?.row?.children}`);
-          // setFieldValue('gallery',  res?.row?.gallery);
+          setFieldValue('gallery', res?.row?.gallery || []);
         } else {
           const res = await getRoomAttributes(hotel_id);
           setAttributes(res?.attributes || []);
