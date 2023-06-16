@@ -22,8 +22,7 @@ const AddHotelAttributes = props => {
   const {navigation, route} = props;
   const {hotel} = useSelector(s => s);
   const {hotel_attributes, edit_hotel} = hotel;
-  // console.log('route-->>params', route?.params);
-  // console.log('hotel_attributes :::::::', hotel_attributes?.attributes);
+  const [addBtnLoading, setAddBtnLoading] = React.useState(false);
 
   const [selectedTypes, setSelectedTypes] = useState(
     edit_hotel?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
@@ -36,6 +35,7 @@ const AddHotelAttributes = props => {
 
   const onSubmit = async () => {
     try {
+      setAddBtnLoading(true);
       const res = await onAddOrUpdateHotel({
         ...route?.params,
         id: edit_hotel?.row?.id || null,
@@ -47,6 +47,8 @@ const AddHotelAttributes = props => {
       console.log('res=>>>add update hotel>>', res);
     } catch (error) {
       Alert.alert(UTILS.returnError(error));
+    } finally {
+      setAddBtnLoading(false);
     }
   };
   const handleCheckboxSelect = item => {
@@ -106,6 +108,7 @@ const AddHotelAttributes = props => {
         />
         <PrimaryButton
           onPress={onSubmit}
+          loading={addBtnLoading}
           disabled={!selectedTypes?.length}
           title={'Add Hotel'}
           containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}

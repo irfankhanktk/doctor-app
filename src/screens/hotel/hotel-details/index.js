@@ -5,12 +5,12 @@ import {mvs} from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
 import {
+  Alert,
   I18nManager,
   ImageBackground,
   ScrollView,
   TouchableOpacity,
   View,
-  Alert,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import i18n from 'translation';
@@ -23,15 +23,14 @@ import styles from './styles';
 import {Loader} from 'components/atoms/loader';
 import {useAppSelector} from 'hooks/use-store';
 import {navigate} from 'navigation/navigation-ref';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/AntDesign';
 
+import {PrimaryButton} from 'components/atoms/buttons';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
 import RoomModal from 'components/molecules/hotel/modals/room-detail-modal';
 import MyMap from 'components/molecules/map';
 import {deleteHotel, getHotelDetails} from 'services/api/hotel/api-actions';
 import HtmlView from './../../../components/atoms/render-html/index';
-import {PrimaryButton} from 'components/atoms/buttons';
 const HotelDetails = props => {
   const {navigation} = props;
   const [text, setText] = React.useState('');
@@ -57,6 +56,7 @@ const HotelDetails = props => {
   const {hotel_id, slug} = props?.route?.params || {};
 
   const [loading, setLoading] = React.useState(true);
+  const [deleteLoading, setDeleteLoading] = React.useState(false);
 
   React.useEffect(() => {
     getDetails();
@@ -73,10 +73,13 @@ const HotelDetails = props => {
   };
   const deleteHotelPress = async () => {
     try {
+      setDeleteLoading(true);
       await deleteHotel(hotel_id);
       Alert.alert('Delete hotel successfully');
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
+    } finally {
+      setDeleteLoading(false);
     }
   };
   return (
@@ -241,6 +244,7 @@ const HotelDetails = props => {
                 }}
               />
               <PrimaryButton
+                loading={deleteLoading}
                 containerStyle={{marginTop: mvs(20), marginBottom: mvs(20)}}
                 title="Delete Hotel"
                 onPress={() => deleteHotelPress()}
