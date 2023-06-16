@@ -22,7 +22,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Checkbox} from 'components/atoms/checkbox';
 import HotelRoom from 'components/molecules/hotel/hotel-room';
 import RoomSelectionModal from 'components/molecules/hotel/modals/room-selection-modal';
-import {deleteHotelRoom, getHotelRooms} from 'services/api/hotel/api-actions';
+import {
+  changeHotelRoomStatus,
+  deleteHotelRoom,
+  getHotelRooms,
+} from 'services/api/hotel/api-actions';
 import {UTILS} from 'utils';
 const RoomScreen = props => {
   const {user, hotel} = useAppSelector(s => s);
@@ -35,7 +39,8 @@ const RoomScreen = props => {
   const [roomSelectedmodal, setRoomSelectedModal] = React.useState(false);
   const [selectedRoom, setSelectedRoom] = React.useState({});
   const [rooms, setRooms] = React.useState([]);
-  console.log('roooms me check====>', rooms);
+  const [statusChangeLoading, setStatusChangeLoading] = React.useState(false);
+
   const {hotel_id} = props?.route?.params;
   const {hotelDetails} = props?.route?.params;
   const [extraPrices, setExtraPrices] = React.useState(
@@ -60,6 +65,29 @@ const RoomScreen = props => {
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
+    }
+  };
+  const roomStatusChangePress = async (hotel_id, room_id, status) => {
+    try {
+      setStatusChangeLoading(true);
+      if (status === 'publish') {
+        await changeHotelRoomStatus(hotel_id, room_id, 'make-hide');
+        setRooms(pre =>
+          pre?.map(x => (x?.id === room_id ? {...x, status: 'draft'} : {...x})),
+        );
+      } else {
+        await changeHotelRoomStatus(hotel_id, room_id, 'make-publish');
+        setRooms(pre =>
+          pre?.map(x =>
+            x?.id === room_id ? {...x, status: 'publish'} : {...x},
+          ),
+        );
+      }
+      Alert.alert('Hotel status change');
+    } catch (error) {
+      Alert.alert(UTILS.returnError(error));
+    } finally {
+      setStatusChangeLoading(false);
     }
   };
   React.useEffect(() => {
@@ -102,15 +130,21 @@ const RoomScreen = props => {
               flexGrow: 1,
             }}
             style={{paddingVertical: mvs(20), flexGrow: 1}}>
-            {rooms?.map(ele => (
+            {rooms?.map((ele, index) => (
               <HotelRoom
+                key={index}
                 selectedRoomNumber={ele?.selectedRoomNumber}
-                hotel_img={{uri: `${ele?.image_id}`}}
+                hotel_img={{uri: `${ele?.image_id?.url}`}}
                 roomtitle={ele?.title}
                 beds={ele?.beds}
                 size={ele?.size}
                 adults={ele?.adults}
                 children={ele?.children}
+                status={ele?.status}
+                loading={statusChangeLoading}
+                onPressStatusChange={() =>
+                  roomStatusChangePress(hotel_id, ele?.id, ele?.status)
+                }
                 onPressEditRoom={() =>
                   props?.navigation?.navigate('AddRoom', {
                     hotel_id,

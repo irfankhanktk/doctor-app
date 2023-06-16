@@ -22,19 +22,25 @@ import styles from './styles';
 
 import {Loader} from 'components/atoms/loader';
 import {useAppSelector} from 'hooks/use-store';
-import {navigate} from 'navigation/navigation-ref';
+import {goBack, navigate} from 'navigation/navigation-ref';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import {PrimaryButton} from 'components/atoms/buttons';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
 import RoomModal from 'components/molecules/hotel/modals/room-detail-modal';
 import MyMap from 'components/molecules/map';
-import {deleteHotel, getHotelDetails} from 'services/api/hotel/api-actions';
+import {
+  changeHotelStauts,
+  deleteHotel,
+  getHotelDetails,
+} from 'services/api/hotel/api-actions';
 import HtmlView from './../../../components/atoms/render-html/index';
+import {setHotels} from 'store/reducers/hotel-reducer';
+import {useDispatch} from 'react-redux';
 const HotelDetails = props => {
   const {navigation} = props;
   const [text, setText] = React.useState('');
-
+  const dispatch = useDispatch();
   const [roomModal, setRoomModal] = React.useState(false);
   const [videoModal, setVideoModal] = React.useState(false);
   const [hotelDetails, setHotelDetails] = React.useState({});
@@ -42,9 +48,9 @@ const HotelDetails = props => {
     rate_number: '4',
     review_content: '',
   });
-  const {userInfo} = useAppSelector(s => s?.user);
+  const {hotels} = useAppSelector(s => s?.hotel);
   const [selectedRoom, setSelectedRoom] = React.useState({});
-  console.log('userinfo-===>', userInfo);
+
   const {t} = i18n;
   const [filter, setFilter] = React.useState({
     checkin: moment().format(DATE_FORMAT.yyyy_mm_dd),
@@ -57,6 +63,7 @@ const HotelDetails = props => {
 
   const [loading, setLoading] = React.useState(true);
   const [deleteLoading, setDeleteLoading] = React.useState(false);
+  const [statusChangeLoading, setStatusChangeLoading] = React.useState(false);
 
   React.useEffect(() => {
     getDetails();
@@ -66,7 +73,6 @@ const HotelDetails = props => {
       const res = await getHotelDetails(slug);
       setLoading(false);
       setHotelDetails(res);
-      console.log('res of hotel detaiols', res);
     } catch (error) {
       setLoading(false);
     }
@@ -75,11 +81,36 @@ const HotelDetails = props => {
     try {
       setDeleteLoading(true);
       await deleteHotel(hotel_id);
+      dispatch(setHotels(hotels?.filter(x => x?.id !== hotel_id)));
+      goBack();
       Alert.alert('Delete hotel successfully');
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
       setDeleteLoading(false);
+    }
+  };
+
+  const statusChangePress = async () => {
+    try {
+      if (hotelDetails?.row?.status === 'publish') {
+        setStatusChangeLoading(true);
+        await changeHotelStauts(hotel_id, 'make-hide');
+        setHotelDetails(pre => ({...pre, row: {...pre.row, status: 'draft'}}));
+      } else {
+        setStatusChangeLoading(true);
+        await changeHotelStauts(hotel_id, 'make-publish');
+        setHotelDetails(pre => ({
+          ...pre,
+          row: {...pre.row, status: 'publish'},
+        }));
+      }
+
+      Alert.alert('Hotel status change');
+    } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
+    } finally {
+      setStatusChangeLoading(false);
     }
   };
   return (
@@ -210,10 +241,7 @@ const HotelDetails = props => {
                 style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('hotel_policies')}
               />
-              {console.log(
-                'hotelDetails?.row?.policy=>>>',
-                hotelDetails?.row?.policy,
-              )}
+
               <View>
                 {hotelDetails?.row?.policy?.map(ele => (
                   <>
@@ -243,12 +271,25 @@ const HotelDetails = props => {
                   longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
                 }}
               />
-              <PrimaryButton
-                loading={deleteLoading}
-                containerStyle={{marginTop: mvs(20), marginBottom: mvs(20)}}
-                title="Delete Hotel"
-                onPress={() => deleteHotelPress()}
-              />
+              <Row>
+                <PrimaryButton
+                  disabled={deleteLoading}
+                  containerStyle={styles.deleteBtn}
+                  title="Delete Hotel"
+                  onPress={() => deleteHotelPress()}
+                />
+                <PrimaryButton
+                  disabled={statusChangeLoading}
+                  containerStyle={styles.publishBtn}
+                  title={
+                    hotelDetails?.row?.status === 'publish'
+                      ? 'Make Hide'
+                      : 'Make Publish'
+                  }
+                  onPress={() => statusChangePress()}
+                />
+              </Row>
+
               {/* <Medium
                 style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('review')}

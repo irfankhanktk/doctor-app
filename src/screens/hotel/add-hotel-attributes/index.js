@@ -17,6 +17,7 @@ import {PrimaryButton} from 'components/atoms/buttons';
 import {useSelector} from 'react-redux';
 import {UTILS} from 'utils';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
+import {navigate, resetStack} from 'navigation/navigation-ref';
 
 const AddHotelAttributes = props => {
   const {navigation, route} = props;
@@ -44,6 +45,7 @@ const AddHotelAttributes = props => {
         image_id: route?.params?.image_id?.data?.id,
         terms: selectedTypes?.map(x => x?.id),
       });
+      resetStack('HotelStack');
       console.log('res=>>>add update hotel>>', res);
     } catch (error) {
       Alert.alert(UTILS.returnError(error));

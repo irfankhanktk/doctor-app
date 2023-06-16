@@ -76,6 +76,20 @@ const styles = StyleSheet.create({
     flexDirection:'row'
     
   },
+  deleteBtn:{
+    borderRadius: mvs(5),
+    marginTop: mvs(20),
+    width: '48%',
+    marginBottom: mvs(20),
+    height: mvs(40),
+  },
+  publishBtn:{
+    borderRadius: mvs(5),
+    marginTop: mvs(20),
+    width: '48%',
+    marginBottom: mvs(20),
+    height: mvs(40),
+  },
   headerContainer:
   {
   position: 'absolute',

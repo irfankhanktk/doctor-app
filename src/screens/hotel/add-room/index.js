@@ -116,7 +116,7 @@ const AddRoom = props => {
             hotel_id,
           );
           console.log('res=>>>add hotel room >>', res);
-          navigation?.navigate('AddHotelLocation');
+          navigation?.navigate('RoomScreen');
           Alert.alert('onsubmit');
         } catch (error) {
           console.log(error);
@@ -238,7 +238,7 @@ const AddRoom = props => {
             // }}
             style={styles.bannerImageContainer}>
             <PrimaryButton
-              loading={addImageloading}
+              disabled={addImageloading}
               title={'Upload Image'}
               onPress={() => openGallery('featureImage')}
               containerStyle={styles.buttonContainerStyle}
@@ -264,7 +264,6 @@ const AddRoom = props => {
             <TouchableOpacity onPress={() => openGallery('gallery')}>
               <View style={[styles.ImageContainer, {marginHorizontal: mvs(3)}]}>
                 <Entypo name="camera" size={20} color={'black'} />
-                {/* <Text style={styles.headerText}>Add image{'\n'}(0 up to 8)</Text> */}
                 <Regular style={styles.headerText} label={'Add images'} />
               </View>
             </TouchableOpacity>

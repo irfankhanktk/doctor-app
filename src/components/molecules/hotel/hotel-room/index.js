@@ -2,7 +2,13 @@ import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -11,24 +17,43 @@ import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 
 import {t} from 'i18next';
+import {Loader} from 'components/atoms/loader';
 const HotelRoom = ({
   onPress = () => {},
   onPressroom = () => {},
   onPressselectedRoom = () => {},
+  onPressStatusChange = () => {},
   onPressEditRoom = () => {},
   onPressDeleteRoom = () => {},
   roomtitle,
+  loading,
   beds,
   adults,
+  status,
   children,
   size,
   hotel_img,
   selectedRoomNumber,
 }) => {
-  console.log('hotel img', hotel_img);
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Image source={hotel_img} style={styles.img} />
+      <View>
+        <Image source={hotel_img} style={styles.img} />
+        <TouchableOpacity
+          disabled={loading}
+          style={styles.publishBtn}
+          onPress={onPressStatusChange}>
+          {loading ? (
+            <ActivityIndicator size={'small'} color={'white'} />
+          ) : (
+            <Regular
+              fontSize={13}
+              color={colors.white}
+              label={status === 'publish' ? 'Make Hide' : 'Make Publish'}
+            />
+          )}
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.rightContainer}>
         <Medium label={roomtitle} fontSize={mvs(12)} />
@@ -121,14 +146,7 @@ const HotelRoom = ({
         </Row>
         <Row>
           <TouchableOpacity
-            style={{
-              width: '49%',
-              flexDirection: 'row',
-              backgroundColor: colors.primary,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: mvs(5),
-            }}
+            style={styles.editRoomBtn}
             onPress={onPressEditRoom}>
             <Regular style={{right: 10}} color={colors.white} label={'Edit'} />
             <Entypo color={colors.white} name={'edit'} size={mvs(20)} />
@@ -162,6 +180,21 @@ const styles = StyleSheet.create({
 
     backgroundColor: colors.secondary,
     ...colors.shadow,
+  },
+  editRoomBtn: {
+    width: '49%',
+    flexDirection: 'row',
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: mvs(5),
+  },
+  publishBtn: {
+    width: '100%',
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: mvs(5),
   },
   img: {
     height: mvs(120),
