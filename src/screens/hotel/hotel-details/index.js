@@ -30,7 +30,7 @@ import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal
 import RoomModal from 'components/molecules/hotel/modals/room-detail-modal';
 import MyMap from 'components/molecules/map';
 import {
-  changeHotelStauts,
+  changeHotelStatus,
   deleteHotel,
   getHotelDetails,
 } from 'services/api/hotel/api-actions';
@@ -95,11 +95,11 @@ const HotelDetails = props => {
     try {
       if (hotelDetails?.row?.status === 'publish') {
         setStatusChangeLoading(true);
-        await changeHotelStauts(hotel_id, 'make-hide');
+        await changeHotelStatus(hotel_id, 'make-hide');
         setHotelDetails(pre => ({...pre, row: {...pre.row, status: 'draft'}}));
       } else {
         setStatusChangeLoading(true);
-        await changeHotelStauts(hotel_id, 'make-publish');
+        await changeHotelStatus(hotel_id, 'make-publish');
         setHotelDetails(pre => ({
           ...pre,
           row: {...pre.row, status: 'publish'},

@@ -69,7 +69,7 @@ const RoomScreen = props => {
   };
   const roomStatusChangePress = async (hotel_id, room_id, status) => {
     try {
-      setStatusChangeLoading(true);
+      setStatusChangeLoading(room_id);
       if (status === 'publish') {
         await changeHotelRoomStatus(hotel_id, room_id, 'make-hide');
         setRooms(pre =>
@@ -141,7 +141,7 @@ const RoomScreen = props => {
                 adults={ele?.adults}
                 children={ele?.children}
                 status={ele?.status}
-                loading={statusChangeLoading}
+                loading={statusChangeLoading === ele?.id}
                 onPressStatusChange={() =>
                   roomStatusChangePress(hotel_id, ele?.id, ele?.status)
                 }
