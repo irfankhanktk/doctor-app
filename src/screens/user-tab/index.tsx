@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/use-store';
 import i18n from '../../translation/index';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import styles from './styles';
+import { navigate } from 'navigation/navigation-ref';
 type props = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, 'UserTab'>,
   NativeStackScreenProps<RootStackParamList>
@@ -88,6 +89,21 @@ const UserTab = (props: props) => {
               <Regular
                 style={styles.itemText1}
                 label={`${t('availabilities')}`}
+              />
+            </TouchableOpacity>
+          )}
+          {userInfo && (
+            <TouchableOpacity
+              style={styles.itemtabs}
+              onPress={() => navigate('RecoveryHotels')}>
+              <Ionicons
+                name="timer-outline"
+                size={mvs(22)}
+                color={colors.primary}
+              />
+              <Regular
+                style={styles.itemText1}
+                label={`${t('recovery')}`}
               />
             </TouchableOpacity>
           )}

@@ -67,11 +67,13 @@ export const postFileData = (data: any) => postFormData(`${URLS.hotel_vendor.sto
 export const onAddOrUpdateHotel = (data: any) => postData(`${URLS.hotel_vendor.add_update_hotel}${data?.id || -1}`, data);
 export const getHotelDetails = (slug: any) => getData(`${URLS.hotel_vendor.hotel_details}${slug}`);
 export const deleteHotel = (hotel_id: any) => getData(`${URLS.hotel_vendor.delete_hotel}${hotel_id}`);
-export const changeHotelStauts = (hotel_id: any,status='make-publish') => getData(`${URLS.hotel_vendor.change_hotel_status}${hotel_id}/?action=${status}`);
+export const changeHotelStauts = (hotel_id: any, status = 'make-publish') => getData(`${URLS.hotel_vendor.change_hotel_status}${hotel_id}/?action=${status}`);
+export const getRecoveryHotels = () => getData(`${URLS.hotel_vendor.recovery.get_recovery_hotels}`);
+export const recoverHotel = (hotel_id: any) => getData(`${URLS.hotel_vendor.recovery.recover_hotel}${hotel_id}`);
 //room endpoints
 export const getRoomAttributes = (hotel_id: any) => getData(`${URLS.hotel_vendor.room.get_room_attributes}${hotel_id}/create`);
 export const onAddOrUpdateRoom = (data: any, hotel_id: any) => postData(`${URLS.hotel_vendor.room.add_update_room}${hotel_id}/store/${data?.id || -1}`, data);
 export const getHotelRooms = (hotel_id: any) => getData(`${URLS.hotel_vendor.room.get_hotel_rooms}${hotel_id}/index `);
 export const getRoomForEdit = (hotel_id: any, room_id: any) => getData(`${URLS.hotel_vendor.room.get_room_for_edit}${hotel_id}/edit/${room_id}`);
 export const deleteHotelRoom = (hotel_id: any, room_id: any) => getData(`${URLS.hotel_vendor.room.delete_room}${hotel_id}/del/${room_id}`);
-export const changeHotelRoomStatus = (hotel_id: any, room_id: any,status='make-publish') => getData(`${URLS.hotel_vendor.room.change_room_status}${hotel_id}/bulkEdit/${room_id}/?action=${status}`);
+export const changeHotelRoomStatus = (hotel_id: any, room_id: any, status = 'make-publish') => getData(`${URLS.hotel_vendor.room.change_room_status}${hotel_id}/bulkEdit/${room_id}/?action=${status}`);

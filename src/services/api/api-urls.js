@@ -43,6 +43,10 @@ export const URLS = {
   // hotel vendor module
   hotel_vendor: {
     get_hotel_list: 'user/hotel?',
+    recovery: {
+      get_recovery_hotels: 'user/hotel/recovery',
+      recover_hotel: 'user/hotel/restore/',//hotel id
+    },
     add_update_hotel: 'user/hotel/store/', //-1 for add new otherwise will update hotel
     delete_hotel: 'user/hotel/del/', //id for delete
     get_hotel_for_edit: 'user/hotel/edit/',
