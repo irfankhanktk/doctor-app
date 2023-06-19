@@ -58,6 +58,7 @@ const EditRoomAvailability = props => {
     try {
       setLoading(true);
       const data = {
+        active: 1,
         price: 350,
         number: 9,
         is_instant: 0,
@@ -66,10 +67,10 @@ const EditRoomAvailability = props => {
         event: '$350',
         start_date: moment(date).format(DATE_FORMAT.yyyy_mm_dd),
         end_date: moment(date).endOf('month').format(DATE_FORMAT.yyyy_mm_dd),
-        target_id: 36,
+        target_id: rooms[0]?.id,
       };
-      const res = await updateRoomAvailability(data);
-      console.log('res::::>>>', res);
+      const res = await updateRoomAvailability(hotel_id, data);
+      console.log('res::::update>>>', res);
       // setAvailability(res);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
@@ -79,7 +80,7 @@ const EditRoomAvailability = props => {
   };
   React.useEffect(() => {
     getAvailabilty();
-  }, []);
+  }, [date]);
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('room_availability')} back={true} />
@@ -130,7 +131,10 @@ const EditRoomAvailability = props => {
                       : colors.transparent,
                     // borderColor: colors.border,
                   }}>
-                  <Regular label={item?.price_html} />
+                  <Regular
+                    style={{marginTop: mvs(10)}}
+                    label={item?.active ? item?.price_html : item?.title}
+                  />
                   <Row style={{position: 'absolute', width: '100%', top: 0}}>
                     <Regular label={moment(item?.start).format('DD')} />
                     <Regular label={moment(item?.start).format('ddd')} />

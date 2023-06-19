@@ -116,6 +116,7 @@ export const getRoomAvailability = (
         `${URLS.hotel_vendor.room.get_room_availability}${hotel_id}/availability/loadDates?id=${room_id}&start=${start_date}&end=${end_date}`,
     );
 export const updateRoomAvailability = (
+    hotel_id: string,
     data = {
         price: 350,
         number: 9,
@@ -129,5 +130,5 @@ export const updateRoomAvailability = (
     }
 ) =>
     postData(
-        `${URLS.hotel_vendor.room.store_room_availability}9/availability/store`, data
+        `${URLS.hotel_vendor.room.store_room_availability}${hotel_id}/availability/store`, data
     );
