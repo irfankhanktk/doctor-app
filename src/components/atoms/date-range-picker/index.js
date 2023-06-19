@@ -1,13 +1,13 @@
 import moment from 'moment';
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import DateRangePicker from 'rn-select-date-range';
+import DateRange from 'rn-select-date-range';
 
 const DateRangePicker = () => {
   const [selectedRange, setRange] = useState({});
   return (
     <View style={styles.container}>
-      <DateRangePicker
+      <DateRange
         onSelectDateRange={range => {
           setRange(range);
         }}

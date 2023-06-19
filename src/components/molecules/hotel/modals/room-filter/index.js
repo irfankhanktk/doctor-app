@@ -13,6 +13,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import styles from './styles';
+import {DATE_FORMAT} from 'config/constants';
 const RoomFilter = ({
   props,
   style,
@@ -28,7 +29,7 @@ const RoomFilter = ({
   const {hotel} = useSelector(s => s);
   const {locations, room_filter, rooms} = hotel;
   const [filterData, setFilterData] = useState({
-    start_date: '',
+    start_date: moment().format(DATE_FORMAT.yyyy_mm_dd),
     end_date: '',
     children: '',
     adults: '',
@@ -57,6 +58,9 @@ const RoomFilter = ({
 
         <Row style={styles.todayContainer}>
           <DatePicker
+            // onChangeText={date =>
+            //   dispatch(setRoomFilter({...room_filter, start_date: date}))
+            // }
             onChangeText={date => handleInputChange('start_date', date)}>
             <Medium
               label={moment(filterData?.start_date).format('ll')}
@@ -69,7 +73,7 @@ const RoomFilter = ({
             )}
             onChangeText={date => handleInputChange('end_date', date)}>
             <Medium
-              label={moment(room_filter?.end_date).format('ll')}
+              label={moment(filterData?.end_date).format('ll')}
               style={styles.tomarrowText}
             />
           </DatePicker>
