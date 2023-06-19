@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '../../../config/colors';
-import {mvs, width} from '../../../config/metrices';
+import {colors} from '../../../../../config/colors';
+import {mvs, width} from '../../../../../config/metrices';
 
 const styles = StyleSheet.create({
   // container: {
@@ -9,25 +9,18 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     padding: mvs(15),
-    height: 500,
+    height: 220,
     // width: width,
     borderRadius: mvs(20),
   },
-  contentContainerStyle: {
-    flex: 1,
-    padding: mvs(20),
-  },
+ 
   contentContainerStyleModal: {
     width: '100%',
     backgroundColor: colors.transparent,
-    // flex: 1,
-    // justifyContent: 'flex-end',
     paddingHorizontal: 20,
     paddingVertical: 0,
   },
-  cardContainer: {
-    flex: 1,
-  },
+ 
   line: {
     borderWidth: mvs(2),
     borderColor: '#dfdede',

@@ -88,6 +88,9 @@ export const HalfOutLineInput = (props: props) => {
       <TextInput
         mode="outlined"
         label={label}
+    
+    value={value}
+        onChangeText={onChangeText}
         placeholder={placeholder}
         outlineStyle={styles.halfOutLineStyle}
         placeholderTextColor={'#706561'}

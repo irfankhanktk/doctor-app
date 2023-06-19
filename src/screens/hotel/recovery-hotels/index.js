@@ -11,7 +11,11 @@ import {useSelector} from 'react-redux';
 import i18n from 'translation';
 import styles from './styles';
 // import {EmptyList} from 'components/molecules/hotel/empty-list';
-import {getRecoveryHotels, recoverHotel} from 'services/api/hotel/api-actions';
+import {
+  getRecoveryHotels,
+  permnentlyDeleteHotel,
+  recoverHotel,
+} from 'services/api/hotel/api-actions';
 import {UTILS} from 'utils';
 import HotelRecoveryCard from 'components/molecules/hotel/hotel-recovery-card';
 
@@ -51,6 +55,15 @@ const RecoveryHotels = props => {
       setRecoverLoading(false);
     }
   };
+  const deleteHotelPress = async hotel_id => {
+    try {
+      await permnentlyDeleteHotel(hotel_id);
+      setHotels(hotels?.filter(x => x?.id !== hotel_id));
+      Alert.alert('Delete hotel successfully');
+    } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
+    }
+  };
   React.useEffect(() => {
     getHomeHotels();
   }, []);
@@ -58,12 +71,7 @@ const RecoveryHotels = props => {
   const renderHotelItem = ({item}) => (
     <HotelRecoveryCard
       item={item}
-      onPress={() =>
-        props?.navigation?.navigate('HotelDetails', {
-          hotel_id: item?.id,
-          slug: item?.slug,
-        })
-      }
+      onPressDelete={() => deleteHotelPress(item?.id)}
       recoverLoading={recoverLoading}
       onPressRecover={() => getRecover(item?.id)}
     />

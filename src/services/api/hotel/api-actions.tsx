@@ -71,22 +71,14 @@ export const getHotelForEdit = (
         }
     };
 };
-export const postFileData = (data: any) =>
-    postFormData(`${URLS.hotel_vendor.store_file}`, data);
-export const onAddOrUpdateHotel = (data: any) =>
-    postData(`${URLS.hotel_vendor.add_update_hotel}${data?.id || -1}`, data);
-export const getHotelDetails = (slug: any) =>
-    getData(`${URLS.hotel_vendor.hotel_details}${slug}`);
-export const deleteHotel = (hotel_id: any) =>
-    getData(`${URLS.hotel_vendor.delete_hotel}${hotel_id}`);
-export const changeHotelStauts = (hotel_id: any, status = 'make-publish') =>
-    getData(
-        `${URLS.hotel_vendor.change_hotel_status}${hotel_id}/?action=${status}`,
-    );
-export const getRecoveryHotels = () =>
-    getData(`${URLS.hotel_vendor.recovery.get_recovery_hotels}`);
-export const recoverHotel = (hotel_id: any) =>
-    getData(`${URLS.hotel_vendor.recovery.recover_hotel}${hotel_id}`);
+export const postFileData = (data: any) => postFormData(`${URLS.hotel_vendor.store_file}`, data);
+export const onAddOrUpdateHotel = (data: any) => postData(`${URLS.hotel_vendor.add_update_hotel}${data?.id || -1}`, data);
+export const getHotelDetails = (slug: any) => getData(`${URLS.hotel_vendor.hotel_details}${slug}`);
+export const deleteHotel = (hotel_id: any) => getData(`${URLS.hotel_vendor.delete_hotel}${hotel_id}`);
+export const permnentlyDeleteHotel = (hotel_id: any) => getData(`${URLS.hotel_vendor.delete_hotel}${hotel_id}?permnently_delete=${1}`);
+export const changeHotelStatus = (hotel_id: any, status = 'make-publish') => getData(`${URLS.hotel_vendor.change_hotel_status}${hotel_id}/?action=${status}`);
+export const getRecoveryHotels = () => getData(`${URLS.hotel_vendor.recovery.get_recovery_hotels}`);
+export const recoverHotel = (hotel_id: any) => getData(`${URLS.hotel_vendor.recovery.recover_hotel}${hotel_id}`);
 //room endpoints
 export const getRoomAttributes = (hotel_id: any) =>
     getData(`${URLS.hotel_vendor.room.get_room_attributes}${hotel_id}/create`);
