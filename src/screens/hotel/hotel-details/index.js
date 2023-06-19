@@ -136,7 +136,7 @@ const HotelDetails = props => {
             </TouchableOpacity>
           </Row>
           <ImageBackground
-            source={{uri: hotelDetails?.row?.image_id}}
+            source={{uri: `${hotelDetails?.row?.image_id}`}}
             style={styles.hotelsimgbackground}>
             <Row>
               <Row

@@ -109,9 +109,11 @@ export const changeHotelRoomStatus = (
 export const getRoomAvailability = (
     hotel_id: any,
     room_id: any,
+    start_date: any,
+    end_date: any,
 ) =>
     getData(
-        `${URLS.hotel_vendor.room.get_room_availability}9/availability/loadDates?id=35&start=2023-05-29&end=2023-06-29`,
+        `${URLS.hotel_vendor.room.get_room_availability}${hotel_id}/availability/loadDates?id=${room_id}&start=${start_date}&end=${end_date}`,
     );
 export const updateRoomAvailability = (
     data = {

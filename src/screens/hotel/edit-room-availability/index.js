@@ -3,10 +3,17 @@ import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollvie
 import {Loader} from 'components/atoms/loader';
 import {t} from 'i18next';
 import React from 'react';
-import {Alert, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import styles from './styles';
 import {
+  getHotelRooms,
   getRoomAvailability,
   updateRoomAvailability,
 } from 'services/api/hotel/api-actions';
@@ -17,18 +24,29 @@ import Regular from 'typography/regular-text';
 import moment from 'moment';
 import {Row} from 'components/atoms/row';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {DATE_FORMAT} from 'config/constants';
 const EditRoomAvailability = props => {
   const {navigation, route} = props;
+  const {hotel_id} = route?.params;
   const {hotel} = useSelector(s => s);
   const [loading, setLoading] = React.useState(true);
   const [updateLoading, setUpdateLoading] = React.useState(true);
   const [date, setDate] = React.useState(moment('2023-10-10').startOf('month'));
   const [availability, setAvailability] = React.useState([]);
+  const [rooms, setRooms] = React.useState([]);
   const getAvailabilty = async () => {
     try {
       setLoading(true);
-      const res = await getRoomAvailability();
-      console.log('res>>:::', res);
+      const res1 = await getHotelRooms(hotel_id);
+      if (!res1?.rows?.data?.length)
+        throw new Error('You have no rooms against hotel id');
+      const res = await getRoomAvailability(
+        hotel_id,
+        res1?.rows?.data[0]?.id,
+        moment(date).format(DATE_FORMAT.yyyy_mm_dd),
+        moment(date).endOf('month').format(DATE_FORMAT.yyyy_mm_dd),
+      );
+      setRooms(res1?.rows?.data);
       setAvailability(res);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
@@ -39,8 +57,19 @@ const EditRoomAvailability = props => {
   const updateAvailabilty = async () => {
     try {
       setLoading(true);
-      const res = await updateRoomAvailability();
-      console.log('res>>:::', res);
+      const data = {
+        price: 350,
+        number: 9,
+        is_instant: 0,
+        is_default: true,
+        price_html: '$350',
+        event: '$350',
+        start_date: moment(date).format(DATE_FORMAT.yyyy_mm_dd),
+        end_date: moment(date).endOf('month').format(DATE_FORMAT.yyyy_mm_dd),
+        target_id: 36,
+      };
+      const res = await updateRoomAvailability(data);
+      console.log('res::::>>>', res);
       // setAvailability(res);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
@@ -63,6 +92,7 @@ const EditRoomAvailability = props => {
           <Row>
             <AntDesign
               name={'leftcircle'}
+              size={mvs(25)}
               onPress={() => setDate(pre => moment(pre)?.subtract(1, 'M'))}
             />
             <Row>
@@ -72,6 +102,7 @@ const EditRoomAvailability = props => {
               /> */}
             </Row>
             <AntDesign
+              size={mvs(25)}
               name={'rightcircle'}
               onPress={() => setDate(pre => moment(pre)?.add(1, 'M'))}
             />
@@ -81,9 +112,9 @@ const EditRoomAvailability = props => {
               flexWrap: 'wrap',
             }}>
             {availability?.map((item, index) => {
-              console.log('item>>>', item);
               return (
-                <View
+                <TouchableOpacity
+                  onPress={updateAvailabilty}
                   key={index}
                   style={{
                     height: mvs(60),
@@ -104,7 +135,7 @@ const EditRoomAvailability = props => {
                     <Regular label={moment(item?.start).format('DD')} />
                     <Regular label={moment(item?.start).format('ddd')} />
                   </Row>
-                </View>
+                </TouchableOpacity>
               );
             })}
           </Row>

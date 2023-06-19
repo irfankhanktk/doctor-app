@@ -1,39 +1,38 @@
-import React, {useState} from 'react';
+import {PrimaryButton} from 'components/atoms/buttons';
+import Header1x2x from 'components/atoms/headers/header-1x-2x';
+import PrimaryInput from 'components/atoms/inputs';
+import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
+import {Loader} from 'components/atoms/loader';
+import {Row} from 'components/atoms/row';
+import {colors} from 'config/colors';
+import {mvs} from 'config/metrices';
+import {useFormik} from 'formik';
+import {t} from 'i18next';
+import {navigate} from 'navigation/navigation-ref';
+import React from 'react';
 import {
-  View,
-  Text,
   Alert,
+  FlatList,
   Image,
   ImageBackground,
-  FlatList,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import styles from './styles';
-import {t} from 'i18next';
-import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
-import PrimaryInput from 'components/atoms/inputs';
-import {useFormik} from 'formik';
-import {addHotelValidation} from 'validations';
-import Regular from 'typography/regular-text';
-import {colors} from 'config/colors';
-import {PrimaryButton} from 'components/atoms/buttons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {mvs} from 'config/metrices';
-import Bold from 'typography/bold-text';
-import {Row} from 'components/atoms/row';
-import {UTILS} from 'utils';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   getHotelAttributes,
   getHotelForEdit,
   postFileData,
 } from 'services/api/hotel/api-actions';
-import {useDispatch, useSelector} from 'react-redux';
-import {Loader} from 'components/atoms/loader';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
-import {navigate} from 'navigation/navigation-ref';
-
+import Bold from 'typography/bold-text';
+import Regular from 'typography/regular-text';
+import {UTILS} from 'utils';
+import {addHotelValidation} from 'validations';
+import styles from './styles';
 const AddHotel = props => {
   const {navigation, route} = props;
   const {hotel} = useSelector(s => s);
@@ -115,7 +114,6 @@ const AddHotel = props => {
       console.log('error=>', error);
     }
   };
-
   const handleAddPolicy = () => {
     setFieldValue('policy', [...values.policy, {title: '', content: ''}]);
   };
