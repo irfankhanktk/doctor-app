@@ -1,6 +1,6 @@
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {PlusButton, PrimaryButton} from 'components/atoms/buttons';
 import {Loader} from 'components/atoms/loader';
@@ -28,6 +28,7 @@ import {
   getHotelRooms,
 } from 'services/api/hotel/api-actions';
 import {UTILS} from 'utils';
+import RoomFilter from 'components/molecules/hotel/modals/room-filter';
 const RoomScreen = props => {
   const {user, hotel} = useAppSelector(s => s);
   const {userInfo} = user;
@@ -40,7 +41,12 @@ const RoomScreen = props => {
   const [selectedRoom, setSelectedRoom] = React.useState({});
   const [rooms, setRooms] = React.useState([]);
   const [statusChangeLoading, setStatusChangeLoading] = React.useState(false);
-
+  const [filterInfo, setFilterInfo] = useState({
+    start_date: null,
+    end_date: null,
+    children: 0,
+    adults: 1,
+  });
   const {hotel_id} = props?.route?.params;
   const {hotelDetails} = props?.route?.params;
   const [extraPrices, setExtraPrices] = React.useState(
@@ -117,8 +123,12 @@ const RoomScreen = props => {
                 style={{marginLeft: mvs(5)}}
               />
             </Row>
-            {/* <Medium label={'Filter'} fontSize={mvs(20)} style={{ marginHorizontal: mvs(20), marginTop: mvs(15), }} /> */}
           </TouchableOpacity>
+          <RoomFilter
+            onCloseModal={setFilterModal}
+            visible={filterModal}
+            onClose={setFilterModal}
+          />
         </Row>
         {loading ? (
           <Loader />
