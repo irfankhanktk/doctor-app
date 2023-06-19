@@ -45,7 +45,7 @@ export const URLS = {
     get_hotel_list: 'user/hotel?',
     recovery: {
       get_recovery_hotels: 'user/hotel/recovery',
-      recover_hotel: 'user/hotel/restore/',//hotel id
+      recover_hotel: 'user/hotel/restore/', //hotel id
     },
     add_update_hotel: 'user/hotel/store/', //-1 for add new otherwise will update hotel
     delete_hotel: 'user/hotel/del/', //id for delete
@@ -60,10 +60,10 @@ export const URLS = {
       change_room_status: 'user/hotel/room/', // '9/bulkEdit/34?action=' make-publish or make-hide
       get_hotel_rooms: 'user/hotel/room/', // '9/index'
       get_room_availability: 'user/hotel/', // 9/availability/loadDates?id=35&start=2023-05-29&end=2023-07-10
-      store_room_availability: '',
+      store_room_availability: 'user/hotel/', //9/availability/store
     },
     store_file: 'hotel/store',
     locations: 'locations',
-    hotel_details: 'hotel/'//hotel slug
+    hotel_details: 'hotel/', //hotel slug
   },
 };

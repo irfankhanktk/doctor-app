@@ -119,5 +119,21 @@ export const getRoomAvailability = (
     room_id: any,
 ) =>
     getData(
-        `${URLS.hotel_vendor.room.get_room_availability}${hotel_id}9/availability/loadDates?id=35&start=2023-05-29&end=2023-07-10`,
+        `${URLS.hotel_vendor.room.get_room_availability}9/availability/loadDates?id=35&start=2023-05-29&end=2023-06-29`,
+    );
+export const updateRoomAvailability = (
+    data = {
+        price: 350,
+        number: 9,
+        is_instant: 0,
+        is_default: true,
+        price_html: '$350',
+        event: '$350',
+        start_date: '2023-06-16',
+        end_date: '2023-07-02',
+        target_id: 36,
+    }
+) =>
+    postData(
+        `${URLS.hotel_vendor.room.store_room_availability}9/availability/store`, data
     );

@@ -364,6 +364,21 @@ export const UTILS = {
       throw new Error(error);
     }
   },
-  getMinutesDiff: (a: string, b: string) => moment(b).diff(a, 'm'),
-  getUUID: () => uuid?.v4()?.toString(),
+  returnDatesInMonth: (year: number, month: number) => {
+    var dates = [];
+
+    // Create a new Date object for the first day of the month
+    var date = new Date(year, month, 1);
+
+    // Loop through the days of the month
+    while (date?.getMonth() === month) {
+      // Add the current date to the array
+      dates.push(new Date(date));
+
+      // Move to the next day
+      date.setDate(date.getDate() + 1);
+    }
+
+    return dates;
+  }
 };

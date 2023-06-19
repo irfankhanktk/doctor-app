@@ -1,10 +1,10 @@
 // In App.js in a new project
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { colors } from 'config/colors';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {colors} from 'config/colors';
 import * as React from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { horizontalAnimation } from 'utils';
+import {StatusBar, StyleSheet, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {horizontalAnimation} from 'utils';
 import HotelTabBar from './hotel-tab';
 import AllHotels from 'screens/hotel/all-hotels';
 import HotelDetails from 'screens/hotel/hotel-details';
@@ -15,12 +15,13 @@ import AddHotelLocation from 'screens/hotel/add-hotel-location';
 import AddHotelPrice from 'screens/hotel/add-hotel-price';
 import AddHotelAttributes from 'screens/hotel/add-hotel-attributes';
 import RecoveryHotels from 'screens/hotel/recovery-hotels';
+import EditRoomAvailability from 'screens/hotel/edit-room-availability';
 const Stack = createNativeStackNavigator();
 
 export default HotelStack = () => {
   return (
     <View style={styles.container}>
-      <SafeAreaView style={{ flex: 0, backgroundColor: colors.primary }} />
+      <SafeAreaView style={{flex: 0, backgroundColor: colors.primary}} />
       <StatusBar
         translucent={false}
         backgroundColor={colors.primary}
@@ -39,6 +40,10 @@ export default HotelStack = () => {
         <Stack.Screen name="AddHotelLocation" component={AddHotelLocation} />
         <Stack.Screen name="AddHotelPrice" component={AddHotelPrice} />
         <Stack.Screen
+          name="EditRoomAvailability"
+          component={EditRoomAvailability}
+        />
+        <Stack.Screen
           name="AddHotelAttributes"
           component={AddHotelAttributes}
         />
@@ -48,5 +53,5 @@ export default HotelStack = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: {flex: 1},
 });

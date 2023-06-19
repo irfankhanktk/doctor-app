@@ -32,6 +32,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {Loader} from 'components/atoms/loader';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
+import {navigate} from 'navigation/navigation-ref';
 
 const AddHotel = props => {
   const {navigation, route} = props;
@@ -161,6 +162,12 @@ const AddHotel = props => {
       ) : (
         <KeyboardAvoidScrollview
           contentContainerStyle={styles.contentContainerStyle}>
+          <PrimaryButton
+            onPress={() =>
+              navigate('EditRoomAvailability', {hotel_id: route?.params?.id})
+            }
+            title={'Room Availability'}
+          />
           <PrimaryInput
             error={
               touched?.title && errors?.title
