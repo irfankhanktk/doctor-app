@@ -61,6 +61,7 @@
     "react-native-modal-datetime-picker": "^14.0.1",
     "react-native-paper": "^5.1.2",
     "react-native-phone-number-input": "^2.1.0",
+    "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-reanimated": "^2.4.0",
     "react-native-rename": "^3.2.0",
     "react-native-render-html": "^6.3.4",

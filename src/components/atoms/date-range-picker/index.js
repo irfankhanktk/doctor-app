@@ -19,9 +19,9 @@ const DateRangePicker = ({children, onChangeText, setVisible, visible}) => {
           style={{
             width: '100%',
             backgroundColor: colors.white,
-            position: 'absolute',
+            // position: 'absolute',
             zIndex: 1001,
-            top: 0,
+            // top: 0,
           }}>
           <DateRange
             onConfirm={() => {
