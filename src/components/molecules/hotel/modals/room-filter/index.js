@@ -1,19 +1,17 @@
-import {DatePicker} from 'components/atoms/date-picker';
+import {PrimaryButton} from 'components/atoms/buttons';
 import {ModalWrapper} from 'components/atoms/modal-wrapper';
 import {HalfOutLineInput} from 'components/atoms/outline-iput';
 import {Row} from 'components/atoms/row';
-import {DATE_FORMAT} from 'config/constants';
 import {useAppDispatch} from 'hooks/use-store';
 import moment from 'moment';
-import React, {useState} from 'react';
+import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useSelector} from 'react-redux';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
-import styles from './styles';
 import DateRangePicker from '../../../../atoms/date-range-picker/index';
-import {PrimaryButton} from 'components/atoms/buttons';
+import styles from './styles';
 const RoomFilter = ({
   visible = false,
   onClose = () => {},
