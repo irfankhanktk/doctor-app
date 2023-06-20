@@ -29,30 +29,30 @@ import {
 } from 'services/api/hotel/api-actions';
 import {UTILS} from 'utils';
 import RoomFilter from 'components/molecules/hotel/modals/room-filter';
+const initialFilter = {
+  start_date: null,
+  end_date: null,
+  children: 0,
+  adults: 1,
+};
 const RoomScreen = props => {
   const {user, hotel} = useAppSelector(s => s);
   const {userInfo} = user;
-  const dispatch = useAppDispatch();
-  const initialValues = userInfo ?? {};
+  const [filterData, setFilterData] = React.useState({
+    start_date: '',
+    end_date: '',
+    children: '0',
+    adults: '1',
+  });
   const [loading, setLoading] = React.useState(false);
-  const [selectedMethod, setSelectedMethod] = React.useState('cash');
   const [videoModal, setVideoModal] = React.useState(false);
   const [roomSelectedmodal, setRoomSelectedModal] = React.useState(false);
   const [selectedRoom, setSelectedRoom] = React.useState({});
   const [rooms, setRooms] = React.useState([]);
   const [statusChangeLoading, setStatusChangeLoading] = React.useState(false);
-  const [filterInfo, setFilterInfo] = useState({
-    start_date: null,
-    end_date: null,
-    children: 0,
-    adults: 1,
-  });
   const {hotel_id} = props?.route?.params;
   const {hotelDetails} = props?.route?.params;
-  const [extraPrices, setExtraPrices] = React.useState(
-    hotelDetails?.booking_data?.extra_price || [],
-  );
-  const [filterModal, setFilterModal] = React.useState(false);
+
   const getRooms = async () => {
     try {
       setLoading(true);
@@ -111,8 +111,7 @@ const RoomScreen = props => {
             marginTop: mvs(15),
           }}>
           <Medium label={t('all_rooms')} fontSize={mvs(20)} />
-          <TouchableOpacity
-            // onPress={() => props?.navigation?.navigate('Hotels')}
+          {/* <TouchableOpacity
             onPress={() => setFilterModal(true)}>
             <Row>
               <Regular label={'Filter Rooms'} />
@@ -125,10 +124,13 @@ const RoomScreen = props => {
             </Row>
           </TouchableOpacity>
           <RoomFilter
-            onCloseModal={setFilterModal}
+            filterData={filterData}
+            setFilterData={setFilterData}
             visible={filterModal}
             onClose={setFilterModal}
-          />
+            onApplyFilter={getRooms}
+            onClearFilter={() => setFilterData(initialFilter)}
+          /> */}
         </Row>
         {loading ? (
           <Loader />

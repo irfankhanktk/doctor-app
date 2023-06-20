@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../../../../config/colors';
-import {mvs, width} from '../../../../../config/metrices';
+import { StyleSheet } from 'react-native';
+import { colors } from '../../../../../config/colors';
+import { mvs, width } from '../../../../../config/metrices';
 
 const styles = StyleSheet.create({
   // container: {
@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
     // width: width,
     borderRadius: mvs(20),
   },
- 
+
   contentContainerStyleModal: {
     width: '100%',
     backgroundColor: colors.transparent,
     paddingHorizontal: 20,
     paddingVertical: 0,
   },
- 
+
   line: {
     borderWidth: mvs(2),
     borderColor: '#dfdede',
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: mvs(10),
   },
-  text: {width: mvs(313), fontSize: 20},
+  text: { width: mvs(313), fontSize: 20 },
   todayContainer: {
     borderWidth: StyleSheet.hairlineWidth,
     color: colors.primary,
@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
     paddingVertical: mvs(8),
     paddingHorizontal: mvs(20),
     borderRadius: mvs(7),
+    width: '100%',
+    textAlign: 'center'
   },
   tomarrowText: {
     color: colors.primary,

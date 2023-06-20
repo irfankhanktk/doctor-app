@@ -200,7 +200,6 @@ const styles = StyleSheet.create({
     height: mvs(120),
     width: mvs(100),
     borderRadius: mvs(10),
-    backgroundColor: 'red',
   },
   iconContainer: {
     alignItems: 'center',
