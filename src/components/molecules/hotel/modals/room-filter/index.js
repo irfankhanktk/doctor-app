@@ -30,7 +30,7 @@ const RoomFilter = ({
   const {locations, room_filter, rooms} = hotel;
   const [filterData, setFilterData] = useState({
     start_date: moment().format(DATE_FORMAT.yyyy_mm_dd),
-    end_date: '',
+    end_date: moment().format(DATE_FORMAT.yyyy_mm_dd),
     children: '',
     adults: '',
   });
