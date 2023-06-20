@@ -1,21 +1,19 @@
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {PlusButton, PrimaryButton} from 'components/atoms/buttons';
 import {Loader} from 'components/atoms/loader';
 import {colors} from 'config/colors';
-import {Alert, ScrollView, TouchableOpacity, View} from 'react-native';
+import {Alert, ScrollView, View} from 'react-native';
 import Medium from 'typography/medium-text';
-import Regular from 'typography/regular-text';
 import styles from './styles';
 
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
-import {useAppDispatch, useAppSelector} from 'hooks/use-store';
+import {useAppSelector} from 'hooks/use-store';
 import {t} from 'i18next';
 import {navigate} from 'navigation/navigation-ref';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 // import {addToCart, getRooms} from 'services/api/hotel-api-actions';
 // import {setRooms} from 'store/reducers/hotel-reducer';
 
@@ -28,7 +26,6 @@ import {
   getHotelRooms,
 } from 'services/api/hotel/api-actions';
 import {UTILS} from 'utils';
-import RoomFilter from 'components/molecules/hotel/modals/room-filter';
 const initialFilter = {
   start_date: null,
   end_date: null,
