@@ -90,7 +90,7 @@ const RecoveryCars = props => {
       <Header1x2x
         style={{height: mvs(70)}}
         isSearch={false}
-        title={t('hotels')}
+        title={t('recovery')}
         back={true}
       />
       {/* <ImageBackground source={IMG.Hotels_Bg} style={styles.bg}>

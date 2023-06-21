@@ -78,16 +78,7 @@ export default CarTabBar = props => {
           position="LEFT"
           component={() => <AllCars {...props} />}
         />
-        {/* <CurvedBottomBar.Screen
-          name="title2"
-          position="LEFT"
-          component={() => <WalletScreen {...props} />}
-        /> */}
-        {/* <CurvedBottomBar.Screen
-          name="title3"
-          component={() => <AppointmentsList {...props} />}
-          position="RIGHT"
-        /> */}
+
         <CurvedBottomBar.Screen
           name="title4"
           component={() => <UserTab {...props} />}

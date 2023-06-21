@@ -11,7 +11,7 @@ import AddCarPrice from 'screens/car/add-car-price';
 import AllCars from 'screens/car/all-cars';
 import CarDetailsScreen from 'screens/car/car-details-screen';
 import CarFilterScreen from 'screens/car/car-filter-screen';
-import RecoveryCars from 'screens/car/recovery-hotels';
+import RecoveryCars from 'screens/car/recovery-cars';
 import {horizontalAnimation} from 'utils';
 import CarTabBar from './car-tab';
 const Stack = createNativeStackNavigator();

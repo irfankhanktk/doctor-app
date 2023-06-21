@@ -11,6 +11,7 @@ import RootStackParamList from '../../types/navigation-types/root-stack';
 import { UTILS } from 'utils';
 import { useAppDispatch } from 'hooks/use-store';
 import styles from './styles';
+import { getUserInfo } from 'services/api/auth-api-actions';
 type props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const Splash = (props: props) => {
@@ -39,11 +40,14 @@ const Splash = (props: props) => {
           dispatch(setLanguage(lang ?? 'en'));
         })
 
-        UTILS.getItem(STORAGEKEYS.user).then((data: any) => {
-          if (data) {
-            const user = JSON.parse(data);
-            screen = 'CarStack';
-            dispatch(setUserInfo(user));
+        UTILS.getItem(STORAGEKEYS.token).then(async (token: any) => {
+          if (token) {
+            try {
+              const res = await getUserInfo();
+              dispatch(setUserInfo(res?.user))
+            } catch (error) {
+              console.log('error', error);
+            }
           }
           setTimeout(() => {
             navigation?.replace(screen);
