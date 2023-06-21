@@ -68,6 +68,8 @@ export const URLS = {
   },
   car: {
     get_car_list: 'user/car?',
+    store_car_availability: 'user/car/availability/store',
+    get_car_availability: 'user/car/availability/loadDates?id=', //17&start=2023-05-29&end=2023-06-05
     recovery: {
       get_recovery_cars: 'user/car/recovery',
       recover_car: 'user/car/restore/', //car id
@@ -77,16 +79,6 @@ export const URLS = {
     get_car_for_edit: 'user/car/edit/',
     change_car_status: 'user/car/bulkEdit/', // 5 car id '1/?action=' make-publish or make-hide
     get_car_attributes: 'user/car/create',
-    room: {
-      add_update_room: 'user/car/room/', //  '9/store/-1' //-1 for add new otherwise will update car-room
-      get_room_attributes: 'user/car/room/', // '9/create',//
-      delete_room: 'user/car/room/', // '9/del/1' car id and room id
-      get_room_for_edit: 'user/car/room/', // '13/edit/45'
-      change_room_status: 'user/car/room/', // '9/bulkEdit/34?action=' make-publish or make-hide
-      get_car_rooms: 'user/car/room/', // '9/index'
-      get_room_availability: 'user/car/', // 9/availability/loadDates?id=35&start=2023-05-29&end=2023-07-10
-      store_room_availability: 'user/car/', //9/availability/store
-    },
     store_file: 'hotel/store',
     locations: 'locations',
     car_details: 'car/', //car slug

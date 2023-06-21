@@ -28,7 +28,8 @@ import {DATE_FORMAT} from 'config/constants';
 const EditCarAvailability = props => {
   const {navigation, route} = props;
   const {hotel_id} = route?.params;
-  const {hotel} = useSelector(s => s);
+  const {car} = useSelector(s => s);
+  const {cars} = car;
   const [loading, setLoading] = React.useState(true);
   const [updateLoading, setUpdateLoading] = React.useState(true);
   const [date, setDate] = React.useState(moment('2023-10-10').startOf('month'));
@@ -37,12 +38,12 @@ const EditCarAvailability = props => {
   const getAvailabilty = async () => {
     try {
       setLoading(true);
-      const res1 = await getHotelRooms(hotel_id);
-      if (!res1?.rows?.data?.length)
+
+      if (cars?.data?.length)
         throw new Error('You have no rooms against hotel id');
       const res = await getRoomAvailability(
         hotel_id,
-        res1?.rows?.data[0]?.id,
+        cars?.data[0]?.id,
         moment(date).format(DATE_FORMAT.yyyy_mm_dd),
         moment(date).endOf('month').format(DATE_FORMAT.yyyy_mm_dd),
       );

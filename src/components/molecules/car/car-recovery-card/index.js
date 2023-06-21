@@ -21,7 +21,7 @@ const CarRecoveryCard = ({
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={{uri: `${item?.image}`}}
+        source={{uri: `${item?.image_id}`}}
         imageStyle={styles.imgStyle}
         style={styles.bg}>
         <LinearGradient

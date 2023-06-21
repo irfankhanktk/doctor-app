@@ -97,25 +97,11 @@ export const postFileData = (data: any) => postFormData(`${URLS.car.store_file}`
 export const onAddOrUpdateCar = (data: any) => postData(`${URLS.car.add_update_car}${data?.id || -1}`, data);
 export const getCarDetails = (slug: any) => getData(`${URLS.car.car_details}${slug}`);
 export const deleteCar = (car_id: any) => getData(`${URLS.car.delete_car}${car_id}`);
-export const permnentlyDeleteCar = (car_id: any) => getData(`${URLS.car.delete_car}${car_id}?permnently_delete=${1}`);
+export const permnentlyDeleteCar = (car_id: any) => getData(`${URLS.car.delete_car}${car_id}?permanently_delete=${1}`);
 export const changeCarStatus = (car_id: any, status = 'make-publish') => getData(`${URLS.car.change_car_status}${car_id}/?action=${status}`);
 export const getRecoveryCars = () => getData(`${URLS.car.recovery.get_recovery_cars}`);
 export const recoverCar = (car_id: any) => getData(`${URLS.car.recovery.recover_car}${car_id}`);
-//room endpoints
-export const getRoomAttributes = (car_id: any) =>
-    getData(`${URLS.car.room.get_room_attributes}${car_id}/create`);
-export const onAddOrUpdateRoom = (data: any, car_id: any) =>
-    postData(
-        `${URLS.car.room.add_update_room}${car_id}/store/${data?.id || -1
-        }`,
-        data,
-    );
-export const getCarRooms = (car_id: any) =>
-    getData(`${URLS.car.room.get_car_rooms}${car_id}/index `);
-export const getRoomForEdit = (car_id: any, room_id: any) =>
-    getData(
-        `${URLS.car.room.get_room_for_edit}${car_id}/edit/${room_id}`,
-    );
+
 // export const deleteCarRoom = (car_id: any, room_id: any) =>
 //     getData(`${URLS.car.room.delete_room}${car_id}/del/${room_id}`);
 // export const changecarRoomStatus = (
@@ -127,30 +113,29 @@ export const getRoomForEdit = (car_id: any, room_id: any) =>
 //         `${URLS.car.room.change_room_status}${car_id}/bulkEdit/${room_id}/?action=${status}`,
 //     );
 
-//room availability
-// export const getRoomAvailability = (
-//     car_id: any,
-//     room_id: any,
-//     start_date: any,
-//     end_date: any,
-// ) =>
-//     getData(
-//         `${URLS.car.room.get_room_availability}${car_id}/availability/loadDates?id=${room_id}&start=${start_date}&end=${end_date}`,
-//     );
-// export const updateRoomAvailability = (
-//     car_id: string,
-//     data = {
-//         price: 350,
-//         number: 9,
-//         is_instant: 0,
-//         is_default: true,
-//         price_html: '$350',
-//         event: '$350',
-//         start_date: '2023-06-16',
-//         end_date: '2023-07-02',
-//         target_id: 36,
-//     }
-// ) =>
-//     postData(
-//         `${URLS.car.room.store_room_availability}${car_id}/availability/store`, data
-//     );
+//car availability
+export const getCarAvailability = (
+    car_id: any,
+    start_date: any,
+    end_date: any,
+) =>
+    getData(
+        `${URLS.car.get_car_availability}${car_id}&start=${start_date}&end=${end_date}`,
+    );
+
+export const updateCarAvailability = (
+    data = {
+        price: 350,
+        number: 9,
+        is_instant: 0,
+        is_default: true,
+        price_html: '$350',
+        event: '$350',
+        start_date: '2023-06-16',
+        end_date: '2023-07-02',
+        target_id: 36,
+    }
+) =>
+    postData(
+        `${URLS.car.store_car_availability}`, data
+    );
