@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-const HotelRecoveryCard = ({
+const CarRecoveryCard = ({
   item,
   style,
   onPress = () => {},
@@ -60,7 +60,7 @@ const HotelRecoveryCard = ({
     </View>
   );
 };
-export default React.memo(HotelRecoveryCard);
+export default React.memo(CarRecoveryCard);
 const styles = StyleSheet.create({
   container: {
     height: mvs(210),

@@ -1,4 +1,3 @@
-import {PlusButton} from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
@@ -10,14 +9,10 @@ import {Alert, FlatList, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import i18n from 'translation';
 import styles from './styles';
-// import {EmptyList} from 'components/molecules/hotel/empty-list';
-import {
-  getRecoveryHotels,
-  permnentlyDeleteHotel,
-  recoverHotel,
-} from 'services/api/hotel/api-actions';
+// import {EmptyList} from 'components/molecules/car/empty-list';
+import {getRecoveryCars, recoverCar} from 'services/api/car/api-actions';
 import {UTILS} from 'utils';
-import HotelRecoveryCard from 'components/molecules/hotel/hotel-recovery-card';
+import CarRecoveryCard from 'components/molecules/car/car-recovery-card';
 
 const RecoveryCars = props => {
   const [cartModal, setCardModal] = React.useState(false);
@@ -26,52 +21,52 @@ const RecoveryCars = props => {
   const [recoverLoading, setRecoverLoading] = React.useState(false);
   const [pageLoading, setPageLoading] = React.useState(false);
   const dispatch = useAppDispatch();
-  const {hotel} = useSelector(s => s);
-  const [hotels, setHotels] = React.useState([]);
-  // const {locations, hotel_filter, hotels} = hotel;
+  const {car} = useSelector(s => s);
+  const [cars, setCars] = React.useState([]);
+  // const {locations, car_filter, cars} = car;
 
   const [page, setPage] = React.useState(1);
   const {t} = i18n;
-  const getHomeHotels = async () => {
+  const getHomeCars = async () => {
     try {
       setLoading(true);
-      const res = await getRecoveryHotels();
-      setHotels(res?.rows?.data || []);
+      const res = await getRecoveryCars();
+      setCars(res?.rows?.data || []);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
       setLoading(false);
     }
   };
-  const getRecover = async hotel_id => {
+  const getRecover = async car_id => {
     try {
       setRecoverLoading(true);
-      const res = await recoverHotel(hotel_id);
-      setHotels(pre => pre?.filter(x => x?.id !== hotel_id));
-      // setHotels(res?.rows?.data || [])
+      const res = await recoverCar(car_id);
+      setCars(pre => pre?.filter(x => x?.id !== car_id));
+      // setCars(res?.rows?.data || [])
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
       setRecoverLoading(false);
     }
   };
-  const deleteHotelPress = async hotel_id => {
+  const deleteCarPress = async car_id => {
     try {
-      await permnentlyDeleteHotel(hotel_id);
-      setHotels(hotels?.filter(x => x?.id !== hotel_id));
-      Alert.alert('Delete hotel successfully');
+      await permnentlyDeletecar(car_id);
+      setCars(cars?.filter(x => x?.id !== car_id));
+      Alert.alert('Delete car successfully');
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     }
   };
   React.useEffect(() => {
-    getHomeHotels();
+    getHomeCars();
   }, []);
 
-  const renderHotelItem = ({item}) => (
-    <HotelRecoveryCard
+  const renderCarItem = ({item}) => (
+    <CarRecoveryCard
       item={item}
-      onPressDelete={() => deleteHotelPress(item?.id)}
+      onPressDelete={() => deleteCarPress(item?.id)}
       recoverLoading={recoverLoading}
       onPressRecover={() => getRecover(item?.id)}
     />
@@ -93,8 +88,8 @@ const RecoveryCars = props => {
         title={t('recovery')}
         back={true}
       />
-      {/* <ImageBackground source={IMG.Hotels_Bg} style={styles.bg}>
-        <HotelsHeader isSearch={true} back={true} />
+      {/* <ImageBackground source={IMG.Cars_Bg} style={styles.bg}>
+        <CarsHeader isSearch={true} back={true} />
       </ImageBackground> */}
 
       {loading ? (
@@ -105,11 +100,11 @@ const RecoveryCars = props => {
             contentContainerStyle={styles.contentContainerStyle}
             ListEmptyComponent={!loading && <EmptyList />}
             showsVerticalScrollIndicator={false}
-            data={hotels || []}
-            renderItem={renderHotelItem}
+            data={cars || []}
+            renderItem={renderCarItem}
             keyExtractor={(item, index) => index?.toString()}
             onEndReached={() => {
-              if (!loading && !pageLoading && page < hotels?.last_page) {
+              if (!loading && !pageLoading && page < cars?.last_page) {
                 setPage(page + 1);
               }
             }}
@@ -120,7 +115,7 @@ const RecoveryCars = props => {
       )}
       {/* <PlusButton
         containerStyle={{bottom: mvs(70)}}
-        onPress={() => props?.navigation?.navigate('AddHotel')}
+        onPress={() => props?.navigation?.navigate('AddCar')}
       /> */}
     </View>
   );
