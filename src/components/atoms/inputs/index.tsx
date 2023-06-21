@@ -236,6 +236,7 @@ export const InputWithIcon = (props: props) => {
     error,
     label,
     isRequired = false,
+     
   } = props;
   return (
     <>

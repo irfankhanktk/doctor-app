@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   contentContainerStyle:{
-    paddingTop:mvs(69),
+    paddingTop:mvs(30),
     
   },
   bannerImageContainer:{
