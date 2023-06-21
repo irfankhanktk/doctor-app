@@ -280,7 +280,8 @@ const AddCar = props => {
             style={{marginTop: mvs(20)}}
           />
           <Row>
-            <HalfOutLineInput
+            <PrimaryInput
+              mainContainer={{width: '48%'}}
               error={
                 touched?.passenger && errors?.passenger
                   ? `${t(errors?.passenger)}`
@@ -293,7 +294,8 @@ const AddCar = props => {
               onBlur={() => setFieldTouched('passenger', true)}
               value={values.passenger}
             />
-            <HalfOutLineInput
+            <PrimaryInput
+              mainContainer={{width: '48%'}}
               error={
                 touched?.gear && errors?.gear ? `${t(errors?.gear)}` : undefined
               }
@@ -305,7 +307,8 @@ const AddCar = props => {
             />
           </Row>
           <Row>
-            <HalfOutLineInput
+            <PrimaryInput
+              mainContainer={{width: '48%'}}
               error={
                 touched?.baggage && errors?.baggage
                   ? `${t(errors?.baggage)}`
@@ -318,7 +321,8 @@ const AddCar = props => {
               onBlur={() => setFieldTouched('baggage', true)}
               value={values.baggage}
             />
-            <HalfOutLineInput
+            <PrimaryInput
+              mainContainer={{width: '48%'}}
               error={
                 touched?.door && errors?.door ? `${t(errors?.door)}` : undefined
               }

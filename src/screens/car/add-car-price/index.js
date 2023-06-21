@@ -29,8 +29,8 @@ const AddCarPrice = props => {
   const {edit_car} = car;
   const initialValues = {
     ...route?.params,
-    check_in_time: edit_car?.row?.check_in_time || '',
-    check_out_time: edit_car?.row?.check_out_time || '',
+    // check_in_time: edit_car?.row?.check_in_time || '',
+    // check_out_time: edit_car?.row?.check_out_time || '',
     min_day_before_booking: `${edit_car?.row?.min_day_before_booking || ''}`,
     min_day_stays: `${edit_car?.row?.min_day_stays || ''}`,
     price: `${edit_car?.row?.price || ''}`,
@@ -113,7 +113,7 @@ const AddCarPrice = props => {
       <Header1x2x title={t('add_price')} back={true} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
-        <PrimaryInput
+        {/* <PrimaryInput
           error={
             touched?.check_in_time && errors?.check_in_time
               ? `${t(errors?.check_in_time)}`
@@ -136,7 +136,7 @@ const AddCarPrice = props => {
           onChangeText={str => setFieldValue('check_out_time', str)}
           onBlur={() => setFieldTouched('check_out_time', true)}
           value={values?.check_out_time}
-        />
+        /> */}
         <PrimaryInput
           error={
             touched?.min_day_before_booking && errors?.min_day_before_booking
