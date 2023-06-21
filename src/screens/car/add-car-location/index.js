@@ -13,13 +13,13 @@ const AddCarLocation = props => {
   console.log('values in map=>>', values);
   const {navigation} = props;
   const dispatch = useDispatch();
-  const {hotel, user} = useSelector(s => s);
-  const {locations, edit_hotel} = hotel;
+  const {car, user} = useSelector(s => s);
+  const {locations, edit_car} = car;
   const [markerCoordinates, setMarkerCoordinates] = useState(
-    edit_hotel?.row
+    edit_car?.row
       ? {
-          latitude: edit_hotel?.row?.map_lat * 1,
-          longitude: edit_hotel?.row?.map_lng * 1,
+          latitude: edit_car?.row?.map_lat * 1,
+          longitude: edit_car?.row?.map_lng * 1,
         }
       : null,
   );
@@ -124,13 +124,13 @@ const AddCarLocation = props => {
           title="Next"
           onPress={async () => {
             try {
-              if (!markerCoordinates) throw 'Please select hotel location';
+              if (!markerCoordinates) throw 'Please select car location';
               const addressComponent = await UTILS._returnAddress(
                 markerCoordinates?.latitude,
                 markerCoordinates?.longitude,
               );
               console.log('addressComponent->>', addressComponent);
-              navigation.navigate('AddHotelPrice', {
+              navigation.navigate('AddCarPrice', {
                 ...values,
                 address: addressComponent?.fulladdress,
                 map_lat: markerCoordinates?.latitude,

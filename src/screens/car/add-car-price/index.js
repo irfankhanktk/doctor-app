@@ -1,23 +1,22 @@
-import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import styles from './styles';
-import {t} from 'i18next';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
-import {useFormik} from 'formik';
-import {addPriceHotelValidation} from 'validations';
-import PrimaryInput from 'components/atoms/inputs';
-import Regular from 'typography/regular-text';
-import {Checkbox} from 'components/atoms/checkbox';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import {Row} from 'components/atoms/row';
-import {mvs} from 'config/metrices';
 import {PrimaryButton} from 'components/atoms/buttons';
+import {Checkbox} from 'components/atoms/checkbox';
+import Header1x2x from 'components/atoms/headers/header-1x-2x';
+import PrimaryInput from 'components/atoms/inputs';
+import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
+import {Row} from 'components/atoms/row';
+import BuyerFeeBottomSheetModal from 'components/molecules/car/dropdown-picker/buyerFeeType';
+import ExtraPriceBottomSheetModal from 'components/molecules/car/dropdown-picker/extraPriceType';
 import {colors} from 'config/colors';
-import ExtraPriceBottomSheetModal from 'components/molecules/hotel/dropdown-picker/extraPriceType';
-import BuyerFeeBottomSheetModal from 'components/molecules/hotel/dropdown-picker/buyerFeeType';
+import {mvs} from 'config/metrices';
+import {useFormik} from 'formik';
+import {t} from 'i18next';
+import React from 'react';
+import {TouchableOpacity, View} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
+import Regular from 'typography/regular-text';
+import {addPriceCarValidation} from 'validations';
+import styles from './styles';
 const AddCarPrice = props => {
   const {navigation, route} = props;
 
@@ -26,17 +25,17 @@ const AddCarPrice = props => {
   const [buyerFeeIndex, setBuyerFeeIndex] = React.useState(0);
   const [extraPrice, setExteraPrice] = React.useState(false);
   const [buyerFeeType, setBuyerFeeType] = React.useState(false);
-  const {hotel} = useSelector(s => s);
-  const {edit_hotel} = hotel;
+  const {car} = useSelector(s => s);
+  const {edit_car} = car;
   const initialValues = {
     ...route?.params,
-    check_in_time: edit_hotel?.row?.check_in_time || '',
-    check_out_time: edit_hotel?.row?.check_out_time || '',
-    min_day_before_booking: `${edit_hotel?.row?.min_day_before_booking || ''}`,
-    min_day_stays: `${edit_hotel?.row?.min_day_stays || ''}`,
-    price: `${edit_hotel?.row?.price || ''}`,
-    enable_extra_price: `${edit_hotel?.row?.enable_extra_price || '0'}`,
-    extra_price: edit_hotel?.row?.extra_price || [
+    check_in_time: edit_car?.row?.check_in_time || '',
+    check_out_time: edit_car?.row?.check_out_time || '',
+    min_day_before_booking: `${edit_car?.row?.min_day_before_booking || ''}`,
+    min_day_stays: `${edit_car?.row?.min_day_stays || ''}`,
+    price: `${edit_car?.row?.price || ''}`,
+    enable_extra_price: `${edit_car?.row?.enable_extra_price || '0'}`,
+    extra_price: edit_car?.row?.extra_price || [
       {
         name: '',
         price: '',
@@ -44,8 +43,8 @@ const AddCarPrice = props => {
         per_person: '0',
       },
     ],
-    enable_service_fee: `${edit_hotel?.row?.enable_service_fee || '0'}`,
-    service_fee: edit_hotel?.row?.service_fee || [
+    enable_service_fee: `${edit_car?.row?.enable_service_fee || '0'}`,
+    service_fee: edit_car?.row?.service_fee || [
       {
         name: '',
         desc: '',
@@ -60,12 +59,12 @@ const AddCarPrice = props => {
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: false,
-      validationSchema: addPriceHotelValidation,
+      validationSchema: addPriceCarValidation,
       onSubmit: () => {},
     });
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddHotelAttributes', {...values});
+      navigation?.navigate('AddCarAttributes', {...values});
       // if (isValid && Object.keys(touched).length > 0) {
       //   try {
       //     Alert.alert('onsubmit');
@@ -78,7 +77,7 @@ const AddCarPrice = props => {
       //   setFieldTouched('content', true);
       //   setFieldTouched('video_link', true);
       //   setFieldTouched('banner_image', true);
-      //   setFieldTouched('hotel_rating', true);
+      //   setFieldTouched('car_rating', true);
       //   setFieldTouched('featured_image', true);
       // }
     } catch (error) {
@@ -178,7 +177,7 @@ const AddCarPrice = props => {
             touched?.price && errors?.price ? `${t(errors?.price)}` : undefined
           }
           label={t('price')}
-          placeholder={t('hotel_price')}
+          placeholder={t('car_price')}
           onChangeText={str => setFieldValue('price', str)}
           onBlur={() => setFieldTouched('price', true)}
           value={values?.price}
