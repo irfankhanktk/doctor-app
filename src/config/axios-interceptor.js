@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { URLS } from 'services/api/api-urls';
-import { UTILS } from '../utils';
-import { STORAGEKEYS } from './constants';
-import { navigate } from 'navigation/navigation-ref';
+import {URLS} from 'services/api/api-urls';
+import {UTILS} from '../utils';
+import {STORAGEKEYS} from './constants';
+import {navigate} from 'navigation/navigation-ref';
 const CancelToken = axios.CancelToken;
 source = CancelToken.source();
 client = axios.create({
@@ -17,7 +17,6 @@ function newAbortSignal(timeoutMs) {
 client.interceptors.request.use(
   async config => {
     let token = await UTILS.getItem(STORAGEKEYS.token);
-    console.log('token->>>', token);
     config.headers = {
       Accept: 'application/json',
       'Cache-Control': 'no-cache',

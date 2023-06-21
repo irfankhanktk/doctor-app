@@ -43,7 +43,6 @@ export const getLocations = () => {
     return async (dispatch: AppDispatch, getState: () => RootState) => {
         try {
             const res = await getData(URLS.hotel_vendor.locations);
-            console.log('res of getLocations=>', res);
             dispatch(setLocations(res?.data));
         } catch (error) {
             console.log('error', UTILS.returnError(error));

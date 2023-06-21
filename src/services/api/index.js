@@ -80,7 +80,7 @@ export const postArrrayFormData = async (url, data) => {
     });
 };
 export const getData = async url => {
-  console.log('url: ', url);
+  console.log('url::::::: ', url);
   const response = await client.get(url);
   return response?.data;
 };

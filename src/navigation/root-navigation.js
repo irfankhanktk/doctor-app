@@ -16,6 +16,7 @@ import Splash from 'screens/splash';
 import {horizontalAnimation} from '../utils';
 import {DoctorStack} from './doctor/doctor-stack';
 import HotelStack from './hotel/hotel-stack';
+import CarStack from './car/car-stack';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -28,7 +29,7 @@ export const RootNavigator = () => {
         barStyle={'light-content'}
       />
       <Stack.Navigator
-        initialRouteName="Splash"
+        initialRouteName="CarStack"
         screenOptions={horizontalAnimation}>
         <Stack.Group>
           <Stack.Screen name="Splash" component={Splash} />
@@ -46,6 +47,7 @@ export const RootNavigator = () => {
         </Stack.Group>
         <Stack.Screen name="DoctorStack" component={DoctorStack} />
         <Stack.Screen name="HotelStack" component={HotelStack} />
+        <Stack.Screen name="CarStack" component={CarStack} />
       </Stack.Navigator>
     </View>
   );
