@@ -10,7 +10,11 @@ import {useSelector} from 'react-redux';
 import i18n from 'translation';
 import styles from './styles';
 // import {EmptyList} from 'components/molecules/car/empty-list';
-import {getRecoveryCars, recoverCar} from 'services/api/car/api-actions';
+import {
+  getRecoveryCars,
+  permnentlyDeleteCar,
+  recoverCar,
+} from 'services/api/car/api-actions';
 import {UTILS} from 'utils';
 import CarRecoveryCard from 'components/molecules/car/car-recovery-card';
 
@@ -52,7 +56,7 @@ const RecoveryCars = props => {
   };
   const deleteCarPress = async car_id => {
     try {
-      await permnentlyDeletecar(car_id);
+      await permnentlyDeleteCar(car_id);
       setCars(cars?.filter(x => x?.id !== car_id));
       Alert.alert('Delete car successfully');
     } catch (error) {
