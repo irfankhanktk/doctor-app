@@ -32,10 +32,13 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {addHotelValidation, addRoomValidation} from 'validations';
 import {Loader} from 'components/atoms/loader';
+import {goBack} from 'navigation/navigation-ref';
 
 const AddRoom = props => {
   const {navigation, route} = props;
   const {hotel_id, room_id} = route?.params || {};
+  // console.log('hotel  id check====>', hotel_id);
+  // console.log('room id check====>', room_id);
   const dispatch = useDispatch();
   const {hotel} = useSelector(s => s);
   const [attributes, setAttributes] = useState([]);
@@ -43,11 +46,9 @@ const AddRoom = props => {
   const [addBtnloading, setAddBtnLoading] = useState(false);
   const [addImageloading, setAddImageLoading] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState([]);
-
   const initialValues = {
     title: '',
     content: '',
-
     gallery: [],
     image_id: '',
     price: '',
@@ -57,7 +58,7 @@ const AddRoom = props => {
     size: '',
     adults: '',
     children: '',
-    ican_import_url: '',
+    ical_import_url: '',
   };
 
   const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
@@ -74,11 +75,11 @@ const AddRoom = props => {
         setLoading(true);
         if (room_id) {
           const res = await getRoomForEdit(hotel_id, room_id);
-          console.log('res:::room for edit', res);
+          // console.log('res:::room for edit', res);
           setAttributes(res?.attributes || []);
           setFieldValue('title', res?.row?.title);
           // setFieldValue('content', true);
-          setFieldValue('ican_import_url', res?.row?.ican_import_url);
+          setFieldValue('ical_import_url', res?.row?.ical_import_url);
           setFieldValue('image_id', res?.row?.image_id);
           setFieldValue('beds', `${res?.row?.beds}`);
           setFieldValue('number', `${res?.row?.number}`);
@@ -88,6 +89,9 @@ const AddRoom = props => {
           setFieldValue('min_day_stays', `${res?.row?.min_day_stays}`);
           setFieldValue('children', `${res?.row?.children}`);
           setFieldValue('gallery', res?.row?.gallery || []);
+          setSelectedTypes(
+            res?.row?.terms.map(x => ({...x, id: x?.term_id})) || [],
+          );
         } else {
           const res = await getRoomAttributes(hotel_id);
           setAttributes(res?.attributes || []);
@@ -116,7 +120,7 @@ const AddRoom = props => {
             hotel_id,
           );
           console.log('res=>>>add hotel room >>', res);
-          navigation?.navigate('RoomScreen');
+          goBack();
           Alert.alert('onsubmit');
         } catch (error) {
           console.log(error);
@@ -127,7 +131,7 @@ const AddRoom = props => {
       } else {
         setFieldTouched('title', true);
         // setFieldTouched('content', true);
-        setFieldTouched('ican_import_url', true);
+        setFieldTouched('ical_import_url', true);
         setFieldTouched('image_id', true);
         setFieldTouched('beds', true);
         setFieldTouched('number', true);
@@ -209,7 +213,7 @@ const AddRoom = props => {
 
   return (
     <View style={styles.container1}>
-      <Header1x2x title={t('add_room')} back={true} />
+      <Header1x2x title={t(room_id ? 'edit_room' : 'add_room')} back={true} />
       {loading ? (
         <Loader />
       ) : (
@@ -420,12 +424,12 @@ const AddRoom = props => {
             labelStyle={{marginTop: mvs(20)}}
             label={t('Import Url')}
             placeholder={t('')}
-            onChangeText={str => setFieldValue('ican_import_url', str)}
-            onBlur={() => setFieldTouched('ican_import_url', true)}
-            value={values.ican_import_url}
+            onChangeText={str => setFieldValue('ical_import_url', str)}
+            onBlur={() => setFieldTouched('ical_import_url', true)}
+            value={values.ical_import_url}
             error={
-              touched?.ican_import_url && errors?.ican_import_url
-                ? `${t(errors?.ican_import_url)}`
+              touched?.ical_import_url && errors?.ical_import_url
+                ? `${t(errors?.ical_import_url)}`
                 : undefined
             }
           />

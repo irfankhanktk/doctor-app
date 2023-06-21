@@ -149,6 +149,7 @@ const RoomScreen = props => {
                 size={ele?.size}
                 adults={ele?.adults}
                 children={ele?.children}
+                number={ele?.number}
                 status={ele?.status}
                 loading={statusChangeLoading === ele?.id}
                 onPressStatusChange={() =>

@@ -115,10 +115,10 @@ const AddHotel = props => {
     }
   };
   const handleAddPolicy = () => {
-    setFieldValue('policy', [...values.policy, {title: '', content: ''}]);
+    setFieldValue('policy', [...values?.policy, {title: '', content: ''}]);
   };
   const handleRemovePolicy = index => {
-    const updatedPolicies = values.policy.filter((_, i) => i !== index);
+    const updatedPolicies = values?.policy?.filter((_, i) => i !== index);
     setFieldValue('policy', updatedPolicies);
   };
 
@@ -153,19 +153,32 @@ const AddHotel = props => {
   };
   return (
     <View style={styles.container1}>
-      <Header1x2x title={t('add_hotel')} back={true} />
+      <Header1x2x
+        title={t(route?.params?.id ? 'edit_hotel' : 'add_hotel')}
+        back={true}
+      />
 
       {loading ? (
         <Loader />
       ) : (
         <KeyboardAvoidScrollview
           contentContainerStyle={styles.contentContainerStyle}>
-          <PrimaryButton
-            onPress={() =>
-              navigate('EditRoomAvailability', {hotel_id: route?.params?.id})
-            }
-            title={'Room Availability'}
-          />
+          {route?.params?.id ? (
+            <PrimaryButton
+              containerStyle={{
+                width: 170,
+                height: mvs(40),
+                borderRadius: mvs(5),
+                alignSelf: 'flex-end',
+              }}
+              onPress={() =>
+                navigate('EditRoomAvailability', {hotel_id: route?.params?.id})
+              }
+              title={t('edit_room_availability')}
+            />
+          ) : (
+            <></>
+          )}
           <PrimaryInput
             error={
               touched?.title && errors?.title

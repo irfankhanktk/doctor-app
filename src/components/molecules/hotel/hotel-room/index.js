@@ -32,6 +32,7 @@ const HotelRoom = ({
   status,
   children,
   size,
+  number,
   hotel_img,
   selectedRoomNumber,
 }) => {
@@ -49,7 +50,7 @@ const HotelRoom = ({
             <Regular
               fontSize={13}
               color={colors.white}
-              label={status === 'publish' ? 'Make Hide' : 'Make Publish'}
+              label={status === 'publish' ? t('make_hide') : t('make_publish')}
             />
           )}
         </TouchableOpacity>
@@ -116,8 +117,7 @@ const HotelRoom = ({
               />
             </Row>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={onPressselectedRoom}
+          <View
             style={{
               paddingHorizontal: mvs(10),
               marginTop: mvs(6),
@@ -131,24 +131,28 @@ const HotelRoom = ({
                 alignItems: 'center',
               }}>
               <Medium
-                label={`${selectedRoomNumber || 0} Rooms`}
+                label={`${number || 0} Rooms`}
                 color={colors.white}
                 fontSize={mvs(12)}
               />
-              <Ionicons
+              {/* <Ionicons
                 name="ios-chevron-down-circle"
                 color={colors.white}
                 size={mvs(14)}
                 style={{marginLeft: mvs(10)}}
-              />
+              /> */}
             </Row>
-          </TouchableOpacity>
+          </View>
         </Row>
         <Row>
           <TouchableOpacity
             style={styles.editRoomBtn}
             onPress={onPressEditRoom}>
-            <Regular style={{right: 10}} color={colors.white} label={'Edit'} />
+            <Regular
+              style={{right: 10}}
+              color={colors.white}
+              label={t('edit')}
+            />
             <Entypo color={colors.white} name={'edit'} size={mvs(20)} />
           </TouchableOpacity>
           <TouchableOpacity
@@ -161,7 +165,7 @@ const HotelRoom = ({
               marginTop: mvs(5),
             }}
             onPress={onPressDeleteRoom}>
-            <Regular color={colors.white} label={'Delete'} />
+            <Regular color={colors.white} label={t('delete')} />
             <Entypo color={colors.white} name={'edit'} size={mvs(20)} />
           </TouchableOpacity>
         </Row>

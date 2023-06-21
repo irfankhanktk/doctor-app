@@ -175,6 +175,16 @@
 "room_amenities":"Room Amenities",
 "check_room":"Check Room",
 "all_rooms":"All Rooms",
-"Available_Rooms":"Available Rooms"
+"Available_Rooms":"Available Rooms",
+"edit_hotel":"Edit Hotel",
+"room_availability":"Room Availability",
+"edit_room_availability":"Edit Room Availability",
+"hotel_policies":"Hotel Policies",
+"delete_hotel":"Delete Hotele",
+"make_publish":"Make Publish",
+"make_hide":"Make Hide",
+"delete":"Delete",
+"edit":"Edit",
+"edit_room":"Edit Room"
 
 }

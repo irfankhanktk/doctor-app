@@ -173,7 +173,17 @@
 "room_amenities":"وسائل الراحة في الغرفة",
 "check_room":"فحص الغرفة",
 "all_rooms":"كل الغرف",
-"Available_Rooms":"الغرف المتاحة"
+"Available_Rooms":"الغرف المتاحة",
+"edit_hotel":"تحرير الفندق",
+"room_availability":"توافر الغرفة",
+"edit_room_availability":"توفر غرف التحرير",
+"hotel_policies":"سياسات الفندق",
+"delete_hotel":"حذف الفندق",
+"make_publish":"جعل النشر",
+"make_hide":"اختبئ",
+"delete":"يمسح",
+"edit":"يحرر",
+"edit_room":"تحرير غرفة"
 
 
 

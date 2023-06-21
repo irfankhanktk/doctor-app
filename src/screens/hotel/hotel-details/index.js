@@ -275,7 +275,7 @@ const HotelDetails = props => {
                 <PrimaryButton
                   disabled={deleteLoading}
                   containerStyle={styles.deleteBtn}
-                  title="Delete Hotel"
+                  title={t('delete_hotel')}
                   onPress={() => deleteHotelPress()}
                 />
                 <PrimaryButton
@@ -283,8 +283,8 @@ const HotelDetails = props => {
                   containerStyle={styles.publishBtn}
                   title={
                     hotelDetails?.row?.status === 'publish'
-                      ? 'Make Hide'
-                      : 'Make Publish'
+                      ? t('make_hide')
+                      : t('make_publish')
                   }
                   onPress={() => statusChangePress()}
                 />

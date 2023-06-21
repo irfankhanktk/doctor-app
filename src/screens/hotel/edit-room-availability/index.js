@@ -1,31 +1,26 @@
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
+import {InputWithIcon} from 'components/atoms/inputs';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {Loader} from 'components/atoms/loader';
+import {Row} from 'components/atoms/row';
+import RoomAvailabilityModal from 'components/molecules/hotel/modals/availability-room-modal';
+import {colors} from 'config/colors';
+import {DATE_FORMAT} from 'config/constants';
+import {mvs} from 'config/metrices';
 import {t} from 'i18next';
+import moment from 'moment';
 import React, {useState} from 'react';
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
-import styles from './styles';
 import {
   getHotelRooms,
   getRoomAvailability,
   updateRoomAvailability,
 } from 'services/api/hotel/api-actions';
-import {UTILS} from 'utils';
-import {mvs} from 'config/metrices';
-import {colors} from 'config/colors';
 import Regular from 'typography/regular-text';
-import moment from 'moment';
-import {Row} from 'components/atoms/row';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {DATE_FORMAT} from 'config/constants';
-import RoomAvailabilityModal from 'components/molecules/hotel/modals/availability-room-modal';
+import {UTILS} from 'utils';
+import styles from './styles';
 
 const EditRoomAvailability = props => {
   const {navigation, route} = props;
@@ -38,6 +33,8 @@ const EditRoomAvailability = props => {
 
   const [rooms, setRooms] = React.useState([]);
   const [filterModal, setFilterModal] = React.useState(false);
+  const [roomSelectModal, setRoomSelectModal] = React.useState(false);
+  const [roomId, setRoomId] = useState();
   const refRBSheet = React.useRef();
   const [filterData, setFilterData] = useState({
     start_date: moment().format(DATE_FORMAT.yyyy_mm_dd),
@@ -59,7 +56,7 @@ const EditRoomAvailability = props => {
         moment(date).format(DATE_FORMAT.yyyy_mm_dd),
         moment(date).endOf('month').format(DATE_FORMAT.yyyy_mm_dd),
       );
-
+      setRoomId(res1?.rows?.data[0]?.id);
       setRooms(res1?.rows?.data);
       setAvailability(res);
     } catch (error) {
@@ -81,7 +78,7 @@ const EditRoomAvailability = props => {
         event: `$${filterData?.price}`,
         start_date: filterData?.start_date,
         end_date: filterData?.end_date,
-        target_id: rooms[0]?.id,
+        target_id: roomId,
       };
       const res = await updateRoomAvailability(hotel_id, data);
 
@@ -100,9 +97,14 @@ const EditRoomAvailability = props => {
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('room_availability')} back={true} />
-
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
+        <InputWithIcon
+          value={rooms?.find(x => x?.id == roomId)?.title}
+          onChangeText={setRoomId}
+          items={rooms}
+          id={roomId}
+        />
         <Row>
           <AntDesign
             name={'leftcircle'}

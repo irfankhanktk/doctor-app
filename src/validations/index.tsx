@@ -125,7 +125,7 @@ export const addRoomValidation = yup.object().shape({
   beds: yup.string().required('beds_required'),
   size: yup.string().required('size_required'),
   adults: yup.string().required('adults_required'),
-  ican_import_url: yup.string().required('link_required').url('invalid_link'),
+  ical_import_url: yup.string().required('link_required').url('invalid_link'),
   gallery: yup
     .array()
     .of(
