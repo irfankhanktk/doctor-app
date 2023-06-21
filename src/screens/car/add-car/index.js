@@ -48,7 +48,6 @@ const AddCar = props => {
     door: '4',
     banner_image_id: '',
     gallery: [],
-    star_rate: '',
     image_id: '',
     faqs: [
       {
@@ -80,7 +79,7 @@ const AddCar = props => {
       setFieldValue('content', edit_car?.row?.content);
       setFieldValue('faqs', [...edit_car?.row?.faqs]);
       setFieldValue('video', edit_car?.row?.video);
-      setFieldValue('star_rate', `${edit_car?.row?.star_rate}`);
+
       setFieldValue('banner_image_id', edit_car?.row?.banner_image_id);
       setFieldValue('image_id', edit_car?.row?.image_id);
       setFieldValue('gallery', edit_car?.row?.gallery);
@@ -94,8 +93,8 @@ const AddCar = props => {
   }, []);
   const onSubmit = async () => {
     try {
-      console.log('valuess->>', values);
-      console.log('errors->>', errors);
+      // console.log('valuess->>', values);
+      // console.log('errors->>', errors);
       if (isValid && Object.keys(touched).length > 0) {
         try {
           navigation?.navigate('AddCarLocation', {values});
@@ -106,7 +105,6 @@ const AddCar = props => {
         setFieldTouched('title', true);
         setFieldTouched('content', true);
         setFieldTouched('video', true);
-        setFieldTouched('star_rate', true);
         setFieldTouched('banner_image_id.url', true);
         setFieldTouched('image_id.url', true);
         setFieldTouched('gallery[0].url', true);
@@ -154,6 +152,7 @@ const AddCar = props => {
       Alert.alert('Error', UTILS?.returnError(error));
     }
   };
+  // console.log('values me check====>', values);
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('add_car')} back={true} />

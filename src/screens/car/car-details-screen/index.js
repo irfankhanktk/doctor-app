@@ -3,9 +3,7 @@ import {PrimaryButton} from 'components/atoms/buttons';
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
 import React from 'react';
-import Feather from 'react-native-vector-icons/Feather';
 
-import PrimaryInput from 'components/atoms/inputs';
 import MyMap from 'components/molecules/map';
 import RatingStar from 'components/molecules/rating-star';
 import {DATE_FORMAT} from 'config/constants';
@@ -71,7 +69,7 @@ const CarDetailsScreen = props => {
     rooms: '1',
     adults: '0',
   });
-  const {slug} = props?.route?.params || {};
+  const {slug, id} = props?.route?.params || {};
 
   const [loading, setLoading] = React.useState(true);
   const [wishlistLoading, setWishlistLoading] = React.useState(false);
@@ -88,7 +86,7 @@ const CarDetailsScreen = props => {
 
       setCarDetails(res);
       setWishlistColor(res?.row?.has_wish_list ? true : false);
-      console.log('res of car detaiols', res);
+      // console.log('res of car detaiols', res);
     } catch (error) {
       setLoading(false);
     }
@@ -154,14 +152,14 @@ const CarDetailsScreen = props => {
               title={t('car_details')}
               back={true}
             /> */}
-            <Row>
+            <Row style={{paddingHorizontal: mvs(10)}}>
               <Row
                 style={{
                   // backgroundColor: 'red',
                   alignSelf: 'center',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  marginHorizontal: mvs(10),
+                  // marginHorizontal: mvs(10),
                   paddingVertical: mvs(5),
                 }}>
                 <TouchableOpacity
@@ -189,6 +187,11 @@ const CarDetailsScreen = props => {
                   <Entypo name="video" color={colors.black} size={mvs(30)} />
                 </TouchableOpacity>
               </Row>
+              <TouchableOpacity
+                style={styles.editBtn}
+                onPress={() => navigate('AddCar', {id: id})}>
+                <Entypo name="edit" color={colors.black} size={mvs(30)} />
+              </TouchableOpacity>
             </Row>
           </ImageBackground>
 

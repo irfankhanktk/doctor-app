@@ -52,6 +52,7 @@ const AllCars = props => {
       onPress={() =>
         props?.navigation?.navigate('CarDetails', {
           slug: item?.slug,
+          id: item?.id,
         })
       }
       onPressCart={() => {}}
@@ -118,7 +119,10 @@ const AllCars = props => {
           />
         </View>
       )}
-      <PlusButton onPress={() => props?.navigation?.navigate('AddCar')} />
+      <PlusButton
+        containerStyle={{bottom: mvs(60)}}
+        onPress={() => props?.navigation?.navigate('AddCar')}
+      />
     </View>
   );
 };

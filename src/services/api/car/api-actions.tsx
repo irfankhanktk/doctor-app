@@ -9,7 +9,7 @@ import {
 } from './../../../store/reducers/car-reducer';
 import { URLS } from '../api-urls';
 import { setLocations } from './../../../store/reducers/hotel-reducer';
-import { getData } from '../';
+import { getData, postData, postFormData } from '../';
 export const getCars = (
     setLoading: (bool: boolean) => void,
     page: number,

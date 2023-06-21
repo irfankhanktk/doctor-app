@@ -87,7 +87,7 @@ export const URLS = {
       get_room_availability: 'user/car/', // 9/availability/loadDates?id=35&start=2023-05-29&end=2023-07-10
       store_room_availability: 'user/car/', //9/availability/store
     },
-    store_file: 'car/store',
+    store_file: 'hotel/store',
     locations: 'locations',
     car_details: 'car/', //car slug
   },

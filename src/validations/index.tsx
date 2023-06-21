@@ -120,7 +120,7 @@ export const addHotelValidation = yup.object().shape({
 export const addCarValidation = yup.object().shape({
   title: yup.string().required('title_required'),
   content: yup.string().required('content_required'),
-  star_rate: yup.string().required('hotel_rating_required'),
+
   video: yup.string().required('link_required').url('invalid_link'),
   policy: yup.array().of(
     yup.object().shape({

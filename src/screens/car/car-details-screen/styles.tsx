@@ -81,5 +81,12 @@ const styles = StyleSheet.create({
     marginTop: mvs(10),
     flexDirection: 'row',
   },
+  editBtn:{
+    // backgroundColor: colors.white,
+    padding: mvs(2),
+    borderRadius: mvs(7),
+    // flexDirection:'row'
+    
+  },
 });
 export default styles;

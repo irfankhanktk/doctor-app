@@ -2,34 +2,33 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {t} from 'i18next';
 import React, {useState} from 'react';
-import {Alert, Text, View} from 'react-native';
+import {Alert, View} from 'react-native';
 import styles from './styles';
 
-import fonts from 'assets/fonts';
+import {PrimaryButton} from 'components/atoms/buttons';
 import {Checkbox} from 'components/atoms/checkbox';
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
+import {resetStack} from 'navigation/navigation-ref';
 import {SectionList} from 'react-native';
-import Regular from 'typography/regular-text';
-import Bold from 'typography/bold-text';
-import {colors} from 'config/colors';
-import {PrimaryButton} from 'components/atoms/buttons';
 import {useSelector} from 'react-redux';
+
+import Bold from 'typography/bold-text';
+import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
-import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
-import {navigate, resetStack} from 'navigation/navigation-ref';
+import {onAddOrUpdateCar} from 'services/api/car/api-actions';
 
 const AddCarAttributes = props => {
   const {navigation, route} = props;
-  const {hotel} = useSelector(s => s);
-  const {hotel_attributes, edit_hotel} = hotel;
+  const {car} = useSelector(s => s);
+  const {car_attributes, edit_car} = car;
   const [addBtnLoading, setAddBtnLoading] = React.useState(false);
 
   const [selectedTypes, setSelectedTypes] = useState(
-    edit_hotel?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
+    edit_car?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
   );
   console.log('selected type===>', selectedTypes);
-  const attributes = hotel_attributes?.attributes?.map(ele => ({
+  const attributes = car_attributes?.attributes?.map(ele => ({
     ...ele,
     data: ele?.terms || [],
   }));
@@ -37,16 +36,16 @@ const AddCarAttributes = props => {
   const onSubmit = async () => {
     try {
       setAddBtnLoading(true);
-      const res = await onAddOrUpdateHotel({
+      const res = await onAddOrUpdateCar({
         ...route?.params,
-        id: edit_hotel?.row?.id || null,
+        id: edit_car?.row?.id || null,
         gallery: route?.params?.gallery?.map(x => x?.data?.id)?.join(),
         banner_image_id: route?.params?.banner_image_id?.data?.id,
         image_id: route?.params?.image_id?.data?.id,
         terms: selectedTypes?.map(x => x?.id),
       });
-      resetStack('HotelStack');
-      console.log('res=>>>add update hotel>>', res);
+      resetStack('CarStack');
+      console.log('res=>>>add update car>>', res);
     } catch (error) {
       Alert.alert(UTILS.returnError(error));
     } finally {
@@ -112,7 +111,7 @@ const AddCarAttributes = props => {
           onPress={onSubmit}
           loading={addBtnLoading}
           disabled={!selectedTypes?.length}
-          title={'Add Hotel'}
+          title={'Add Car'}
           containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
         />
       </KeyboardAvoidScrollview>
