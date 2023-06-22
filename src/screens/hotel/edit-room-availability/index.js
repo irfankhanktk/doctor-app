@@ -9,7 +9,7 @@ import {DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
 import {t} from 'i18next';
 import moment from 'moment';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
@@ -44,20 +44,27 @@ const EditRoomAvailability = props => {
     active: '0',
   });
 
+  useEffect(() => {
+    getRooms();
+  }, []);
+  const getRooms = async () => {
+    const res1 = await getHotelRooms(hotel_id);
+    if (!res1?.rows?.data?.length)
+      throw new Error('You have no rooms against hotel id');
+    setRoomId(res1?.rows?.data[0]?.id);
+    setRooms(res1?.rows?.data);
+  };
   const getAvailabilty = async () => {
     try {
       setLoading(true);
-      const res1 = await getHotelRooms(hotel_id);
-      if (!res1?.rows?.data?.length)
-        throw new Error('You have no rooms against hotel id');
+      // const res1 = await getHotelRooms(hotel_id);
       const res = await getRoomAvailability(
         hotel_id,
-        res1?.rows?.data[0]?.id,
+        roomId,
         moment(date).format(DATE_FORMAT.yyyy_mm_dd),
         moment(date).endOf('month').format(DATE_FORMAT.yyyy_mm_dd),
       );
-      setRoomId(res1?.rows?.data[0]?.id);
-      setRooms(res1?.rows?.data);
+
       setAvailability(res);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
@@ -92,8 +99,9 @@ const EditRoomAvailability = props => {
   };
 
   React.useEffect(() => {
+    if (!roomId) return;
     getAvailabilty();
-  }, [date]);
+  }, [date, roomId]);
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('room_availability')} back={true} />

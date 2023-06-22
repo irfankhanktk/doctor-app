@@ -15,6 +15,7 @@ import RecoveryCars from 'screens/car/recovery-cars';
 import {horizontalAnimation} from 'utils';
 import CarTabBar from './car-tab';
 import AddHotelPrice from 'screens/hotel/add-hotel-price';
+import EditCarAvailability from 'screens/car/edit-car-availability';
 const Stack = createNativeStackNavigator();
 
 export default CarStack = () => {
@@ -41,10 +42,10 @@ export default CarStack = () => {
         <Stack.Screen name="AddCarLocation" component={AddCarLocation} />
         <Stack.Screen name="AddCarPrice" component={AddCarPrice} />
 
-        {/* <Stack.Screen
-          name="EditRoomAvailability"
-          component={EditRoomAvailability}
-        /> */}
+        <Stack.Screen
+          name="EditCarAvailability"
+          component={EditCarAvailability}
+        />
         <Stack.Screen name="AddCarAttributes" component={AddCarAttributes} />
       </Stack.Navigator>
     </View>

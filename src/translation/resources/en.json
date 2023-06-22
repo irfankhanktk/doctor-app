@@ -185,6 +185,18 @@
 "make_hide":"Make Hide",
 "delete":"Delete",
 "edit":"Edit",
-"edit_room":"Edit Room"
+"edit_room":"Edit Room",
+"car_sale_price":"Car sale price",
+"sale_price":"Sale Price",
+"car_number":"Car Number",
+"number":"Number",
+
+
+
+"cars":"Cars",
+"all_cars":"All Cars",
+"car_filter":"Car Filter",
+"car_details":"Car Details",
+"car_features":"Car Features"
 
 }

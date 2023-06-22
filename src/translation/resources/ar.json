@@ -183,7 +183,21 @@
 "make_hide":"اختبئ",
 "delete":"يمسح",
 "edit":"يحرر",
-"edit_room":"تحرير غرفة"
+"edit_room":"تحرير غرفة",
+"car_sale_price":"سعر بيع السيارة",
+"sale_price":"سعر البيع",
+"car_number":"رقم السياره",
+"number":"رقم",
+
+
+
+
+
+"cars":"سيارة",
+"all_cars":"كل السيارات",
+"car_filter":"مرشح السيارة",
+"car_details":"تفاصيل السيارة",
+"car_features":"ميزات السيارة"
 
 
 

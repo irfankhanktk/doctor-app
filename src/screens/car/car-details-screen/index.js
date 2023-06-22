@@ -39,6 +39,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {toggleWishlistCar} from 'services/api/auth-api-actions';
 import {getCarDetails} from 'services/api/car/api-actions';
 import {UTILS} from 'utils';
+import ImageView from 'react-native-image-viewing';
 const CarDetailsScreen = props => {
   const [text, setText] = React.useState('');
   const [cartModal, setCardModal] = React.useState(false);
@@ -59,6 +60,8 @@ const CarDetailsScreen = props => {
   const {userInfo} = useAppSelector(s => s?.user);
   const [selectedRoom, setSelectedRoom] = React.useState({});
   const [wishlistColor, setWishlistColor] = React.useState('');
+  const [visible, setIsVisible] = React.useState(false);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
 
   console.log('userinfo-===>', userInfo);
   const {t} = i18n;
@@ -90,6 +93,11 @@ const CarDetailsScreen = props => {
     } catch (error) {
       setLoading(false);
     }
+  };
+
+  const handleImagePress = index => {
+    setCurrentIndex(index);
+    setIsVisible(true);
   };
 
   const toggleWishlist = async () => {
@@ -229,15 +237,19 @@ const CarDetailsScreen = props => {
                       borderRadius: mvs(15),
                       padding: mvs(10),
                     }}>
-                    <Image
-                      source={item?.large ? {uri: item?.large} : IMG.Car_bg}
-                      style={{
-                        height: mvs(80),
-                        width: mvs(80),
-                        resizeMode: 'cover',
-                        borderRadius: mvs(10),
-                      }}
-                    />
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => handleImagePress(index)}>
+                      <Image
+                        source={item?.large ? {uri: item?.large} : IMG.Car_bg}
+                        style={{
+                          height: mvs(80),
+                          width: mvs(80),
+                          resizeMode: 'cover',
+                          borderRadius: mvs(10),
+                        }}
+                      />
+                    </TouchableOpacity>
                   </Row>
                 ))}
               </ScrollView>
@@ -496,6 +508,14 @@ const CarDetailsScreen = props => {
             </ScrollView>
           </View>
 
+          <ImageView
+            images={carDetails?.row?.gallery?.map((item, index) => ({
+              uri: `${item.large}`,
+            }))}
+            imageIndex={currentIndex}
+            visible={visible}
+            onRequestClose={() => setIsVisible(false)}
+          />
           <CarVideoModal
             visible={videoModal}
             onClose={setVideoModal}

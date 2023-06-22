@@ -34,10 +34,7 @@ const AddHotelPrice = props => {
     check_out_time: edit_hotel?.row?.check_out_time || '',
     min_day_before_booking: `${edit_hotel?.row?.min_day_before_booking || ''}`,
     min_day_stays: `${edit_hotel?.row?.min_day_stays || ''}`,
-    default_state: `${edit_hotel?.row?.number || '0'}`,
-    price: `${edit_hotel?.row?.number || ''}`,
     price: `${edit_hotel?.row?.price || ''}`,
-    sale_price: `${edit_hotel?.row?.sale_price || ''}`,
     enable_extra_price: `${edit_hotel?.row?.enable_extra_price || '0'}`,
     extra_price: edit_hotel?.row?.extra_price || [
       {
@@ -68,7 +65,7 @@ const AddHotelPrice = props => {
     });
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddCarAttributes', {...values});
+      navigation?.navigate('AddHotelAttributes', {...values});
       // if (isValid && Object.keys(touched).length > 0) {
       //   try {
       //     Alert.alert('onsubmit');
@@ -176,18 +173,7 @@ const AddHotelPrice = props => {
           fontSize={12}
           style={{alignSelf: 'flex-end'}}
         />
-        <PrimaryInput
-          error={
-            touched?.number && errors?.number
-              ? `${t(errors?.number)}`
-              : undefined
-          }
-          label={t('number')}
-          placeholder={t('hotel_number')}
-          onChangeText={str => setFieldValue('number', str)}
-          onBlur={() => setFieldTouched('number', true)}
-          value={values?.number}
-        />
+
         <PrimaryInput
           error={
             touched?.price && errors?.price ? `${t(errors?.price)}` : undefined
@@ -198,18 +184,7 @@ const AddHotelPrice = props => {
           onBlur={() => setFieldTouched('price', true)}
           value={values?.price}
         />
-        <PrimaryInput
-          error={
-            touched?.sale_price && errors?.sale_price
-              ? `${t(errors?.sale_price)}`
-              : undefined
-          }
-          label={t('sale_price')}
-          placeholder={t('hotel_sale_price')}
-          onChangeText={str => setFieldValue('sale_price', str)}
-          onBlur={() => setFieldTouched('sale_price', true)}
-          value={values?.sale_price}
-        />
+
         <Row style={{justifyContent: 'flex-start'}}>
           <Checkbox
             checked={values?.enable_extra_price === '1'}

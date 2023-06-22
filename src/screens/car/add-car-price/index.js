@@ -31,9 +31,13 @@ const AddCarPrice = props => {
     ...route?.params,
     // check_in_time: edit_car?.row?.check_in_time || '',
     // check_out_time: edit_car?.row?.check_out_time || '',
+    default_state: `${edit_car?.row?.default_state || '0'}`,
+    number: `${edit_car?.row?.number || ''}`,
+
     min_day_before_booking: `${edit_car?.row?.min_day_before_booking || ''}`,
     min_day_stays: `${edit_car?.row?.min_day_stays || ''}`,
     price: `${edit_car?.row?.price || ''}`,
+    sale_price: `${edit_car?.row?.sale_price || ''}`,
     enable_extra_price: `${edit_car?.row?.enable_extra_price || '0'}`,
     extra_price: edit_car?.row?.extra_price || [
       {
@@ -174,6 +178,18 @@ const AddCarPrice = props => {
         />
         <PrimaryInput
           error={
+            touched?.number && errors?.number
+              ? `${t(errors?.number)}`
+              : undefined
+          }
+          label={t('car_number')}
+          placeholder={t('number')}
+          onChangeText={str => setFieldValue('number', str)}
+          onBlur={() => setFieldTouched('number', true)}
+          value={values?.number}
+        />
+        <PrimaryInput
+          error={
             touched?.price && errors?.price ? `${t(errors?.price)}` : undefined
           }
           label={t('price')}
@@ -181,6 +197,18 @@ const AddCarPrice = props => {
           onChangeText={str => setFieldValue('price', str)}
           onBlur={() => setFieldTouched('price', true)}
           value={values?.price}
+        />
+        <PrimaryInput
+          error={
+            touched?.sale_price && errors?.sale_price
+              ? `${t(errors?.sale_price)}`
+              : undefined
+          }
+          label={t('sale_price')}
+          placeholder={t('car_sale_price')}
+          onChangeText={str => setFieldValue('sale_price', str)}
+          onBlur={() => setFieldTouched('sale_price', true)}
+          value={values?.sale_price}
         />
         <Row style={{justifyContent: 'flex-start'}}>
           <Checkbox
@@ -244,6 +272,7 @@ const AddCarPrice = props => {
                     `${t(errors?.extra_price[0]?.price)}`
                   }
                 />
+
                 <TouchableOpacity
                   onPress={() => {
                     setExteraPrice(true);

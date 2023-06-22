@@ -1,26 +1,27 @@
 import SearchableDropDown from 'components/atoms/searchable-dropdown';
-import React, { useRef, useState } from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import React, {useRef, useState} from 'react';
+import {Alert, TouchableOpacity, View} from 'react-native';
+import MapView, {Marker} from 'react-native-maps';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
-import { PrimaryButton } from 'components/atoms/buttons';
-import { UTILS } from 'utils';
-import { getLocations } from 'services/api/hotel/api-actions';
+import {PrimaryButton} from 'components/atoms/buttons';
+import {UTILS} from 'utils';
+import {getLocations} from 'services/api/auth-api-actions';
 const AddHotelLocation = props => {
-  const { values } = props?.route?.params || {};
+  const {values} = props?.route?.params || {};
   console.log('values in map=>>', values);
-  const { navigation } = props;
+  const {navigation} = props;
   const dispatch = useDispatch();
-  const { hotel, user } = useSelector(s => s);
-  const { locations, edit_hotel } = hotel;
+  const {hotel, user} = useSelector(s => s);
+  const {edit_hotel} = hotel;
+  const {locations} = user;
   const [markerCoordinates, setMarkerCoordinates] = useState(
     edit_hotel?.row
       ? {
-        latitude: edit_hotel?.row?.map_lat * 1,
-        longitude: edit_hotel?.row?.map_lng * 1,
-      }
+          latitude: edit_hotel?.row?.map_lat * 1,
+          longitude: edit_hotel?.row?.map_lng * 1,
+        }
       : null,
   );
   // console.log('marker cordinate check===>', markerCoordinates);
@@ -36,7 +37,7 @@ const AddHotelLocation = props => {
   const mapRef = useRef(null);
   const handleLongPress = async event => {
     try {
-      const { coordinate } = event.nativeEvent;
+      const {coordinate} = event.nativeEvent;
       const res = await UTILS._returnAddress(
         coordinate?.latitude,
         coordinate?.longitude,
@@ -88,7 +89,7 @@ const AddHotelLocation = props => {
       <MapView
         onPress={handleLongPress}
         // onLongPress={handleLongPress}
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         initialRegion={{
           ...region,
           latitudeDelta: 0.0922,

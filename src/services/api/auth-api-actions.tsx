@@ -4,7 +4,7 @@ import { URLS } from './api-urls';
 import { UTILS } from 'utils';
 import { STORAGEKEYS } from 'config/constants';
 import { Alert } from 'react-native';
-import { setUserInfo } from './../../store/reducers/user-reducer';
+import { setLocations, setUserInfo } from './../../store/reducers/user-reducer';
 export const getUserInfo = () => {
   return getData(URLS.auth.get_user_info);
 };
@@ -49,5 +49,16 @@ export const onSignup = (
     } finally {
       setLoading(false);
     }
+  };
+};
+export const getLocations = () => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+      try {
+          const res = await getData(URLS.auth.locations);
+          dispatch(setLocations(res?.data));
+      } catch (error) {
+          console.log('error', UTILS.returnError(error));
+          Alert.alert('Error', UTILS.returnError(error));
+      }
   };
 };

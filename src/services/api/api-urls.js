@@ -11,6 +11,7 @@ export const URLS = {
     otp_verify: 'doctor/otpVerify',
     forget_password: 'doctor/forgetPassword',
     update_profile: 'doctor/updateProfile',
+    locations: 'locations',
   },
   availability: {
     add: 'doctor/addDoctorAvailability',

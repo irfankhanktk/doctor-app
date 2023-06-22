@@ -80,7 +80,10 @@ const UserTab = (props: props) => {
           {userInfo && (
             <TouchableOpacity
               style={styles.itemtabs}
+              
               onPress={() => props?.navigation?.navigate('AvailabilityList')}>
+              {/* onPress={() => props?.navigation?.navigate('EditCarAvailability')}> */}
+
               <Ionicons
                 name="timer-outline"
                 size={mvs(22)}

@@ -7,14 +7,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
 import {PrimaryButton} from 'components/atoms/buttons';
 import {UTILS} from 'utils';
-import {getLocations} from 'services/api/hotel/api-actions';
+import {getLocations} from 'services/api/auth-api-actions';
+
 const AddCarLocation = props => {
   const {values} = props?.route?.params || {};
   console.log('values in map=>>', values);
   const {navigation} = props;
   const dispatch = useDispatch();
-  const {car, user} = useSelector(s => s);
-  const {locations, edit_car} = car;
+  const {car, user, hotel} = useSelector(s => s);
+  const {edit_car} = car;
+  const {locations} = user;
   const [markerCoordinates, setMarkerCoordinates] = useState(
     edit_car?.row
       ? {
