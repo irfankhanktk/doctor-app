@@ -13,7 +13,10 @@ import React, {useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
-import {getCarAvailability} from 'services/api/car/api-actions';
+import {
+  getCarAvailability,
+  updateCarAvailability,
+} from 'services/api/car/api-actions';
 import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import styles from './styles';
@@ -28,6 +31,7 @@ const EditCarAvailability = props => {
   const [date, setDate] = React.useState(moment('2023-10-10').startOf('month'));
   const [availability, setAvailability] = React.useState([]);
   const [carId, setCarId] = React.useState();
+  console.log('state carid ===?', carId);
   const [rooms, setRooms] = React.useState([]);
   const [filterModal, setFilterModal] = React.useState(false);
   const [roomSelectModal, setRoomSelectModal] = React.useState(false);
@@ -45,7 +49,7 @@ const EditCarAvailability = props => {
     try {
       setLoading(true);
 
-      if (cars?.length) throw new Error('You have no rooms against car id');
+      if (cars?.length) throw new Error('You have no car against car id');
       const res = await getCarAvailability(
         cars?.data[0]?.id,
         moment(date).format(DATE_FORMAT.yyyy_mm_dd),
@@ -76,6 +80,8 @@ const EditCarAvailability = props => {
         target_id: carId,
       };
 
+      const res = await updateCarAvailability(data);
+
       await getAvailabilty();
       // setAvailability(res);
     } catch (error) {
@@ -90,7 +96,7 @@ const EditCarAvailability = props => {
   }, [date, carId]);
   return (
     <View style={styles.container1}>
-      <Header1x2x title={t('room_availability')} back={true} />
+      <Header1x2x title={t('car_availability')} back={true} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <InputWithIcon
@@ -145,7 +151,7 @@ const EditCarAvailability = props => {
                     }}>
                     <Regular
                       style={{marginTop: mvs(10)}}
-                      label={item?.active ? item?.event : item?.title}
+                      label={item?.active ? `$${item?.price}` : item?.title}
                     />
                     <Row style={{position: 'absolute', width: '100%', top: 0}}>
                       <Regular label={moment(item?.start).format('DD')} />

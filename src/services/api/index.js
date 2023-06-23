@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGEKEYS} from 'config/constants';
 export const postData = async (url, data) => {
   console.log('url: ', url);
-  console.log('data: ', data);
+  console.log('data:::: ', data);
   const response = await client.post(url, data);
   return response?.data;
 };
@@ -21,7 +21,6 @@ export const putData = async (url, data) => {
 };
 export const postFormData = async (url, data) => {
   console.log('url==>', url);
-  
 
   data = UTILS.getFormData(data);
   const token = await AsyncStorage.getItem(STORAGEKEYS.token);

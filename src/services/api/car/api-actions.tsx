@@ -124,17 +124,7 @@ export const getCarAvailability = (
     );
 
 export const updateCarAvailability = (
-    data = {
-        price: 350,
-        number: 9,
-        is_instant: 0,
-        is_default: true,
-        price_html: '$350',
-        event: '$350',
-        start_date: '2023-06-16',
-        end_date: '2023-07-02',
-        target_id: 36,
-    }
+    data
 ) =>
     postData(
         `${URLS.car.store_car_availability}`, data

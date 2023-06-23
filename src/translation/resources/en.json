@@ -197,6 +197,19 @@
 "all_cars":"All Cars",
 "car_filter":"Car Filter",
 "car_details":"Car Details",
-"car_features":"Car Features"
+"car_features":"Car Features",
+"you_might_also_like":"You might also like",
+"book_now":"Book now",
+"faqs_title":"Faqs title",
+"car_passenger":"Car passenger",
+"car_gear":"Car gear",
+"car_baggage":"Car baggage",
+"extra_info":"Extra info",
+"add_car":"Add Car",
+"edit_car":"Edit Car",
+"edit_car_availability":"Edit Car Availability",
+"car_availability":"Car Availability",
+"car_price":"Car price"
+
 
 }

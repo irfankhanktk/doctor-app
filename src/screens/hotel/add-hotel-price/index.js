@@ -65,22 +65,19 @@ const AddHotelPrice = props => {
     });
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddHotelAttributes', {...values});
-      // if (isValid && Object.keys(touched).length > 0) {
-      //   try {
-      //     Alert.alert('onsubmit');
-
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // } else {
-      //   setFieldTouched('title', true);
-      //   setFieldTouched('content', true);
-      //   setFieldTouched('video_link', true);
-      //   setFieldTouched('banner_image', true);
-      //   setFieldTouched('hotel_rating', true);
-      //   setFieldTouched('featured_image', true);
-      // }
+      if (isValid && Object.keys(touched).length > 0) {
+        try {
+          navigation?.navigate('AddHotelAttributes', {...values});
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        setFieldTouched('check_in_time', true);
+        setFieldTouched('check_out_time', true);
+        setFieldTouched('price', true);
+        setFieldTouched('enable_extra_price', true);
+        setFieldTouched('enable_service_fee', true);
+      }
     } catch (error) {
       console.log('error=>', error);
     }
@@ -108,7 +105,7 @@ const AddHotelPrice = props => {
     setFieldValue('service_fee', updatedService);
   };
 
-  console.log('values me check===>', values);
+  console.log('values me check===>', errors);
   return (
     <View style={styles.container}>
       <Header1x2x title={t('add_price')} back={true} />
@@ -188,15 +185,17 @@ const AddHotelPrice = props => {
         <Row style={{justifyContent: 'flex-start'}}>
           <Checkbox
             checked={values?.enable_extra_price === '1'}
-            onPress={() =>
+            onPress={() => {
               setFieldValue(
                 'enable_extra_price',
                 values?.enable_extra_price === '1' ? '0' : '1',
-              )
-            }
+              );
+              setFieldTouched('enable_extra_price', true);
+            }}
           />
           <Regular label={t('enable_price')} style={{marginLeft: mvs(10)}} />
         </Row>
+
         {values?.enable_extra_price === '1' ? (
           <>
             {values?.extra_price.map((extra_price, index) => (
@@ -301,16 +300,17 @@ const AddHotelPrice = props => {
         <Row style={{justifyContent: 'flex-start', marginTop: mvs(10)}}>
           <Checkbox
             checked={values?.enable_service_fee === '1'}
-            onPress={() =>
+            onPress={() => {
               setFieldValue(
                 'enable_service_fee',
                 values?.enable_service_fee === '1' ? '0' : '1',
-              )
-            }
+              );
+              setFieldTouched('enable_service_fee', true);
+            }}
           />
-
           <Regular label={t('enable_extra')} style={{marginLeft: mvs(10)}} />
         </Row>
+
         {values?.enable_service_fee === '1' ? (
           <>
             {values?.service_fee?.map((service_fee, index) => (

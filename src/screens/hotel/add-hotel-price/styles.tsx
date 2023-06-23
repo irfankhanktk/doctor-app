@@ -34,6 +34,14 @@ const styles = StyleSheet.create({
         borderRadius: mvs(5),
         alignSelf: 'flex-end',
         marginTop: mvs(10),
-      }
+      },
+      errorLabel: {
+        
+        fontSize: mvs(10),
+        marginBottom: mvs(5),
+        height: mvs(15),
+        marginHorizontal: mvs(5),
+        backgroundColor:'red'
+      },
 });
 export default styles

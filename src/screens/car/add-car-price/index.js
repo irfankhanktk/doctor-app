@@ -15,8 +15,10 @@ import {TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
 import Regular from 'typography/regular-text';
-import {addPriceCarValidation} from 'validations';
+
 import styles from './styles';
+import {addPriceCarValidation} from 'validations';
+
 const AddCarPrice = props => {
   const {navigation, route} = props;
 
@@ -29,11 +31,9 @@ const AddCarPrice = props => {
   const {edit_car} = car;
   const initialValues = {
     ...route?.params,
-    // check_in_time: edit_car?.row?.check_in_time || '',
-    // check_out_time: edit_car?.row?.check_out_time || '',
+
     default_state: `${edit_car?.row?.default_state || '0'}`,
     number: `${edit_car?.row?.number || ''}`,
-
     min_day_before_booking: `${edit_car?.row?.min_day_before_booking || ''}`,
     min_day_stays: `${edit_car?.row?.min_day_stays || ''}`,
     price: `${edit_car?.row?.price || ''}`,
@@ -68,22 +68,20 @@ const AddCarPrice = props => {
     });
   const onSubmit = async () => {
     try {
-      navigation?.navigate('AddCarAttributes', {...values});
-      // if (isValid && Object.keys(touched).length > 0) {
-      //   try {
-      //     Alert.alert('onsubmit');
-
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // } else {
-      //   setFieldTouched('title', true);
-      //   setFieldTouched('content', true);
-      //   setFieldTouched('video_link', true);
-      //   setFieldTouched('banner_image', true);
-      //   setFieldTouched('car_rating', true);
-      //   setFieldTouched('featured_image', true);
-      // }
+      if (isValid && Object.keys(touched).length > 0) {
+        try {
+          navigation?.navigate('AddCarAttributes', {...values});
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        setFieldTouched('title', true);
+        setFieldTouched('content', true);
+        setFieldTouched('video_link', true);
+        setFieldTouched('banner_image', true);
+        setFieldTouched('car_rating', true);
+        setFieldTouched('featured_image', true);
+      }
     } catch (error) {
       console.log('error=>', error);
     }

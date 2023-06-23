@@ -33,8 +33,10 @@ import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import {addCarValidation} from 'validations';
 import styles from './styles';
+import {navigate} from 'navigation/navigation-ref';
 const AddCar = props => {
   const {navigation, route} = props;
+  console.log('check id =====>', route?.params?.id);
   const {car} = useSelector(s => s);
   const {edit_car} = car;
   const [loading, setLoading] = React.useState(true);
@@ -79,7 +81,6 @@ const AddCar = props => {
       setFieldValue('content', edit_car?.row?.content);
       setFieldValue('faqs', [...edit_car?.row?.faqs]);
       setFieldValue('video', edit_car?.row?.video);
-
       setFieldValue('banner_image_id', edit_car?.row?.banner_image_id);
       setFieldValue('image_id', edit_car?.row?.image_id);
       setFieldValue('gallery', edit_car?.row?.gallery);
@@ -116,7 +117,7 @@ const AddCar = props => {
     }
   };
   const handleAddfaqs = () => {
-    setFieldValue('faqs', [...values.faqs, {title: '', content: ''}]);
+    setFieldValue('faqs', [...values?.faqs, {title: '', content: ''}]);
   };
   const handleRemovefaqs = index => {
     const updatedPolicies = values?.faqs?.filter((_, i) => i !== index);
@@ -155,13 +156,32 @@ const AddCar = props => {
   // console.log('values me check====>', values);
   return (
     <View style={styles.container1}>
-      <Header1x2x title={t('add_car')} back={true} />
+      <Header1x2x
+        title={t(route?.params?.id ? 'edit_car' : 'add_car')}
+        back={true}
+      />
 
       {loading ? (
         <Loader />
       ) : (
         <KeyboardAvoidScrollview
           contentContainerStyle={styles.contentContainerStyle}>
+          {route?.params?.id ? (
+            <PrimaryButton
+              containerStyle={{
+                width: 170,
+                height: mvs(40),
+                borderRadius: mvs(5),
+                alignSelf: 'flex-end',
+              }}
+              onPress={() =>
+                navigate('EditCarAvailability', {car_id: route?.params?.id})
+              }
+              title={t('edit_car_availability')}
+            />
+          ) : (
+            <></>
+          )}
           <PrimaryInput
             error={
               touched?.title && errors?.title
