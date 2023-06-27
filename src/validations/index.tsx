@@ -175,75 +175,75 @@ export const addRoomValidation = yup.object().shape({
 });
 
 export const addPriceHotelValidation = yup.object().shape({
-  check_in_time: yup.string().required('Check-in time is required'),
-  check_out_time: yup.string().required('Check-out time is required'),
-  price: yup.string().required('Price is required'),
+  check_in_time: yup.string().required('checkin_required'),
+  check_out_time: yup.string().required('checkout_required'),
+  price: yup.string().required('price_required'),
 
-  enable_extra_price: yup.string().oneOf(['0', '1']).required('Enable extra price'),
+  enable_extra_price: yup.string().oneOf(['0', '1']).required('enable_extreaprice_required'),
   extra_price: yup.array().when('enable_extra_price', {
     is: '1',
     then: yup.array()
       .of(
         yup.object().shape({
-          name: yup.string().required('Please enter the name.'),
-          type: yup.string().required('Please enter the type.'),
-          price: yup.number().required('Please enter the price.'),
+          name: yup.string().required('name_required'),
+          type: yup.string().required('type_required'),
+          price: yup.number().required('price_required'),
         })
       )
-      .required('Please enter the extra fee.'),
+      .required('extra_price_required'),
     otherwise: yup.array(),
   }),
-  enable_service_fee: yup.string().oneOf(['0', '1']).required('Enable extra price'),
+  enable_service_fee: yup.string().oneOf(['0', '1']).required('enable_service_fee'),
   service_fee: yup.array().when('enable_service_fee', {
     is: '1',
     then: yup.array()
       .of(
         yup.object().shape({
-          name: yup.string().required('Service fee name is required'),
-                desc: yup.string().required('Service fee description is required'),
-                price: yup.string().required('Service fee price is required'),
-                type: yup.string().required('Service fee type is required'),
-                per_person: yup.string().required('Per person field is required'),
+                name: yup.string().required('service_name_required'),
+                desc: yup.string().required('service_desc_required'),
+                price: yup.string().required('service_price_required'),
+                type: yup.string().required('service_type_required'),
+                per_person: yup.string().required('per_person_required'),
         })
       )
-      .required('Please enter the extra fee.'),
+      .required('extra_fee'),
     otherwise: yup.array(),
   }),
 
 });
 export const addPriceCarValidation = yup.object().shape({
  
-  price: yup.string().required('Price is required'),
-  sale_price: yup.string().required('Sale Price is required'),
-  number: yup.string().required('Number is required'),
-  enable_extra_price: yup.string().oneOf(['0', '1']).required('Enable extra price'),
+  price: yup.string().required('price_required'),
+  sale_price: yup.string().required('sale_price_required'),
+  number: yup.string().required('number_required'),
+  enable_extra_price: yup.string().oneOf(['0', '1']).required('enable_price'),
   extra_price: yup.array().when('enable_extra_price', {
     is: '1',
     then: yup.array()
       .of(
         yup.object().shape({
-          name: yup.string().required('Please enter the name.'),
-          type: yup.string().required('Please enter the type.'),
-          price: yup.number().required('Please enter the price.'),
+          name: yup.string().required('name_required'),
+          type: yup.string().required('type_required'),
+          price: yup.number().required('price_enter'),
         })
       )
-      .required('Please enter the extra fee.'),
+      .required('extra_price_required'),
     otherwise: yup.array(),
   }),
-  enable_service_fee: yup.string().oneOf(['0', '1']).required('Enable extra price'),
+  enable_service_fee: yup.string().oneOf(['0', '1']).required('enable_price'),
   service_fee: yup.array().when('enable_service_fee', {
     is: '1',
     then: yup.array()
       .of(
         yup.object().shape({
-          name: yup.string().required('Service fee name is required'),
-                desc: yup.string().required('Service fee description is required'),
-                price: yup.string().required('Service fee price is required'),
-                type: yup.string().required('Service fee type is required'),
-                per_person: yup.string().required('Per person field is required'),
+          name: yup.string().required('service_name_required'),
+                desc: yup.string().required('service_desc_required'),
+                price: yup.string().required('service_price_required'),
+                type: yup.string().required('service_type_required'),
+                per_person: yup.string().required('per_person_required'),
         })
       )
-      .required('Please enter the extra fee.'),
+      .required('extra_price_required'),
     otherwise: yup.array(),
   }),
 

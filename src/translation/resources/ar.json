@@ -188,7 +188,7 @@
 "sale_price":"سعر البيع",
 "car_number":"رقم السياره",
 "number":"رقم",
-
+"upload_image":"تحميل الصور",
 
 
 
@@ -209,7 +209,37 @@
 "edit_car":"تحرير السيارة",
 "edit_car_availability":"تحرير توفر السيارة",
 "car_availability":"توافر السيارة",
-"car_price":"سعر السيارة"
+"car_price":"سعر السيارة",
+"checkin_required":"مطلوب وقت تسجيل الوصول",
+"checkout_required":"وقت تسجيل الخروج مطلوب",
+"price_required":"السعر مطلوب",
+"enable_extreaprice_required":"تمكين سعر إضافي",
+"name_required":"الرجاء إدخال الاسم",
+"type_required":"الرجاء إدخال النوع.",
+"extra_price_required":"الرجاء إدخال الرسوم الإضافية.",
+"enable_service_fee":"تفعيل رسوم الخدمة",
+"service_name_required":"مطلوب اسم رسوم الخدمة",
+"service_desc_required":"مطلوب وصف رسوم الخدمة",
+"service_price_required":"مطلوب سعر رسوم الخدمة",
+"service_type_required":"نوع رسوم الخدمة مطلوب",
+"per_person_required":"مطلوب حقل لكل شخص",
+"extra_fee":"الرجاء إدخال الرسوم الإضافية.",
+"sale_price_required":"سعر البيع مطلوب",
+"price_enter":"الرجاء إدخال السعر",
+"description":"وصف",
+"FAQS":"أسئلة وأجوبة",
+"location":"موقع",
+"review":"مراجعة",
+"passenger":"راكب",
+"gear":"هيأ",
+"door":"باب",
+"baggage":"أمتعة",
+"faqs":"أسئلة وأجوبة",
+"add_images":"إضافة الصور",
+"remove":"يزيل",
+"next":"التالي",
+"number_required":"الرقم مطلوب",
+"recovery":"استعادة"
 
 
 

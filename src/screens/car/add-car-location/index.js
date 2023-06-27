@@ -8,6 +8,7 @@ import styles from './styles';
 import {PrimaryButton} from 'components/atoms/buttons';
 import {UTILS} from 'utils';
 import {getLocations} from 'services/api/auth-api-actions';
+import {t} from 'i18next';
 
 const AddCarLocation = props => {
   const {values} = props?.route?.params || {};
@@ -123,7 +124,7 @@ const AddCarLocation = props => {
       </View>
       <View style={styles.nextButton}>
         <PrimaryButton
-          title="Next"
+          title={t('next')}
           onPress={async () => {
             try {
               if (!markerCoordinates) throw 'Please select car location';

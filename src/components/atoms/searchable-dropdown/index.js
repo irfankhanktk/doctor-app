@@ -51,7 +51,7 @@ const SearchableDropDown = ({
           onChangeItem(item);
           toggleHeight();
         }}>
-        <Regular label={item?.title} />
+        <Regular color={colors.black} label={item?.title} />
       </TouchableOpacity>
     );
   };
@@ -79,6 +79,8 @@ const SearchableDropDown = ({
             value={searchTerm}
             onChangeText={setSearchTerm}
             placeholder="Search here"
+            TextStyle={{color: colors.black}}
+            placeholderTextColor={`${colors.border}`}
           />
           <FlatList
             data={searchTerm?.trim()?.length ? searchList : items}

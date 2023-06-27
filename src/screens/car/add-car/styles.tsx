@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   },
   txtRemove: {
     color: colors.white,
+    fontSize:mvs(14)
   },
   removeContainer: {
     backgroundColor: "red",

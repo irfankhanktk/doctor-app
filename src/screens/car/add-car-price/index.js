@@ -75,12 +75,14 @@ const AddCarPrice = props => {
           console.log(error);
         }
       } else {
-        setFieldTouched('title', true);
-        setFieldTouched('content', true);
-        setFieldTouched('video_link', true);
+        setFieldTouched('number', true);
+        setFieldTouched('price', true);
+        setFieldTouched('sale_price', true);
         setFieldTouched('banner_image', true);
         setFieldTouched('car_rating', true);
         setFieldTouched('featured_image', true);
+        setFieldTouched('enable_extra_price', true);
+        setFieldTouched('enable_service_fee', true);
       }
     } catch (error) {
       console.log('error=>', error);
@@ -218,7 +220,10 @@ const AddCarPrice = props => {
               )
             }
           />
-          <Regular label={t('enable_price')} style={{marginLeft: mvs(10)}} />
+          <Regular
+            label={t('enable_price')}
+            style={{marginLeft: mvs(10), color: colors.black}}
+          />
         </Row>
         {values?.enable_extra_price === '1' ? (
           <>
@@ -333,7 +338,10 @@ const AddCarPrice = props => {
             }
           />
 
-          <Regular label={t('enable_extra')} style={{marginLeft: mvs(10)}} />
+          <Regular
+            label={t('enable_extra')}
+            style={{marginLeft: mvs(10), color: colors.black}}
+          />
         </Row>
         {values?.enable_service_fee === '1' ? (
           <>
@@ -455,7 +463,7 @@ const AddCarPrice = props => {
           </>
         ) : null}
         <PrimaryButton
-          title={'Next'}
+          title={t('next')}
           onPress={onSubmit}
           containerStyle={styles.nextButton}
         />
