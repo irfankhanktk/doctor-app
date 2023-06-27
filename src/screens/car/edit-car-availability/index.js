@@ -3,7 +3,7 @@ import {InputWithIcon} from 'components/atoms/inputs';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {Loader} from 'components/atoms/loader';
 import {Row} from 'components/atoms/row';
-import RoomAvailabilityModal from 'components/molecules/hotel/modals/availability-room-modal';
+
 import {colors} from 'config/colors';
 import {DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
@@ -20,6 +20,7 @@ import {
 import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import styles from './styles';
+import CarAvailabilityModal from 'components/molecules/car/modals/availability-car-modal';
 
 const EditCarAvailability = props => {
   const {navigation, route} = props;
@@ -163,7 +164,7 @@ const EditCarAvailability = props => {
             </>
           </Row>
         )}
-        <RoomAvailabilityModal
+        <CarAvailabilityModal
           filterData={filterData}
           setFilterData={setFilterData}
           visible={filterModal}

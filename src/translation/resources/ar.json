@@ -239,7 +239,13 @@
 "remove":"يزيل",
 "next":"التالي",
 "number_required":"الرقم مطلوب",
-"recovery":"استعادة"
+"recovery":"استعادة",
+"save_changes":"احفظ التغييرات",
+"number_of_car":"عدد السيارات",
+"availabel_booking":"متاح للحجز؟",
+"status":"حالة",
+"date_information":"معلومات التاريخ",
+"select_one":"رجاءا اختر واحدة"
 
 
 

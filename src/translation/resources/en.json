@@ -240,5 +240,11 @@
 "remove":"Remove",
 "next":"Next",
 "number_required":"Number is required",
-"recovery":"Recovery"
+"recovery":"Recovery",
+"save_changes":"Save Changes",
+"number_of_car":"Number of car",
+"availabel_booking":"Availabel for booking?",
+"status":"Status",
+"date_information":"Date Infromation",
+"select_one":"Please select one"
 }

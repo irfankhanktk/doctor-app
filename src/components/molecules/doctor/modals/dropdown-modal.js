@@ -9,6 +9,7 @@ import Medium from 'typography/medium-text';
 import {mvs} from 'config/metrices';
 import DoctorAvailabilityLocation from '../doctor-availability-location';
 import {EmptyList} from '../empty-list';
+import {t} from 'i18next';
 
 const DropdownModal = ({
   style = {},
@@ -29,11 +30,7 @@ const DropdownModal = ({
         <TouchableOpacity onPress={() => onClose()} style={styles.cross}>
           <CrossModal height={mvs(30)} width={mvs(30)} />
         </TouchableOpacity>
-        <Medium
-          numberOfLines={2}
-          style={styles.pick}
-          label={`Please Select one`}
-        />
+        <Medium numberOfLines={2} style={styles.pick} label={t('select_one')} />
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
