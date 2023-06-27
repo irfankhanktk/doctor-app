@@ -222,7 +222,7 @@ const AddHotel = props => {
             // }}
             style={styles.bannerImageContainer}>
             <PrimaryButton
-              title={'Upload Image'}
+              title={t('upload_image')}
               onPress={() => openGallery('bannerImage')}
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
@@ -243,7 +243,7 @@ const AddHotel = props => {
 
           <Regular
             color={colors.primary}
-            label={t('Gallery')}
+            label={t('gallery')}
             style={styles.galleryText}
           />
           <View style={styles.galleryContainer}>
@@ -252,7 +252,7 @@ const AddHotel = props => {
                 <Entypo name="camera" size={20} color={'black'} />
                 {/* <Text style={styles.headerText}>Add image{'\n'}(0 up to 8)</Text> */}
 
-                <Regular style={styles.headerText} label={'Add images'} />
+                <Regular style={styles.headerText} label={t('add_images')} />
               </View>
             </TouchableOpacity>
             <FlatList
@@ -272,7 +272,7 @@ const AddHotel = props => {
                       <TouchableOpacity
                         onPress={() => onImageRemove(index)}
                         style={styles.removeContainer}>
-                        <Text style={styles.txtRemove}>Remove</Text>
+                        <Regular style={styles.txtRemove} label={t('remove')} />
                       </TouchableOpacity>
                     </View>
                   </>
@@ -380,7 +380,7 @@ const AddHotel = props => {
             // }}
             style={styles.bannerImageContainer}>
             <PrimaryButton
-              title={'Upload Image'}
+              title={t('upload_image')}
               onPress={() => openGallery('featureImage')}
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
@@ -402,7 +402,7 @@ const AddHotel = props => {
           <PrimaryButton
             containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
             onPress={() => onSubmit()}
-            title="Next"
+            title={t('next')}
           />
         </KeyboardAvoidScrollview>
       )}

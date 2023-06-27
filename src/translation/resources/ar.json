@@ -124,7 +124,7 @@
   "days":"أيام",
   "prescription_card_heading":"تفاصيل الوصفة",
 
-
+"hotels":"الفنادق",
   "add_room" :"أضف غرفة",
   "add_hotel":"إضافة فندق",
   "title":"عنوان",
@@ -189,7 +189,7 @@
 "car_number":"رقم السياره",
 "number":"رقم",
 "upload_image":"تحميل الصور",
-
+"number_of_room":"عدد الغرف",
 
 
 
@@ -245,7 +245,8 @@
 "availabel_booking":"متاح للحجز؟",
 "status":"حالة",
 "date_information":"معلومات التاريخ",
-"select_one":"رجاءا اختر واحدة"
+"select_one":"رجاءا اختر واحدة",
+"add_item":"اضافة عنصر"
 
 
 

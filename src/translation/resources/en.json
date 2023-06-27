@@ -126,7 +126,7 @@
  "prescription_card_heading":"Prescription Details",
 
 
-
+"hotels":"Hotels",
 "add_room":"Add Room",
 "add_hotel":"Add Hotel",
 "title":"Title",
@@ -189,6 +189,8 @@
 "car_sale_price":"Car sale price",
 "sale_price":"Sale Price",
 "car_number":"Car Number",
+"number_of_room":"Number of room",
+
 "number":"Number",
 
 
@@ -246,5 +248,6 @@
 "availabel_booking":"Availabel for booking?",
 "status":"Status",
 "date_information":"Date Infromation",
-"select_one":"Please select one"
+"select_one":"Please select one",
+"add_item":"Add Item"
 }

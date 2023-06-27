@@ -25,6 +25,8 @@ type props = CompositeScreenProps<
 const UserTab = (props: props) => {
   const user = useAppSelector(s => s?.user);
   const userInfo = user?.userInfo;
+  console.log('user info===>',userInfo);
+  
   const dispatch = useAppDispatch();
   const { t } = i18n;
 

@@ -76,7 +76,9 @@ const AddHotelPrice = props => {
         setFieldTouched('check_out_time', true);
         setFieldTouched('price', true);
         setFieldTouched('enable_extra_price', true);
+        setFieldTouched(`extra_price.[0].name`, true);
         setFieldTouched('enable_service_fee', true);
+        setFieldTouched(`service_fee.[0].name`, true);
       }
     } catch (error) {
       console.log('error=>', error);
@@ -290,7 +292,7 @@ const AddHotelPrice = props => {
               </View>
             ))}
             <PrimaryButton
-              title={'Add Item'}
+              title={t('add_item')}
               onPress={handleAddExtraPrice}
               containerStyle={styles.addItem}
               textStyle={{fontSize: mvs(12)}}
@@ -423,7 +425,7 @@ const AddHotelPrice = props => {
               </View>
             ))}
             <PrimaryButton
-              title={'Add Item'}
+              title={t('add_item')}
               onPress={handleAddService}
               containerStyle={styles.addItem}
               textStyle={{fontSize: mvs(12)}}
@@ -431,7 +433,7 @@ const AddHotelPrice = props => {
           </>
         ) : null}
         <PrimaryButton
-          title={'Next'}
+          title={t('next')}
           onPress={onSubmit}
           containerStyle={styles.nextButton}
         />

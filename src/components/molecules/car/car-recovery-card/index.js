@@ -36,12 +36,12 @@ const CarRecoveryCard = ({
             <Row>
               <PrimaryButton
                 containerStyle={styles.recoveryBtn}
-                title="Recovery"
+                title={t('recovery')}
                 onPress={onPressRecover}
               />
               <PrimaryButton
                 containerStyle={styles.recoveryBtn}
-                title="Delete"
+                title={t('delete')}
                 onPress={onPressDelete}
               />
             </Row>

@@ -56,7 +56,7 @@ const RoomAvailabilityModal = ({
 
         <View style={styles.todayContainer}>
           <Bold
-            label={'Date Infromation'}
+            label={t('date_information')}
             fontSize={mvs(16)}
             style={{alignSelf: 'center'}}
           />
@@ -89,7 +89,7 @@ const RoomAvailabilityModal = ({
               <Regular
                 color={colors.primary}
                 fontSize={mvs(16)}
-                label={'Status'}
+                label={t('status')}
               />
               <Row style={{justifyContent: 'flex-start', marginTop: mvs(5)}}>
                 <Checkbox
@@ -103,12 +103,12 @@ const RoomAvailabilityModal = ({
                 />
                 <Regular
                   style={{marginLeft: mvs(15)}}
-                  label={'Availabel for booking?'}
+                  label={t('availabel_booking')}
                 />
               </Row>
             </View>
             <PrimaryInput
-              label="price"
+              label={t('price')}
               onChangeText={date => handleInputChange('price', date)}
               value={filterData.children}
               placeholder="400"
@@ -116,10 +116,10 @@ const RoomAvailabilityModal = ({
             <PrimaryInput
               onChangeText={date => handleInputChange('number', date)}
               value={filterData.number}
-              label="Number of room"
+              label={t('number_of_room')}
               placeholder="1"
             />
-            <PrimaryButton onPress={onPress} title="Save Changes" />
+            <PrimaryButton onPress={onPress} title={t('save_changes')} />
           </>
         )}
       </View>

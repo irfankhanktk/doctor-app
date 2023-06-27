@@ -320,7 +320,7 @@ const AddCarPrice = props => {
               </View>
             ))}
             <PrimaryButton
-              title={'Add Item'}
+              title={t('add_item')}
               onPress={handleAddExtraPrice}
               containerStyle={styles.addItem}
               textStyle={{fontSize: mvs(12)}}
@@ -455,7 +455,7 @@ const AddCarPrice = props => {
               </View>
             ))}
             <PrimaryButton
-              title={'Add Item'}
+              title={t('add_item')}
               onPress={handleAddService}
               containerStyle={styles.addItem}
               textStyle={{fontSize: mvs(12)}}
