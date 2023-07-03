@@ -3,7 +3,7 @@ import {Row} from 'components/atoms/row';
 import {DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
 import moment from 'moment';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   I18nManager,
@@ -37,6 +37,7 @@ import {
 import HtmlView from './../../../components/atoms/render-html/index';
 import {setHotels} from 'store/reducers/hotel-reducer';
 import {useDispatch} from 'react-redux';
+
 const HotelDetails = props => {
   const {navigation} = props;
   const [text, setText] = React.useState('');
@@ -44,11 +45,13 @@ const HotelDetails = props => {
   const [roomModal, setRoomModal] = React.useState(false);
   const [videoModal, setVideoModal] = React.useState(false);
   const [hotelDetails, setHotelDetails] = React.useState({});
+  console.log('check hotel details===>', hotelDetails?.row);
   const [submitReview, setSubmitReview] = React.useState({
     rate_number: '4',
     review_content: '',
   });
   const {hotels} = useAppSelector(s => s?.hotel);
+
   const [selectedRoom, setSelectedRoom] = React.useState({});
 
   const {t} = i18n;
@@ -113,6 +116,24 @@ const HotelDetails = props => {
       setStatusChangeLoading(false);
     }
   };
+
+  const location = {
+    latitude: (hotelDetails?.row?.map_lat || 19.229727) * 1,
+    longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
+  };
+  const handleMapReady = () => {
+    if (location) {
+      mapViewRef.current.animateToRegion({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.02,
+      });
+    }
+  };
+
+  const mapViewRef = React.createRef();
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -270,6 +291,14 @@ const HotelDetails = props => {
                   latitude: (hotelDetails?.row?.map_lat || 19.229727) * 1,
                   longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
                 }}
+                coordinate={{
+                  latitude: (hotelDetails?.row?.map_lat || 19.229727) * 1,
+                  longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
+                }}
+                // initialRegion={{
+                //   latitude: (hotelDetails?.row?.map_lat || 19.229727) * 1,
+                //   longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
+                // }}
               />
               <Row>
                 <PrimaryButton
