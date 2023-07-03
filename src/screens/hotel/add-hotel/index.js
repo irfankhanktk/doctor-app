@@ -40,6 +40,8 @@ const AddHotel = props => {
   // console.log('edit_hotel::::', edit_hotel);
   const [loading, setLoading] = React.useState(true);
   const [imageLoading, setImageLoading] = React.useState(false);
+  const [galleryImageLoading, setGalleryImageLoading] = React.useState(false);
+  const [featuredImageLoading, setFeaturedImageLoading] = React.useState(false);
   const initialValues = {
     title: '',
     content: '',
@@ -134,25 +136,47 @@ const AddHotel = props => {
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
-      setImageLoading(true);
-      const file_resp = await postFileData({file: res, type: 'image'});
-      console.log('res of file->>>', file_resp?.data);
-      const uri = res.uri;
-
-      if (v === 'gallery' && file_resp?.data) {
+      if (v == 'gallery') {
+        setGalleryImageLoading(true);
+        setImageLoading(false);
+        setFeaturedImageLoading(false);
+        const file_resp = await postFileData({file: res, type: 'image'});
+        console.log('res of file->>>', file_resp?.data);
         setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
           ...file_resp?.data,
         });
       } else if (v == 'bannerImage') {
+        setImageLoading(true);
+        setFeaturedImageLoading(false);
+        setGalleryImageLoading(false);
+        const file_resp = await postFileData({file: res, type: 'image'});
+        console.log('res of file->>>', file_resp?.data);
         setFieldValue('banner_image_id', file_resp?.data);
       } else {
+        setFeaturedImageLoading(true);
+        const file_resp = await postFileData({file: res, type: 'image'});
+        console.log('res of file->>>', file_resp?.data);
         setFieldValue('image_id', file_resp?.data);
       }
+
+      // const uri = res.uri;
+
+      // if (v === 'gallery' && file_resp?.data) {
+      //   setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
+      //     ...file_resp?.data,
+      //   });
+      // } else if (v == 'bannerImage') {
+      //   setFieldValue('banner_image_id', file_resp?.data);
+      // } else {
+      //   setFieldValue('image_id', file_resp?.data);
+      // }
     } catch (error) {
       console.log('upload image error', error);
       Alert.alert('Error', UTILS?.returnError(error));
     } finally {
       setImageLoading(false);
+      setFeaturedImageLoading(false);
+      setGalleryImageLoading(false);
     }
   };
   return (
@@ -252,12 +276,21 @@ const AddHotel = props => {
             style={styles.galleryText}
           />
           <View style={styles.galleryContainer}>
-            <TouchableOpacity onPress={() => openGallery('gallery')}>
+            <TouchableOpacity
+              loading={galleryImageLoading}
+              onPress={() => openGallery('gallery')}>
               <View style={[styles.ImageContainer, {marginHorizontal: mvs(3)}]}>
-                <Entypo name="camera" size={20} color={'black'} />
-                {/* <Text style={styles.headerText}>Add image{'\n'}(0 up to 8)</Text> */}
-
-                <Regular style={styles.headerText} label={t('add_images')} />
+                {galleryImageLoading ? (
+                  <Loader color={colors.black} />
+                ) : (
+                  <>
+                    <Entypo name="camera" size={20} color={'black'} />
+                    <Regular
+                      style={styles.headerText}
+                      label={t('add_images')}
+                    />
+                  </>
+                )}
               </View>
             </TouchableOpacity>
             <FlatList
@@ -386,7 +419,7 @@ const AddHotel = props => {
             style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
-              loading={imageLoading}
+              loading={featuredImageLoading}
               onPress={() => openGallery('featureImage')}
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
