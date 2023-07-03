@@ -39,6 +39,7 @@ const AddHotel = props => {
   const {edit_hotel} = hotel;
   // console.log('edit_hotel::::', edit_hotel);
   const [loading, setLoading] = React.useState(true);
+  const [imageLoading, setImageLoading] = React.useState(false);
   const initialValues = {
     title: '',
     content: '',
@@ -133,6 +134,7 @@ const AddHotel = props => {
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
+      setImageLoading(true);
       const file_resp = await postFileData({file: res, type: 'image'});
       console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
@@ -223,6 +225,7 @@ const AddHotel = props => {
             style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
+              loading={imageLoading}
               onPress={() => openGallery('bannerImage')}
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
@@ -381,6 +384,7 @@ const AddHotel = props => {
             style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
+              loading={imageLoading}
               onPress={() => openGallery('featureImage')}
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}

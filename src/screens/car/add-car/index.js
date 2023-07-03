@@ -40,6 +40,7 @@ const AddCar = props => {
   const {car} = useSelector(s => s);
   const {edit_car} = car;
   const [loading, setLoading] = React.useState(true);
+  const [imageLoading, setImageLoading] = React.useState(false);
   const initialValues = {
     title: '',
     content: '',
@@ -135,7 +136,9 @@ const AddCar = props => {
   const openGallery = async v => {
     try {
       const res = await UTILS._returnImageGallery();
+      setImageLoading(true);
       const file_resp = await postFileData({file: res, type: 'image'});
+
       console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
 
@@ -151,6 +154,8 @@ const AddCar = props => {
     } catch (error) {
       console.log('upload image error', error);
       Alert.alert('Error', UTILS?.returnError(error));
+    } finally {
+      setImageLoading(false);
     }
   };
   // console.log('values me check====>', values);
@@ -226,6 +231,7 @@ const AddCar = props => {
             style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
+              loading={imageLoading}
               onPress={() => openGallery('bannerImage')}
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
@@ -422,6 +428,7 @@ const AddCar = props => {
             style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
+              loading={imageLoading}
               onPress={() => openGallery('featureImage')}
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
