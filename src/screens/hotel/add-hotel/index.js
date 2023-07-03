@@ -151,6 +151,8 @@ const AddHotel = props => {
     } catch (error) {
       console.log('upload image error', error);
       Alert.alert('Error', UTILS?.returnError(error));
+    } finally {
+      setImageLoading(false);
     }
   };
   return (
