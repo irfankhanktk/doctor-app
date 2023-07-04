@@ -160,19 +160,10 @@ const HotelDetails = props => {
             source={{uri: `${hotelDetails?.row?.image_id}`}}
             style={styles.hotelsimgbackground}>
             <Row>
-              <Row
-                style={{
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginHorizontal: mvs(10),
-                  paddingVertical: mvs(5),
-                }}>
+              <Row style={styles.bgStyles}>
                 <TouchableOpacity
                   onPress={() => setVideoModal(true)}
-                  style={{
-                    marginHorizontal: mvs(20),
-                  }}>
+                  style={{}}>
                   <Entypo name="video" color={colors.white} size={mvs(30)} />
                 </TouchableOpacity>
               </Row>
@@ -184,16 +175,8 @@ const HotelDetails = props => {
                     hotelDetails,
                   })
                 }
-                style={{
-                  backgroundColor: 'blue',
-                  marginHorizontal: mvs(10),
-                  paddingHorizontal: mvs(15),
-                  paddingVertical: mvs(5),
-                  opacity: 0.8,
-                  alignSelf: 'center',
-                  borderRadius: mvs(10),
-                }}>
-                <Medium label={t('check_room')} color={colors.white} />
+                style={styles.checkRooms}>
+                <Medium label={t('check_room')} />
               </TouchableOpacity>
             </Row>
           </ImageBackground>

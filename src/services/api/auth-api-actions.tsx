@@ -53,12 +53,12 @@ export const onSignup = (
 };
 export const getLocations = () => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
-      try {
-          const res = await getData(URLS.auth.locations);
-          dispatch(setLocations(res?.data));
-      } catch (error) {
-          console.log('error', UTILS.returnError(error));
-          Alert.alert('Error', UTILS.returnError(error));
-      }
+    try {
+      const res = await getData(URLS.auth.locations);
+      dispatch(setLocations(res?.data));
+    } catch (error) {
+      console.log('error', UTILS.returnError(error));
+      Alert.alert('Error', UTILS.returnError(error));
+    }
   };
 };

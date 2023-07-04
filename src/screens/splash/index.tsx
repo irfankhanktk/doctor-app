@@ -25,7 +25,7 @@ const Splash = (props: props) => {
 
     (async () => {
       try {
-        let screen: any = 'DoctorStack';
+        let screen: any = 'HotelStack';
         UTILS.get_current_location((position) => {
           dispatch(setLocation({
             latitude: position?.coords?.latitude,
