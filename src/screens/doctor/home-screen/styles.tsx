@@ -15,11 +15,18 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
-  contentContainerStyle: {
+  containerStyle: {
     flexGrow: 1,
     paddingVertical: mvs(10),
     paddingHorizontal: mvs(20),
-    paddingBottom: mvs(100)
+    paddingBottom: mvs(100),
+    
+  },
+  contentContainerStyle: {
+    flexGrow: 1,
+    paddingVertical: mvs(10),
+    paddingBottom: mvs(100),
+    
   },
   columnWrapperStyle: {
     justifyContent: 'space-between',

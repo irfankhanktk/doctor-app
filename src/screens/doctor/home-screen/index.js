@@ -30,6 +30,7 @@ const Home = props => {
   const {t} = i18n;
   const [homeData, setHomeData] = React.useState({});
   const [loading, setLoading] = React.useState(true);
+
   React.useEffect(() => {
     // getDoctorAvailability(2);
     dispatch(getAllHospitals());
@@ -53,6 +54,15 @@ const Home = props => {
       console.log('error=>', error);
     }
   };
+  const uniquePatient = [];
+  const seenIds = new Set();
+
+  homeData?.patients.forEach(entry => {
+    if (!seenIds.has(entry.id)) {
+      uniquePatient.push(entry);
+      seenIds.add(entry.id);
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -64,7 +74,7 @@ const Home = props => {
         <SearchInput value="" />
       </View> */}
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.contentContainerStyle}>
+        <ScrollView contentContainerStyle={styles.containerStyle}>
           <ImageBackground source={appointment_bg} style={styles.bgImg}>
             <Regular
               label={t('appointments')}
@@ -136,7 +146,7 @@ const Home = props => {
             }
             contentContainerStyle={styles.contentContainerStyle}
             showsVerticalScrollIndicator={false}
-            data={homeData?.patients}
+            data={uniquePatient}
             renderItem={({item, index}) => {
               return <PopularPatientCard key={index} name={item?.name} />;
             }}
