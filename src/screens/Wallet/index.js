@@ -2,6 +2,7 @@ import {PrimaryButton} from 'components/atoms/buttons';
 
 import {Loader} from 'components/atoms/loader';
 import Header1x2x from 'components/atoms/walletheader/header-1x-2x';
+import {EmptyList} from 'components/molecules/doctor/empty-list';
 import WalletAmount from 'components/molecules/doctor/modals/Wallet-amountmodal';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
@@ -15,9 +16,7 @@ import {getWallet} from 'services/api/doctor/api-actions';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview/index';
 import styles from './styles';
-import {EmptyList} from 'components/molecules/doctor/empty-list';
 
 const WalletScreen = props => {
   const dispatch = useAppDispatch();
@@ -94,9 +93,7 @@ const WalletScreen = props => {
 
             <FlatList
               data={wallet?.tansactions}
-              ListEmptyComponent={
-                <EmptyList label={t('history_content')} />
-              }
+              ListEmptyComponent={<EmptyList label={t('history_content')} />}
               renderItem={({item, index}) => (
                 <View key={index} style={styles.historycontainer}>
                   <View style={styles.cardcontainer}>
@@ -114,7 +111,9 @@ const WalletScreen = props => {
                   </View>
                   <Regular
                     label={`SR ${item.amount}`}
-                    color={colors.red}
+                    color={
+                      item?.type == 'deposit' ? colors.primary : colors.red
+                    }
                     style={{marginHorizontal: mvs(10)}}
                   />
                 </View>

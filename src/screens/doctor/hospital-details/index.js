@@ -34,6 +34,10 @@ const HospitalDetails = props => {
                       longitude: hospital?.map_lng * 1,
                     }
               }
+              coordinate={{
+                latitude: (hospital?.map_lat || 19.229727) * 1,
+                longitude: (hospital?.map_lng || 72.98447) * 1,
+              }}
             />
           </ScrollView>
         )}
