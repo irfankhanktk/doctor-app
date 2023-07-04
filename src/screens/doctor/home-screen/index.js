@@ -105,12 +105,19 @@ const Home = props => {
             />
           </Row>
           <Row>
-            <IconButton icon={'user'} title={t('patients')} />
+            <IconButton
+              containerStyle={{width: '48%'}}
+              icon={'user'}
+              title={t('patients')}
+            />
             <IconButton
               icon={'wallet'}
               title={t('payments')}
               containerStyle={{
-                backgroundColor: colors.green,
+                // backgroundColor: colors.green,
+                backgroundColor: 'red',
+                paddingHorizontal: mvs(0),
+                width: '48%',
               }}
             />
           </Row>

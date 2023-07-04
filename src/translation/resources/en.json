@@ -173,14 +173,14 @@
 "max_adults":"Max Adults",
 "max_children":"Max Children",
 "room_amenities":"Room Amenities",
-"check_room":"Check Room",
+"check_room":"Check Rooms",
 "all_rooms":"All Rooms",
 "Available_Rooms":"Available Rooms",
 "edit_hotel":"Edit Hotel",
 "room_availability":"Room Availability",
 "edit_room_availability":"Edit Room Availability",
 "hotel_policies":"Hotel Policies",
-"delete_hotel":"Delete Hotele",
+"delete_hotel":"Delete Hotel",
 "make_publish":"Make Publish",
 "make_hide":"Make Hide",
 "delete":"Delete",
@@ -190,8 +190,8 @@
 "sale_price":"Sale Price",
 "car_number":"Car Number",
 "number_of_room":"Number of room",
-
 "number":"Number",
+"history_content":"You have not transaction history",
 
 
 

@@ -106,14 +106,14 @@ const LoginScreen = props => {
               onPress={onSubmit}
               title={t('login')}
             />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{alignSelf: 'center', marginTop: mvs(20)}}
               onPress={() => navigate('Signup')}>
               <Medium
                 label={t('dont_have_account')}
                 style={{textDecorationLine: 'underline'}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <OtpModal
               onClose={() => setOtpModalVisible(false)}
               visible={otpModalVisible}

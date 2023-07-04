@@ -17,10 +17,12 @@ import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview/index';
 import styles from './styles';
+import {EmptyList} from 'components/molecules/doctor/empty-list';
 
 const WalletScreen = props => {
   const dispatch = useAppDispatch();
   const {userInfo, wallet} = useAppSelector(s => s.user);
+
   const {t} = i18n;
   const [otpModalVisible, setOtpModalVisible] = React.useState(false);
 
@@ -60,12 +62,12 @@ const WalletScreen = props => {
     <View style={styles.container}>
       <Header1x2x
         title={t('wallet')}
-        wallettext={`SR ${loading ? '--' : wallet?.wallet?.balance ?? ''}`}
+        wallettext={`SR ${loading ? '--' : wallet?.wallet?.balance ?? '--'}`}
       />
       <View style={styles.walletcard}>
         <Feather name="shopping-bag" size={mvs(35)} color={'#000'} />
         <Medium
-          label={`SR ${loading ? '--' : wallet?.wallet?.balance ?? ''}`}
+          label={`SR ${loading ? '--' : wallet?.wallet?.balance ?? '--'}`}
           fontSize={mvs(20)}
           color={'#000'}
         />
@@ -89,37 +91,37 @@ const WalletScreen = props => {
               fontSize={mvs(20)}
               style={{marginLeft: mvs(14)}}
             />
-            <View style={{padding: mvs(5)}}>
-              <FlatList
-                data={wallet?.tansactions}
-                renderItem={({item, index}) => (
-                  <View key={index} style={styles.historycontainer}>
-                    <View style={styles.cardcontainer}>
-                      <MaterialIcons
-                        name="payments"
-                        size={mvs(40)}
-                        color={colors.primary}
-                        style={{marginRight: mvs(15)}}
-                      />
-                      {/* <Regular label={item.city} color={colors.green} /> */}
-                      <Regular
-                        label={moment(item.created_at).format(
-                          'DD/MM/YYYY HH:mm',
-                        )}
-                        color={colors.green}
-                      />
-                    </View>
+
+            <FlatList
+              data={wallet?.tansactions}
+              ListEmptyComponent={
+                <EmptyList label={t('history_content')} />
+              }
+              renderItem={({item, index}) => (
+                <View key={index} style={styles.historycontainer}>
+                  <View style={styles.cardcontainer}>
+                    <MaterialIcons
+                      name="payments"
+                      size={mvs(40)}
+                      color={colors.primary}
+                      style={{marginRight: mvs(15)}}
+                    />
+                    {/* <Regular label={item.city} color={colors.green} /> */}
                     <Regular
-                      label={`SR ${item.amount}`}
-                      color={colors.red}
-                      style={{marginHorizontal: mvs(10)}}
+                      label={moment(item.created_at).format('DD/MM/YYYY HH:mm')}
+                      color={colors.green}
                     />
                   </View>
-                )}
-                contentContainerStyle={{paddingBottom: mvs(100)}}
-                ItemSeparatorComponent={itemSeparatorComponent()}
-              />
-            </View>
+                  <Regular
+                    label={`SR ${item.amount}`}
+                    color={colors.red}
+                    style={{marginHorizontal: mvs(10)}}
+                  />
+                </View>
+              )}
+              contentContainerStyle={{paddingBottom: mvs(100), flexGrow: 1}}
+              ItemSeparatorComponent={itemSeparatorComponent()}
+            />
 
             <WalletAmount
               onClose={() => setOtpModalVisible(false)}

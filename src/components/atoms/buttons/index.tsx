@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle,View } from 'react-native'
 import { colors } from 'config/colors'
 import { mvs } from 'config/metrices'
 import Regular from '../../../typography/regular-text'
@@ -55,10 +55,18 @@ export const IconButton = (props: props) => {
     } = props;
     return (
         <TouchableOpacity disabled={disabled || loading} style={[styles.iconContainer, { backgroundColor: `${colors.primary}${disabled ? '50' : ''}`, }, containerStyle]} onPress={onPress}>
-            <Icon color={colors.white} name={icon} size={30} style={{ marginHorizontal: mvs(10) }} />
+            <Icon color={colors.white} name={icon} size={20} style={{ marginHorizontal: mvs(10) }} />
             {loading ?
+           
+
                 <Loader color={colors.white} />
-                : <Regular style={[styles.iconText, textStyle]} label={title} />}
+                :
+                <View style={{flex:1}}>
+
+                    <Regular numberOfLines={1} style={[styles.iconText, textStyle]} label={title} />
+                </View>
+                }
+            
         </TouchableOpacity>
     )
 };
@@ -93,11 +101,11 @@ const styles = StyleSheet.create({
     iconContainer: {
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         backgroundColor: colors.primary,
         height: mvs(80),
-        paddingHorizontal: mvs(15),
-        width: '49%',
+        paddingHorizontal: mvs(10),
+        
         borderRadius: mvs(10),
     },
     primaryText: {
@@ -105,8 +113,9 @@ const styles = StyleSheet.create({
     },
     iconText: {
         color: colors.white,
-        marginHorizontal: mvs(10),
+        // marginHorizontal: mvs(10),
         fontSize: mvs(18),
         lineHeight: mvs(22),
+        
     }
 })
