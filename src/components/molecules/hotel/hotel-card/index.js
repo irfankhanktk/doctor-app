@@ -38,9 +38,16 @@ const HotelCard = ({
           ]}>
           <Row style={styles.row}>
             <View style={{flex: 1}}>
-              <Medium label={item?.title} color={colors.white} />
+              <Row>
+                <Medium label={item?.title} color={colors.white} />
+                <PrimaryButton
+                  onPress={onPressRecover}
+                  containerStyle={styles.btn}
+                  textStyle={styles.btnTxt}
+                  title={`${item?.price} / ${t('night')}`}
+                />
+              </Row>
               <Row style={{justifyContent: 'flex-start'}}>
-                {/* <SpecialistLocation /> */}
                 <Entypo
                   name="location"
                   color={colors.red}
@@ -57,12 +64,6 @@ const HotelCard = ({
                 </View>
               </Row>
             </View>
-            <PrimaryButton
-              onPress={onPressRecover}
-              containerStyle={styles.btn}
-              textStyle={styles.btnTxt}
-              title={`${item?.price} / ${t('night')}`}
-            />
           </Row>
         </LinearGradient>
       </ImageBackground>
@@ -96,10 +97,10 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: colors.white,
     height: mvs(28),
-    width: mvs(96),
+    width: mvs(120),
+    // padding: mvs(5),
     borderRadius: mvs(10),
     ...colors.shadow,
-    top: mvs(15),
   },
   btnTxt: {
     color: colors.primary,
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
   },
   rateTxt: {marginLeft: mvs(10), lineHeight: mvs(16)},
   grd: {
-    height: mvs(80),
+    height: mvs(90),
     padding: mvs(15),
     borderRadius: mvs(15),
   },

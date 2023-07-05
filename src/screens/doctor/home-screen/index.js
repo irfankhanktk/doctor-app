@@ -57,7 +57,7 @@ const Home = props => {
   const uniquePatient = [];
   const seenIds = new Set();
 
-  homeData?.patients.forEach(entry => {
+  homeData?.patients?.forEach(entry => {
     if (!seenIds.has(entry.id)) {
       uniquePatient.push(entry);
       seenIds.add(entry.id);

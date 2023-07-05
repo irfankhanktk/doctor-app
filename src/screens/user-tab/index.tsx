@@ -67,7 +67,7 @@ const UserTab = (props: props) => {
           {userInfo && (
             <TouchableOpacity
               style={styles.itemtabs}
-              onPress={() => props?.navigation?.navigate('UpdateProfile')}>
+              onPress={() => navigate('UpdateProfile')}>
               <FontAwesome5
                 name="user-edit"
                 size={mvs(22)}
@@ -97,7 +97,7 @@ const UserTab = (props: props) => {
           {userInfo && (
             <TouchableOpacity
               style={styles.itemtabs}
-              onPress={() => navigate('RecoveryCars')}>
+              onPress={() => navigate('RecoveryHotels')}>
               <Ionicons
                 name="timer-outline"
                 size={mvs(22)}

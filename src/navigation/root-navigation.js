@@ -17,6 +17,9 @@ import {horizontalAnimation} from '../utils';
 import {DoctorStack} from './doctor/doctor-stack';
 import HotelStack from './hotel/hotel-stack';
 import CarStack from './car/car-stack';
+import UpdateProfile from 'screens/update-profile';
+import UpdatePassword from 'screens/update-password';
+import RecoveryHotels from 'screens/hotel/recovery-hotels';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -40,6 +43,9 @@ export const RootNavigator = () => {
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="WalletScreen" component={WalletScreen} />
           <Stack.Screen name="LanguageScreen" component={LanguageScreen} />
+          <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
+          <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
+          <Stack.Screen name="RecoveryHotels" component={RecoveryHotels} />
           <Stack.Screen
             name="RenewPasswordScreen"
             component={RenewPasswordScreen}
