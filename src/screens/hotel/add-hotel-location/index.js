@@ -59,7 +59,6 @@ const AddHotelLocation = props => {
   };
   React.useEffect(() => {
     if (selectedItem) {
-      console.log('selectedItem=>>', selectedItem);
       handleRegionChange({
         latitude: selectedItem?.map_lat * 1,
         longitude: selectedItem?.map_lng * 1,
@@ -80,7 +79,9 @@ const AddHotelLocation = props => {
     setRegion(user?.location);
   }, [user]);
   const handleRegionChange = coords => {
-    mapRef?.current?.animateToRegion(coords, 1000);
+    setTimeout(() => {
+      mapRef?.current?.animateToRegion(coords, 1000);
+    }, 1000);
   };
   React.useEffect(() => {
     dispatch(getLocations());
@@ -131,7 +132,6 @@ const AddHotelLocation = props => {
                 markerCoordinates?.latitude,
                 markerCoordinates?.longitude,
               );
-              console.log('addressComponent->>', addressComponent);
               navigation.navigate('AddHotelPrice', {
                 ...values,
                 address: addressComponent?.fulladdress,

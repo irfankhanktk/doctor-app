@@ -179,7 +179,7 @@ export const addPriceHotelValidation = yup.object().shape({
   check_out_time: yup.string().required('checkout_required'),
   price: yup.string().required('price_required'),
 
-  enable_extra_price: yup.string().oneOf(['0', '1']).required('enable_extreaprice_required'),
+  enable_extra_price: yup.string().oneOf(['0', '1']).required('enable_extra_price_required'),
   extra_price: yup.array().when('enable_extra_price', {
     is: '1',
     then: yup.array()
@@ -190,8 +190,8 @@ export const addPriceHotelValidation = yup.object().shape({
           price: yup.number().required('price_required'),
         })
       )
-      .required('extra_price_required'),
-    otherwise: yup.array(),
+      .min(1, 'extra_price_required'),
+    otherwise: yup.array().notRequired(),
   }),
   enable_service_fee: yup.string().oneOf(['0', '1']).required('enable_service_fee'),
   service_fee: yup.array().when('enable_service_fee', {
@@ -199,11 +199,11 @@ export const addPriceHotelValidation = yup.object().shape({
     then: yup.array()
       .of(
         yup.object().shape({
-                name: yup.string().required('service_name_required'),
-                desc: yup.string().required('service_desc_required'),
-                price: yup.string().required('service_price_required'),
-                type: yup.string().required('service_type_required'),
-                per_person: yup.string().required('per_person_required'),
+          name: yup.string().required('service_name_required'),
+          desc: yup.string().required('service_desc_required'),
+          price: yup.string().required('service_price_required'),
+          type: yup.string().required('service_type_required'),
+          per_person: yup.string().required('per_person_required'),
         })
       )
       .required('extra_fee'),
@@ -212,7 +212,7 @@ export const addPriceHotelValidation = yup.object().shape({
 
 });
 export const addPriceCarValidation = yup.object().shape({
- 
+
   price: yup.string().required('price_required'),
   sale_price: yup.string().required('sale_price_required'),
   number: yup.string().required('number_required'),
@@ -237,10 +237,10 @@ export const addPriceCarValidation = yup.object().shape({
       .of(
         yup.object().shape({
           name: yup.string().required('service_name_required'),
-                desc: yup.string().required('service_desc_required'),
-                price: yup.string().required('service_price_required'),
-                type: yup.string().required('service_type_required'),
-                per_person: yup.string().required('per_person_required'),
+          desc: yup.string().required('service_desc_required'),
+          price: yup.string().required('service_price_required'),
+          type: yup.string().required('service_type_required'),
+          per_person: yup.string().required('per_person_required'),
         })
       )
       .required('extra_price_required'),

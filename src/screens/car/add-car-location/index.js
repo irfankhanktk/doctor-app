@@ -132,7 +132,6 @@ const AddCarLocation = props => {
                 markerCoordinates?.latitude,
                 markerCoordinates?.longitude,
               );
-              console.log('addressComponent->>', addressComponent);
               navigation.navigate('AddCarPrice', {
                 ...values,
                 address: addressComponent?.fulladdress,

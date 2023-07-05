@@ -437,7 +437,7 @@ const AddRoom = props => {
             loading={addBtnloading}
             containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
             onPress={() => onSubmit()}
-            title="Add Room"
+            title={t(room_id ? 'save' : 'add_room')}
           />
         </KeyboardAvoidScrollview>
       )}

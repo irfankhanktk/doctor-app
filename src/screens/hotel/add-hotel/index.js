@@ -62,7 +62,7 @@ const AddHotel = props => {
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
-      validateOnChange: false,
+      validateOnChange: true,
       validationSchema: addHotelValidation,
       onSubmit: () => {},
     });
@@ -84,6 +84,7 @@ const AddHotel = props => {
       setFieldValue('banner_image_id', edit_hotel?.row?.banner_image_id);
       setFieldValue('image_id', edit_hotel?.row?.image_id);
       setFieldValue('gallery', edit_hotel?.row?.gallery);
+      setAllFiedsTouched();
     }
   }, [edit_hotel]);
   React.useEffect(() => {
@@ -92,6 +93,18 @@ const AddHotel = props => {
   React.useEffect(() => {
     dispatch(setHotelForEdit(null));
   }, []);
+
+  const setAllFiedsTouched = () => {
+    setFieldTouched('title', true);
+    setFieldTouched('content', true);
+    setFieldTouched('video', true);
+    setFieldTouched('star_rate', true);
+    setFieldTouched('banner_image_id.url', true);
+    setFieldTouched('image_id.url', true);
+    setFieldTouched('gallery[0].url', true);
+    setFieldTouched(`policy[0].content`, true);
+    setFieldTouched(`policy[0].title`, true);
+  };
   const onSubmit = async () => {
     try {
       console.log('valuess->>', values);
@@ -103,15 +116,7 @@ const AddHotel = props => {
           console.log(error);
         }
       } else {
-        setFieldTouched('title', true);
-        setFieldTouched('content', true);
-        setFieldTouched('video', true);
-        setFieldTouched('star_rate', true);
-        setFieldTouched('banner_image_id.url', true);
-        setFieldTouched('image_id.url', true);
-        setFieldTouched('gallery[0].url', true);
-        setFieldTouched(`policy[0].content`, true);
-        setFieldTouched(`policy[0].title`, true);
+        setAllFiedsTouched();
       }
     } catch (error) {
       console.log('error=>', error);
