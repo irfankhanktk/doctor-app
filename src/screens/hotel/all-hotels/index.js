@@ -60,11 +60,8 @@ const AllHotels = props => {
         style={{height: mvs(70)}}
         isSearch={false}
         title={t('hotels')}
-        back={true}
+        // back={true}
       />
-      {/* <ImageBackground source={IMG.Hotels_Bg} style={styles.bg}>
-        <HotelsHeader isSearch={true} back={true} />
-      </ImageBackground> */}
 
       {loading ? (
         <Loader />

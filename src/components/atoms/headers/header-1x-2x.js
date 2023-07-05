@@ -26,18 +26,21 @@ const HeaderX = ({
   return (
     <View style={[styles.container, style]}>
       <Row style={{alignItems: 'center'}}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: colors.white,
-            padding: mvs(5),
-            borderRadius: mvs(7),
-          }}
-          onPress={() => navigation?.goBack()}>
-          <Icon
-            name={I18nManager.isRTL ? 'right' : 'left'}
-            size={mvs(20)}
-            color={colors.black}
-          />
+        <TouchableOpacity onPress={() => navigation?.goBack()}>
+          {back && (
+            <View
+              style={{
+                backgroundColor: colors.white,
+                padding: mvs(5),
+                borderRadius: mvs(7),
+              }}>
+              <Icon
+                name={I18nManager.isRTL ? 'right' : 'left'}
+                size={mvs(20)}
+                color={colors.black}
+              />
+            </View>
+          )}
         </TouchableOpacity>
         <Medium fontSize={mvs(20)} label={title} style={[styles.title]} />
         <View style={styles.empty} />
