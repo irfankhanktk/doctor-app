@@ -75,6 +75,8 @@ const AddHotel = props => {
   }, [route?.params?.id]);
   React.useEffect(() => {
     if (edit_hotel && route?.params?.id) {
+      setAllFiedsTouched();
+
       // console.log('edit_hotel?.row?.popp->>', edit_hotel?.row?.policy);
       setFieldValue('title', edit_hotel?.row?.title);
       setFieldValue('content', edit_hotel?.row?.content);
@@ -84,7 +86,6 @@ const AddHotel = props => {
       setFieldValue('banner_image_id', edit_hotel?.row?.banner_image_id);
       setFieldValue('image_id', edit_hotel?.row?.image_id);
       setFieldValue('gallery', edit_hotel?.row?.gallery);
-      setAllFiedsTouched();
     }
   }, [edit_hotel]);
   React.useEffect(() => {
