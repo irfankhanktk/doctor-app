@@ -25,6 +25,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   getHotelAttributes,
   getHotelForEdit,
+  onAddOrUpdateHotel,
   postFileData,
 } from 'services/api/hotel/api-actions';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
@@ -39,6 +40,7 @@ const AddHotel = props => {
   const {edit_hotel} = hotel;
   // console.log('edit_hotel::::', edit_hotel);
   const [loading, setLoading] = React.useState(true);
+  const [btnLoading, setBtnLoading] = React.useState(false);
   const [imageLoading, setImageLoading] = React.useState(false);
   const [galleryImageLoading, setGalleryImageLoading] = React.useState(false);
   const [featuredImageLoading, setFeaturedImageLoading] = React.useState(false);
@@ -47,7 +49,11 @@ const AddHotel = props => {
     content: '',
     video: '',
     banner_image_id: '',
-    gallery: [],
+    gallery: [
+      {
+        url: '',
+      },
+    ],
     star_rate: '',
     image_id: '',
     policy: [
@@ -94,6 +100,16 @@ const AddHotel = props => {
   React.useEffect(() => {
     dispatch(setHotelForEdit(null));
   }, []);
+  const onSave = async () => {
+    await onAddOrUpdateHotel({
+      ...values,
+      id: edit_hotel?.row?.id || null,
+      gallery: values?.gallery?.map(x => x?.data?.id)?.join(),
+      banner_image_id: values?.banner_image_id?.data?.id,
+      image_id: values?.image_id?.data?.id,
+      terms: edit_hotel?.row?.id ? edit_hotel?.selected_terms : [],
+    });
+  };
 
   const setAllFiedsTouched = () => {
     setFieldTouched('title', true);
@@ -107,20 +123,20 @@ const AddHotel = props => {
     setFieldTouched(`policy[0].title`, true);
   };
   const onSubmit = async () => {
-    try {
-      console.log('valuess->>', values);
-      console.log('errors->>', errors);
-      if (isValid && Object.keys(touched).length > 0) {
-        try {
-          navigation?.navigate('AddHotelLocation', {values});
-        } catch (error) {
-          console.log(error);
+    if (isValid && Object.keys(touched).length > 0) {
+      try {
+        if (edit_hotel?.row?.id) {
+          setBtnLoading(true);
+          await onSave();
         }
-      } else {
-        setAllFiedsTouched();
+        navigation?.navigate('AddHotelLocation', {values});
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setBtnLoading(false);
       }
-    } catch (error) {
-      console.log('error=>', error);
+    } else {
+      setAllFiedsTouched();
     }
   };
   const handleAddPolicy = () => {
@@ -224,6 +240,7 @@ const AddHotel = props => {
             onChangeText={str => setFieldValue('title', str)}
             onBlur={() => setFieldTouched('title', true)}
             value={values.title}
+            // containerStyle={}
           />
           <PrimaryInput
             error={
@@ -445,9 +462,10 @@ const AddHotel = props => {
           )}
 
           <PrimaryButton
+            loading={btnLoading}
             containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
             onPress={() => onSubmit()}
-            title={t('next')}
+            title={t(edit_hotel?.row?.id ? 'save_next' : 'next')}
           />
         </KeyboardAvoidScrollview>
       )}

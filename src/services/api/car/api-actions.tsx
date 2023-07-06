@@ -12,35 +12,15 @@ import { setLocations } from './../../../store/reducers/hotel-reducer';
 import { getData, postData, postFormData } from '../';
 export const getCars = (
     setLoading: (bool: boolean) => void,
-    page: number,
 ) => {
     return async (dispatch: AppDispatch, getState: () => RootState) => {
         try {
             setLoading(true);
-            const { car_filter, cars } = getState()?.car;
-            let filter = UTILS._removeEmptyKeys(car_filter);
-            console.log('filter=---->', filter);
-            if (!filter?.terms?.length) delete filter?.terms;
-            filter = { ...filter, price_range: filter?.price_range?.join(';') };
-            if (!filter?.review_score?.length) delete filter?.review_score;
-            if (!filter?.star_rate?.length) delete filter?.star_rate;
-
-            const params = new URLSearchParams({
-                ...filter,
-                page,
-            });
-            const queryString = params.toString();
-            console.log('queryString=>:::', queryString);
-            // return res;
             const res = await getData(
-                `${URLS.car.get_car_list}?${queryString}`,
+                `${URLS.car.get_car_list}per_page=2000`,
             );
             dispatch(
-                setCars(
-                    page > 1
-                        ? { ...cars, data: [...cars?.data, ...res?.data?.data] }
-                        : res?.data,
-                ),
+                setCars(res?.data),
             );
         } catch (error) {
             console.log('errorLL::::::::', UTILS.returnError(error));

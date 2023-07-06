@@ -6,7 +6,7 @@ import HotelCard from 'components/molecules/hotel/hotel-card';
 import {mvs} from 'config/metrices';
 import {useAppDispatch} from 'hooks/use-store';
 import React from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import i18n from 'translation';
 import styles from './styles';
@@ -15,7 +15,7 @@ import {getAllHotels} from 'services/api/hotel/api-actions';
 
 const AllHotels = props => {
   const [cartModal, setCardModal] = React.useState(false);
-
+  const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [pageLoading, setPageLoading] = React.useState(false);
   const dispatch = useAppDispatch();
@@ -26,8 +26,8 @@ const AllHotels = props => {
 
   const [page, setPage] = React.useState(1);
   const {t} = i18n;
-  const getHomeHotels = () => {
-    dispatch(getAllHotels(setLoading));
+  const getHomeHotels = isReFreshing => {
+    dispatch(getAllHotels(isReFreshing ? setRefreshing : setLoading));
   };
   React.useEffect(() => {
     getHomeHotels();
@@ -68,6 +68,12 @@ const AllHotels = props => {
       ) : (
         <View style={styles.container}>
           <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={() => getHomeHotels(true)}
+              />
+            }
             contentContainerStyle={styles.contentContainerStyle}
             ListEmptyComponent={!loading && <EmptyList />}
             showsVerticalScrollIndicator={false}

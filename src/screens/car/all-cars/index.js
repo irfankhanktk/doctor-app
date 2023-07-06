@@ -7,7 +7,7 @@ import {EmptyList} from 'components/molecules/doctor/empty-list';
 import {mvs} from 'config/metrices';
 import {useAppDispatch} from 'hooks/use-store';
 import React from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {getCars} from 'services/api/car/api-actions';
@@ -19,30 +19,22 @@ import styles from './styles';
 import {getLocations} from 'services/api/hotel/api-actions';
 const AllCars = props => {
   const [loading, setLoading] = React.useState(true);
-  const [pageLoading, setPageLoading] = React.useState(false);
   const dispatch = useAppDispatch();
   const {car, user} = useSelector(s => s);
   const {car_filter, cars} = car;
-  const [filterModal, setFilterModal] = React.useState(false);
   const [page, setPage] = React.useState(1);
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const {userInfo} = user;
   console.log('userInfo', userInfo);
 
   const {t} = i18n;
   const getHomeCars = bool => {
-    if (bool) {
-      setPage(1);
-    }
-    dispatch(getCars(page > 1 ? setPageLoading : setLoading, bool ? 1 : page));
+    dispatch(getCars(bool ? setRefreshing : setLoading));
   };
   React.useEffect(() => {
-    getHomeCars(true);
+    getHomeCars();
   }, [car_filter]);
-  React.useEffect(() => {
-    if (page > 1) {
-      getHomeCars();
-    }
-  }, [page]);
   React.useEffect(() => {
     dispatch(getLocations());
   }, []);
@@ -60,7 +52,7 @@ const AllCars = props => {
   );
   const renderFooter = () => {
     // Render a loading indicator while more data is being fetched
-    if (!loading && !pageLoading) return null;
+    if (!loading) return null;
     return (
       <View style={{paddingVertical: 70}}>
         <Loader />
@@ -103,18 +95,18 @@ const AllCars = props => {
       ) : (
         <View style={styles.container}>
           <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={() => getHomeCars(true)}
+              />
+            }
             contentContainerStyle={styles.contentContainerStyle}
             ListEmptyComponent={!loading && <EmptyList />}
             showsVerticalScrollIndicator={false}
             data={cars?.data || []}
             renderItem={renderCarItem}
             keyExtractor={(item, index) => index?.toString()}
-            onEndReached={() => {
-              if (!loading && !pageLoading && page < cars?.last_page) {
-                setPage(page + 1);
-              }
-            }}
-            onEndReachedThreshold={0.5}
             ListFooterComponent={renderFooter}
           />
         </View>
