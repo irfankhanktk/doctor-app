@@ -102,8 +102,8 @@ const AddHotel = props => {
   }, []);
   const onSave = async () => {
     await onAddOrUpdateHotel({
-      ...values,
       ...edit_hotel?.row,
+      ...values,
       id: edit_hotel?.row?.id || null,
       gallery: values?.gallery?.map(x => x?.data?.id)?.join(),
       banner_image_id: values?.banner_image_id?.data?.id,
