@@ -36,8 +36,10 @@ const HotelRoom = ({
   hotel_img,
   selectedRoomNumber,
 }) => {
+  var label =
+    number < 1 ? '0 Room' : number === 1 ? '1 Room' : number + ' Rooms';
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <View onPress={onPress} style={styles.container}>
       <View>
         <Image source={hotel_img} style={styles.img} />
         <TouchableOpacity
@@ -131,7 +133,7 @@ const HotelRoom = ({
                 alignItems: 'center',
               }}>
               <Medium
-                label={`${number || 0} Rooms`}
+                label={`${label || 0} `}
                 color={colors.white}
                 fontSize={mvs(12)}
               />
@@ -153,12 +155,11 @@ const HotelRoom = ({
               color={colors.white}
               label={t('edit')}
             />
-            <Entypo color={colors.white} name={'edit'} size={mvs(20)} />
+            {/* <Entypo color={colors.white} name={'edit'} size={mvs(20)} /> */}
           </TouchableOpacity>
           <TouchableOpacity
             style={{
               width: '49%',
-              flexDirection: 'row',
               backgroundColor: colors.primary,
               alignItems: 'center',
               justifyContent: 'center',
@@ -166,11 +167,11 @@ const HotelRoom = ({
             }}
             onPress={onPressDeleteRoom}>
             <Regular color={colors.white} label={t('delete')} />
-            <Entypo color={colors.white} name={'edit'} size={mvs(20)} />
+            {/* <Entypo color={colors.white} name={'edit'} size={mvs(20)} /> */}
           </TouchableOpacity>
         </Row>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 export default HotelRoom;
@@ -187,7 +188,6 @@ const styles = StyleSheet.create({
   },
   editRoomBtn: {
     width: '49%',
-    flexDirection: 'row',
     backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',

@@ -247,7 +247,10 @@
 "date_information":"معلومات التاريخ",
 "select_one":"رجاءا اختر واحدة",
 "add_item":"اضافة عنصر",
-"history_content":"ليس لديك تاريخ المعاملات"
+"history_content":"ليس لديك تاريخ المعاملات",
+"night":"ليلة",
+"rules":"قواعد",
+"rooms":"غرف"
 
 
 

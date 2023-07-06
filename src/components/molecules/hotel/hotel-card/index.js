@@ -38,7 +38,7 @@ const HotelCard = ({
           ]}>
           <Row style={styles.row}>
             <View style={{flex: 1}}>
-              <Row>
+              <Row style={{alignItems: 'center'}}>
                 <Medium label={item?.title} color={colors.white} />
                 <PrimaryButton
                   onPress={onPressRecover}
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: colors.white,
     height: mvs(28),
-    width: mvs(120),
+    width: mvs(130),
     // padding: mvs(5),
     borderRadius: mvs(10),
     ...colors.shadow,
