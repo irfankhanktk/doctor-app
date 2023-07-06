@@ -68,11 +68,19 @@ const AddHotelLocation = props => {
         longitudeDelta: 0.0421,
       });
     } else {
-      handleRegionChange({
-        ...region,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
+      handleRegionChange(
+        markerCoordinates
+          ? {
+              ...markerCoordinates,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }
+          : {
+              ...region,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            },
+      );
     }
   }, [selectedItem, region]);
   React.useEffect(() => {
