@@ -1,31 +1,28 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SplashIcon } from 'assets/doctor/icons';
 import { splash_bg } from 'assets/doctor/images';
+import { useAppDispatch } from 'hooks/use-store';
 import React from 'react';
 import { ImageBackground, View } from 'react-native';
+import { getUserInfo } from 'services/api/auth-api-actions';
 import i18n from 'translation';
+import { UTILS } from 'utils';
 import { STORAGEKEYS } from '../../config/constants';
-import { getAllCategories } from '../../services/api/doctor/api-actions';
 import { setLanguage, setLocation, setUserInfo } from '../../store/reducers/user-reducer';
 import RootStackParamList from '../../types/navigation-types/root-stack';
-import { UTILS } from 'utils';
-import { useAppDispatch } from 'hooks/use-store';
 import styles from './styles';
-import { getUserInfo } from 'services/api/auth-api-actions';
 type props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const Splash = (props: props) => {
   const { navigation } = props;
   const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
-    dispatch(getAllCategories());
-  }, [])
+
   React.useEffect(() => {
 
     (async () => {
       try {
-        let screen: any = 'HotelStack';
+        let screen: any = 'EventStack';
         UTILS.get_current_location((position) => {
           dispatch(setLocation({
             latitude: position?.coords?.latitude,

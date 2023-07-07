@@ -3,6 +3,7 @@ import carSlice from './reducers/car-reducer'
 import docSlice from './reducers/doctor-reducer'
 import hotelSlice from './reducers/hotel-reducer'
 import userSlice from './reducers/user-reducer'
+import eventSlice from './reducers/event-reducer'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     user: userSlice,
     hotel: hotelSlice,
     car: carSlice,
+    event: eventSlice,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

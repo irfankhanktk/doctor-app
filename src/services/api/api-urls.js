@@ -84,4 +84,21 @@ export const URLS = {
     locations: 'locations',
     car_details: 'car/', //car slug
   },
+  event: {
+    get_event_list: 'user/car?',
+    store_event_availability: 'user/event/availability/store',
+    get_event_availability: 'user/event/availability/loadDates?id=', //17&start=2023-05-29&end=2023-06-05
+    recovery: {
+      get_recovery_events: 'user/event/recovery',
+      recover_event: 'user/event/restore/', //event id
+    },
+    add_update_event: 'user/event/store/', //-1 for add new otherwise will update event
+    delete_event: 'user/event/del/', //id for delete
+    get_event_for_edit: 'user/event/edit/',
+    change_event_status: 'user/event/bulkEdit/', // 5 event id '1/?action=' make-publish or make-hide
+    get_event_attributes: 'user/event/create',
+    store_file: 'hotel/store',
+    locations: 'locations',
+    event_details: 'car/', //event slug
+  },
 };
