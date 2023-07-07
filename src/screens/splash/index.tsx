@@ -22,7 +22,7 @@ const Splash = (props: props) => {
 
     (async () => {
       try {
-        let screen: any = 'EventStack';
+        let screen: any = 'TourStack';
         UTILS.get_current_location((position) => {
           dispatch(setLocation({
             latitude: position?.coords?.latitude,
