@@ -15,6 +15,7 @@ import React from 'react';
 import {FlatList} from 'react-native';
 import {ImageBackground, ScrollView, View} from 'react-native';
 import {
+  getAllCategories,
   getAllHospitals,
   getHomeData,
   getNotifications,
@@ -33,6 +34,8 @@ const Home = props => {
 
   React.useEffect(() => {
     // getDoctorAvailability(2);
+    dispatch(getAllCategories());
+
     dispatch(getAllHospitals());
     (async () => {
       try {

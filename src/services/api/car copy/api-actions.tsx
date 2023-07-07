@@ -6,10 +6,10 @@ import {
     setCarAttributes,
     setCarForEdit,
     setCars,
-} from './../../../store/reducers/car-reducer';
+} from '../../../store/reducers/car-reducer';
 import { URLS } from '../api-urls';
-import { setLocations } from './../../../store/reducers/hotel-reducer';
-import { getData, postData, postFormData } from '../';
+import { setLocations } from '../../../store/reducers/hotel-reducer';
+import { getData, postData, postFormData } from '..';
 export const getCars = (
     setLoading: (bool: boolean) => void,
 ) => {
@@ -104,7 +104,7 @@ export const getCarAvailability = (
     );
 
 export const updateCarAvailability = (
-    data: any
+    data
 ) =>
     postData(
         `${URLS.car.store_car_availability}`, data
