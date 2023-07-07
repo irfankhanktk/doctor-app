@@ -250,5 +250,10 @@
   "rules": "قواعد",
   "rooms": "غرف",
   "save_next": "حفظ & التالي",
-  "delete_car":"حذف السيارة"
+  "delete_car":"حذف السيارة",
+  "beds_required":"السرير رقم مطلوب",
+  "size_required":"حجم الغرفة مطلوب",
+  "adults_required":"مطلوب الكبار",
+  "import_url":"استيراد عنوان Url",
+  
 }

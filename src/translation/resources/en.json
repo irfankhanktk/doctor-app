@@ -251,5 +251,9 @@
   "date_information": "Date Infromation",
   "select_one": "Please select one",
   "add_item": "Add Item",
-  "save_next": "Save & Next"
+  "save_next": "Save & Next",
+  "beds_required":"Bed No is required",
+  "size_required":"Room size is required",
+  "adults_required":"Adult is required",
+  "import_url":"Import Url"
 }
