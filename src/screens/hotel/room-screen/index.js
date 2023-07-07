@@ -33,6 +33,7 @@ const initialFilter = {
   adults: 1,
 };
 const RoomScreen = props => {
+  const {navigation} = props;
   const {user, hotel} = useAppSelector(s => s);
   const {userInfo} = user;
   const [filterData, setFilterData] = React.useState({
@@ -42,6 +43,7 @@ const RoomScreen = props => {
     adults: '1',
   });
   const [loading, setLoading] = React.useState(false);
+  const [deleteLoading, setdeleteLoading] = React.useState(false);
   const [videoModal, setVideoModal] = React.useState(false);
   const [roomSelectedmodal, setRoomSelectedModal] = React.useState(false);
   const [selectedRoom, setSelectedRoom] = React.useState({});
@@ -63,11 +65,14 @@ const RoomScreen = props => {
   };
   const onDeleteRoom = async (hotel_id, room_id) => {
     try {
+      setdeleteLoading(room_id);
       await deleteHotelRoom(hotel_id, room_id);
+      setRooms(rooms?.filter(x => x?.id !== room_id));
       Alert.alert('Room delete successfully');
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
+      setdeleteLoading(false);
     }
   };
   const roomStatusChangePress = async (hotel_id, room_id, status) => {
@@ -94,9 +99,11 @@ const RoomScreen = props => {
     }
   };
   React.useEffect(() => {
-    getRooms();
-  }, []);
-
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      getRooms();
+    });
+    return unsubscribe;
+  }, [props.navigation]);
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('Available_Rooms')} back={true} />
@@ -108,26 +115,6 @@ const RoomScreen = props => {
             marginTop: mvs(15),
           }}>
           <Medium label={t('all_rooms')} fontSize={mvs(20)} />
-          {/* <TouchableOpacity
-            onPress={() => setFilterModal(true)}>
-            <Row>
-              <Regular label={'Filter Rooms'} />
-              <Ionicons
-                size={mvs(20)}
-                name={'filter'}
-                color={colors.primary}
-                style={{marginLeft: mvs(5)}}
-              />
-            </Row>
-          </TouchableOpacity>
-          <RoomFilter
-            filterData={filterData}
-            setFilterData={setFilterData}
-            visible={filterModal}
-            onClose={setFilterModal}
-            onApplyFilter={getRooms}
-            onClearFilter={() => setFilterData(initialFilter)}
-          /> */}
         </Row>
         {loading ? (
           <Loader />
@@ -151,6 +138,7 @@ const RoomScreen = props => {
                 children={ele?.children}
                 number={ele?.number}
                 status={ele?.status}
+                deleteLoading={deleteLoading === ele?.id}
                 loading={statusChangeLoading === ele?.id}
                 onPressStatusChange={() =>
                   roomStatusChangePress(hotel_id, ele?.id, ele?.status)

@@ -1,22 +1,17 @@
 import {PlusButton} from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
-import {Row} from 'components/atoms/row';
 import CarCard from 'components/molecules/car/car-card';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
 import {mvs} from 'config/metrices';
 import {useAppDispatch} from 'hooks/use-store';
 import React from 'react';
-import {FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {getCars} from 'services/api/car/api-actions';
-import i18n from 'translation';
-import Medium from 'typography/medium-text';
-import Regular from 'typography/regular-text';
-import {colors} from '../../../config/colors';
-import styles from './styles';
 import {getLocations} from 'services/api/hotel/api-actions';
+import i18n from 'translation';
+import styles from './styles';
 const AllCars = props => {
   const [loading, setLoading] = React.useState(true);
   const dispatch = useAppDispatch();

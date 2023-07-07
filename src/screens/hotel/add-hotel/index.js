@@ -159,8 +159,7 @@ const AddHotel = props => {
       const res = await UTILS._returnImageGallery();
       if (v == 'gallery') {
         setGalleryImageLoading(true);
-        setImageLoading(false);
-        setFeaturedImageLoading(false);
+
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
         setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
@@ -168,8 +167,7 @@ const AddHotel = props => {
         });
       } else if (v == 'bannerImage') {
         setImageLoading(true);
-        setFeaturedImageLoading(false);
-        setGalleryImageLoading(false);
+
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
         setFieldValue('banner_image_id', file_resp?.data);

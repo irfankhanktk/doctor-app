@@ -28,7 +28,7 @@ const AddHotelAttributes = props => {
   const [selectedTypes, setSelectedTypes] = useState(
     edit_hotel?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
   );
-  console.log('selected type===>', selectedTypes);
+
   const attributes = hotel_attributes?.attributes?.map(ele => ({
     ...ele,
     data: ele?.terms || [],
@@ -46,7 +46,6 @@ const AddHotelAttributes = props => {
         terms: selectedTypes?.map(x => x?.id),
       });
       resetStack('HotelStack');
-      console.log('res=>>>add update hotel>>', res);
     } catch (error) {
       Alert.alert(UTILS.returnError(error));
     } finally {
@@ -112,7 +111,7 @@ const AddHotelAttributes = props => {
           onPress={onSubmit}
           loading={addBtnLoading}
           disabled={!selectedTypes?.length}
-          title={'Add Hotel'}
+          title={t('add_hotel')}
           containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
         />
       </KeyboardAvoidScrollview>

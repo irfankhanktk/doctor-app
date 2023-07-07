@@ -27,6 +27,7 @@ const HotelRoom = ({
   onPressDeleteRoom = () => {},
   roomtitle,
   loading,
+  deleteLoading,
   beds,
   adults,
   status,
@@ -158,6 +159,7 @@ const HotelRoom = ({
             {/* <Entypo color={colors.white} name={'edit'} size={mvs(20)} /> */}
           </TouchableOpacity>
           <TouchableOpacity
+            loading={deleteLoading}
             style={{
               width: '49%',
               backgroundColor: colors.primary,
@@ -166,8 +168,11 @@ const HotelRoom = ({
               marginTop: mvs(5),
             }}
             onPress={onPressDeleteRoom}>
-            <Regular color={colors.white} label={t('delete')} />
-            {/* <Entypo color={colors.white} name={'edit'} size={mvs(20)} /> */}
+            {deleteLoading ? (
+              <ActivityIndicator size={'small'} color={'white'} />
+            ) : (
+              <Regular color={colors.white} label={t('delete')} />
+            )}
           </TouchableOpacity>
         </Row>
       </View>

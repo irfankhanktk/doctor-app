@@ -30,15 +30,14 @@ import {
   postFileData,
 } from 'services/api/hotel/api-actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {addHotelValidation, addRoomValidation} from 'validations';
+import {addRoomValidation} from 'validations';
 import {Loader} from 'components/atoms/loader';
 import {goBack} from 'navigation/navigation-ref';
 
 const AddRoom = props => {
   const {navigation, route} = props;
   const {hotel_id, room_id} = route?.params || {};
-  // console.log('hotel  id check====>', hotel_id);
-  // console.log('room id check====>', room_id);
+
   const dispatch = useDispatch();
   const {hotel} = useSelector(s => s);
   const [attributes, setAttributes] = useState([]);
@@ -46,6 +45,8 @@ const AddRoom = props => {
   const [addBtnloading, setAddBtnLoading] = useState(false);
   const [addImageloading, setAddImageLoading] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const [galleryImageLoading, setGalleryImageLoading] = React.useState(false);
+  const [featuredImageLoading, setFeaturedImageLoading] = React.useState(false);
   const initialValues = {
     title: '',
     content: '',
@@ -75,10 +76,9 @@ const AddRoom = props => {
         setLoading(true);
         if (room_id) {
           const res = await getRoomForEdit(hotel_id, room_id);
-          // console.log('res:::room for edit', res);
+
           setAttributes(res?.attributes || []);
           setFieldValue('title', res?.row?.title);
-          // setFieldValue('content', true);
           setFieldValue('ical_import_url', res?.row?.ical_import_url);
           setFieldValue('image_id', res?.row?.image_id);
           setFieldValue('beds', `${res?.row?.beds}`);
@@ -119,7 +119,7 @@ const AddRoom = props => {
             },
             hotel_id,
           );
-          console.log('res=>>>add hotel room >>', res);
+
           goBack();
           Alert.alert('onsubmit');
         } catch (error) {
@@ -153,26 +153,52 @@ const AddRoom = props => {
     // setAddImage(copy);
     setFieldValue('gallery', copy);
   };
+  // const openGallery = async v => {
+  //   try {
+  //     setAddImageLoading(true);
+  //     const res = await UTILS._returnImageGallery();
+  //     const file_resp = await postFileData({file: res, type: 'image'});
+  //     console.log('res of file->>>', file_resp?.data);
+  //     const uri = res.uri;
+
+  //     if (v === 'gallery' && file_resp?.data) {
+  //       setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
+  //         ...file_resp?.data,
+  //       });
+  //     } else {
+  //       setFieldValue('image_id', file_resp?.data);
+  //     }
+  //   } catch (error) {
+  //     console.log('upload image error', error);
+  //     Alert.alert('Error', UTILS?.returnError(error));
+  //   } finally {
+  //     setAddImageLoading(false);
+  //   }
+  // };
+
   const openGallery = async v => {
     try {
-      setAddImageLoading(true);
       const res = await UTILS._returnImageGallery();
-      const file_resp = await postFileData({file: res, type: 'image'});
-      console.log('res of file->>>', file_resp?.data);
-      const uri = res.uri;
+      if (v == 'gallery') {
+        setGalleryImageLoading(true);
 
-      if (v === 'gallery' && file_resp?.data) {
+        const file_resp = await postFileData({file: res, type: 'image'});
+        // console.log('res of file->>>', file_resp?.data);
         setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
           ...file_resp?.data,
         });
       } else {
+        setFeaturedImageLoading(true);
+        const file_resp = await postFileData({file: res, type: 'image'});
+        // console.log('res of file->>>', file_resp?.data);
         setFieldValue('image_id', file_resp?.data);
       }
     } catch (error) {
       console.log('upload image error', error);
       Alert.alert('Error', UTILS?.returnError(error));
     } finally {
-      setAddImageLoading(false);
+      setFeaturedImageLoading(false);
+      setGalleryImageLoading(false);
     }
   };
   const handleCheckboxSelect = item => {
@@ -242,8 +268,8 @@ const AddRoom = props => {
             // }}
             style={styles.bannerImageContainer}>
             <PrimaryButton
-              disabled={addImageloading}
-              title={'Upload Image'}
+              loading={featuredImageLoading}
+              title={t('upload_image')}
               onPress={() => openGallery('featureImage')}
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
@@ -261,14 +287,25 @@ const AddRoom = props => {
           )}
           <Regular
             color={colors.primary}
-            label={t('Gallery')}
+            label={t('gallery')}
             style={styles.galleryText}
           />
           <View style={styles.galleryContainer}>
-            <TouchableOpacity onPress={() => openGallery('gallery')}>
+            <TouchableOpacity
+              loading={galleryImageLoading}
+              onPress={() => openGallery('gallery')}>
               <View style={[styles.ImageContainer, {marginHorizontal: mvs(3)}]}>
-                <Entypo name="camera" size={20} color={'black'} />
-                <Regular style={styles.headerText} label={'Add images'} />
+                {galleryImageLoading ? (
+                  <Loader color={colors.black} />
+                ) : (
+                  <>
+                    <Entypo name="camera" size={20} color={'black'} />
+                    <Regular
+                      style={styles.headerText}
+                      label={t('add_images')}
+                    />
+                  </>
+                )}
               </View>
             </TouchableOpacity>
             <FlatList
@@ -347,7 +384,7 @@ const AddRoom = props => {
             />
           </Row>
           <Regular
-            label={'(Optional)'}
+            label={t('optional')}
             fontSize={12}
             style={{alignSelf: 'flex-end'}}
           />
@@ -422,7 +459,7 @@ const AddRoom = props => {
 
           <PrimaryInput
             labelStyle={{marginTop: mvs(20)}}
-            label={t('Import Url')}
+            label={t('import_url')}
             placeholder={t('')}
             onChangeText={str => setFieldValue('ical_import_url', str)}
             onBlur={() => setFieldTouched('ical_import_url', true)}
