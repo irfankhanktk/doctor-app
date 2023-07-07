@@ -285,7 +285,7 @@ const HotelDetails = props => {
               />
               <Row>
                 <PrimaryButton
-                  disabled={deleteLoading}
+                  loading={deleteLoading}
                   containerStyle={styles.deleteBtn}
                   title={t('delete_hotel')}
                   onPress={() => deleteHotelPress()}
