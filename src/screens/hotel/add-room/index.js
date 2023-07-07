@@ -119,7 +119,7 @@ const AddRoom = props => {
             },
             hotel_id,
           );
-          console.log('res=>>>add hotel room >>', res);
+
           goBack();
           Alert.alert('onsubmit');
         } catch (error) {
@@ -183,14 +183,14 @@ const AddRoom = props => {
         setGalleryImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
+        // console.log('res of file->>>', file_resp?.data);
         setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
           ...file_resp?.data,
         });
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
+        // console.log('res of file->>>', file_resp?.data);
         setFieldValue('image_id', file_resp?.data);
       }
     } catch (error) {
