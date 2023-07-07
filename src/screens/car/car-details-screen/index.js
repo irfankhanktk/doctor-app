@@ -34,18 +34,21 @@ import {Loader} from 'components/atoms/loader';
 import CarVideoModal from 'components/molecules/car/modals/car-video-modal';
 import RelatedCarCard from 'components/molecules/car/related-car-card';
 import {useAppSelector} from 'hooks/use-store';
-import {navigate} from 'navigation/navigation-ref';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {toggleWishlistCar} from 'services/api/auth-api-actions';
-import {getCarDetails} from 'services/api/car/api-actions';
-import {UTILS} from 'utils';
+import {goBack, navigate} from 'navigation/navigation-ref';
 import ImageView from 'react-native-image-viewing';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useDispatch} from 'react-redux';
+import {
+  changeCarStatus,
+  deleteCar,
+  getCarDetails,
+} from 'services/api/car/api-actions';
+import {setCars} from 'store/reducers/car-reducer';
+import {UTILS} from 'utils';
 const CarDetailsScreen = props => {
-  const [text, setText] = React.useState('');
-  const [cartModal, setCardModal] = React.useState(false);
-  const [roomModal, setRoomModal] = React.useState(false);
   const [videoModal, setVideoModal] = React.useState(false);
   const [carDetails, setCarDetails] = React.useState({});
+  console.log('check car details===>', carDetails?.row?.status);
   const [submitReview, setSubmitReview] = React.useState({
     review_title: 'car',
     review_content: '',
@@ -58,12 +61,14 @@ const CarDetailsScreen = props => {
     },
   });
   const {userInfo} = useAppSelector(s => s?.user);
-  const [selectedRoom, setSelectedRoom] = React.useState({});
-  const [wishlistColor, setWishlistColor] = React.useState('');
   const [visible, setIsVisible] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [statusChangeLoading, setStatusChangeLoading] = React.useState(false);
+  const [deleteLoading, setDeleteLoading] = React.useState(false);
 
-  console.log('userinfo-===>', userInfo);
+  const dispatch = useDispatch();
+  const {cars} = useAppSelector(s => s?.car);
+
   const {t} = i18n;
   const [filter, setFilter] = React.useState({
     checkin: moment().format(DATE_FORMAT.yyyy_mm_dd),
@@ -73,10 +78,7 @@ const CarDetailsScreen = props => {
     adults: '0',
   });
   const {slug, id} = props?.route?.params || {};
-
   const [loading, setLoading] = React.useState(true);
-  const [wishlistLoading, setWishlistLoading] = React.useState(false);
-  const [submitReviewLoading, setSubmitReviewLoading] = React.useState(false);
 
   React.useEffect(() => {
     getDetails();
@@ -84,12 +86,8 @@ const CarDetailsScreen = props => {
   const getDetails = async () => {
     try {
       const res = await getCarDetails(slug);
-
       setLoading(false);
-
       setCarDetails(res);
-      setWishlistColor(res?.row?.has_wish_list ? true : false);
-      // console.log('res of car detaiols', res);
     } catch (error) {
       setLoading(false);
     }
@@ -100,44 +98,42 @@ const CarDetailsScreen = props => {
     setIsVisible(true);
   };
 
-  const toggleWishlist = async () => {
+  const deleteCarPress = async () => {
     try {
-      setWishlistLoading(true);
-      const res = await toggleWishlistCar({
-        object_id: carDetails?.row?.id,
-        object_model: 'car',
-        // user_id: userInfo?.id,
-      });
-      setWishlistColor(res?.status),
-        console.log('res--wishlist-->>>', res?.status);
-      console.log('res--wishlist-->>>', res);
-    } catch (error) {
-      // setLoading(false);
-      console.log('error =>>>', error);
-    } finally {
-      setWishlistLoading(false);
-    }
-  };
-
-  const SubmitReviewCar = async () => {
-    try {
-      setSubmitReviewLoading(true);
-      // const res = await addCarReview({
-      //   review_service_id: carDetails?.row?.id,
-
-      //   review_service_type: 'car',
-      //   ...submitReview,
-      // });
-      // getDetails();
-      console.log('res--rsubmitreview-->>>', res);
+      setDeleteLoading(true);
+      await deleteCar(id);
+      dispatch(setCars({...cars, data: cars?.data?.filter(x => x?.id !== id)}));
+      goBack();
+      Alert.alert('Delete Car successfully');
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
-      // setLoading(false);
-      console.log('error =>>>', error);
     } finally {
-      setSubmitReviewLoading(false);
+      setDeleteLoading(false);
     }
   };
+  const statusChangePress = async () => {
+    try {
+      if (carDetails?.row?.status === 'publish') {
+        setStatusChangeLoading(true);
+        await changeCarStatus(id, 'make-hide');
+        setCarDetails(pre => ({...pre, row: {...pre.row, status: 'draft'}}));
+      } else {
+        setStatusChangeLoading(true);
+        await changeCarStatus(id, 'make-publish');
+        setCarDetails(pre => ({
+          ...pre,
+          row: {...pre.row, status: 'publish'},
+        }));
+      }
+
+      Alert.alert('Car status change');
+    } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
+    } finally {
+      setStatusChangeLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header1x2x isSearch={false} title={t('car_details')} back={true} />
@@ -158,12 +154,6 @@ const CarDetailsScreen = props => {
                   : IMG.Car_bg
               }
               style={styles.hotelsimgbackground}>
-              {/* <HotelsHeader
-              style={{height: mvs(200)}}
-              isSearch={false}
-              title={t('car_details')}
-              back={true}
-            /> */}
               <Row style={{paddingHorizontal: mvs(10)}}>
                 <Row
                   style={{
@@ -175,26 +165,9 @@ const CarDetailsScreen = props => {
                     paddingVertical: mvs(5),
                   }}>
                   <TouchableOpacity
-                    onPress={toggleWishlist}
-                    disabled={wishlistLoading}
-                    style={{
-                      // marginHorizontal: mvs(20),
-                      alignSelf: 'flex-start',
-                    }}>
-                    <Ionicons
-                      name={'heart'}
-                      size={mvs(30)}
-                      color={wishlistColor == true ? colors.red : colors.black}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
                     onPress={() => setVideoModal(true)}
                     style={{
-                      // paddingHorizontal: mvs(15),
                       marginHorizontal: mvs(20),
-                      // backgroundColor: colors.black,
-                      // opacity: 0.6,
-                      // alignSelf: 'flex-end',
                     }}>
                     <Entypo name="video" color={colors.black} size={mvs(30)} />
                   </TouchableOpacity>
@@ -262,40 +235,7 @@ const CarDetailsScreen = props => {
                   style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 />
                 <HtmlView html={carDetails?.row?.content} />
-                {/* <Medium
-                label={t('rooms')}
-                style={{marginTop: mvs(12), fontSize: mvs(18)}}
-              />
-              <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-                {carDetails?.rooms?.map(ele => (
-                  <HotelRoom
-                    hotel_img={{uri: `${ele?.image_id}`}}
-                    roomtitle={ele?.title}
-                    beds={ele?.beds}
-                    size={ele?.size}
-                    adults={ele?.adults}
-                    children={ele?.children}
-                    onPressroom={() => setVideoModal(true)}
-                    onPress={() => {
-                      navigate('RoomBooking', {
-                        room: ele,
-                      });
-                    }}
-                  />
-                ))}
-              </ScrollView> */}
-                {/* <Medium
-                style={{marginTop: mvs(12), fontSize: mvs(18)}}
-                label={t('rules')}
-              />
-              <Row>
-                <Regular label={t('check_in')} />
-                <Regular label={carDetails?.row?.check_in_time} />
-              </Row>
-              <Row>
-                <Regular label={t('check_out')} />
-                <Regular label={carDetails?.row?.check_out_time} />
-              </Row> */}
+
                 <Medium
                   style={{marginTop: mvs(12), fontSize: mvs(18)}}
                   label={t('FAQS')}
@@ -409,6 +349,10 @@ const CarDetailsScreen = props => {
                     latitude: (carDetails?.row?.map_lat || 19.229727) * 1,
                     longitude: (carDetails?.row?.map_lng || 72.98447) * 1,
                   }}
+                  coordinate={{
+                    latitude: (carDetails?.row?.map_lat || 19.229727) * 1,
+                    longitude: (carDetails?.row?.map_lng || 72.98447) * 1,
+                  }}
                 />
                 <Medium
                   style={{marginTop: mvs(12), fontSize: mvs(18)}}
@@ -496,6 +440,24 @@ const CarDetailsScreen = props => {
                     ))}
                   </ScrollView>
                 </View>
+                <Row>
+                  <PrimaryButton
+                    loading={deleteLoading}
+                    containerStyle={styles.deleteBtn}
+                    title={t('delete_car')}
+                    onPress={() => deleteCarPress()}
+                  />
+                  <PrimaryButton
+                    loading={statusChangeLoading}
+                    containerStyle={styles.publishBtn}
+                    title={
+                      carDetails?.row?.status === 'publish'
+                        ? t('make_hide')
+                        : t('make_publish')
+                    }
+                    onPress={() => statusChangePress()}
+                  />
+                </Row>
               </ScrollView>
             </View>
 

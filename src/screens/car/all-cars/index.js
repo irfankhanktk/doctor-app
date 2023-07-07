@@ -65,31 +65,11 @@ const AllCars = props => {
         style={{height: mvs(60)}}
         isSearch={false}
         title={t('cars')}
-        back={true}
+        back={false}
         isCart={userInfo?.id}
         {...props}
       />
-      <Row
-        style={{
-          alignItems: 'center',
-          marginHorizontal: mvs(20),
-          marginTop: mvs(15),
-        }}>
-        <Medium label={t('all_cars')} fontSize={mvs(20)} />
-        <TouchableOpacity
-          onPress={() => props?.navigation?.navigate('CarFilterScreen')}>
-          <Row>
-            <Regular label={t('car_filter')} />
-            <Ionicons
-              size={mvs(20)}
-              name={'filter'}
-              color={colors.primary}
-              style={{marginLeft: mvs(5)}}
-            />
-          </Row>
-          {/* <Medium label={'Filter'} fontSize={mvs(20)} style={{ marginHorizontal: mvs(20), marginTop: mvs(15), }} /> */}
-        </TouchableOpacity>
-      </Row>
+
       {loading ? (
         <Loader />
       ) : (

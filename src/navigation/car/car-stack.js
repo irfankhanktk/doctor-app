@@ -33,7 +33,7 @@ export default CarStack = () => {
         <Stack.Screen name="CarTabBar" component={CarTabBar} />
         <Stack.Screen name="AllCars" component={AllCars} />
         <Stack.Screen name="CarFilterScreen" component={CarFilterScreen} />
-        <Stack.Screen name="RecoveryCars" component={RecoveryCars} />
+        <Stack.Screen name="Recovery" component={RecoveryCars} />
         <Stack.Screen name="CarDetails" component={CarDetailsScreen} />
         <Stack.Screen name="AddHotelPrice" component={AddHotelPrice} />
         {/* <Stack.Screen name="RoomScreen" component={RoomScreen} /> */}

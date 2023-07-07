@@ -17,7 +17,7 @@ const CarRecoveryCard = ({
   onPressDelete = () => {},
 }) => {
   const {t} = i18n;
-
+  console.log('item check recovery=====>', item);
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -48,15 +48,15 @@ const CarRecoveryCard = ({
           </View>
         </LinearGradient>
       </ImageBackground>
-      <Row style={styles.rowRating}>
+      {/* <Row style={styles.rowRating}>
         <Icon name={'star'} color={colors.white} size={mvs(12)} />
         <Regular
           style={styles.rateTxt}
-          label={`${item?.star_rate} (2.3k)`}
+          label={`${item?.review_score} (2.3k)`}
           fontSize={mvs(12)}
           color={colors.white}
         />
-      </Row>
+      </Row> */}
     </View>
   );
 };

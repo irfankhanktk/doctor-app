@@ -45,7 +45,7 @@ const HotelDetails = props => {
   const [roomModal, setRoomModal] = React.useState(false);
   const [videoModal, setVideoModal] = React.useState(false);
   const [hotelDetails, setHotelDetails] = React.useState({});
-  console.log('check hotel details===>', hotelDetails?.row);
+
   const [submitReview, setSubmitReview] = React.useState({
     rate_number: '4',
     review_content: '',
