@@ -33,7 +33,7 @@ export default EventStack = () => {
         <Stack.Screen name="EventTabBar" component={EventTabBar} />
         <Stack.Screen name="AllEvents" component={AllEvents} />
         <Stack.Screen name="EventFilterScreen" component={EventFilterScreen} />
-        <Stack.Screen name="RecoveryEvents" component={RecoveryEvents} />
+        <Stack.Screen name="Recovery" component={RecoveryEvents} />
         <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
         <Stack.Screen name="AddHotelPrice" component={AddHotelPrice} />
         {/* <Stack.Screen name="RoomScreen" component={RoomScreen} /> */}

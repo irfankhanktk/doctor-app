@@ -49,11 +49,7 @@ const AddHotel = props => {
     content: '',
     video: '',
     banner_image_id: '',
-    gallery: [
-      {
-        url: '',
-      },
-    ],
+    gallery: [],
     star_rate: '',
     image_id: '',
     policy: [
@@ -119,17 +115,19 @@ const AddHotel = props => {
     setFieldTouched('star_rate', true);
     setFieldTouched('banner_image_id.url', true);
     setFieldTouched('image_id.url', true);
-    setFieldTouched('gallery[0].url', true);
+    // setFieldTouched('gallery[q].url', true);
     setFieldTouched(`policy[0].content`, true);
     setFieldTouched(`policy[0].title`, true);
   };
+  console.log('values===>', values);
+  console.log('errors====>', errors);
   const onSubmit = async () => {
     if (isValid && Object.keys(touched).length > 0) {
       try {
-        if (edit_hotel?.row?.id) {
-          setBtnLoading(true);
-          await onSave();
-        }
+        // if (edit_hotel?.row?.id) {
+        //   setBtnLoading(true);
+        //   await onSave();
+        // }
         navigation?.navigate('AddHotelLocation', {values});
       } catch (error) {
         console.log(error);
@@ -181,18 +179,6 @@ const AddHotel = props => {
         console.log('res of file->>>', file_resp?.data);
         setFieldValue('image_id', file_resp?.data);
       }
-
-      // const uri = res.uri;
-
-      // if (v === 'gallery' && file_resp?.data) {
-      //   setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
-      //     ...file_resp?.data,
-      //   });
-      // } else if (v == 'bannerImage') {
-      //   setFieldValue('banner_image_id', file_resp?.data);
-      // } else {
-      //   setFieldValue('image_id', file_resp?.data);
-      // }
     } catch (error) {
       console.log('upload image error', error);
       Alert.alert('Error', UTILS?.returnError(error));
@@ -342,7 +328,7 @@ const AddHotel = props => {
               }}
             />
           </View>
-          {errors?.gallery &&
+          {/* {errors?.gallery &&
             errors?.gallery[0] &&
             errors?.gallery[0]?.url &&
             touched?.gallery &&
@@ -352,7 +338,7 @@ const AddHotel = props => {
                 style={styles.errorLabel}
                 label={t(errors?.gallery[0]?.url)}
               />
-            )}
+            )} */}
           <Bold
             label={t('hotle_policy')}
             color={colors.primary}
@@ -466,7 +452,7 @@ const AddHotel = props => {
             loading={btnLoading}
             containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
             onPress={() => onSubmit()}
-            title={t(edit_hotel?.row?.id ? 'save_next' : 'next')}
+            title={t('next')}
           />
         </KeyboardAvoidScrollview>
       )}

@@ -32,7 +32,7 @@ export default HotelStack = () => {
         screenOptions={horizontalAnimation}>
         <Stack.Screen name="HotelTabBar" component={HotelTabBar} />
         <Stack.Screen name="AllHotels" component={AllHotels} />
-        <Stack.Screen name="RecoveryHotels" component={RecoveryHotels} />
+        <Stack.Screen name="Recovery" component={RecoveryHotels} />
         <Stack.Screen name="HotelDetails" component={HotelDetails} />
         <Stack.Screen name="RoomScreen" component={RoomScreen} />
         <Stack.Screen name="AddRoom" component={AddRoom} />

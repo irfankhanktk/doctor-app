@@ -97,6 +97,8 @@ const AddEvent = props => {
     try {
       // console.log('valuess->>', values);
       // console.log('errors->>', errors);
+      navigation?.navigate('AddEventLocation', {values});
+      return;
       if (isValid && Object.keys(touched).length > 0) {
         try {
           navigation?.navigate('AddEventLocation', {values});

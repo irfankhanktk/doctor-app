@@ -115,30 +115,6 @@ const AddEventPrice = props => {
       <Header1x2x title={t('add_price')} back={true} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
-        {/* <PrimaryInput
-          error={
-            touched?.check_in_time && errors?.check_in_time
-              ? `${t(errors?.check_in_time)}`
-              : undefined
-          }
-          label={t('checkin')}
-          placeholder={t('check_in_content')}
-          onChangeText={str => setFieldValue('check_in_time', str)}
-          onBlur={() => setFieldTouched('check_in_time', true)}
-          value={values?.check_in_time}
-        />
-        <PrimaryInput
-          error={
-            touched?.check_out_time && errors?.check_out_time
-              ? `${t(errors?.check_out_time)}`
-              : undefined
-          }
-          label={t('check_out')}
-          placeholder={t('check_out_content')}
-          onChangeText={str => setFieldValue('check_out_time', str)}
-          onBlur={() => setFieldTouched('check_out_time', true)}
-          value={values?.check_out_time}
-        /> */}
         <PrimaryInput
           error={
             touched?.min_day_before_booking && errors?.min_day_before_booking

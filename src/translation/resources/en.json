@@ -195,6 +195,7 @@
   "rules": "Rules",
   "rooms": "Rooms",
 
+  "delete_car":"Delete Car",
   "cars": "Cars",
   "all_cars": "All Cars",
   "car_filter": "Car Filter",
