@@ -17,6 +17,7 @@ import Bold from 'typography/bold-text';
 import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import {onAddOrUpdateTour} from 'services/api/tour/api-actions';
+import {ADD_HOTEL_DEFAULT} from 'config/constants';
 
 const AddTourAttributes = props => {
   const {navigation, route} = props;
@@ -37,6 +38,7 @@ const AddTourAttributes = props => {
     try {
       setAddBtnLoading(true);
       const res = await onAddOrUpdateTour({
+        ...ADD_HOTEL_DEFAULT,
         ...route?.params,
         id: edit_tour?.row?.id || null,
         gallery: route?.params?.gallery?.map(x => x?.data?.id)?.join(),

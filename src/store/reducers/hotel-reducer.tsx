@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ADD_HOTEL_DEFAULT } from 'config/constants';
 
 type Props = {
   hotels: any,
@@ -9,7 +10,9 @@ type Props = {
 };
 const initialState: Props = {
   hotels: {},
-  edit_hotel: null,
+  edit_hotel: {
+    row: { ...ADD_HOTEL_DEFAULT, }
+  },
   hotel_attributes: null,
   room_attributes: null,
   locations: [],

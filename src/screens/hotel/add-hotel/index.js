@@ -34,6 +34,7 @@ import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import {addHotelValidation} from 'validations';
 import styles from './styles';
+import {ADD_HOTEL_DEFAULT} from 'config/constants';
 const AddHotel = props => {
   const {navigation, route} = props;
   const {hotel} = useSelector(s => s);
@@ -94,7 +95,7 @@ const AddHotel = props => {
     dispatch(getHotelAttributes());
   }, []);
   React.useEffect(() => {
-    dispatch(setHotelForEdit(null));
+    dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
   }, []);
   const onSave = async () => {
     await onAddOrUpdateHotel({
@@ -215,28 +216,32 @@ const AddHotel = props => {
             <></>
           )}
           <PrimaryInput
-            error={
-              touched?.title && errors?.title
-                ? `${t(errors?.title)}`
-                : undefined
-            }
             label={t('title')}
             placeholder={t('title')}
-            onChangeText={str => setFieldValue('title', str)}
-            onBlur={() => setFieldTouched('title', true)}
-            value={values.title}
+            onChangeText={str =>
+              dispatch(
+                setHotelForEdit({
+                  ...edit_hotel,
+                  row: {...edit_hotel.row, title: str},
+                }),
+              )
+            }
+            // onBlur={() => setFieldTouched('title', true)}
+            value={edit_hotel.title}
             // containerStyle={}
           />
           <PrimaryInput
-            error={
-              touched?.content && errors?.content
-                ? `${t(errors?.content)}`
-                : undefined
-            }
             label={t('content')}
             placeholder={t('content')}
-            onChangeText={str => setFieldValue('content', str)}
-            onBlur={() => setFieldTouched('content', true)}
+            onChangeText={str =>
+              dispatch(
+                setHotelForEdit({
+                  ...edit_hotel,
+                  row: {...edit_hotel.row, content: str},
+                }),
+              )
+            }
+            // onBlur={() => setFieldTouched('content', true)}
             value={values.content}
           />
           <PrimaryInput
