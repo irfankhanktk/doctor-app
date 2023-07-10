@@ -247,19 +247,21 @@ const AddHotel = props => {
               )
             }
             // onBlur={() => setFieldTouched('content', true)}
-            value={values.content}
+            value={edit_hotel.content}
           />
           <PrimaryInput
-            error={
-              touched?.video && errors?.video
-                ? `${t(errors?.video)}`
-                : undefined
-            }
             label={t('youtube_video')}
             placeholder={t('youtube_video')}
-            onChangeText={str => setFieldValue('video', str)}
-            onBlur={() => setFieldTouched('video', true)}
-            value={values.video}
+            onChangeText={str =>
+              dispatch(
+                setHotelForEdit({
+                  ...edit_hotel,
+                  row: {...edit_hotel.row, video: str},
+                }),
+              )
+            }
+            // onBlur={() => setFieldTouched('video', true)}
+            value={edit_hotel.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
           <ImageBackground
@@ -336,33 +338,25 @@ const AddHotel = props => {
               }}
             />
           </View>
-          {/* {errors?.gallery &&
-            errors?.gallery[0] &&
-            errors?.gallery[0]?.url &&
-            touched?.gallery &&
-            touched?.gallery[0] &&
-            touched?.gallery[0]?.url && (
-              <Regular
-                style={styles.errorLabel}
-                label={t(errors?.gallery[0]?.url)}
-              />
-            )} */}
+
           <Bold
             label={t('hotle_policy')}
             color={colors.primary}
             style={{marginTop: mvs(20)}}
           />
           <PrimaryInput
-            error={
-              touched?.star_rate && errors?.star_rate
-                ? `${t(errors?.star_rate)}`
-                : undefined
-            }
             label={t('hotel_rating_standard')}
             placeholder={t('hotel_rating_standard')}
-            onChangeText={str => setFieldValue('star_rate', str)}
+            onChangeText={str =>
+              dispatch(
+                setHotelForEdit({
+                  ...edit_hotel,
+                  row: {...edit_hotel.row, star_rate: str},
+                }),
+              )
+            }
             onBlur={() => setFieldTouched('star_rate', true)}
-            value={values.star_rate}
+            value={edit_hotel.star_rate}
           />
           <Row style={{backgroundColor: colors.lightGray}}>
             <Bold
@@ -396,14 +390,14 @@ const AddHotel = props => {
                 }
                 onBlur={() => setFieldTouched(`policy.[${index}].title`, true)}
                 value={values.policy[index].title}
-                error={
-                  touched?.policy &&
-                  touched?.policy[index] &&
-                  errors?.policy &&
-                  errors?.policy[index] &&
-                  `${t(errors.policy[0]?.title)}` &&
-                  `${t(errors?.policy[0]?.title)}`
-                }
+                // error={
+                //   touched?.policy &&
+                //   touched?.policy[index] &&
+                //   errors?.policy &&
+                //   errors?.policy[index] &&
+                //   `${t(errors.policy[0]?.title)}` &&
+                //   `${t(errors?.policy[0]?.title)}`
+                // }
               />
 
               <PrimaryInput

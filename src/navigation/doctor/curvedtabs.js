@@ -22,7 +22,7 @@ export const TabBar = props => {
       case 'title3':
         icon = 'receipt';
         break;
-      case 'title4':
+      case 'DoctorUserTab':
         icon = 'ios-person-sharp';
         break;
     }
@@ -89,7 +89,7 @@ export const TabBar = props => {
           position="RIGHT"
         /> */}
         <CurvedBottomBar.Screen
-          name="title4"
+          name="DoctorUserTab"
           component={() => <UserTab {...props} />}
           position="RIGHT"
         />

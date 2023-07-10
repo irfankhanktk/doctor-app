@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     borderRadius: mvs(100),
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: mvs(60),
+    marginTop: mvs(10),
   },
   searchContainer: {
     position: 'absolute',

@@ -72,10 +72,9 @@ const Home = props => {
       <AppHeader
         unreadNotification={unreadNotification}
         title={`\t${userInfo?.name || t('guest')}`}
+        onPress={() => navigate('DoctorUserTab')}
       />
-      {/* <View style={styles.search}>
-        <SearchInput value="" />
-      </View> */}
+
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.containerStyle}>
           <ImageBackground source={appointment_bg} style={styles.bgImg}>
@@ -124,6 +123,7 @@ const Home = props => {
               title={t('patients')}
             />
             <IconButton
+              onPress={() => navigate('WalletScreen')}
               icon={'wallet'}
               title={t('payments')}
               containerStyle={{

@@ -464,7 +464,7 @@ const AddHotelPrice = props => {
           setExteraPrice(false);
           setIndex(0);
         }}
-        value={values?.extra_price[index].type}
+        value={values?.extra_price[index]?.type}
       />
       <BuyerFeeBottomSheetModal
         visible={buyerFeeType}
@@ -475,7 +475,7 @@ const AddHotelPrice = props => {
           setBuyerFeeType(false);
           setBuyerFeeIndex(0);
         }}
-        value={values?.service_fee[buyerFeeIndex].type}
+        value={values?.service_fee[buyerFeeIndex]?.type}
       />
     </View>
   );

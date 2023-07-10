@@ -2,22 +2,20 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {t} from 'i18next';
 import React, {useState} from 'react';
-import {Alert, Text, View} from 'react-native';
+import {Alert, View} from 'react-native';
 import styles from './styles';
 
-import fonts from 'assets/fonts';
+import {PrimaryButton} from 'components/atoms/buttons';
 import {Checkbox} from 'components/atoms/checkbox';
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
+import {resetStack} from 'navigation/navigation-ref';
 import {SectionList} from 'react-native';
-import Regular from 'typography/regular-text';
-import Bold from 'typography/bold-text';
-import {colors} from 'config/colors';
-import {PrimaryButton} from 'components/atoms/buttons';
 import {useSelector} from 'react-redux';
-import {UTILS} from 'utils';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
-import {navigate, resetStack} from 'navigation/navigation-ref';
+import Bold from 'typography/bold-text';
+import Regular from 'typography/regular-text';
+import {UTILS} from 'utils';
 
 const AddHotelAttributes = props => {
   const {navigation, route} = props;
@@ -93,7 +91,7 @@ const AddHotelAttributes = props => {
       <Header1x2x title={t('attributes')} back={true} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
-        <SectionList
+        {/* <SectionList
           sections={attributes}
           keyExtractor={(item, index) => item + index}
           renderItem={renderItem}
@@ -106,7 +104,7 @@ const AddHotelAttributes = props => {
               />
             </Row>
           )}
-        />
+        /> */}
         <PrimaryButton
           onPress={onSubmit}
           loading={addBtnLoading}
