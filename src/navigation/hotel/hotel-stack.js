@@ -16,6 +16,7 @@ import AddHotelPrice from 'screens/hotel/add-hotel-price';
 import AddHotelAttributes from 'screens/hotel/add-hotel-attributes';
 import RecoveryHotels from 'screens/hotel/recovery-hotels';
 import EditRoomAvailability from 'screens/hotel/edit-room-availability';
+import HotelTopTab from './hotel-top-tab';
 const Stack = createNativeStackNavigator();
 
 export default HotelStack = () => {
@@ -39,6 +40,7 @@ export default HotelStack = () => {
         <Stack.Screen name="AddHotel" component={AddHotel} />
         <Stack.Screen name="AddHotelLocation" component={AddHotelLocation} />
         <Stack.Screen name="AddHotelPrice" component={AddHotelPrice} />
+        <Stack.Screen name="HotelTopTab" component={HotelTopTab} />
         <Stack.Screen
           name="EditRoomAvailability"
           component={EditRoomAvailability}

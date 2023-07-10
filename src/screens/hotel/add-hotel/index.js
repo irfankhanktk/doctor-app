@@ -188,10 +188,10 @@ const AddHotel = props => {
   };
   return (
     <View style={styles.container1}>
-      <Header1x2x
+      {/* <Header1x2x
         title={t(route?.params?.id ? 'edit_hotel' : 'add_hotel')}
         back={true}
-      />
+      /> */}
 
       {loading ? (
         <Loader />
