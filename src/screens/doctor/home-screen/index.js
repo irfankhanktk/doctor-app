@@ -118,6 +118,7 @@ const Home = props => {
           </Row>
           <Row>
             <IconButton
+              onPress={() => navigate('AllPatientScreen')}
               containerStyle={{width: '48%'}}
               icon={'user'}
               title={t('patients')}
@@ -143,12 +144,12 @@ const Home = props => {
             }}
           />
           <FlatList
+            showsHorizontalScrollIndicator={false}
             horizontal
             ListEmptyComponent={
               !loading && <EmptyList label={t('no_patients')} />
             }
             contentContainerStyle={styles.contentContainerStyle}
-            showsVerticalScrollIndicator={false}
             data={uniquePatient}
             renderItem={({item, index}) => {
               return <PopularPatientCard key={index} name={item?.name} />;

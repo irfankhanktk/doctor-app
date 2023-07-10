@@ -21,6 +21,7 @@ import UpdatePassword from 'screens/update-password';
 import UpdateProfile from 'screens/update-profile';
 import {horizontalAnimation} from 'utils';
 import {TabBar} from './curvedtabs';
+import AllPatientScreen from 'screens/doctor/patient-screen';
 const Stack = createNativeStackNavigator();
 
 export const DoctorStack = () => {
@@ -58,6 +59,7 @@ export const DoctorStack = () => {
         <Stack.Screen name="AppointmentsList" component={AppointmentsList} />
         <Stack.Screen name="HospitalDetails" component={HospitalDetails} />
         <Stack.Screen name="WalletScreen" component={WalletScreen} />
+        <Stack.Screen name="AllPatientScreen" component={AllPatientScreen} />
         <Stack.Screen
           name="AppointmentDetails"
           component={AppointmentDetails}

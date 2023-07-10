@@ -13,14 +13,15 @@ const PopularPatientCard = ({
   image,
   fee = 0,
   style,
+  Imagestyle,
   onPress,
 }) => {
   return (
     <View style={[styles.container, style]}>
-      <View style={styles.imgContainer}>
+      <View style={[styles.imgContainer]}>
         <Image
           source={image ? {uri: image} : IMG.login_bg}
-          style={styles.img}
+          style={[styles.img, Imagestyle]}
         />
       </View>
       <View style={styles.profile}>
