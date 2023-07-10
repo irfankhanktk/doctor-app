@@ -101,4 +101,21 @@ export const URLS = {
     locations: 'locations',
     event_details: 'car/', //event slug
   },
+  tour: {
+    get_tour_list: 'user/car?',
+    store_tour_availability: 'user/tour/availability/store',
+    get_tour_availability: 'user/tour/availability/loadDates?id=', //17&start=2023-05-29&end=2023-06-05
+    recovery: {
+      get_recovery_tours: 'user/tour/recovery',
+      recover_tour: 'user/tour/restore/', //tour id
+    },
+    add_update_tour: 'user/tour/store/', //-1 for add new otherwise will update tour
+    delete_tour: 'user/tour/del/', //id for delete
+    get_tour_for_edit: 'user/tour/edit/',
+    change_tour_status: 'user/tour/bulkEdit/', // 5 tour id '1/?action=' make-publish or make-hide
+    get_tour_attributes: 'user/tour/create',
+    store_file: 'hotel/store',
+    locations: 'locations',
+    tour_details: 'car/', //tour slug
+  },
 };

@@ -21,6 +21,7 @@ import UpdateProfile from 'screens/update-profile';
 import UpdatePassword from 'screens/update-password';
 import RecoveryHotels from 'screens/hotel/recovery-hotels';
 import EventStack from './event/event-stack';
+import TourStack from './tour/tour-stack';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -56,6 +57,7 @@ export const RootNavigator = () => {
         <Stack.Screen name="HotelStack" component={HotelStack} />
         <Stack.Screen name="CarStack" component={CarStack} />
         <Stack.Screen name="EventStack" component={EventStack} />
+        <Stack.Screen name="TourStack" component={TourStack} />
       </Stack.Navigator>
     </View>
   );
