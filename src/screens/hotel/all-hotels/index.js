@@ -92,7 +92,7 @@ const AllHotels = props => {
       )}
       <PlusButton
         containerStyle={{bottom: mvs(70)}}
-        onPress={() => props?.navigation?.navigate('AddHotel')}
+        onPress={() => props?.navigation?.navigate('HotelTopTab')}
       />
     </View>
   );
