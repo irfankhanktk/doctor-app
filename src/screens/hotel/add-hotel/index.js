@@ -168,20 +168,38 @@ const AddHotel = props => {
 
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
-          ...file_resp?.data,
+        setHotelForEdit({
+          ...edit_hotel,
+          row: {
+            ...edit_hotel?.row,
+            gallery: [...edit_hotel?.row?.gallery, file_resp?.data],
+          },
         });
       } else if (v == 'bannerImage') {
         setImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        setFieldValue('banner_image_id', file_resp?.data);
+        // setFieldValue('banner_image_id', file_resp?.data);
+        setHotelForEdit({
+          ...edit_hotel,
+          row: {
+            ...edit_hotel?.row,
+            banner_image_id: file_resp?.data,
+          },
+        });
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        setFieldValue('image_id', file_resp?.data);
+        // setFieldValue('image_id', file_resp?.data);
+        setHotelForEdit({
+          ...edit_hotel,
+          row: {
+            ...edit_hotel?.row,
+            image_id: file_resp?.data,
+          },
+        });
       }
     } catch (error) {
       console.log('upload image error', error);
@@ -232,7 +250,7 @@ const AddHotel = props => {
               )
             }
             // onBlur={() => setFieldTouched('title', true)}
-            value={edit_hotel.title}
+            value={edit_hotel?.row.title}
             // containerStyle={}
           />
           <PrimaryInput
@@ -247,7 +265,7 @@ const AddHotel = props => {
               )
             }
             // onBlur={() => setFieldTouched('content', true)}
-            value={edit_hotel.content}
+            value={edit_hotel?.row?.content}
           />
           <PrimaryInput
             label={t('youtube_video')}
@@ -261,7 +279,7 @@ const AddHotel = props => {
               )
             }
             // onBlur={() => setFieldTouched('video', true)}
-            value={edit_hotel.video}
+            value={edit_hotel?.row?.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
           <ImageBackground
@@ -276,9 +294,9 @@ const AddHotel = props => {
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
             />
-            {values.banner_image_id?.url ? (
+            {edit_hotel?.row?.banner_image_id?.url ? (
               <Image
-                source={{uri: values.banner_image_id?.url}}
+                source={{uri: edit_hotel?.row?.banner_image_id?.url}}
                 style={{width: '100%', height: '100%'}}
               />
             ) : null}

@@ -22,7 +22,7 @@ export const onLogin = (
 
       const uRes = await getUserInfo();
       dispatch(setUserInfo(uRes?.user));
-      UTILS.resetStack(props, 'DoctorStack');
+      UTILS.resetStack(props, 'HotelStack');
     } catch (error: any) {
       console.log('error in login', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));
