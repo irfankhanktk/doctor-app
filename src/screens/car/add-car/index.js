@@ -99,22 +99,23 @@ const AddCar = props => {
     try {
       // console.log('valuess->>', values);
       // console.log('errors->>', errors);
-      if (isValid && Object.keys(touched).length > 0) {
-        try {
-          navigation?.navigate('AddCarLocation', {values});
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        setFieldTouched('title', true);
-        setFieldTouched('content', true);
-        setFieldTouched('video', true);
-        // setFieldTouched('banner_image_id.url', true);
-        // setFieldTouched('image_id.url', true);
-        // setFieldTouched('gallery[0].url', true);
-        // setFieldTouched(`faqs[0].content`, true);
-        // setFieldTouched(`faqs[0].title`, true);
-      }
+      // if (isValid && Object.keys(touched).length > 0) {
+      //   try {
+      //     navigation?.navigate('AddCarLocation', {values});
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // } else {
+      //   setFieldTouched('title', true);
+      //   setFieldTouched('content', true);
+      //   setFieldTouched('video', true);
+      //   // setFieldTouched('banner_image_id.url', true);
+      //   // setFieldTouched('image_id.url', true);
+      //   // setFieldTouched('gallery[0].url', true);
+      //   // setFieldTouched(`faqs[0].content`, true);
+      //   // setFieldTouched(`faqs[0].title`, true);
+      // }
+      navigation?.navigate('AddCarLocation', {values});
     } catch (error) {
       console.log('error=>', error);
     }
