@@ -88,66 +88,66 @@ export const updatePasswordValidation = yup.object().shape({
 export const addHotelValidation = yup.object().shape({
   title: yup.string().required('title_required'),
   content: yup.string().required('content_required'),
-  star_rate: yup.string().required('hotel_rating_required'),
+  // star_rate: yup.string().required('hotel_rating_required'),
   video: yup.string().required('link_required').url('invalid_link'),
-  policy: yup.array().of(
-    yup.object().shape({
-      title: yup.string().required('policy_title'),
-      content: yup.string().required('policy_content'),
-    })
-  ),
-  banner_image_id: yup
-    .object()
-    .shape({
-      url: yup.string().required('select_image'),
-    })
-    .required('select_image'),
-  gallery: yup
-    .array()
-    .of(
-      yup.object().shape({
-        url: yup.string().required('select_image'),
-      })
-    )
-    .required('select_image'),
-  image_id: yup
-    .object()
-    .shape({
-      url: yup.string().required('select_image'),
-    })
-    .required('select_image'),
+  // policy: yup.array().of(
+  //   yup.object().shape({
+  //     title: yup.string().required('policy_title'),
+  //     content: yup.string().required('policy_content'),
+  //   })
+  // ),
+  // banner_image_id: yup
+  //   .object()
+  //   .shape({
+  //     url: yup.string().required('select_image'),
+  //   })
+  //   .required('select_image'),
+  // gallery: yup
+  //   .array()
+  //   .of(
+  //     yup.object().shape({
+  //       url: yup.string().required('select_image'),
+  //     })
+  //   )
+  //   .required('select_image'),
+  // image_id: yup
+  //   .object()
+  //   .shape({
+  //     url: yup.string().required('select_image'),
+  //   })
+  //   .required('select_image'),
 });
 export const addCarValidation = yup.object().shape({
   title: yup.string().required('title_required'),
   content: yup.string().required('content_required'),
 
   video: yup.string().required('link_required').url('invalid_link'),
-  faqs: yup.array().of(
-    yup.object().shape({
-      title: yup.string().required('policy_title'),
-      content: yup.string().required('policy_content'),
-    })
-  ),
-  banner_image_id: yup
-    .object()
-    .shape({
-      url: yup.string().required('select_image'),
-    })
-    .required('select_image'),
-  gallery: yup
-    .array()
-    .of(
-      yup.object().shape({
-        url: yup.string().required('select_image'),
-      })
-    )
-    .required('select_image'),
-  image_id: yup
-    .object()
-    .shape({
-      url: yup.string().required('select_image'),
-    })
-    .required('select_image'),
+  // faqs: yup.array().of(
+  //   yup.object().shape({
+  //     title: yup.string().required('policy_title'),
+  //     content: yup.string().required('policy_content'),
+  //   })
+  // ),
+  // banner_image_id: yup
+  //   .object()
+  //   .shape({
+  //     url: yup.string().required('select_image'),
+  //   })
+  //   .required('select_image'),
+  // gallery: yup
+  //   .array()
+  //   .of(
+  //     yup.object().shape({
+  //       url: yup.string().required('select_image'),
+  //     })
+  //   )
+  //   .required('select_image'),
+  // image_id: yup
+  //   .object()
+  //   .shape({
+  //     url: yup.string().required('select_image'),
+  //   })
+  //   .required('select_image'),
 });
 export const addRoomValidation = yup.object().shape({
   title: yup.string().required('title_required'),
@@ -179,36 +179,36 @@ export const addPriceHotelValidation = yup.object().shape({
   check_out_time: yup.string().required('checkout_required'),
   price: yup.string().required('price_required'),
 
-  enable_extra_price: yup.string().oneOf(['0', '1']).required('enable_extra_price_required'),
-  extra_price: yup.array().when('enable_extra_price', {
-    is: '1',
-    then: yup.array()
-      .of(
-        yup.object().shape({
-          name: yup.string().required('name_required'),
-          type: yup.string().required('type_required'),
-          price: yup.number().required('price_required'),
-        })
-      )
-      .min(1, 'extra_price_required'),
-    otherwise: yup.array().notRequired(),
-  }),
-  enable_service_fee: yup.string().oneOf(['0', '1']).required('enable_service_fee'),
-  service_fee: yup.array().when('enable_service_fee', {
-    is: '1',
-    then: yup.array()
-      .of(
-        yup.object().shape({
-          name: yup.string().required('service_name_required'),
-          desc: yup.string().required('service_desc_required'),
-          price: yup.string().required('service_price_required'),
-          type: yup.string().required('service_type_required'),
-          per_person: yup.string().required('per_person_required'),
-        })
-      )
-      .required('extra_fee'),
-    otherwise: yup.array(),
-  }),
+  // enable_extra_price: yup.string().oneOf(['0', '1']).required('enable_extra_price_required'),
+  // extra_price: yup.array().when('enable_extra_price', {
+  //   is: '1',
+  //   then: yup.array()
+  //     .of(
+  //       yup.object().shape({
+  //         name: yup.string().required('name_required'),
+  //         type: yup.string().required('type_required'),
+  //         price: yup.number().required('price_required'),
+  //       })
+  //     )
+  //     .min(1, 'extra_price_required'),
+  //   otherwise: yup.array().notRequired(),
+  // }),
+  // enable_service_fee: yup.string().oneOf(['0', '1']).required('enable_service_fee'),
+  // service_fee: yup.array().when('enable_service_fee', {
+  //   is: '1',
+  //   then: yup.array()
+  //     .of(
+  //       yup.object().shape({
+  //         name: yup.string().required('service_name_required'),
+  //         desc: yup.string().required('service_desc_required'),
+  //         price: yup.string().required('service_price_required'),
+  //         type: yup.string().required('service_type_required'),
+  //         per_person: yup.string().required('per_person_required'),
+  //       })
+  //     )
+  //     .required('extra_fee'),
+  //   otherwise: yup.array(),
+  // }),
 
 });
 export const addPriceCarValidation = yup.object().shape({
@@ -216,35 +216,35 @@ export const addPriceCarValidation = yup.object().shape({
   price: yup.string().required('price_required'),
   sale_price: yup.string().required('sale_price_required'),
   number: yup.string().required('number_required'),
-  enable_extra_price: yup.string().oneOf(['0', '1']).required('enable_price'),
-  extra_price: yup.array().when('enable_extra_price', {
-    is: '1',
-    then: yup.array()
-      .of(
-        yup.object().shape({
-          name: yup.string().required('name_required'),
-          type: yup.string().required('type_required'),
-          price: yup.number().required('price_enter'),
-        })
-      )
-      .required('extra_price_required'),
-    otherwise: yup.array(),
-  }),
-  enable_service_fee: yup.string().oneOf(['0', '1']).required('enable_price'),
-  service_fee: yup.array().when('enable_service_fee', {
-    is: '1',
-    then: yup.array()
-      .of(
-        yup.object().shape({
-          name: yup.string().required('service_name_required'),
-          desc: yup.string().required('service_desc_required'),
-          price: yup.string().required('service_price_required'),
-          type: yup.string().required('service_type_required'),
-          per_person: yup.string().required('per_person_required'),
-        })
-      )
-      .required('extra_price_required'),
-    otherwise: yup.array(),
-  }),
+  // enable_extra_price: yup.string().oneOf(['0', '1']).required('enable_price'),
+  // extra_price: yup.array().when('enable_extra_price', {
+  //   is: '1',
+  //   then: yup.array()
+  //     .of(
+  //       yup.object().shape({
+  //         name: yup.string().required('name_required'),
+  //         type: yup.string().required('type_required'),
+  //         price: yup.number().required('price_enter'),
+  //       })
+  //     )
+  //     .required('extra_price_required'),
+  //   otherwise: yup.array(),
+  // }),
+  // enable_service_fee: yup.string().oneOf(['0', '1']).required('enable_price'),
+  // service_fee: yup.array().when('enable_service_fee', {
+  //   is: '1',
+  //   then: yup.array()
+  //     .of(
+  //       yup.object().shape({
+  //         name: yup.string().required('service_name_required'),
+  //         desc: yup.string().required('service_desc_required'),
+  //         price: yup.string().required('service_price_required'),
+  //         type: yup.string().required('service_type_required'),
+  //         per_person: yup.string().required('per_person_required'),
+  //       })
+  //     )
+  //     .required('extra_price_required'),
+  //   otherwise: yup.array(),
+  // }),
 
 });

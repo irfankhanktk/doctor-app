@@ -78,11 +78,11 @@ const AddCarPrice = props => {
         setFieldTouched('number', true);
         setFieldTouched('price', true);
         setFieldTouched('sale_price', true);
-        setFieldTouched('banner_image', true);
-        setFieldTouched('car_rating', true);
-        setFieldTouched('featured_image', true);
-        setFieldTouched('enable_extra_price', true);
-        setFieldTouched('enable_service_fee', true);
+        // setFieldTouched('banner_image', true);
+        // setFieldTouched('car_rating', true);
+        // setFieldTouched('featured_image', true);
+        // setFieldTouched('enable_extra_price', true);
+        // setFieldTouched('enable_service_fee', true);
       }
     } catch (error) {
       console.log('error=>', error);

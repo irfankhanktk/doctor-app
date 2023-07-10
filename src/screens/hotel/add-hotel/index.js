@@ -112,12 +112,12 @@ const AddHotel = props => {
     setFieldTouched('title', true);
     setFieldTouched('content', true);
     setFieldTouched('video', true);
-    setFieldTouched('star_rate', true);
-    setFieldTouched('banner_image_id.url', true);
-    setFieldTouched('image_id.url', true);
+    // setFieldTouched('star_rate', true);
+    // setFieldTouched('banner_image_id.url', true);
+    // setFieldTouched('image_id.url', true);
     // setFieldTouched('gallery[q].url', true);
-    setFieldTouched(`policy[0].content`, true);
-    setFieldTouched(`policy[0].title`, true);
+    // setFieldTouched(`policy[0].content`, true);
+    // setFieldTouched(`policy[0].title`, true);
   };
   console.log('values===>', values);
   console.log('errors====>', errors);
