@@ -109,11 +109,11 @@ const AddCar = props => {
         setFieldTouched('title', true);
         setFieldTouched('content', true);
         setFieldTouched('video', true);
-        setFieldTouched('banner_image_id.url', true);
-        setFieldTouched('image_id.url', true);
-        setFieldTouched('gallery[0].url', true);
-        setFieldTouched(`faqs[0].content`, true);
-        setFieldTouched(`faqs[0].title`, true);
+        // setFieldTouched('banner_image_id.url', true);
+        // setFieldTouched('image_id.url', true);
+        // setFieldTouched('gallery[0].url', true);
+        // setFieldTouched(`faqs[0].content`, true);
+        // setFieldTouched(`faqs[0].title`, true);
       }
     } catch (error) {
       console.log('error=>', error);
