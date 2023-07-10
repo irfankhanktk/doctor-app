@@ -122,20 +122,25 @@ const AddHotel = props => {
   console.log('values===>', values);
   console.log('errors====>', errors);
   const onSubmit = async () => {
-    if (isValid && Object.keys(touched).length > 0) {
-      try {
-        // if (edit_hotel?.row?.id) {
-        //   setBtnLoading(true);
-        //   await onSave();
-        // }
-        navigation?.navigate('AddHotelLocation', {values});
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setBtnLoading(false);
-      }
-    } else {
-      setAllFiedsTouched();
+    // if (isValid && Object.keys(touched).length > 0) {
+    //   try {
+    //     // if (edit_hotel?.row?.id) {
+    //     //   setBtnLoading(true);
+    //     //   await onSave();
+    //     // }
+    //     navigation?.navigate('AddHotelLocation', {values});
+    //   } catch (error) {
+    //     console.log(error);
+    //   } finally {
+    //     setBtnLoading(false);
+    //   }
+    // } else {
+    //   setAllFiedsTouched();
+    // }
+    try {
+      navigation?.navigate('AddHotelLocation', {values});
+    } catch (error) {
+      console.log('error===> ', error);
     }
   };
   const handleAddPolicy = () => {

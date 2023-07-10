@@ -68,23 +68,24 @@ const AddHotelPrice = props => {
   console.log('errors:::', errors);
   const onSubmit = async () => {
     try {
-      if (isValid && Object.keys(touched).length > 0) {
-        try {
-          navigation?.navigate('AddHotelAttributes', {...values});
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        setFieldTouched('check_in_time', true);
-        setFieldTouched('check_out_time', true);
-        setFieldTouched('price', true);
-        // setFieldTouched('enable_extra_price', true);
-        // setFieldTouched('enable_service_fee', true);
-        // if (values.enable_extra_price)
-        //   setFieldTouched(`extra_price.[0].name`, true);
-        // if (values.enable_service_fee)
-        //   setFieldTouched(`service_fee.[0].name`, true);
-      }
+      // if (isValid && Object.keys(touched).length > 0) {
+      //   try {
+      //     navigation?.navigate('AddHotelAttributes', {...values});
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // } else {
+      //   setFieldTouched('check_in_time', true);
+      //   setFieldTouched('check_out_time', true);
+      //   setFieldTouched('price', true);
+      //   // setFieldTouched('enable_extra_price', true);
+      //   // setFieldTouched('enable_service_fee', true);
+      //   // if (values.enable_extra_price)
+      //   //   setFieldTouched(`extra_price.[0].name`, true);
+      //   // if (values.enable_service_fee)
+      //   //   setFieldTouched(`service_fee.[0].name`, true);
+      // }
+      navigation?.navigate('AddHotelAttributes', {...values});
     } catch (error) {
       console.log('error=>', error);
     }

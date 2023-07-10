@@ -68,22 +68,23 @@ const AddCarPrice = props => {
     });
   const onSubmit = async () => {
     try {
-      if (isValid && Object.keys(touched).length > 0) {
-        try {
-          navigation?.navigate('AddCarAttributes', {...values});
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        setFieldTouched('number', true);
-        setFieldTouched('price', true);
-        setFieldTouched('sale_price', true);
-        // setFieldTouched('banner_image', true);
-        // setFieldTouched('car_rating', true);
-        // setFieldTouched('featured_image', true);
-        // setFieldTouched('enable_extra_price', true);
-        // setFieldTouched('enable_service_fee', true);
-      }
+      // if (isValid && Object.keys(touched).length > 0) {
+      //   try {
+      //     navigation?.navigate('AddCarAttributes', {...values});
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // } else {
+      //   setFieldTouched('number', true);
+      //   setFieldTouched('price', true);
+      //   setFieldTouched('sale_price', true);
+      //   // setFieldTouched('banner_image', true);
+      //   // setFieldTouched('car_rating', true);
+      //   // setFieldTouched('featured_image', true);
+      //   // setFieldTouched('enable_extra_price', true);
+      //   // setFieldTouched('enable_service_fee', true);
+      // }
+      navigation?.navigate('AddCarAttributes', {...values});
     } catch (error) {
       console.log('error=>', error);
     }
