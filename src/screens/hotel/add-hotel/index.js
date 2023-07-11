@@ -1,12 +1,10 @@
 import {PrimaryButton} from 'components/atoms/buttons';
-import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import PrimaryInput from 'components/atoms/inputs';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {Loader} from 'components/atoms/loader';
 import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
-import {useFormik} from 'formik';
 import {t} from 'i18next';
 import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
@@ -15,7 +13,6 @@ import {
   FlatList,
   Image,
   ImageBackground,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -32,9 +29,7 @@ import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 import Bold from 'typography/bold-text';
 import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
-import {addHotelValidation} from 'validations';
 import styles from './styles';
-import {ADD_HOTEL_DEFAULT} from 'config/constants';
 const AddHotel = props => {
   const {navigation, route} = props;
   const {hotel} = useSelector(s => s);
@@ -57,9 +52,6 @@ const AddHotel = props => {
   React.useEffect(() => {
     dispatch(getHotelAttributes());
   }, []);
-  // React.useEffect(() => {
-  //   dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
-  // }, []);
 
   const onSubmit = async () => {
     try {
@@ -149,8 +141,6 @@ const AddHotel = props => {
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
-        // setFieldValue('image_id', file_resp?.data);
         dispatch(
           setHotelForEdit({
             ...edit_hotel,
@@ -172,11 +162,6 @@ const AddHotel = props => {
   };
   return (
     <View style={styles.container1}>
-      {/* <Header1x2x
-        title={t(route?.params?.id ? 'edit_hotel' : 'add_hotel')}
-        back={true}
-      /> */}
-
       {loading ? (
         <Loader />
       ) : (

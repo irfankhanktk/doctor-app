@@ -38,8 +38,8 @@ export const URLS = {
     read_notification: 'doctor/readNotification',
   },
   wallet: {
-    get_wallet: 'doctor/getWallet',
-    add_amount: 'doctor/addDeposit',
+    get_wallet: 'user/getWallet',
+    add_amount: 'user/addDeposit',
   },
   // hotel vendor module
   hotel_vendor: {

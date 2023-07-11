@@ -1,9 +1,9 @@
 import {Row} from 'components/atoms/row';
 
-import {ADD_HOTEL_DEFAULT, DATE_FORMAT} from 'config/constants';
+import {DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
 import moment from 'moment';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   Alert,
   I18nManager,
@@ -29,15 +29,14 @@ import {PrimaryButton} from 'components/atoms/buttons';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
 import RoomModal from 'components/molecules/hotel/modals/room-detail-modal';
 import MyMap from 'components/molecules/map';
+import {useDispatch} from 'react-redux';
 import {
   changeHotelStatus,
   deleteHotel,
   getHotelDetails,
 } from 'services/api/hotel/api-actions';
-import HtmlView from './../../../components/atoms/render-html/index';
 import {setHotels} from 'store/reducers/hotel-reducer';
-import {useDispatch} from 'react-redux';
-import {setHotelForEdit} from 'store/reducers/hotel-reducer';
+import HtmlView from './../../../components/atoms/render-html/index';
 
 const HotelDetails = props => {
   const {navigation} = props;
@@ -68,9 +67,7 @@ const HotelDetails = props => {
   const [loading, setLoading] = React.useState(true);
   const [deleteLoading, setDeleteLoading] = React.useState(false);
   const [statusChangeLoading, setStatusChangeLoading] = React.useState(false);
-  React.useEffect(() => {
-    dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
-  }, []);
+
   React.useEffect(() => {
     getDetails();
   }, []);

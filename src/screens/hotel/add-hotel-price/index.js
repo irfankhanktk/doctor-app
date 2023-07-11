@@ -8,18 +8,16 @@ import BuyerFeeBottomSheetModal from 'components/molecules/hotel/dropdown-picker
 import ExtraPriceBottomSheetModal from 'components/molecules/hotel/dropdown-picker/extraPriceType';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
-import {useFormik} from 'formik';
 import {useAppDispatch} from 'hooks/use-store';
 import {t} from 'i18next';
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
-import Regular from 'typography/regular-text';
-import {addPriceHotelValidation} from 'validations';
-import styles from './styles';
-import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
+import {setHotelForEdit} from 'store/reducers/hotel-reducer';
+import Regular from 'typography/regular-text';
+import styles from './styles';
 const AddHotelPrice = props => {
   const {navigation, route} = props;
   const dispatch = useAppDispatch();
@@ -29,33 +27,6 @@ const AddHotelPrice = props => {
   const [buyerFeeType, setBuyerFeeType] = React.useState(false);
   const {hotel} = useSelector(s => s);
   const {edit_hotel} = hotel;
-  // const initialValues = {
-  //   ...route?.params,
-  //   check_in_time: edit_hotel?.row?.check_in_time || '',
-  //   check_out_time: edit_hotel?.row?.check_out_time || '',
-  //   min_day_before_booking: `${edit_hotel?.row?.min_day_before_booking || ''}`,
-  //   min_day_stays: `${edit_hotel?.row?.min_day_stays || ''}`,
-  //   price: `${edit_hotel?.row?.price || ''}`,
-  //   enable_extra_price: `${edit_hotel?.row?.enable_extra_price || '0'}`,
-  //   extra_price: edit_hotel?.row?.extra_price || [
-  //     {
-  //       name: '',
-  //       price: '',
-  //       type: '',
-  //       per_person: '0',
-  //     },
-  //   ],
-  //   enable_service_fee: `${edit_hotel?.row?.enable_service_fee || '0'}`,
-  //   service_fee: edit_hotel?.row?.service_fee || [
-  //     {
-  //       name: '',
-  //       desc: '',
-  //       price: '',
-  //       type: '',
-  //       per_person: '0',
-  //     },
-  //   ],
-  // };
 
   const onHandleChange = (key, value) => {
     dispatch(

@@ -12,7 +12,7 @@ import React, {useEffect} from 'react';
 import {FlatList, View} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {getWallet} from 'services/api/doctor/api-actions';
+import {getWallet} from 'services/api/auth-api-actions';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
@@ -40,7 +40,7 @@ const WalletScreen = props => {
 
   const getWalletHistory = async () => {
     try {
-      dispatch(getWallet({doctor_id: userInfo?.id}, setLoading));
+      dispatch(getWallet({user_id: userInfo?.id}, setLoading));
     } catch (error) {
       console.log('error=>', error);
     }

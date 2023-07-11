@@ -78,7 +78,7 @@ export const onAddOrUpdateHotel = (data: any) => postData(`${URLS.hotel_vendor.a
     gallery: data?.row?.gallery?.map((x: any) => x?.data?.id)?.join(),
     image_id: data?.row?.image_id?.data?.id || '',
     star_rate: data?.row?.star_rate || '0',
-    terms: data?.row?.id ? data?.selected_terms : [],
+    terms: data?.selected_terms,
 });
 export const getHotelDetails = (slug: any) => getData(`${URLS.hotel_vendor.hotel_details}${slug}`);
 export const deleteHotel = (hotel_id: any) => getData(`${URLS.hotel_vendor.delete_hotel}${hotel_id}`);

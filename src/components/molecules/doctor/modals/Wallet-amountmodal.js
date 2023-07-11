@@ -9,7 +9,7 @@ import {mvs} from 'config/metrices';
 import {OtpInput} from '../otp-input';
 import PrimaryInput from 'components/atoms/inputs';
 import i18n from 'translation';
-import {onAddAmount} from 'services/api/doctor/api-actions';
+import {onAddAmount} from 'services/api/auth-api-actions';
 const WalletAmount = ({
   style,
   email,
@@ -26,7 +26,6 @@ const WalletAmount = ({
     try {
       setLoading(true);
       const res = await onAddAmount(value);
-
       console.log('res===>>>>> addamount', res);
       isSubmited();
       onClose();
@@ -63,7 +62,7 @@ const WalletAmount = ({
             label={t('add_amount')}
             placeholder={t('add_amount')}
             onChangeText={str =>
-              setValue({doctor_id: userInfo?.id, amount: parseInt(str)})
+              setValue({user_id: userInfo?.id, amount: parseInt(str)})
             }
             // onBlur={() => setFieldTouched('email', true)}
             // value={values.email}

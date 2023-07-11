@@ -10,7 +10,6 @@ import {Checkbox} from 'components/atoms/checkbox';
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
 import {resetStack} from 'navigation/navigation-ref';
-import {SectionList} from 'react-native';
 import {useSelector} from 'react-redux';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
 import Bold from 'typography/bold-text';
@@ -31,17 +30,17 @@ const AddHotelAttributes = props => {
     ...ele,
     data: ele?.terms || [],
   }));
-
+  React.useEffect(() => {
+    setSelectedTypes(
+      edit_hotel?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
+    );
+  }, [edit_hotel?.row?.terms]);
   const onSubmit = async () => {
     try {
       setAddBtnLoading(true);
       const res = await onAddOrUpdateHotel({
-        ...route?.params,
-        id: edit_hotel?.row?.id || null,
-        gallery: route?.params?.gallery?.map(x => x?.data?.id)?.join(),
-        banner_image_id: route?.params?.banner_image_id?.data?.id,
-        image_id: route?.params?.image_id?.data?.id,
-        terms: selectedTypes?.map(x => x?.id),
+        ...edit_hotel,
+        selected_terms: selectedTypes?.map(x => x?.id),
       });
       resetStack('HotelStack');
     } catch (error) {
@@ -85,26 +84,27 @@ const AddHotelAttributes = props => {
       </Row>
     );
   };
-
+  const nestedMap = attributes?.map(section => ({
+    name: section.name,
+    data: section.data.map(item => renderItem({item})), // assuming renderItem is a function that renders each item
+  }));
   return (
     <View style={styles.container}>
       <Header1x2x title={t('attributes')} back={true} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
-        {/* <SectionList
-          sections={attributes}
-          keyExtractor={(item, index) => item + index}
-          renderItem={renderItem}
-          renderSectionHeader={({section: {name}}) => (
+        {nestedMap.map(section => (
+          <React.Fragment key={section.name}>
             <Row style={{justifyContent: 'flex-start'}}>
               <Bold fontSize={mvs(18)} label={'ATTRIBUTE:'} />
               <Bold
                 style={{marginLeft: mvs(10), fontSize: mvs(18)}}
-                label={name}
+                label={section.name}
               />
             </Row>
-          )}
-        /> */}
+            {section.data}
+          </React.Fragment>
+        ))}
         <PrimaryButton
           onPress={onSubmit}
           loading={addBtnLoading}

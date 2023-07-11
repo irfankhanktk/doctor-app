@@ -4,7 +4,7 @@ import { URLS } from './api-urls';
 import { UTILS } from 'utils';
 import { STORAGEKEYS } from 'config/constants';
 import { Alert } from 'react-native';
-import { setLocations, setUserInfo } from './../../store/reducers/user-reducer';
+import { setLocations, setUserInfo, setWallet } from './../../store/reducers/user-reducer';
 export const getUserInfo = () => {
   return getData(URLS.auth.get_user_info);
 };
@@ -46,6 +46,34 @@ export const onSignup = (
     } catch (error: any) {
       console.log('error in onSignupPress', UTILS?.returnError(error));
       Alert.alert('', UTILS?.returnError(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+};
+//// add amount///
+export const onAddAmount = async (values: any) => {
+  try {
+    const res = await postData(URLS.wallet.add_amount, values);
+    console.log('res of addamount=>', res);
+    return res;
+  } catch (error: any) {
+    console.log('error in addamount', UTILS.returnError(error));
+    Alert.alert('', UTILS.returnError(error));
+  }
+};
+/// Wallet ///
+export const getWallet = (values: any, setLoading: (bool: boolean) => void) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      setLoading(true);
+      const res = await postData(URLS.wallet.get_wallet, values);
+
+      dispatch(setWallet(res || {}));
+      console.log('res of wallet=>', res);
+    } catch (error: any) {
+      console.log('error in wallet', UTILS.returnError(error));
+      Alert.alert('', UTILS.returnError(error));
     } finally {
       setLoading(false);
     }

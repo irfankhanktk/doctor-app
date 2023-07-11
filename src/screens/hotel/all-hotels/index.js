@@ -11,10 +11,13 @@ import {useSelector} from 'react-redux';
 import i18n from 'translation';
 import styles from './styles';
 // import {EmptyList} from 'components/molecules/hotel/empty-list';
+import {useIsFocused} from '@react-navigation/native';
+import {ADD_HOTEL_DEFAULT} from 'config/constants';
 import {getAllHotels} from 'services/api/hotel/api-actions';
+import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 
 const AllHotels = props => {
-  const [cartModal, setCardModal] = React.useState(false);
+  const isFocus = useIsFocused();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [pageLoading, setPageLoading] = React.useState(false);
@@ -29,10 +32,13 @@ const AllHotels = props => {
   const getHomeHotels = isReFreshing => {
     dispatch(getAllHotels(isReFreshing ? setRefreshing : setLoading));
   };
+
   React.useEffect(() => {
     getHomeHotels();
   }, []);
-
+  React.useEffect(() => {
+    if (isFocus) dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
+  }, [isFocus]);
   const renderHotelItem = ({item}) => (
     <HotelCard
       item={item}
