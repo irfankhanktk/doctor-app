@@ -90,7 +90,6 @@ const AddHotelAttributes = props => {
   }));
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('attributes')} back={true} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         {nestedMap.map(section => (

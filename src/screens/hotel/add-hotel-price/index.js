@@ -74,7 +74,6 @@ const AddHotelPrice = props => {
 
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('add_price')} back={true} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
