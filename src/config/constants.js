@@ -81,7 +81,7 @@ export const ADD_HOTEL_DEFAULT = {
   content: '',
   video: '',
   banner_image_id: '',
-  gallery: '',
+  gallery: [],
   star_rate: '0',
   policy: [],
   image_id: '',

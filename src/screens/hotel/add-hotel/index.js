@@ -39,36 +39,13 @@ const AddHotel = props => {
   const {navigation, route} = props;
   const {hotel} = useSelector(s => s);
   const {edit_hotel} = hotel;
-  // console.log('edit_hotel::::', edit_hotel);
+  console.log('edit_hotel::::', edit_hotel);
   const [loading, setLoading] = React.useState(true);
   const [btnLoading, setBtnLoading] = React.useState(false);
   const [imageLoading, setImageLoading] = React.useState(false);
   const [galleryImageLoading, setGalleryImageLoading] = React.useState(false);
   const [featuredImageLoading, setFeaturedImageLoading] = React.useState(false);
-  const initialValues = {
-    title: '',
-    content: '',
-    video: '',
-    banner_image_id: '',
-    gallery: [],
-    star_rate: '',
-    image_id: '',
-    policy: [
-      {
-        title: '',
-        content: '',
-      },
-    ],
-  };
   const dispatch = useDispatch();
-  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
-    useFormik({
-      initialValues: initialValues,
-      validateOnBlur: true,
-      validateOnChange: true,
-      validationSchema: addHotelValidation,
-      onSubmit: () => {},
-    });
   React.useEffect(() => {
     if (route?.params?.id) {
       dispatch(getHotelForEdit(route?.params?.id, setLoading));
@@ -76,89 +53,66 @@ const AddHotel = props => {
       setLoading(false);
     }
   }, [route?.params?.id]);
-  React.useEffect(() => {
-    if (edit_hotel && route?.params?.id) {
-      setAllFiedsTouched();
 
-      // console.log('edit_hotel?.row?.popp->>', edit_hotel?.row?.policy);
-      setFieldValue('title', edit_hotel?.row?.title);
-      setFieldValue('content', edit_hotel?.row?.content);
-      setFieldValue('policy', [...edit_hotel?.row?.policy]);
-      setFieldValue('video', edit_hotel?.row?.video);
-      setFieldValue('star_rate', `${edit_hotel?.row?.star_rate}`);
-      setFieldValue('banner_image_id', edit_hotel?.row?.banner_image_id);
-      setFieldValue('image_id', edit_hotel?.row?.image_id);
-      setFieldValue('gallery', edit_hotel?.row?.gallery);
-    }
-  }, [edit_hotel]);
   React.useEffect(() => {
     dispatch(getHotelAttributes());
   }, []);
-  React.useEffect(() => {
-    dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
-  }, []);
-  const onSave = async () => {
-    await onAddOrUpdateHotel({
-      ...edit_hotel?.row,
-      ...values,
-      id: edit_hotel?.row?.id || null,
-      gallery: values?.gallery?.map(x => x?.data?.id)?.join(),
-      banner_image_id: values?.banner_image_id?.data?.id,
-      image_id: values?.image_id?.data?.id,
-      terms: edit_hotel?.row?.id ? edit_hotel?.selected_terms : [],
-    });
-  };
+  // React.useEffect(() => {
+  //   dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
+  // }, []);
 
-  const setAllFiedsTouched = () => {
-    setFieldTouched('title', true);
-    setFieldTouched('content', true);
-    setFieldTouched('video', true);
-    // setFieldTouched('star_rate', true);
-    // setFieldTouched('banner_image_id.url', true);
-    // setFieldTouched('image_id.url', true);
-    // setFieldTouched('gallery[q].url', true);
-    // setFieldTouched(`policy[0].content`, true);
-    // setFieldTouched(`policy[0].title`, true);
-  };
-  console.log('values===>', values);
-  console.log('errors====>', errors);
   const onSubmit = async () => {
-    // if (isValid && Object.keys(touched).length > 0) {
-    //   try {
-    //     // if (edit_hotel?.row?.id) {
-    //     //   setBtnLoading(true);
-    //     //   await onSave();
-    //     // }
-    //     navigation?.navigate('AddHotelLocation', {values});
-    //   } catch (error) {
-    //     console.log(error);
-    //   } finally {
-    //     setBtnLoading(false);
-    //   }
-    // } else {
-    //   setAllFiedsTouched();
-    // }
     try {
-      navigation?.navigate('AddHotelLocation', {values});
+      setBtnLoading(true);
+      await onAddOrUpdateHotel({...edit_hotel});
+      // navigation?.navigate('AddHotelLocation');
     } catch (error) {
-      console.log('error===> ', error);
+      console.log('error===> ', UTILS.returnError(error));
+      Alert.alert('Error', UTILS.returnError(error));
+    } finally {
+      setBtnLoading(false);
     }
   };
   const handleAddPolicy = () => {
-    setFieldValue('policy', [...values?.policy, {title: '', content: ''}]);
+    dispatch(
+      setHotelForEdit({
+        ...edit_hotel,
+        row: {
+          ...edit_hotel.row,
+          policy: [...edit_hotel.row?.policy, {title: '', content: ''}],
+        },
+      }),
+    );
   };
   const handleRemovePolicy = index => {
-    const updatedPolicies = values?.policy?.filter((_, i) => i !== index);
-    setFieldValue('policy', updatedPolicies);
+    const updatedPolicies = edit_hotel?.row?.policy?.filter(
+      (_, i) => i !== index,
+    );
+    dispatch(
+      setHotelForEdit({
+        ...edit_hotel,
+        row: {
+          ...edit_hotel.row,
+          policy: updatedPolicies,
+        },
+      }),
+    );
   };
 
   const onImageRemove = index => {
-    let copy = [...values.gallery];
+    let copy = [...edit_hotel?.row?.gallery];
     copy = copy.filter((e, i) => {
       return i != index;
     });
-    // setAddImage(copy);
-    setFieldValue('gallery', copy);
+    dispatch(
+      setHotelForEdit({
+        ...edit_hotel,
+        row: {
+          ...edit_hotel.row,
+          gallery: copy,
+        },
+      }),
+    );
   };
   const openGallery = async v => {
     try {
@@ -168,38 +122,44 @@ const AddHotel = props => {
 
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        setHotelForEdit({
-          ...edit_hotel,
-          row: {
-            ...edit_hotel?.row,
-            gallery: [...edit_hotel?.row?.gallery, file_resp?.data],
-          },
-        });
+        dispatch(
+          setHotelForEdit({
+            ...edit_hotel,
+            row: {
+              ...edit_hotel?.row,
+              gallery: [...edit_hotel?.row?.gallery, file_resp?.data],
+            },
+          }),
+        );
       } else if (v == 'bannerImage') {
         setImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
         // setFieldValue('banner_image_id', file_resp?.data);
-        setHotelForEdit({
-          ...edit_hotel,
-          row: {
-            ...edit_hotel?.row,
-            banner_image_id: file_resp?.data,
-          },
-        });
+        dispatch(
+          setHotelForEdit({
+            ...edit_hotel,
+            row: {
+              ...edit_hotel?.row,
+              banner_image_id: file_resp?.data,
+            },
+          }),
+        );
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
         // setFieldValue('image_id', file_resp?.data);
-        setHotelForEdit({
-          ...edit_hotel,
-          row: {
-            ...edit_hotel?.row,
-            image_id: file_resp?.data,
-          },
-        });
+        dispatch(
+          setHotelForEdit({
+            ...edit_hotel,
+            row: {
+              ...edit_hotel?.row,
+              image_id: file_resp?.data,
+            },
+          }),
+        );
       }
     } catch (error) {
       console.log('upload image error', error);
@@ -249,9 +209,7 @@ const AddHotel = props => {
                 }),
               )
             }
-            // onBlur={() => setFieldTouched('title', true)}
             value={edit_hotel?.row.title}
-            // containerStyle={}
           />
           <PrimaryInput
             label={t('content')}
@@ -264,7 +222,6 @@ const AddHotel = props => {
                 }),
               )
             }
-            // onBlur={() => setFieldTouched('content', true)}
             value={edit_hotel?.row?.content}
           />
           <PrimaryInput
@@ -278,7 +235,6 @@ const AddHotel = props => {
                 }),
               )
             }
-            // onBlur={() => setFieldTouched('video', true)}
             value={edit_hotel?.row?.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
@@ -301,12 +257,6 @@ const AddHotel = props => {
               />
             ) : null}
           </ImageBackground>
-          {errors.banner_image_id?.url && touched.banner_image_id?.url && (
-            <Regular
-              label={t(errors?.banner_image_id?.url)}
-              style={styles.errorLabel}
-            />
-          )}
 
           <Regular
             color={colors.primary}
@@ -333,7 +283,7 @@ const AddHotel = props => {
             </TouchableOpacity>
             <FlatList
               horizontal={true}
-              data={values?.gallery}
+              data={edit_hotel?.row?.gallery || []}
               renderItem={({item, index}) => {
                 if (!item?.url) return null;
                 return (
@@ -373,7 +323,6 @@ const AddHotel = props => {
                 }),
               )
             }
-            onBlur={() => setFieldTouched('star_rate', true)}
             value={edit_hotel.star_rate}
           />
           <Row style={{backgroundColor: colors.lightGray}}>
@@ -387,9 +336,9 @@ const AddHotel = props => {
             </TouchableOpacity>
           </Row>
 
-          {values?.policy.map((policy, index) => (
+          {edit_hotel?.row?.policy.map((policy, index) => (
             <View style={styles.policyContainer} key={index}>
-              {values?.policy?.length !== 1 && (
+              {edit_hotel?.row?.policy?.length !== 1 && (
                 <TouchableOpacity
                   style={{alignSelf: 'flex-end'}}
                   onPress={() => handleRemovePolicy(index)}>
@@ -403,37 +352,45 @@ const AddHotel = props => {
               <PrimaryInput
                 label={t('title')}
                 placeholder={t('policy_title')}
-                onChangeText={str =>
-                  setFieldValue(`policy.[${index}].title`, str)
-                }
-                onBlur={() => setFieldTouched(`policy.[${index}].title`, true)}
-                value={values.policy[index].title}
-                // error={
-                //   touched?.policy &&
-                //   touched?.policy[index] &&
-                //   errors?.policy &&
-                //   errors?.policy[index] &&
-                //   `${t(errors.policy[0]?.title)}` &&
-                //   `${t(errors?.policy[0]?.title)}`
-                // }
+                onChangeText={str => {
+                  const item = {...policy};
+                  const copy = [...edit_hotel?.row?.policy];
+                  item.title = str;
+                  copy[index] = item;
+
+                  dispatch(
+                    setHotelForEdit({
+                      ...edit_hotel,
+                      row: {
+                        ...edit_hotel?.row,
+                        policy: copy,
+                      },
+                    }),
+                  );
+                }}
+                value={policy.title}
               />
 
               <PrimaryInput
                 label={t('content')}
                 placeholder={t('content')}
-                onChangeText={str =>
-                  setFieldValue(`policy.${index}.content`, str)
-                }
-                onBlur={() => setFieldTouched(`policy.${index}.content`, true)}
-                value={values?.policy[index].content}
-                error={
-                  touched?.policy &&
-                  touched?.policy[index] &&
-                  errors?.policy &&
-                  errors?.policy[0] &&
-                  `${t(errors.policy[0]?.content)}` &&
-                  `${t(errors?.policy[0]?.content)}`
-                }
+                onChangeText={str => {
+                  const item = {...policy};
+                  const copy = [...edit_hotel?.row?.policy];
+                  item.content = str;
+                  copy[index] = item;
+
+                  dispatch(
+                    setHotelForEdit({
+                      ...edit_hotel,
+                      row: {
+                        ...edit_hotel?.row,
+                        policy: copy,
+                      },
+                    }),
+                  );
+                }}
+                value={policy?.content}
               />
             </View>
           ))}
@@ -454,19 +411,13 @@ const AddHotel = props => {
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
             />
-            {values?.image_id?.url ? (
+            {edit_hotel?.row?.image_id?.url ? (
               <Image
-                source={{uri: values?.image_id?.url}}
+                source={{uri: edit_hotel?.row?.image_id?.url}}
                 style={{width: '100%', height: '100%'}}
               />
             ) : null}
           </ImageBackground>
-          {errors?.image_id?.url && touched?.image_id?.url && (
-            <Regular
-              label={`${t(errors?.image_id?.url)}`}
-              style={styles.errorLabel}
-            />
-          )}
 
           <PrimaryButton
             loading={btnLoading}

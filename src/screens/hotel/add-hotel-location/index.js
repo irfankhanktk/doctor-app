@@ -9,9 +9,10 @@ import {PrimaryButton} from 'components/atoms/buttons';
 import {UTILS} from 'utils';
 import {getLocations} from 'services/api/auth-api-actions';
 import {t} from 'i18next';
+import {setHotelForEdit} from 'store/reducers/hotel-reducer';
+import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
 const AddHotelLocation = props => {
   const {values} = props?.route?.params || {};
-  console.log('values in map=>>', values);
   const {navigation} = props;
   const dispatch = useDispatch();
   const {hotel, user} = useSelector(s => s);
@@ -25,7 +26,6 @@ const AddHotelLocation = props => {
         }
       : null,
   );
-  // console.log('marker cordinate check===>', markerCoordinates);
 
   const [selectedItem, setSelectedItem] = React.useState(null);
   const [region, setRegion] = React.useState({
@@ -47,7 +47,21 @@ const AddHotelLocation = props => {
         res?.city?.toLowerCase() === selectedItem?.title?.toLowerCase() ||
         res?.country?.toLowerCase() === selectedItem?.title?.toLowerCase()
       ) {
-        setMarkerCoordinates(coordinate);
+        const addressComponent = await UTILS._returnAddress(
+          coordinate?.latitude,
+          coordinate?.longitude,
+        );
+        dispatch(
+          setHotelForEdit({
+            ...edit_hotel,
+            row: {
+              ...edit_hotel?.row,
+              map_lat: coordinate?.latitude,
+              map_lng: coordinate?.longitude,
+              address: addressComponent?.fulladdress,
+            },
+          }),
+        );
       } else {
         if (!selectedItem?.title)
           throw `Please first select location from dropdown`;
@@ -69,9 +83,10 @@ const AddHotelLocation = props => {
       });
     } else {
       handleRegionChange(
-        markerCoordinates
+        edit_hotel?.row?.map_lat
           ? {
-              ...markerCoordinates,
+              latitude: edit_hotel?.row?.map_lat * 1,
+              longitude: edit_hotel?.row?.map_lng * 1,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }
@@ -113,7 +128,14 @@ const AddHotelLocation = props => {
           longitudeDelta: 0.0421,
         }}
         ref={mapRef}>
-        {markerCoordinates && <Marker coordinate={markerCoordinates} />}
+        {edit_hotel?.row?.map_lat && edit_hotel?.row?.map_lng && (
+          <Marker
+            coordinate={{
+              latitude: edit_hotel?.row?.map_lat * 1,
+              longitude: edit_hotel?.row?.map_lng * 1,
+            }}
+          />
+        )}
       </MapView>
       <TouchableOpacity
         onPress={() => props?.navigation?.goBack()}
@@ -135,17 +157,11 @@ const AddHotelLocation = props => {
           title={t('next')}
           onPress={async () => {
             try {
-              if (!markerCoordinates) throw 'Please select hotel location';
-              const addressComponent = await UTILS._returnAddress(
-                markerCoordinates?.latitude,
-                markerCoordinates?.longitude,
-              );
-              navigation.navigate('AddHotelPrice', {
-                ...values,
-                address: addressComponent?.fulladdress,
-                map_lat: markerCoordinates?.latitude,
-                map_lng: markerCoordinates?.longitude,
-              });
+              if (!edit_hotel?.row?.map_lat)
+                throw 'Please select hotel location';
+
+              await onAddOrUpdateHotel({...edit_hotel});
+              // navigation.navigate('AddHotelPrice');
             } catch (error) {
               console.log('error in map location ::', error);
               Alert.alert('Validation Error', UTILS.returnError(error));

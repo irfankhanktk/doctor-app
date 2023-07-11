@@ -1,6 +1,6 @@
 import {Row} from 'components/atoms/row';
 
-import {DATE_FORMAT} from 'config/constants';
+import {ADD_HOTEL_DEFAULT, DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
 import moment from 'moment';
 import React, {useState, useEffect} from 'react';
@@ -37,6 +37,7 @@ import {
 import HtmlView from './../../../components/atoms/render-html/index';
 import {setHotels} from 'store/reducers/hotel-reducer';
 import {useDispatch} from 'react-redux';
+import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 
 const HotelDetails = props => {
   const {navigation} = props;
@@ -67,7 +68,9 @@ const HotelDetails = props => {
   const [loading, setLoading] = React.useState(true);
   const [deleteLoading, setDeleteLoading] = React.useState(false);
   const [statusChangeLoading, setStatusChangeLoading] = React.useState(false);
-
+  React.useEffect(() => {
+    dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
+  }, []);
   React.useEffect(() => {
     getDetails();
   }, []);
@@ -152,7 +155,7 @@ const HotelDetails = props => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.editBtn}
-              onPress={() => navigate('AddHotel', {id: hotel_id})}>
+              onPress={() => navigate('HotelTopTab', {id: hotel_id})}>
               <Entypo name="edit" color={colors.black} size={mvs(18)} />
             </TouchableOpacity>
           </Row>

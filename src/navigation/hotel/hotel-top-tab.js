@@ -69,11 +69,16 @@ function MyTabBar({state, descriptors, navigation, position}) {
 }
 
 // ...
-export default HotelTopTab = () => {
+export default HotelTopTab = props => {
+  const {route} = props;
   const Tab = createMaterialTopTabNavigator();
   return (
     <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
-      <Tab.Screen name="Content" component={AddHotel} />
+      <Tab.Screen
+        name="Content"
+        component={AddHotel}
+        initialParams={{id: route?.params?.id}}
+      />
       <Tab.Screen name="Location" component={AddHotelLocation} />
       <Tab.Screen name="Price" component={AddHotelPrice} />
       <Tab.Screen name="Attr" component={AddHotelAttributes} />
