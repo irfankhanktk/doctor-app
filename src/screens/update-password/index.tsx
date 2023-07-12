@@ -1,17 +1,16 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { PrimaryButton } from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
+import PrimaryInput from 'components/atoms/inputs';
+import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
 import { useFormik } from 'formik';
+import { useAppDispatch } from 'hooks/use-store';
 import { t } from 'i18next';
 import React from 'react';
 import { View } from 'react-native';
-import { onSignup, onUpdatePassword } from 'services/api/doctor/api-actions';
-import { signupFormValidation, updatePasswordValidation } from 'validations';
-import { PrimaryButton } from 'components/atoms/buttons';
-import PrimaryInput from 'components/atoms/inputs';
-import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
-import { useAppDispatch } from 'hooks/use-store';
+import { onUpdatePassword } from 'services/api/auth-api-actions';
+import { updatePasswordValidation } from 'validations';
 import RootStackParamList from '../../types/navigation-types/root-stack';
-import Medium from 'typography/medium-text';
 import styles from './styles';
 type props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
 
@@ -19,7 +18,6 @@ const UpdatePassword = (props: props) => {
   const { navigation } = props;
   const dispatch = useAppDispatch();
   const initialValues = {
-    email: '',
     new_password: '',
     old_password: '',
   };
@@ -37,15 +35,6 @@ const UpdatePassword = (props: props) => {
       <Header1x2x isSearch={false} title={t('update_password')} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
-        <PrimaryInput
-          keyboardType={'email-address'}
-          error={errors?.email}
-          label={t('email')}
-          placeholder={t('email')}
-          onChangeText={str => setFieldValue('email', str)}
-          onBlur={() => setFieldTouched('email', true)}
-          value={values.email}
-        />
         <PrimaryInput
           isPassword
           error={

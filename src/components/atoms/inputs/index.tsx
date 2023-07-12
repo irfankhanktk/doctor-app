@@ -40,7 +40,7 @@ type props = {
   style?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
-  mainContainer?:StyleProp<ViewStyle>;
+  mainContainer?: StyleProp<ViewStyle>;
   errorStyle?: StyleProp<ViewStyle>;
   secureTextEntry?: boolean | undefined;
   ref?: React.LegacyRef<PhoneInput> | undefined;
@@ -236,7 +236,7 @@ export const InputWithIcon = (props: props) => {
     error,
     label,
     isRequired = false,
-     
+
   } = props;
   return (
     <>
@@ -356,11 +356,11 @@ export const SearchInput = (props: props) => {
 
 const styles = StyleSheet.create({
   Container: {
-    borderWidth: mvs(0.7),
+    borderBottomWidth: mvs(0.7),
+    // borderRadius: mvs(10),
     borderColor: colors.primary,
     height: mvs(50),
     paddingTop: mvs(7),
-    borderRadius: mvs(10),
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: mvs(10),

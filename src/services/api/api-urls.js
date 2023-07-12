@@ -6,11 +6,11 @@ export const URLS = {
     signup: 'doctor/signup',
     login: 'auth/login',
     get_user_info: 'user/userInfo',
-    update_password: 'doctor/updatePassword',
+    update_password: 'user/updatePassword',
     change_password: 'doctor/changePassword',
     otp_verify: 'doctor/otpVerify',
     forget_password: 'doctor/forgetPassword',
-    update_profile: 'doctor/updateProfile',
+    update_profile: 'user/updateProfile',
     locations: 'locations',
   },
   availability: {

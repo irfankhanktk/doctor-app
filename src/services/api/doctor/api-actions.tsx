@@ -1,5 +1,5 @@
 import { STORAGEKEYS } from 'config/constants';
-import { goBack } from 'navigation/navigation-ref';
+import { goBack, resetStack } from 'navigation/navigation-ref';
 import { Alert } from 'react-native';
 import { AppDispatch, RootState } from 'store';
 import { getData, postArrrayFormData, postData, postFormData } from './../';
@@ -359,28 +359,7 @@ export const onAddAvailability = (
 //         }
 //     }
 // }
-export const onUpdateProfile = (
-  values: any,
-  setLoading: (bool: boolean) => void,
-  props: any,
-) => {
-  return async (dispatch: AppDispatch, getState: () => RootState) => {
-    try {
-      setLoading(true);
-      const res = await postData(URLS.auth.update_profile, values);
-      console.log('res of onUpdateProfile=>', res);
 
-      UTILS.setItem(STORAGEKEYS.user, JSON.stringify(values));
-      dispatch(setUserInfo(values));
-      goBack();
-    } catch (error: any) {
-      console.log('error in onUpdateProfile', UTILS.returnError(error));
-      Alert.alert('', UTILS.returnError(error));
-    } finally {
-      setLoading(false);
-    }
-  };
-};
 
 export const onVerifyOtp = (values: any) => {
   return postData(URLS.auth.login, values);
@@ -430,16 +409,4 @@ export const onVerifyOtpRenewpassword = (
     }
   };
 };
-export const onLogoutPress = (props: any) => {
-  return async (dispatch: AppDispatch, getState: () => RootState) => {
-    try {
-      // await logout();
-      await UTILS.clearStorage();
-      dispatch(setUserInfo(null));
-      UTILS.resetStack(props, 'Splash');
-    } catch (error: any) {
-      console.log('error in onDeleteTask', UTILS.returnError(error));
-      Alert.alert('', UTILS.returnError(error));
-    }
-  };
-};
+

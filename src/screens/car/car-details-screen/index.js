@@ -174,7 +174,7 @@ const CarDetailsScreen = props => {
                 </Row>
                 <TouchableOpacity
                   style={styles.editBtn}
-                  onPress={() => navigate('AddCar', {id: id})}>
+                  onPress={() => navigate('CarTopTab', {id: id})}>
                   <Entypo name="edit" color={colors.black} size={mvs(30)} />
                 </TouchableOpacity>
               </Row>

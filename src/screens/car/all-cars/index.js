@@ -12,6 +12,8 @@ import {getCars} from 'services/api/car/api-actions';
 import {getLocations} from 'services/api/hotel/api-actions';
 import i18n from 'translation';
 import styles from './styles';
+import {setCarForEdit} from 'store/reducers/car-reducer';
+import {ADD_CAR_DEFAULT} from 'config/constants';
 const AllCars = props => {
   const [loading, setLoading] = React.useState(true);
   const dispatch = useAppDispatch();
@@ -27,6 +29,9 @@ const AllCars = props => {
   const getHomeCars = bool => {
     dispatch(getCars(bool ? setRefreshing : setLoading));
   };
+  React.useEffect(() => {
+    dispatch(setCarForEdit({row: {...ADD_CAR_DEFAULT}}));
+  }, []);
   React.useEffect(() => {
     getHomeCars();
   }, [car_filter]);
@@ -88,7 +93,7 @@ const AllCars = props => {
       )}
       <PlusButton
         containerStyle={{bottom: mvs(60)}}
-        onPress={() => props?.navigation?.navigate('AddCar')}
+        onPress={() => props?.navigation?.navigate('CarTopTab')}
       />
     </View>
   );

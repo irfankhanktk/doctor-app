@@ -41,7 +41,16 @@ const AddHotelPrice = props => {
   };
   const onSubmit = async () => {
     try {
-      await onAddOrUpdateHotel({...edit_hotel});
+      const res = await onAddOrUpdateHotel({...edit_hotel});
+      dispatch(
+        setHotelForEdit({
+          ...edit_hotel,
+          row: {
+            ...edit_hotel.row,
+            id: res?.id,
+          },
+        }),
+      );
       navigation?.navigate('AddHotelAttributes');
     } catch (error) {
       console.log('error=>', error);

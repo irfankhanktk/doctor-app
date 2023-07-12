@@ -56,7 +56,16 @@ const AddHotel = props => {
   const onSubmit = async () => {
     try {
       setBtnLoading(true);
-      await onAddOrUpdateHotel({...edit_hotel});
+      const res = await onAddOrUpdateHotel({...edit_hotel});
+      dispatch(
+        setHotelForEdit({
+          ...edit_hotel,
+          row: {
+            ...edit_hotel.row,
+            id: res?.id,
+          },
+        }),
+      );
       // navigation?.navigate('AddHotelLocation');
     } catch (error) {
       console.log('error===> ', UTILS.returnError(error));

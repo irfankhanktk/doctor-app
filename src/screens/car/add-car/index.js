@@ -1,21 +1,19 @@
 import {PrimaryButton} from 'components/atoms/buttons';
-import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import PrimaryInput from 'components/atoms/inputs';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {Loader} from 'components/atoms/loader';
-import {HalfOutLineInput} from 'components/atoms/outline-iput';
 import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
 import {useFormik} from 'formik';
 import {t} from 'i18next';
+import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
 import {
   Alert,
   FlatList,
   Image,
   ImageBackground,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -25,6 +23,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   getCarAttributes,
   getCarForEdit,
+  onAddOrUpdateCar,
   postFileData,
 } from 'services/api/car/api-actions';
 import {setCarForEdit} from 'store/reducers/car-reducer';
@@ -33,7 +32,6 @@ import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import {addCarValidation} from 'validations';
 import styles from './styles';
-import {navigate} from 'navigation/navigation-ref';
 const AddCar = props => {
   const {navigation, route} = props;
   // console.log('check id =====>', route?.params?.id);
@@ -43,33 +41,8 @@ const AddCar = props => {
   const [imageLoading, setImageLoading] = React.useState(false);
   const [galleryImageLoading, setGalleryImageLoading] = React.useState(false);
   const [featuredImageLoading, setFeaturedImageLoading] = React.useState(false);
-  const initialValues = {
-    title: '',
-    content: '',
-    video: '',
-    passenger: '1',
-    gear: 'Auto',
-    baggage: '4',
-    door: '4',
-    banner_image_id: '',
-    gallery: [],
-    image_id: '',
-    faqs: [
-      {
-        title: '',
-        content: '',
-      },
-    ],
-  };
   const dispatch = useDispatch();
-  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
-    useFormik({
-      initialValues: initialValues,
-      validateOnBlur: true,
-      validateOnChange: false,
-      validationSchema: addCarValidation,
-      onSubmit: () => {},
-    });
+
   React.useEffect(() => {
     if (route?.params?.id) {
       dispatch(getCarForEdit(route?.params?.id, setLoading));
@@ -77,64 +50,51 @@ const AddCar = props => {
       setLoading(false);
     }
   }, [route?.params?.id]);
-  React.useEffect(() => {
-    if (edit_car && route?.params?.id) {
-      // console.log('edit_car?.row?.popp->>', edit_car?.row?.faqs);
-      setFieldValue('title', edit_car?.row?.title);
-      setFieldValue('content', edit_car?.row?.content);
-      setFieldValue('faqs', [...edit_car?.row?.faqs]);
-      setFieldValue('video', edit_car?.row?.video);
-      setFieldValue('banner_image_id', edit_car?.row?.banner_image_id);
-      setFieldValue('image_id', edit_car?.row?.image_id);
-      setFieldValue('gallery', edit_car?.row?.gallery);
-    }
-  }, [edit_car]);
+
   React.useEffect(() => {
     dispatch(getCarAttributes());
   }, []);
-  React.useEffect(() => {
-    dispatch(setCarForEdit(null));
-  }, []);
+  const onHandleChange = (key, value) => {
+    dispatch(
+      setCarForEdit({
+        ...edit_car,
+        row: {
+          ...edit_car.row,
+          [key]: value,
+        },
+      }),
+    );
+  };
   const onSubmit = async () => {
     try {
-      // console.log('valuess->>', values);
-      // console.log('errors->>', errors);
-      // if (isValid && Object.keys(touched).length > 0) {
-      //   try {
-      //     navigation?.navigate('AddCarLocation', {values});
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // } else {
-      //   setFieldTouched('title', true);
-      //   setFieldTouched('content', true);
-      //   setFieldTouched('video', true);
-      //   // setFieldTouched('banner_image_id.url', true);
-      //   // setFieldTouched('image_id.url', true);
-      //   // setFieldTouched('gallery[0].url', true);
-      //   // setFieldTouched(`faqs[0].content`, true);
-      //   // setFieldTouched(`faqs[0].title`, true);
-      // }
-      navigation?.navigate('AddCarLocation', {values});
+      const res = await onAddOrUpdateCar({...edit_car});
+      dispatch(
+        setCarForEdit({
+          ...edit_car,
+          row: {
+            ...edit_car.row,
+            id: res?.id,
+          },
+        }),
+      );
     } catch (error) {
       console.log('error=>', error);
     }
   };
   const handleAddfaqs = () => {
-    setFieldValue('faqs', [...values?.faqs, {title: '', content: ''}]);
+    onHandleChange('faqs', [...edit_car?.row?.faqs, {title: '', content: ''}]);
   };
   const handleRemovefaqs = index => {
-    const updatedPolicies = values?.faqs?.filter((_, i) => i !== index);
-    setFieldValue('faqs', updatedPolicies);
+    const updatedPolicies = edit_car?.row?.faqs?.filter((_, i) => i !== index);
+    onHandleChange('faqs', updatedPolicies);
   };
 
   const onImageRemove = index => {
-    let copy = [...values.gallery];
+    let copy = [...edit_car?.row?.gallery];
     copy = copy.filter((e, i) => {
       return i != index;
     });
-    // setAddImage(copy);
-    setFieldValue('gallery', copy);
+    onHandleChange(gallery, copy);
   };
   const openGallery = async v => {
     try {
@@ -145,34 +105,20 @@ const AddCar = props => {
         setFeaturedImageLoading(false);
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
-          ...file_resp?.data,
-        });
+        onHandleChange('gallery', [...edit_car?.row?.gallery, file_resp?.data]);
       } else if (v == 'bannerImage') {
         setImageLoading(true);
         setFeaturedImageLoading(false);
         setGalleryImageLoading(false);
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        setFieldValue('banner_image_id', file_resp?.data);
+        onHandleChange('banner_image_id', file_resp?.data);
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        setFieldValue('image_id', file_resp?.data);
+        onHandleChange('image_id', file_resp?.data);
       }
-
-      // const uri = res.uri;
-
-      // if (v === 'gallery' && file_resp?.data) {
-      //   setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
-      //     ...file_resp?.data,
-      //   });
-      // } else if (v == 'bannerImage') {
-      //   setFieldValue('banner_image_id', file_resp?.data);
-      // } else {
-      //   setFieldValue('image_id', file_resp?.data);
-      // }
     } catch (error) {
       console.log('upload image error', error);
       Alert.alert('Error', UTILS?.returnError(error));
@@ -182,14 +128,8 @@ const AddCar = props => {
       setGalleryImageLoading(false);
     }
   };
-  // console.log('values me check====>', values);
   return (
     <View style={styles.container1}>
-      <Header1x2x
-        title={t(route?.params?.id ? 'edit_car' : 'add_car')}
-        back={true}
-      />
-
       {loading ? (
         <Loader />
       ) : (
@@ -212,40 +152,22 @@ const AddCar = props => {
             <></>
           )}
           <PrimaryInput
-            error={
-              touched?.title && errors?.title
-                ? `${t(errors?.title)}`
-                : undefined
-            }
             label={t('title')}
             placeholder={t('title')}
-            onChangeText={str => setFieldValue('title', str)}
-            onBlur={() => setFieldTouched('title', true)}
-            value={values.title}
+            onChangeText={str => onHandleChange('title', str)}
+            value={edit_car?.row?.title}
           />
           <PrimaryInput
-            error={
-              touched?.content && errors?.content
-                ? `${t(errors?.content)}`
-                : undefined
-            }
             label={t('content')}
             placeholder={t('content')}
-            onChangeText={str => setFieldValue('content', str)}
-            onBlur={() => setFieldTouched('content', true)}
-            value={values.content}
+            onChangeText={str => onHandleChange('content', str)}
+            value={edit_car?.row?.content}
           />
           <PrimaryInput
-            error={
-              touched?.video && errors?.video
-                ? `${t(errors?.video)}`
-                : undefined
-            }
             label={t('youtube_video')}
             placeholder={t('youtube_video')}
-            onChangeText={str => setFieldValue('video', str)}
-            onBlur={() => setFieldTouched('video', true)}
-            value={values.video}
+            onChangeText={str => onHandleChange('video', str)}
+            value={edit_car?.row?.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
           <ImageBackground
@@ -260,19 +182,13 @@ const AddCar = props => {
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
             />
-            {values.banner_image_id?.url ? (
+            {edit_car?.row?.banner_image_id?.url ? (
               <Image
-                source={{uri: values.banner_image_id?.url}}
+                source={{uri: edit_car?.row?.banner_image_id?.url}}
                 style={{width: '100%', height: '100%'}}
               />
             ) : null}
           </ImageBackground>
-          {errors.banner_image_id?.url && touched.banner_image_id?.url && (
-            <Regular
-              label={t(errors?.banner_image_id?.url)}
-              style={styles.errorLabel}
-            />
-          )}
 
           <Regular
             color={colors.primary}
@@ -299,7 +215,7 @@ const AddCar = props => {
             </TouchableOpacity>
             <FlatList
               horizontal={true}
-              data={values?.gallery}
+              data={edit_car?.row?.gallery || []}
               renderItem={({item, index}) => {
                 if (!item?.url) return null;
                 return (
@@ -322,17 +238,6 @@ const AddCar = props => {
               }}
             />
           </View>
-          {errors?.gallery &&
-            errors?.gallery[0] &&
-            errors?.gallery[0]?.url &&
-            touched?.gallery &&
-            touched?.gallery[0] &&
-            touched?.gallery[0]?.url && (
-              <Regular
-                style={styles.errorLabel}
-                label={t(errors?.gallery[0]?.url)}
-              />
-            )}
           <Bold
             label={t('extra_info')}
             color={colors.primary}
@@ -341,55 +246,33 @@ const AddCar = props => {
           <Row>
             <PrimaryInput
               mainContainer={{width: '48%'}}
-              error={
-                touched?.passenger && errors?.passenger
-                  ? `${t(errors?.passenger)}`
-                  : undefined
-              }
               label={t('passenger')}
-              // containerStyle={{width: '30%'}}
               placeholder={t('car_passenger')}
-              onChangeText={str => setFieldValue('passenger', str)}
-              onBlur={() => setFieldTouched('passenger', true)}
-              value={values.passenger}
+              onChangeText={str => onHandleChange('passenger', str)}
+              value={`${edit_car?.row?.passenger}`}
             />
             <PrimaryInput
               mainContainer={{width: '48%'}}
-              error={
-                touched?.gear && errors?.gear ? `${t(errors?.gear)}` : undefined
-              }
               label={t('gear')}
               placeholder={t('car_gear')}
-              onChangeText={str => setFieldValue('gear', str)}
-              onBlur={() => setFieldTouched('gear', true)}
-              value={values.gear}
+              onChangeText={str => onHandleChange('gear', str)}
+              value={`${edit_car?.row?.gear}`}
             />
           </Row>
           <Row>
             <PrimaryInput
               mainContainer={{width: '48%'}}
-              error={
-                touched?.baggage && errors?.baggage
-                  ? `${t(errors?.baggage)}`
-                  : undefined
-              }
               label={t('baggage')}
-              // containerStyle={{width: '30%'}}
               placeholder={t('car_baggage')}
-              onChangeText={str => setFieldValue('baggage', str)}
-              onBlur={() => setFieldTouched('baggage', true)}
-              value={values.baggage}
+              onChangeText={str => onHandleChange('baggage', str)}
+              value={`${edit_car?.row?.baggage}`}
             />
             <PrimaryInput
               mainContainer={{width: '48%'}}
-              error={
-                touched?.door && errors?.door ? `${t(errors?.door)}` : undefined
-              }
               label={t('door')}
               placeholder={t('car_door')}
-              onChangeText={str => setFieldValue('door', str)}
-              onBlur={() => setFieldTouched('door', true)}
-              value={values.door}
+              onChangeText={str => onHandleChange('door', str)}
+              value={`${edit_car?.row?.door}`}
             />
           </Row>
           <Row style={{backgroundColor: colors.lightGray}}>
@@ -399,9 +282,9 @@ const AddCar = props => {
             </TouchableOpacity>
           </Row>
 
-          {values?.faqs?.map((faqs, index) => (
+          {edit_car?.row?.faqs?.map((faq, index) => (
             <View style={styles.policyContainer} key={index}>
-              {values?.faqs?.length !== 1 && (
+              {edit_car?.row?.faqs?.length !== 1 && (
                 <TouchableOpacity
                   style={{alignSelf: 'flex-end'}}
                   onPress={() => handleRemovefaqs(index)}>
@@ -415,37 +298,25 @@ const AddCar = props => {
               <PrimaryInput
                 label={t('title')}
                 placeholder={t('faqs_title')}
-                onChangeText={str =>
-                  setFieldValue(`faqs.[${index}].title`, str)
-                }
-                onBlur={() => setFieldTouched(`faqs.[${index}].title`, true)}
-                value={values.faqs[index].title}
-                error={
-                  touched?.faqs &&
-                  touched?.faqs[index] &&
-                  errors?.faqs &&
-                  errors?.faqs[index] &&
-                  `${t(errors.faqs[0]?.title)}` &&
-                  `${t(errors?.faqs[0]?.title)}`
-                }
+                onChangeText={str => {
+                  const copy = [...edit_car?.row?.faqs];
+                  faq.title = str;
+                  copy[index] = faq;
+                  onHandleChange('faqs', copy);
+                }}
+                value={faq?.title}
               />
 
               <PrimaryInput
                 label={t('content')}
                 placeholder={t('content')}
-                onChangeText={str =>
-                  setFieldValue(`faqs.${index}.content`, str)
-                }
-                onBlur={() => setFieldTouched(`faqs.${index}.content`, true)}
-                value={values?.faqs[index].content}
-                error={
-                  touched?.faqs &&
-                  touched?.faqs[index] &&
-                  errors?.faqs &&
-                  errors?.faqs[0] &&
-                  `${t(errors.faqs[0]?.content)}` &&
-                  `${t(errors?.faqs[0]?.content)}`
-                }
+                onChangeText={str => {
+                  const copy = [...edit_car?.row?.faqs];
+                  faq.content = str;
+                  copy[index] = faq;
+                  onHandleChange('faqs', copy);
+                }}
+                value={faq?.content}
               />
             </View>
           ))}
@@ -466,20 +337,13 @@ const AddCar = props => {
               containerStyle={styles.buttonContainerStyle}
               textStyle={styles.buttonTextStyle}
             />
-            {values?.image_id?.url ? (
+            {edit_car?.row?.image_id?.url ? (
               <Image
-                source={{uri: values?.image_id?.url}}
+                source={{uri: edit_car?.row?.image_id?.url}}
                 style={{width: '100%', height: '100%'}}
               />
             ) : null}
           </ImageBackground>
-          {errors?.image_id?.url && touched?.image_id?.url && (
-            <Regular
-              label={`${t(errors?.image_id?.url)}`}
-              style={styles.errorLabel}
-            />
-          )}
-
           <PrimaryButton
             containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
             onPress={() => onSubmit()}

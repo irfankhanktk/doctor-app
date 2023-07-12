@@ -10,13 +10,11 @@ import {Checkbox} from 'components/atoms/checkbox';
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
 import {resetStack} from 'navigation/navigation-ref';
-import {SectionList} from 'react-native';
 import {useSelector} from 'react-redux';
-
-import Bold from 'typography/bold-text';
+import {onAddOrUpdateCar} from 'services/api/car/api-actions';
 import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
-import {onAddOrUpdateCar} from 'services/api/car/api-actions';
+import Bold from 'typography/bold-text';
 
 const AddCarAttributes = props => {
   const {navigation, route} = props;
@@ -32,7 +30,11 @@ const AddCarAttributes = props => {
     ...ele,
     data: ele?.terms || [],
   }));
-
+  React.useEffect(() => {
+    setSelectedTypes(
+      edit_car?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
+    );
+  }, [edit_car?.row?.terms]);
   const onSubmit = async () => {
     try {
       setAddBtnLoading(true);
@@ -87,26 +89,28 @@ const AddCarAttributes = props => {
       </Row>
     );
   };
-
+  const nestedMap =
+    attributes?.map(section => ({
+      name: section.name,
+      data: section.data?.map(item => renderItem({item})), // assuming renderItem is a function that renders each item
+    })) || [];
   return (
     <View style={styles.container}>
       <Header1x2x title={t('attributes')} back={true} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
-        <SectionList
-          sections={attributes}
-          keyExtractor={(item, index) => item + index}
-          renderItem={renderItem}
-          renderSectionHeader={({section: {name}}) => (
+        {nestedMap?.map(section => (
+          <React.Fragment key={section?.name}>
             <Row style={{justifyContent: 'flex-start'}}>
               <Bold fontSize={mvs(18)} label={'ATTRIBUTE:'} />
               <Bold
                 style={{marginLeft: mvs(10), fontSize: mvs(18)}}
-                label={name}
+                label={section?.name}
               />
             </Row>
-          )}
-        />
+            {section.data}
+          </React.Fragment>
+        ))}
         <PrimaryButton
           onPress={onSubmit}
           loading={addBtnLoading}

@@ -5,6 +5,7 @@ import { UTILS } from 'utils';
 import { STORAGEKEYS } from 'config/constants';
 import { Alert } from 'react-native';
 import { setLocations, setUserInfo, setWallet } from './../../store/reducers/user-reducer';
+import { goBack, resetStack } from 'navigation/navigation-ref';
 export const getUserInfo = () => {
   return getData(URLS.auth.get_user_info);
 };
@@ -22,7 +23,7 @@ export const onLogin = (
 
       const uRes = await getUserInfo();
       dispatch(setUserInfo(uRes?.user));
-      UTILS.resetStack(props, 'HotelStack');
+      UTILS.resetStack(props, 'Login');
     } catch (error: any) {
       console.log('error in login', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));
@@ -87,6 +88,61 @@ export const getLocations = () => {
     } catch (error) {
       console.log('error', UTILS.returnError(error));
       Alert.alert('Error', UTILS.returnError(error));
+    }
+  };
+};
+export const onUpdateProfile = (
+  values: any,
+  setLoading: (bool: boolean) => void,
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      setLoading(true);
+      const res = await postData(URLS.auth.update_profile, values);
+      console.log('res of onUpdateProfile=>', res);
+
+      UTILS.setItem(STORAGEKEYS.user, JSON.stringify(values));
+      dispatch(setUserInfo(values));
+      goBack();
+    } catch (error: any) {
+      console.log('error in onUpdateProfile', UTILS.returnError(error));
+      Alert.alert('', UTILS.returnError(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+};
+export const onUpdatePassword = (
+  values: any,
+  setLoading: (bool: boolean) => void,
+  props: any,
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      setLoading(true);
+      const res = await postData(URLS.auth.update_password, values);
+      console.log('res of onUpdatePassword=>', res);
+      Alert.alert('Password Changed Successfully');
+      dispatch(onLogoutPress());
+    } catch (error: any) {
+      console.log('error in onSignupPress', UTILS.returnError(error));
+      Alert.alert('', UTILS.returnError(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+};
+
+export const onLogoutPress = () => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      // await logout();
+      await UTILS.clearStorage();
+      dispatch(setUserInfo(null));
+      resetStack('Splash');
+    } catch (error: any) {
+      console.log('error in onDeleteTask', UTILS.returnError(error));
+      Alert.alert('', UTILS.returnError(error));
     }
   };
 };

@@ -1,10 +1,10 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {mvs} from 'config/metrices';
 import {Animated, TouchableOpacity, View} from 'react-native';
-import AddHotel from 'screens/hotel/add-hotel';
-import AddHotelAttributes from 'screens/hotel/add-hotel-attributes';
-import AddHotelLocation from 'screens/hotel/add-hotel-location';
-import AddHotelPrice from 'screens/hotel/add-hotel-price';
+import AddCar from 'screens/car/add-car';
+import AddCarAttributes from 'screens/car/add-car-attributes';
+import AddCarLocation from 'screens/car/add-car-location';
+import AddCarPrice from 'screens/car/add-car-price';
 
 function MyTabBar({state, descriptors, navigation, position}) {
   return (
@@ -69,19 +69,19 @@ function MyTabBar({state, descriptors, navigation, position}) {
 }
 
 // ...
-export default HotelTopTab = props => {
+export default CarTopTab = props => {
   const {route} = props;
   const Tab = createMaterialTopTabNavigator();
   return (
     <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
       <Tab.Screen
         name="Content"
-        component={AddHotel}
+        component={AddCar}
         initialParams={{id: route?.params?.id}}
       />
-      <Tab.Screen name="Location" component={AddHotelLocation} />
-      <Tab.Screen name="Price" component={AddHotelPrice} />
-      <Tab.Screen name="Attr" component={AddHotelAttributes} />
+      <Tab.Screen name="Location" component={AddCarLocation} />
+      <Tab.Screen name="Price" component={AddCarPrice} />
+      <Tab.Screen name="Attr" component={AddCarAttributes} />
     </Tab.Navigator>
   );
 };

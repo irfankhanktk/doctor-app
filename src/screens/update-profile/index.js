@@ -1,25 +1,20 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {PrimaryButton} from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import { useFormik } from 'formik';
+import PrimaryInput, {PrimaryPhoneInput} from 'components/atoms/inputs';
+import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
+import {useFormik} from 'formik';
+import {useAppDispatch, useAppSelector} from 'hooks/use-store';
 import React from 'react';
-import { View } from 'react-native';
-import { onUpdateProfile } from 'services/api/doctor/api-actions';
+import {View} from 'react-native';
+import {onUpdateProfile} from 'services/api/auth-api-actions';
 import i18n from 'translation';
-import { updateProfileFormValidation } from 'validations';
-import { PrimaryButton } from 'components/atoms/buttons';
-import PrimaryInput, {
-  PrimaryPhoneInput
-} from 'components/atoms/inputs';
-import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
-import { useAppDispatch, useAppSelector } from 'hooks/use-store';
-import RootStackParamList from '../../types/navigation-types/root-stack';
+import {updateProfileFormValidation} from 'validations';
 import styles from './styles';
-type props = NativeStackScreenProps<RootStackParamList, 'UpdateProfile'>;
 
-const UpdateProfile = (props: props) => {
-  const { navigation } = props;
-  const { t } = i18n;
-  const { userInfo } = useAppSelector(s => s?.user);
+const UpdateProfile = props => {
+  const {navigation} = props;
+  const {t} = i18n;
+  const {userInfo} = useAppSelector(s => s?.user);
   console.log('userinfo======>', userInfo);
   const dispatch = useAppDispatch();
   const initialValues = userInfo ?? {
@@ -41,13 +36,13 @@ const UpdateProfile = (props: props) => {
     enable_service_fee: 0,
   };
   const [loading, setLoading] = React.useState(false);
-  const { values, errors, touched, setFieldValue, setFieldTouched, isValid } =
+  const {values, errors, touched, setFieldValue, setFieldTouched, isValid} =
     useFormik({
       initialValues: initialValues,
       validateOnBlur: true,
       validateOnChange: true,
       validationSchema: updateProfileFormValidation,
-      onSubmit: () => { },
+      onSubmit: () => {},
     });
   console.log('errors=>', errors);
   React.useEffect(() => {
@@ -237,7 +232,7 @@ const UpdateProfile = (props: props) => {
           title={t('save')}
           // onPress={onSubmit}
           onPress={() => {
-            dispatch(onUpdateProfile({ ...values }, setLoading, props));
+            dispatch(onUpdateProfile({...values}, setLoading, props));
           }}
           containerStyle={styles.button}
         />

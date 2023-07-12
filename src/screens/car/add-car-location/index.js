@@ -9,25 +9,15 @@ import {PrimaryButton} from 'components/atoms/buttons';
 import {UTILS} from 'utils';
 import {getLocations} from 'services/api/auth-api-actions';
 import {t} from 'i18next';
+import {setCarForEdit} from 'store/reducers/car-reducer';
+import {navigate} from 'navigation/navigation-ref';
+import {onAddOrUpdateCar} from 'services/api/car/api-actions';
 
 const AddCarLocation = props => {
-  const {values} = props?.route?.params || {};
-  console.log('values in map=>>', values);
-  const {navigation} = props;
   const dispatch = useDispatch();
-  const {car, user, hotel} = useSelector(s => s);
+  const {car, user} = useSelector(s => s);
   const {edit_car} = car;
   const {locations} = user;
-  const [markerCoordinates, setMarkerCoordinates] = useState(
-    edit_car?.row
-      ? {
-          latitude: edit_car?.row?.map_lat * 1,
-          longitude: edit_car?.row?.map_lng * 1,
-        }
-      : null,
-  );
-  // console.log('marker cordinate check===>', markerCoordinates);
-
   const [selectedItem, setSelectedItem] = React.useState(null);
   const [region, setRegion] = React.useState({
     latitude: user?.location?.latitude ?? 51.528564,
@@ -35,7 +25,6 @@ const AddCarLocation = props => {
     latitude: 51.528564,
     longitude: -0.20301,
   });
-  console.log('region-->', region);
   const mapRef = useRef(null);
   const handleLongPress = async event => {
     try {
@@ -48,7 +37,21 @@ const AddCarLocation = props => {
         res?.city?.toLowerCase() === selectedItem?.title?.toLowerCase() ||
         res?.country?.toLowerCase() === selectedItem?.title?.toLowerCase()
       ) {
-        setMarkerCoordinates(coordinate);
+        const addressComponent = await UTILS._returnAddress(
+          coordinate?.latitude,
+          coordinate?.longitude,
+        );
+        dispatch(
+          setCarForEdit({
+            ...edit_car,
+            row: {
+              ...edit_car?.row,
+              map_lat: coordinate?.latitude,
+              map_lng: coordinate?.longitude,
+              address: addressComponent?.fulladdress,
+            },
+          }),
+        );
       } else {
         if (!selectedItem?.title)
           throw `Please first select location from dropdown`;
@@ -64,17 +67,24 @@ const AddCarLocation = props => {
       handleRegionChange({
         latitude: selectedItem?.map_lat * 1,
         longitude: selectedItem?.map_lng * 1,
-        // latitude: 31.5055046844182,
-        // longitude: 74.34502738081864,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
     } else {
-      handleRegionChange({
-        ...region,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
+      handleRegionChange(
+        edit_car?.row?.map_lat
+          ? {
+              latitude: edit_car?.row?.map_lat * 1,
+              longitude: edit_car?.row?.map_lng * 1,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }
+          : {
+              ...region,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            },
+      );
     }
   }, [selectedItem, region]);
   React.useEffect(() => {
@@ -105,7 +115,14 @@ const AddCarLocation = props => {
           longitudeDelta: 0.0421,
         }}
         ref={mapRef}>
-        {markerCoordinates && <Marker coordinate={markerCoordinates} />}
+        {edit_car?.row?.map_lat && edit_car?.row?.map_lng && (
+          <Marker
+            coordinate={{
+              latitude: edit_car?.row?.map_lat * 1,
+              longitude: edit_car?.row?.map_lng * 1,
+            }}
+          />
+        )}
       </MapView>
       <TouchableOpacity
         onPress={() => props?.navigation?.goBack()}
@@ -127,17 +144,17 @@ const AddCarLocation = props => {
           title={t('next')}
           onPress={async () => {
             try {
-              if (!markerCoordinates) throw 'Please select car location';
-              const addressComponent = await UTILS._returnAddress(
-                markerCoordinates?.latitude,
-                markerCoordinates?.longitude,
+              if (!edit_car?.row?.map_lat) throw 'Please select car location';
+              const res = await onAddOrUpdateCar({...edit_car});
+              dispatch(
+                setCarForEdit({
+                  ...edit_car,
+                  row: {
+                    ...edit_car.row,
+                    id: res?.id,
+                  },
+                }),
               );
-              navigation.navigate('AddCarPrice', {
-                ...values,
-                address: addressComponent?.fulladdress,
-                map_lat: markerCoordinates?.latitude,
-                map_lng: markerCoordinates?.longitude,
-              });
             } catch (error) {
               console.log('error in map location ::', error);
               Alert.alert('Validation Error', UTILS.returnError(error));

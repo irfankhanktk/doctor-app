@@ -1,4 +1,3 @@
-import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {t} from 'i18next';
 import React, {useState} from 'react';
@@ -12,20 +11,18 @@ import {mvs} from 'config/metrices';
 import {resetStack} from 'navigation/navigation-ref';
 import {useSelector} from 'react-redux';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
+import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 import Bold from 'typography/bold-text';
 import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 
 const AddHotelAttributes = props => {
-  const {navigation, route} = props;
   const {hotel} = useSelector(s => s);
   const {hotel_attributes, edit_hotel} = hotel;
   const [addBtnLoading, setAddBtnLoading] = React.useState(false);
-
   const [selectedTypes, setSelectedTypes] = useState(
     edit_hotel?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
   );
-
   const attributes = hotel_attributes?.attributes?.map(ele => ({
     ...ele,
     data: ele?.terms || [],
@@ -42,6 +39,15 @@ const AddHotelAttributes = props => {
         ...edit_hotel,
         selected_terms: selectedTypes?.map(x => x?.id),
       });
+      dispatch(
+        setHotelForEdit({
+          ...edit_hotel,
+          row: {
+            ...edit_hotel.row,
+            id: res?.id,
+          },
+        }),
+      );
       resetStack('HotelStack');
     } catch (error) {
       Alert.alert(UTILS.returnError(error));

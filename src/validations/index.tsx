@@ -78,7 +78,7 @@ export const updateProfileFormValidation = yup.object().shape({
 //     .required('Phone is required'),
 // });
 export const updatePasswordValidation = yup.object().shape({
-  email: yup.string().email('invalid_email').required('req_email'),
+  // email: yup.string().email('invalid_email').required('req_email'),
   old_password: yup.string().required('req_pass').min(8, 'weak_pass'),
   new_password: yup
     .string()

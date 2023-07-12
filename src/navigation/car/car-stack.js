@@ -4,18 +4,15 @@ import {colors} from 'config/colors';
 import * as React from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import AddCar from 'screens/car/add-car';
-import AddCarAttributes from 'screens/car/add-car-attributes';
-import AddCarLocation from 'screens/car/add-car-location';
-import AddCarPrice from 'screens/car/add-car-price';
 import AllCars from 'screens/car/all-cars';
 import CarDetailsScreen from 'screens/car/car-details-screen';
 import CarFilterScreen from 'screens/car/car-filter-screen';
+import EditCarAvailability from 'screens/car/edit-car-availability';
 import RecoveryCars from 'screens/car/recovery-cars';
+import AddHotelPrice from 'screens/hotel/add-hotel-price';
 import {horizontalAnimation} from 'utils';
 import CarTabBar from './car-tab';
-import AddHotelPrice from 'screens/hotel/add-hotel-price';
-import EditCarAvailability from 'screens/car/edit-car-availability';
+import CarTopTab from './car-top-tab';
 const Stack = createNativeStackNavigator();
 
 export default CarStack = () => {
@@ -37,16 +34,12 @@ export default CarStack = () => {
         <Stack.Screen name="CarDetails" component={CarDetailsScreen} />
         <Stack.Screen name="AddHotelPrice" component={AddHotelPrice} />
         {/* <Stack.Screen name="RoomScreen" component={RoomScreen} /> */}
-        {/* <Stack.Screen name="AddRoom" component={AddRoom} /> */}
-        <Stack.Screen name="AddCar" component={AddCar} />
-        <Stack.Screen name="AddCarLocation" component={AddCarLocation} />
-        <Stack.Screen name="AddCarPrice" component={AddCarPrice} />
+        <Stack.Screen name="CarTopTab" component={CarTopTab} />
 
         <Stack.Screen
           name="EditCarAvailability"
           component={EditCarAvailability}
         />
-        <Stack.Screen name="AddCarAttributes" component={AddCarAttributes} />
       </Stack.Navigator>
     </View>
   );

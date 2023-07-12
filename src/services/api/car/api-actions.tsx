@@ -74,7 +74,15 @@ export const getCarForEdit = (
     };
 };
 export const postFileData = (data: any) => postFormData(`${URLS.car.store_file}`, data);
-export const onAddOrUpdateCar = (data: any) => postData(`${URLS.car.add_update_car}${data?.id || -1}`, data);
+export const onAddOrUpdateCar = (data: any) => postData(`${URLS.car.add_update_car}${data?.row?.id || -1}`, {
+    ...data?.row,
+    id: data?.row?.id || null,
+    banner_image_id: data?.row?.banner_image_id?.data?.id || '',
+    gallery: data?.row?.gallery?.map((x: any) => x?.data?.id)?.join(),
+    image_id: data?.row?.image_id?.data?.id || '',
+    star_rate: data?.row?.star_rate || '0',
+    terms: data?.selected_terms,
+});
 export const getCarDetails = (slug: any) => getData(`${URLS.car.car_details}${slug}`);
 export const deleteCar = (car_id: any) => getData(`${URLS.car.delete_car}${car_id}`);
 export const permnentlyDeleteCar = (car_id: any) => getData(`${URLS.car.delete_car}${car_id}?permanently_delete=${1}`);

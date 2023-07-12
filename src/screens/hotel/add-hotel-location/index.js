@@ -12,21 +12,10 @@ import {t} from 'i18next';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
 const AddHotelLocation = props => {
-  const {values} = props?.route?.params || {};
-  const {navigation} = props;
   const dispatch = useDispatch();
   const {hotel, user} = useSelector(s => s);
   const {edit_hotel} = hotel;
   const {locations} = user;
-  const [markerCoordinates, setMarkerCoordinates] = useState(
-    edit_hotel?.row
-      ? {
-          latitude: edit_hotel?.row?.map_lat * 1,
-          longitude: edit_hotel?.row?.map_lng * 1,
-        }
-      : null,
-  );
-
   const [selectedItem, setSelectedItem] = React.useState(null);
   const [region, setRegion] = React.useState({
     latitude: user?.location?.latitude ?? 51.528564,
@@ -34,7 +23,6 @@ const AddHotelLocation = props => {
     latitude: 51.528564,
     longitude: -0.20301,
   });
-  console.log('region-->', region);
   const mapRef = useRef(null);
   const handleLongPress = async event => {
     try {
@@ -76,8 +64,6 @@ const AddHotelLocation = props => {
       handleRegionChange({
         latitude: selectedItem?.map_lat * 1,
         longitude: selectedItem?.map_lng * 1,
-        // latitude: 31.5055046844182,
-        // longitude: 74.34502738081864,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
@@ -160,7 +146,16 @@ const AddHotelLocation = props => {
               if (!edit_hotel?.row?.map_lat)
                 throw 'Please select hotel location';
 
-              await onAddOrUpdateHotel({...edit_hotel});
+              const res = await onAddOrUpdateHotel({...edit_hotel});
+              dispatch(
+                setHotelForEdit({
+                  ...edit_hotel,
+                  row: {
+                    ...edit_hotel.row,
+                    id: res?.id,
+                  },
+                }),
+              );
               // navigation.navigate('AddHotelPrice');
             } catch (error) {
               console.log('error in map location ::', error);
