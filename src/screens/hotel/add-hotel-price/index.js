@@ -13,11 +13,15 @@ import {t} from 'i18next';
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 import Regular from 'typography/regular-text';
 import styles from './styles';
+import {goBack, navigate} from 'navigation/navigation-ref';
+import {Alert} from 'react-native';
+import {I18nManager} from 'react-native';
 const AddHotelPrice = props => {
   const {navigation, route} = props;
   const dispatch = useAppDispatch();
@@ -25,6 +29,8 @@ const AddHotelPrice = props => {
   const [buyerFeeIndex, setBuyerFeeIndex] = React.useState(0);
   const [extraPrice, setExteraPrice] = React.useState(false);
   const [buyerFeeType, setBuyerFeeType] = React.useState(false);
+  const [btnLoading, setBtnLoading] = React.useState(false);
+
   const {hotel} = useSelector(s => s);
   const {edit_hotel} = hotel;
 
@@ -41,6 +47,7 @@ const AddHotelPrice = props => {
   };
   const onSubmit = async () => {
     try {
+      setBtnLoading(true);
       const res = await onAddOrUpdateHotel({...edit_hotel});
       dispatch(
         setHotelForEdit({
@@ -51,9 +58,12 @@ const AddHotelPrice = props => {
           },
         }),
       );
-      navigation?.navigate('AddHotelAttributes');
+      Alert.alert(t('save_changes_successfully'));
+      navigate('Attr');
     } catch (error) {
       console.log('error=>', error);
+    } finally {
+      setBtnLoading(false);
     }
   };
   const handleAddExtraPrice = () => {
@@ -83,6 +93,14 @@ const AddHotelPrice = props => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => goBack()} style={styles.backButton}>
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
+      </TouchableOpacity>
+
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
@@ -332,7 +350,8 @@ const AddHotelPrice = props => {
           </>
         ) : null}
         <PrimaryButton
-          title={t('next')}
+          loading={btnLoading}
+          title={t('save_changes')}
           onPress={onSubmit}
           containerStyle={styles.nextButton}
         />

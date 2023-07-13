@@ -6,17 +6,19 @@ import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
 import {t} from 'i18next';
-import {navigate} from 'navigation/navigation-ref';
+import {goBack, navigate} from 'navigation/navigation-ref';
 import React from 'react';
 import {
   Alert,
   FlatList,
+  I18nManager,
   Image,
   ImageBackground,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -53,20 +55,23 @@ const AddHotel = props => {
     dispatch(getHotelAttributes());
   }, []);
 
+  const onHandleChange = (key, value) => {
+    dispatch(
+      setHotelForEdit({
+        ...edit_hotel,
+        row: {
+          ...edit_hotel?.row,
+          [key]: value,
+        },
+      }),
+    );
+  };
   const onSubmit = async () => {
     try {
       setBtnLoading(true);
-      const res = await onAddOrUpdateHotel({...edit_hotel});
-      dispatch(
-        setHotelForEdit({
-          ...edit_hotel,
-          row: {
-            ...edit_hotel.row,
-            id: res?.id,
-          },
-        }),
-      );
-      // navigation?.navigate('AddHotelLocation');
+      await onAddOrUpdateHotel({...edit_hotel});
+      Alert.alert(t('save_changes_successfully'));
+      navigate('Location');
     } catch (error) {
       console.log('error===> ', UTILS.returnError(error));
       Alert.alert('Error', UTILS.returnError(error));
@@ -105,15 +110,7 @@ const AddHotel = props => {
     copy = copy.filter((e, i) => {
       return i != index;
     });
-    dispatch(
-      setHotelForEdit({
-        ...edit_hotel,
-        row: {
-          ...edit_hotel.row,
-          gallery: copy,
-        },
-      }),
-    );
+    onHandleChange(gallery, copy);
   };
   const openGallery = async v => {
     try {
@@ -123,42 +120,22 @@ const AddHotel = props => {
 
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        dispatch(
-          setHotelForEdit({
-            ...edit_hotel,
-            row: {
-              ...edit_hotel?.row,
-              gallery: [...edit_hotel?.row?.gallery, file_resp?.data],
-            },
-          }),
-        );
+        onHandleChange('gallery', [
+          ...edit_hotel?.row?.gallery,
+          file_resp?.data,
+        ]);
       } else if (v == 'bannerImage') {
         setImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        // setFieldValue('banner_image_id', file_resp?.data);
-        dispatch(
-          setHotelForEdit({
-            ...edit_hotel,
-            row: {
-              ...edit_hotel?.row,
-              banner_image_id: file_resp?.data,
-            },
-          }),
-        );
+
+        onHandleChange('banner_image_id', file_resp?.data);
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
-        dispatch(
-          setHotelForEdit({
-            ...edit_hotel,
-            row: {
-              ...edit_hotel?.row,
-              image_id: file_resp?.data,
-            },
-          }),
-        );
+        console.log('res of file->>>', file_resp?.data);
+        onHandleChange('image_id', file_resp?.data);
       }
     } catch (error) {
       console.log('upload image error', error);
@@ -171,6 +148,14 @@ const AddHotel = props => {
   };
   return (
     <View style={styles.container1}>
+      <TouchableOpacity onPress={() => goBack()} style={styles.backButton}>
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
+      </TouchableOpacity>
+
       {loading ? (
         <Loader />
       ) : (
@@ -195,40 +180,19 @@ const AddHotel = props => {
           <PrimaryInput
             label={t('title')}
             placeholder={t('title')}
-            onChangeText={str =>
-              dispatch(
-                setHotelForEdit({
-                  ...edit_hotel,
-                  row: {...edit_hotel.row, title: str},
-                }),
-              )
-            }
+            onChangeText={str => onHandleChange('title', str)}
             value={edit_hotel?.row.title}
           />
           <PrimaryInput
             label={t('content')}
             placeholder={t('content')}
-            onChangeText={str =>
-              dispatch(
-                setHotelForEdit({
-                  ...edit_hotel,
-                  row: {...edit_hotel.row, content: str},
-                }),
-              )
-            }
+            onChangeText={str => onHandleChange('content', str)}
             value={edit_hotel?.row?.content}
           />
           <PrimaryInput
             label={t('youtube_video')}
             placeholder={t('youtube_video')}
-            onChangeText={str =>
-              dispatch(
-                setHotelForEdit({
-                  ...edit_hotel,
-                  row: {...edit_hotel.row, video: str},
-                }),
-              )
-            }
+            onChangeText={str => onHandleChange('video', str)}
             value={edit_hotel?.row?.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
@@ -309,14 +273,7 @@ const AddHotel = props => {
           <PrimaryInput
             label={t('hotel_rating_standard')}
             placeholder={t('hotel_rating_standard')}
-            onChangeText={str =>
-              dispatch(
-                setHotelForEdit({
-                  ...edit_hotel,
-                  row: {...edit_hotel.row, star_rate: str},
-                }),
-              )
-            }
+            onChangeText={str => onHandleChange('star_rate', str)}
             value={edit_hotel.star_rate}
           />
           <Row style={{backgroundColor: colors.lightGray}}>
@@ -352,15 +309,7 @@ const AddHotel = props => {
                   item.title = str;
                   copy[index] = item;
 
-                  dispatch(
-                    setHotelForEdit({
-                      ...edit_hotel,
-                      row: {
-                        ...edit_hotel?.row,
-                        policy: copy,
-                      },
-                    }),
-                  );
+                  onHandleChange('policy', copy);
                 }}
                 value={policy.title}
               />
@@ -374,15 +323,7 @@ const AddHotel = props => {
                   item.content = str;
                   copy[index] = item;
 
-                  dispatch(
-                    setHotelForEdit({
-                      ...edit_hotel,
-                      row: {
-                        ...edit_hotel?.row,
-                        policy: copy,
-                      },
-                    }),
-                  );
+                  onHandleChange('policy', copy);
                 }}
                 value={policy?.content}
               />
@@ -417,7 +358,7 @@ const AddHotel = props => {
             loading={btnLoading}
             containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
             onPress={() => onSubmit()}
-            title={t('next')}
+            title={t('save_changes')}
           />
         </KeyboardAvoidScrollview>
       )}

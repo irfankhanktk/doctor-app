@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     fontSize: mvs(12),
     lineHeight: mvs(16),
   },
-  imgStyle: {borderRadius: mvs(15)},
+  imgStyle: {borderRadius: mvs(15), resizeMode: 'contain'},
   rowRating: {
     position: 'absolute',
     padding: mvs(15),

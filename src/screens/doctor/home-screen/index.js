@@ -152,7 +152,14 @@ const Home = props => {
             contentContainerStyle={styles.contentContainerStyle}
             data={uniquePatient}
             renderItem={({item, index}) => {
-              return <PopularPatientCard key={index} name={item?.name} />;
+              console.log('item me check===>', item);
+              return (
+                <PopularPatientCard
+                  key={index}
+                  name={item?.name}
+                  image={item?.avatar_id ? `${item?.avatar_id}` : false}
+                />
+              );
             }}
             keyExtractor={(item, index) => index?.toString()}
           />

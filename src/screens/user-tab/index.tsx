@@ -9,7 +9,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { onLogoutPress } from 'services/api/doctor/api-actions';
+import { onLogoutPress } from 'services/api/auth-api-actions';
 import TabParamList from 'types/navigation-types/bottom-tab';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';

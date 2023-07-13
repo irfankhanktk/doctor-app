@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     flexGrow: 1,
     paddingVertical: mvs(10),
-    paddingBottom: mvs(100),
+    
     
   },
   columnWrapperStyle: {

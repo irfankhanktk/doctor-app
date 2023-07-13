@@ -8,8 +8,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   contentContainerStyle: {
-    paddingTop: mvs(40),
+    paddingTop: mvs(20),
   },
-
+  backButton: {
+    width: mvs(32),
+    height: mvs(32),
+    
+    marginLeft: mvs(16),
+    borderRadius: mvs(100),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: mvs(10),
+  },
 });
 export default styles;

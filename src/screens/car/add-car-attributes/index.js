@@ -46,6 +46,7 @@ const AddCarAttributes = props => {
         image_id: route?.params?.image_id?.data?.id,
         terms: selectedTypes?.map(x => x?.id),
       });
+      Alert.alert(t('save_changes_successfully'));
       resetStack('CarStack');
       console.log('res=>>>add update car>>', res);
     } catch (error) {
@@ -115,7 +116,7 @@ const AddCarAttributes = props => {
           onPress={onSubmit}
           loading={addBtnLoading}
           disabled={!selectedTypes?.length}
-          title={'Add Car'}
+          title={t('save_changes')}
           containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
         />
       </KeyboardAvoidScrollview>

@@ -58,6 +58,7 @@ const AllPatientScreen = () => {
                 style={{width: '100%'}}
                 key={index}
                 name={item?.name}
+                image={item?.avatar_id ? `${item?.avatar_id}` : false}
                 Imagestyle={{width: '100%'}}
               />
             );
