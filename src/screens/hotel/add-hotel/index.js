@@ -52,20 +52,14 @@ const AddHotel = props => {
   React.useEffect(() => {
     dispatch(getHotelAttributes());
   }, []);
+  // React.useEffect(() => {
+  //   dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
+  // }, []);
 
   const onSubmit = async () => {
     try {
       setBtnLoading(true);
-      const res = await onAddOrUpdateHotel({...edit_hotel});
-      dispatch(
-        setHotelForEdit({
-          ...edit_hotel,
-          row: {
-            ...edit_hotel.row,
-            id: res?.id,
-          },
-        }),
-      );
+      await onAddOrUpdateHotel({...edit_hotel});
       // navigation?.navigate('AddHotelLocation');
     } catch (error) {
       console.log('error===> ', UTILS.returnError(error));
@@ -150,6 +144,8 @@ const AddHotel = props => {
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
+        console.log('res of file->>>', file_resp?.data);
+        // setFieldValue('image_id', file_resp?.data);
         dispatch(
           setHotelForEdit({
             ...edit_hotel,
@@ -171,6 +167,11 @@ const AddHotel = props => {
   };
   return (
     <View style={styles.container1}>
+      {/* <Header1x2x
+        title={t(route?.params?.id ? 'edit_hotel' : 'add_hotel')}
+        back={true}
+      /> */}
+
       {loading ? (
         <Loader />
       ) : (

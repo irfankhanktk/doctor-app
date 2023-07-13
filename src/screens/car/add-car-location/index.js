@@ -19,6 +19,8 @@ const AddCarLocation = props => {
   const {edit_car} = car;
   const {locations} = user;
   const [selectedItem, setSelectedItem] = React.useState(null);
+  const [btnLoading, setBtnLoading] = React.useState(false);
+
   const [region, setRegion] = React.useState({
     latitude: user?.location?.latitude ?? 51.528564,
     longitude: user?.location?.longitude ?? -0.20301,
@@ -141,9 +143,11 @@ const AddCarLocation = props => {
       </View>
       <View style={styles.nextButton}>
         <PrimaryButton
-          title={t('next')}
+          loading={btnLoading}
+          title={t('save_changes')}
           onPress={async () => {
             try {
+              setBtnLoading(true);
               if (!edit_car?.row?.map_lat) throw 'Please select car location';
               const res = await onAddOrUpdateCar({...edit_car});
               dispatch(
@@ -155,9 +159,13 @@ const AddCarLocation = props => {
                   },
                 }),
               );
+              Alert.alert(t('save_changes_successfully'));
+              navigate('Price');
             } catch (error) {
               console.log('error in map location ::', error);
               Alert.alert('Validation Error', UTILS.returnError(error));
+            } finally {
+              setBtnLoading(false);
             }
           }}
         />

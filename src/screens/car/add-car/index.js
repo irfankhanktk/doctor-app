@@ -38,6 +38,8 @@ const AddCar = props => {
   const {car} = useSelector(s => s);
   const {edit_car} = car;
   const [loading, setLoading] = React.useState(true);
+  const [btnLoading, setBtnLoading] = React.useState(false);
+
   const [imageLoading, setImageLoading] = React.useState(false);
   const [galleryImageLoading, setGalleryImageLoading] = React.useState(false);
   const [featuredImageLoading, setFeaturedImageLoading] = React.useState(false);
@@ -67,6 +69,7 @@ const AddCar = props => {
   };
   const onSubmit = async () => {
     try {
+      setBtnLoading(true);
       const res = await onAddOrUpdateCar({...edit_car});
       dispatch(
         setCarForEdit({
@@ -77,8 +80,12 @@ const AddCar = props => {
           },
         }),
       );
+      Alert.alert(t('save_changes_successfully'));
+      navigate('Location');
     } catch (error) {
       console.log('error=>', error);
+    } finally {
+      setBtnLoading(false);
     }
   };
   const handleAddfaqs = () => {
@@ -144,7 +151,9 @@ const AddCar = props => {
                 alignSelf: 'flex-end',
               }}
               onPress={() =>
-                navigate('EditCarAvailability', {car_id: route?.params?.id})
+                navigate('Location')('EditCarAvailability', {
+                  car_id: route?.params?.id,
+                })
               }
               title={t('edit_car_availability')}
             />
@@ -345,9 +354,10 @@ const AddCar = props => {
             ) : null}
           </ImageBackground>
           <PrimaryButton
+            loading={btnLoading}
             containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
             onPress={() => onSubmit()}
-            title={t('next')}
+            title={t('save_changes')}
           />
         </KeyboardAvoidScrollview>
       )}

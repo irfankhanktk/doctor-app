@@ -1,6 +1,5 @@
 import {PrimaryButton} from 'components/atoms/buttons';
 import {Checkbox} from 'components/atoms/checkbox';
-import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import PrimaryInput from 'components/atoms/inputs';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {Row} from 'components/atoms/row';
@@ -10,21 +9,23 @@ import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
 import {t} from 'i18next';
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
 import Regular from 'typography/regular-text';
 
+import {useAppDispatch} from 'hooks/use-store';
 import {navigate} from 'navigation/navigation-ref';
 import {onAddOrUpdateCar} from 'services/api/car/api-actions';
 import {setCarForEdit} from 'store/reducers/car-reducer';
 import styles from './styles';
-import {useAppDispatch} from 'hooks/use-store';
 
 const AddCarPrice = props => {
   const dispatch = useAppDispatch();
   const [index, setIndex] = React.useState(0);
   const [buyerFeeIndex, setBuyerFeeIndex] = React.useState(0);
+  const [btnLoading, setBtnLoading] = React.useState(false);
+
   const [extraPrice, setExteraPrice] = React.useState(false);
   const [buyerFeeType, setBuyerFeeType] = React.useState(false);
   const {car} = useSelector(s => s);
@@ -42,6 +43,7 @@ const AddCarPrice = props => {
   };
   const onSubmit = async () => {
     try {
+      setBtnLoading(true);
       const res = await onAddOrUpdateCar({...edit_car});
       dispatch(
         setCarForEdit({
@@ -52,8 +54,12 @@ const AddCarPrice = props => {
           },
         }),
       );
+      Alert.alert(t('save_changes_successfully'));
+      navigate('Attr');
     } catch (error) {
       console.log('error=>', error);
+    } finally {
+      setBtnLoading(false);
     }
   };
   const handleAddExtraPrice = () => {
@@ -335,7 +341,8 @@ const AddCarPrice = props => {
           </>
         ) : null}
         <PrimaryButton
-          title={t('next')}
+          loading={btnLoading}
+          title={t('save_changes')}
           onPress={onSubmit}
           containerStyle={styles.nextButton}
         />
