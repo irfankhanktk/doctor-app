@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   contentContainerStyle:{
-    paddingTop:mvs(69),
+    paddingTop:mvs(30),
+
     
   },
   bannerImageContainer:{
@@ -17,6 +18,16 @@ const styles = StyleSheet.create({
     height:mvs(250),
     marginTop:mvs(10),
     backgroundColor: colors.lightGray
+  },
+  backButton: {
+    width: mvs(32),
+    height: mvs(32),
+    
+    marginLeft: mvs(16),
+    borderRadius: mvs(100),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: mvs(10),
   },
   buttonContainerStyle:{
     width:mvs(150),

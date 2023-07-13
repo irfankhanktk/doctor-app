@@ -22,7 +22,7 @@ const Splash = (props: props) => {
 
     (async () => {
       try {
-        let screen: any = 'HotelStack';
+        let screen: any = 'Login';
         UTILS.get_current_location((position) => {
           dispatch(setLocation({
             latitude: position?.coords?.latitude,

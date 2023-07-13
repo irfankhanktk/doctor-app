@@ -2,19 +2,22 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {t} from 'i18next';
 import React, {useState} from 'react';
-import {Alert, View} from 'react-native';
+import {Alert, View, TouchableOpacity} from 'react-native';
 import styles from './styles';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {PrimaryButton} from 'components/atoms/buttons';
 import {Checkbox} from 'components/atoms/checkbox';
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
-import {resetStack} from 'navigation/navigation-ref';
+import {goBack, resetStack} from 'navigation/navigation-ref';
 import {useSelector} from 'react-redux';
 import {onAddOrUpdateCar} from 'services/api/car/api-actions';
 import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import Bold from 'typography/bold-text';
+
+import {I18nManager} from 'react-native';
 
 const AddCarAttributes = props => {
   const {navigation, route} = props;
@@ -38,7 +41,19 @@ const AddCarAttributes = props => {
   const onSubmit = async () => {
     try {
       setAddBtnLoading(true);
-      const res = await onAddOrUpdateCar({...edit_car});
+      const res = await onAddOrUpdateCar({
+        ...edit_car,
+        selected_terms: selectedTypes?.map(x => x?.id),
+      });
+      dispatch(
+        setHotelForEdit({
+          ...edit_car,
+          row: {
+            ...edit_car.row,
+            id: res?.id,
+          },
+        }),
+      );
       Alert.alert(t('save_changes_successfully'));
       resetStack('CarStack');
       console.log('res=>>>add update car>>', res);
@@ -90,7 +105,13 @@ const AddCarAttributes = props => {
     })) || [];
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('attributes')} back={true} />
+      <TouchableOpacity onPress={() => goBack()} style={styles.backButton}>
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
+      </TouchableOpacity>
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         {nestedMap?.map(section => (
