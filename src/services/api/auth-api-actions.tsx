@@ -23,7 +23,12 @@ export const onLogin = (
 
       const uRes = await getUserInfo();
       dispatch(setUserInfo(uRes?.user));
-      UTILS.resetStack(props, 'Login');
+      const role = uRes?.user?.role?.name;
+      let screen = `${role}Stack`;
+      if (!role) {
+        screen = 'Login';
+      }
+      resetStack(screen);
     } catch (error: any) {
       console.log('error in login', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));

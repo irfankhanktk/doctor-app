@@ -15,7 +15,10 @@ import uuid from 'react-native-uuid';
 import { NavigationProps } from '../types/navigation-types';
 import Geocoder from 'react-native-geocoding';
 Geocoder.init('AIzaSyCbFQqjZgQOWRMuQ_RpXU0kGAUIfJhDw98');
-
+// Helper function to convert degrees to radians
+function toRadians(degrees: any) {
+  return (degrees * Math.PI) / 180;
+}
 // Initialize the module (needs to be done only once)
 const getErrorList = (data: any) => {
   const { message, errors } = data;
@@ -203,7 +206,24 @@ export const UTILS = {
       throw new Error(error);
     }
   },
+  // Function to calculate the distance between two points using the Haversine formula
+  calculateDistance: (lat1: any, lon1: any, lat2: any, lon2: any) => {
+    const R = 6371; // Radius of the Earth in kilometers
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
 
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRadians(lat1)) *
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+
+    return distance; // Distance in kilometers
+  },
   _returnAddress: async (latitude: any, longitude: any) => {
     const addressObject = await Geocoder.from(latitude || '', longitude || '')
     let returnAddress = {

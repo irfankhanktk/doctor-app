@@ -41,6 +41,8 @@ const Splash = (props: props) => {
           if (token) {
             try {
               const res = await getUserInfo();
+              const role = res?.user?.role?.name;
+              screen = `${role}Stack`;
               dispatch(setUserInfo(res?.user))
             } catch (error) {
               console.log('error', error);
