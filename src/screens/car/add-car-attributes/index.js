@@ -38,14 +38,7 @@ const AddCarAttributes = props => {
   const onSubmit = async () => {
     try {
       setAddBtnLoading(true);
-      const res = await onAddOrUpdateCar({
-        ...route?.params,
-        id: edit_car?.row?.id || null,
-        gallery: route?.params?.gallery?.map(x => x?.data?.id)?.join(),
-        banner_image_id: route?.params?.banner_image_id?.data?.id,
-        image_id: route?.params?.image_id?.data?.id,
-        terms: selectedTypes?.map(x => x?.id),
-      });
+      const res = await onAddOrUpdateCar({...edit_car});
       Alert.alert(t('save_changes_successfully'));
       resetStack('CarStack');
       console.log('res=>>>add update car>>', res);
