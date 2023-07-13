@@ -7,7 +7,7 @@ import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
 import {useFormik} from 'formik';
 import {t} from 'i18next';
-import {navigate} from 'navigation/navigation-ref';
+import {goBack, navigate} from 'navigation/navigation-ref';
 import React from 'react';
 import {
   Alert,
@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getCarAttributes,
@@ -32,6 +33,7 @@ import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import {addCarValidation} from 'validations';
 import styles from './styles';
+import {I18nManager} from 'react-native';
 const AddCar = props => {
   const {navigation, route} = props;
   // console.log('check id =====>', route?.params?.id);
@@ -137,6 +139,13 @@ const AddCar = props => {
   };
   return (
     <View style={styles.container1}>
+      <TouchableOpacity onPress={() => goBack()} style={styles.backButton}>
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
+      </TouchableOpacity>
       {loading ? (
         <Loader />
       ) : (

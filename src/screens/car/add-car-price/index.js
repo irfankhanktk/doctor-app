@@ -11,14 +11,16 @@ import {t} from 'i18next';
 import React from 'react';
 import {Alert, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
 import Regular from 'typography/regular-text';
 
 import {useAppDispatch} from 'hooks/use-store';
-import {navigate} from 'navigation/navigation-ref';
+import {goBack, navigate} from 'navigation/navigation-ref';
 import {onAddOrUpdateCar} from 'services/api/car/api-actions';
 import {setCarForEdit} from 'store/reducers/car-reducer';
 import styles from './styles';
+import {I18nManager} from 'react-native';
 
 const AddCarPrice = props => {
   const dispatch = useAppDispatch();
@@ -89,6 +91,13 @@ const AddCarPrice = props => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => goBack()} style={styles.backButton}>
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
+      </TouchableOpacity>
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
