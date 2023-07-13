@@ -9,10 +9,10 @@ const styles = StyleSheet.create({
     },
     contentContainerStyle: {
         padding: mvs(20),
-        paddingTop: mvs(20),
+        paddingTop: '35%',
     },
     button: {
-        marginTop: mvs(20),
+        marginTop: mvs(40),
     },
     accountText: {
         color: colors.primary,

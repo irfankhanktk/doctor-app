@@ -15,7 +15,7 @@ const UpdateProfile = props => {
   const {navigation} = props;
   const {t} = i18n;
   const {userInfo} = useAppSelector(s => s?.user);
-  console.log('userinfo======>', userInfo);
+  // console.log('userinfo======>', userInfo);
   const dispatch = useAppDispatch();
   const initialValues = userInfo ?? {
     name: '',
@@ -52,7 +52,7 @@ const UpdateProfile = props => {
   }, []);
   return (
     <View style={styles.container}>
-      <Header1x2x isSearch={false} title={t('update_profile')} />
+      <Header1x2x back={true} isSearch={false} title={t('update_profile')} />
 
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
@@ -62,7 +62,7 @@ const UpdateProfile = props => {
           placeholder={t('name')}
           onChangeText={str => setFieldValue('name', str)}
           onBlur={() => setFieldTouched('name', true)}
-          value={values.name}
+          value={values.name || ''}
         />
         <PrimaryInput
           keyboardType={'email-address'}
@@ -71,7 +71,7 @@ const UpdateProfile = props => {
           placeholder={t('email')}
           onChangeText={str => setFieldValue('email', str)}
           onBlur={() => setFieldTouched('email', true)}
-          value={values.email}
+          value={values.email || ''}
         />
         <PrimaryPhoneInput
           error={errors?.phone && touched?.phone ? `${t(errors?.phone)}` : ''}
@@ -82,7 +82,7 @@ const UpdateProfile = props => {
             setFieldTouched('phone', true);
           }}
           onBlur={() => setFieldTouched('phone', true)}
-          value={values.phone}
+          value={values.phone || ''}
         />
         {/* 
         <InputWithIcon
@@ -109,7 +109,7 @@ const UpdateProfile = props => {
           placeholder={t('zip_code')}
           onChangeText={str => setFieldValue('zip_code', str)}
           onBlur={() => setFieldTouched('zip_code', true)}
-          value={`${values.zip_code}`}
+          value={`${values.zip_code || ''}`}
         />
         <PrimaryInput
           error={touched?.city && errors?.city ? t(errors?.city) : ''}
@@ -117,7 +117,7 @@ const UpdateProfile = props => {
           placeholder={t('city')}
           onChangeText={str => setFieldValue('city', str)}
           onBlur={() => setFieldTouched('city', true)}
-          value={`${values.city}`}
+          value={`${values.city || ''}`}
         />
         <PrimaryInput
           error={touched?.state && errors?.state ? t(errors?.state) : ''}
@@ -125,7 +125,7 @@ const UpdateProfile = props => {
           placeholder={t('state')}
           onChangeText={str => setFieldValue('state', str)}
           onBlur={() => setFieldTouched('state', true)}
-          value={`${values.state}`}
+          value={`${values.state || ''}`}
         />
         {/* <DatePicker
           onChangeText={(str: string) => setFieldValue('birthday', str)}>
@@ -146,7 +146,7 @@ const UpdateProfile = props => {
           placeholder={t('country')}
           onChangeText={str => setFieldValue('country', str)}
           onBlur={() => setFieldTouched('country', true)}
-          value={`${values.country}`}
+          value={`${values.country || ''}`}
         />
         <PrimaryInput
           keyboardType={'numeric'}
@@ -155,7 +155,7 @@ const UpdateProfile = props => {
           placeholder={t('price')}
           onChangeText={str => setFieldValue('price', str)}
           onBlur={() => setFieldTouched('price', true)}
-          value={`${values.price}`}
+          value={`${values.price || ''}`}
         />
         <PrimaryInput
           isRequired
@@ -168,7 +168,7 @@ const UpdateProfile = props => {
           placeholder={t('short_description')}
           onChangeText={str => setFieldValue('short_description', str)}
           onBlur={() => setFieldTouched('short_description', true)}
-          value={`${values.short_description}`}
+          value={`${values.short_description || ''}`}
         />
         <PrimaryInput
           keyboardType={'numeric'}
@@ -181,7 +181,7 @@ const UpdateProfile = props => {
           placeholder={t('experience')}
           onChangeText={str => setFieldValue('experience', str)}
           onBlur={() => setFieldTouched('experience', true)}
-          value={`${values.experience}`}
+          value={`${values.experience || ''}`}
         />
         <PrimaryInput
           keyboardType={'numeric'}
@@ -194,7 +194,7 @@ const UpdateProfile = props => {
           placeholder={t('min_day_before_booking')}
           onChangeText={str => setFieldValue('min_day_before_booking', str)}
           onBlur={() => setFieldTouched('min_day_before_booking', true)}
-          value={`${values.min_day_before_booking}`}
+          value={`${values.min_day_before_booking || ''}`}
         />
         <PrimaryInput
           keyboardType={'numeric'}
@@ -207,7 +207,7 @@ const UpdateProfile = props => {
           placeholder={t('min_day_stays')}
           onChangeText={str => setFieldValue('min_day_stays', str)}
           onBlur={() => setFieldTouched('min_day_stays', true)}
-          value={`${values.min_day_stays}`}
+          value={`${values.min_day_stays || ''}`}
         />
         <PrimaryInput
           keyboardType={'numeric'}
@@ -220,7 +220,7 @@ const UpdateProfile = props => {
           placeholder={t('per_patient')}
           onChangeText={str => setFieldValue('per_patient', str)}
           onBlur={() => setFieldTouched('per_patient', true)}
-          value={`${values.per_patient}`}
+          value={`${values.per_patient || ''}`}
         />
 
         <PrimaryButton

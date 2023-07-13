@@ -11,16 +11,19 @@ import {Checkbox} from 'components/atoms/checkbox';
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
 import {goBack, resetStack} from 'navigation/navigation-ref';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {onAddOrUpdateCar} from 'services/api/car/api-actions';
 import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import Bold from 'typography/bold-text';
 
 import {I18nManager} from 'react-native';
+import {setCarForEdit} from 'store/reducers/car-reducer';
+import {useAppDispatch} from 'hooks/use-store';
 
 const AddCarAttributes = props => {
   const {navigation, route} = props;
+  const dispatch = useAppDispatch();
   const {car} = useSelector(s => s);
   const {car_attributes, edit_car} = car;
   const [addBtnLoading, setAddBtnLoading] = React.useState(false);
@@ -46,7 +49,7 @@ const AddCarAttributes = props => {
         selected_terms: selectedTypes?.map(x => x?.id),
       });
       dispatch(
-        setHotelForEdit({
+        setCarForEdit({
           ...edit_car,
           row: {
             ...edit_car.row,

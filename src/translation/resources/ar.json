@@ -256,5 +256,7 @@
   "size_required":"حجم الغرفة مطلوب",
   "adults_required":"مطلوب الكبار",
   "import_url":"استيراد عنوان Url",
+  "new_password_required":"مطلوب كلمة مرور جديدة",
+  "phone_required":"الهاتف مطلوب"
   
 }
