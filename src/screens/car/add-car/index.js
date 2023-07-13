@@ -61,7 +61,7 @@ const AddCar = props => {
       setCarForEdit({
         ...edit_car,
         row: {
-          ...edit_car.row,
+          ...edit_car?.row,
           [key]: value,
         },
       }),

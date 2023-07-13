@@ -18,6 +18,8 @@ import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 import Regular from 'typography/regular-text';
 import styles from './styles';
+import {navigate} from 'navigation/navigation-ref';
+import {Alert} from 'react-native';
 const AddHotelPrice = props => {
   const {navigation, route} = props;
   const dispatch = useAppDispatch();
@@ -25,6 +27,8 @@ const AddHotelPrice = props => {
   const [buyerFeeIndex, setBuyerFeeIndex] = React.useState(0);
   const [extraPrice, setExteraPrice] = React.useState(false);
   const [buyerFeeType, setBuyerFeeType] = React.useState(false);
+  const [btnLoading, setBtnLoading] = React.useState(false);
+
   const {hotel} = useSelector(s => s);
   const {edit_hotel} = hotel;
 
@@ -41,6 +45,7 @@ const AddHotelPrice = props => {
   };
   const onSubmit = async () => {
     try {
+      setBtnLoading(true);
       const res = await onAddOrUpdateHotel({...edit_hotel});
       dispatch(
         setHotelForEdit({
@@ -51,9 +56,12 @@ const AddHotelPrice = props => {
           },
         }),
       );
-      navigation?.navigate('AddHotelAttributes');
+      Alert.alert(t('save_changes_successfully'));
+      navigate('Attr');
     } catch (error) {
       console.log('error=>', error);
+    } finally {
+      setBtnLoading(false);
     }
   };
   const handleAddExtraPrice = () => {
@@ -332,7 +340,8 @@ const AddHotelPrice = props => {
           </>
         ) : null}
         <PrimaryButton
-          title={t('next')}
+          loading={btnLoading}
+          title={t('save_changes')}
           onPress={onSubmit}
           containerStyle={styles.nextButton}
         />

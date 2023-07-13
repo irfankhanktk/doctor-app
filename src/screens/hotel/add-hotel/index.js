@@ -52,15 +52,24 @@ const AddHotel = props => {
   React.useEffect(() => {
     dispatch(getHotelAttributes());
   }, []);
-  // React.useEffect(() => {
-  //   dispatch(setHotelForEdit({row: {...ADD_HOTEL_DEFAULT}}));
-  // }, []);
 
+  const onHandleChange = (key, value) => {
+    dispatch(
+      setHotelForEdit({
+        ...edit_hotel,
+        row: {
+          ...edit_hotel?.row,
+          [key]: value,
+        },
+      }),
+    );
+  };
   const onSubmit = async () => {
     try {
       setBtnLoading(true);
       await onAddOrUpdateHotel({...edit_hotel});
-      // navigation?.navigate('AddHotelLocation');
+      Alert.alert(t('save_changes_successfully'));
+      navigate('Location');
     } catch (error) {
       console.log('error===> ', UTILS.returnError(error));
       Alert.alert('Error', UTILS.returnError(error));
@@ -99,15 +108,7 @@ const AddHotel = props => {
     copy = copy.filter((e, i) => {
       return i != index;
     });
-    dispatch(
-      setHotelForEdit({
-        ...edit_hotel,
-        row: {
-          ...edit_hotel.row,
-          gallery: copy,
-        },
-      }),
-    );
+    onHandleChange(gallery, copy);
   };
   const openGallery = async v => {
     try {
@@ -117,44 +118,22 @@ const AddHotel = props => {
 
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        dispatch(
-          setHotelForEdit({
-            ...edit_hotel,
-            row: {
-              ...edit_hotel?.row,
-              gallery: [...edit_hotel?.row?.gallery, file_resp?.data],
-            },
-          }),
-        );
+        onHandleChange('gallery', [
+          ...edit_hotel?.row?.gallery,
+          file_resp?.data,
+        ]);
       } else if (v == 'bannerImage') {
         setImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        // setFieldValue('banner_image_id', file_resp?.data);
-        dispatch(
-          setHotelForEdit({
-            ...edit_hotel,
-            row: {
-              ...edit_hotel?.row,
-              banner_image_id: file_resp?.data,
-            },
-          }),
-        );
+
+        onHandleChange('banner_image_id', file_resp?.data);
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
         console.log('res of file->>>', file_resp?.data);
-        // setFieldValue('image_id', file_resp?.data);
-        dispatch(
-          setHotelForEdit({
-            ...edit_hotel,
-            row: {
-              ...edit_hotel?.row,
-              image_id: file_resp?.data,
-            },
-          }),
-        );
+        onHandleChange('image_id', file_resp?.data);
       }
     } catch (error) {
       console.log('upload image error', error);
@@ -196,40 +175,19 @@ const AddHotel = props => {
           <PrimaryInput
             label={t('title')}
             placeholder={t('title')}
-            onChangeText={str =>
-              dispatch(
-                setHotelForEdit({
-                  ...edit_hotel,
-                  row: {...edit_hotel.row, title: str},
-                }),
-              )
-            }
+            onChangeText={str => onHandleChange('title', str)}
             value={edit_hotel?.row.title}
           />
           <PrimaryInput
             label={t('content')}
             placeholder={t('content')}
-            onChangeText={str =>
-              dispatch(
-                setHotelForEdit({
-                  ...edit_hotel,
-                  row: {...edit_hotel.row, content: str},
-                }),
-              )
-            }
+            onChangeText={str => onHandleChange('content', str)}
             value={edit_hotel?.row?.content}
           />
           <PrimaryInput
             label={t('youtube_video')}
             placeholder={t('youtube_video')}
-            onChangeText={str =>
-              dispatch(
-                setHotelForEdit({
-                  ...edit_hotel,
-                  row: {...edit_hotel.row, video: str},
-                }),
-              )
-            }
+            onChangeText={str => onHandleChange('video', str)}
             value={edit_hotel?.row?.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
@@ -310,14 +268,7 @@ const AddHotel = props => {
           <PrimaryInput
             label={t('hotel_rating_standard')}
             placeholder={t('hotel_rating_standard')}
-            onChangeText={str =>
-              dispatch(
-                setHotelForEdit({
-                  ...edit_hotel,
-                  row: {...edit_hotel.row, star_rate: str},
-                }),
-              )
-            }
+            onChangeText={str => onHandleChange('star_rate', str)}
             value={edit_hotel.star_rate}
           />
           <Row style={{backgroundColor: colors.lightGray}}>
@@ -353,15 +304,7 @@ const AddHotel = props => {
                   item.title = str;
                   copy[index] = item;
 
-                  dispatch(
-                    setHotelForEdit({
-                      ...edit_hotel,
-                      row: {
-                        ...edit_hotel?.row,
-                        policy: copy,
-                      },
-                    }),
-                  );
+                  onHandleChange('policy', copy);
                 }}
                 value={policy.title}
               />
@@ -375,15 +318,7 @@ const AddHotel = props => {
                   item.content = str;
                   copy[index] = item;
 
-                  dispatch(
-                    setHotelForEdit({
-                      ...edit_hotel,
-                      row: {
-                        ...edit_hotel?.row,
-                        policy: copy,
-                      },
-                    }),
-                  );
+                  onHandleChange('policy', copy);
                 }}
                 value={policy?.content}
               />
@@ -418,7 +353,7 @@ const AddHotel = props => {
             loading={btnLoading}
             containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
             onPress={() => onSubmit()}
-            title={t('next')}
+            title={t('save_changes')}
           />
         </KeyboardAvoidScrollview>
       )}

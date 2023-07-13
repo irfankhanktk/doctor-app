@@ -11,12 +11,15 @@ import {getLocations} from 'services/api/auth-api-actions';
 import {t} from 'i18next';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
+import {navigate} from 'navigation/navigation-ref';
 const AddHotelLocation = props => {
   const dispatch = useDispatch();
   const {hotel, user} = useSelector(s => s);
   const {edit_hotel} = hotel;
   const {locations} = user;
   const [selectedItem, setSelectedItem] = React.useState(null);
+  const [btnLoading, setBtnLoading] = React.useState(false);
+
   const [region, setRegion] = React.useState({
     latitude: user?.location?.latitude ?? 51.528564,
     longitude: user?.location?.longitude ?? -0.20301,
@@ -140,9 +143,11 @@ const AddHotelLocation = props => {
       </View>
       <View style={styles.nextButton}>
         <PrimaryButton
-          title={t('next')}
+          loading={btnLoading}
+          title={t('save_changes')}
           onPress={async () => {
             try {
+              setBtnLoading(true);
               if (!edit_hotel?.row?.map_lat)
                 throw 'Please select hotel location';
 
@@ -156,10 +161,13 @@ const AddHotelLocation = props => {
                   },
                 }),
               );
-              // navigation.navigate('AddHotelPrice');
+              Alert.alert(t('save_changes_successfully'));
+              navigate('Price');
             } catch (error) {
               console.log('error in map location ::', error);
               Alert.alert('Validation Error', UTILS.returnError(error));
+            } finally {
+              setBtnLoading(false);
             }
           }}
         />
