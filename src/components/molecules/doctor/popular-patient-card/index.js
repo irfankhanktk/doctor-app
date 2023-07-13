@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     width: mvs(140),
     borderTopRightRadius: mvs(10),
     borderTopLeftRadius: mvs(10),
+    resizeMode: 'contain',
   },
   profile: {
     marginTop: mvs(15),

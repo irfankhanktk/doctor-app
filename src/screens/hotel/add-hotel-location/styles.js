@@ -18,11 +18,8 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     position: 'absolute',
-    // height: mvs(108),
     width: '100%',
-    // backgroundColor: 'white',
-    marginTop: mvs(106),
-    //   padding: 20,
+    marginTop: mvs(70),
   },
   nextButton: {
     paddingHorizontal: mvs(20),

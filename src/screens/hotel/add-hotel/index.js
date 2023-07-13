@@ -6,17 +6,19 @@ import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
 import {t} from 'i18next';
-import {navigate} from 'navigation/navigation-ref';
+import {goBack, navigate} from 'navigation/navigation-ref';
 import React from 'react';
 import {
   Alert,
   FlatList,
+  I18nManager,
   Image,
   ImageBackground,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -146,10 +148,13 @@ const AddHotel = props => {
   };
   return (
     <View style={styles.container1}>
-      {/* <Header1x2x
-        title={t(route?.params?.id ? 'edit_hotel' : 'add_hotel')}
-        back={true}
-      /> */}
+      <TouchableOpacity onPress={() => goBack()} style={styles.backButton}>
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
+      </TouchableOpacity>
 
       {loading ? (
         <Loader />

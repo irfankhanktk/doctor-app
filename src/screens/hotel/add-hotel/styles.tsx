@@ -86,5 +86,15 @@ const styles = StyleSheet.create({
     height: mvs(15),
     marginHorizontal: mvs(5),
   },
+  backButton: {
+    width: mvs(32),
+    height: mvs(32),
+    
+    marginLeft: mvs(16),
+    borderRadius: mvs(100),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: mvs(10),
+  },
 });
 export default styles;

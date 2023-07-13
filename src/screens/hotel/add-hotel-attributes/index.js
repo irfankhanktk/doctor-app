@@ -1,14 +1,15 @@
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
 import {t} from 'i18next';
 import React, {useState} from 'react';
-import {Alert, View} from 'react-native';
+import {Alert, View, I18nManager, TouchableOpacity} from 'react-native';
 import styles from './styles';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {PrimaryButton} from 'components/atoms/buttons';
 import {Checkbox} from 'components/atoms/checkbox';
 import {Row} from 'components/atoms/row';
 import {mvs} from 'config/metrices';
-import {resetStack} from 'navigation/navigation-ref';
+import {goBack, resetStack} from 'navigation/navigation-ref';
 import {useDispatch, useSelector} from 'react-redux';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
@@ -101,6 +102,13 @@ const AddHotelAttributes = props => {
     })) || [];
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => goBack()} style={styles.backButton}>
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
+      </TouchableOpacity>
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         {nestedMap?.map(section => (

@@ -13,13 +13,15 @@ import {t} from 'i18next';
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
 import {onAddOrUpdateHotel} from 'services/api/hotel/api-actions';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
 import Regular from 'typography/regular-text';
 import styles from './styles';
-import {navigate} from 'navigation/navigation-ref';
+import {goBack, navigate} from 'navigation/navigation-ref';
 import {Alert} from 'react-native';
+import {I18nManager} from 'react-native';
 const AddHotelPrice = props => {
   const {navigation, route} = props;
   const dispatch = useAppDispatch();
@@ -91,6 +93,14 @@ const AddHotelPrice = props => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => goBack()} style={styles.backButton}>
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
+      </TouchableOpacity>
+
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
