@@ -73,15 +73,24 @@ const styles = StyleSheet.create({
     marginLeft: mvs(10),
   },
   img: {
-    height: mvs(70),
-    width: mvs(70),
-    borderRadius: mvs(35),
-    backgroundColor: colors.black,
+    height: mvs(100),
+    width: mvs(100),
+    borderRadius: mvs(50),
+    justifyContent: 'center',
+    alignItems: 'center',
     alignSelf: 'center',
   },
   logouttab: {
     flexDirection: 'row',
     marginBottom: mvs(15),
+  },
+  imgUpload: {
+    height: mvs(100),
+    width: mvs(100),
+    borderRadius: mvs(50),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
 });
 export default styles;

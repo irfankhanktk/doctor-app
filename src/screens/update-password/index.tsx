@@ -56,7 +56,7 @@ const UpdatePassword = (props: props) => {
               : undefined
           }
           placeholder={'********'}
-          label={t('confirm_password')}
+          label={t('new_password')}
           onChangeText={str => setFieldValue('new_password', str)}
           onBlur={() => setFieldTouched('new_password', true)}
           value={values.new_password}

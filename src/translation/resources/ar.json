@@ -257,6 +257,7 @@
   "adults_required":"مطلوب الكبار",
   "import_url":"استيراد عنوان Url",
   "new_password_required":"مطلوب كلمة مرور جديدة",
-  "phone_required":"الهاتف مطلوب"
+  "phone_required":"الهاتف مطلوب",
+  "new_password":"كلمة المرور الجديدة"
   
 }

@@ -50,6 +50,8 @@
   "no_account": "Please signup in case of no account",
   "new_password_required":"New Password is required",
   "phone_required":"Phone is required",
+
+  "new_password":"New Password",
   "phone": "Phone",
   "confirm_pass": "Confirm Password",
   "signup": "Signup",
