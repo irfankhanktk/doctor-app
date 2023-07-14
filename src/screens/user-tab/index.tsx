@@ -132,7 +132,7 @@ const UserTab = (props: props) => {
               />
             </TouchableOpacity>
           )}
-          {/* {userInfo && (
+          {userInfo?.role?.name === 'Doctor' ?(
             <TouchableOpacity
               style={styles.itemtabs}
               onPress={() => props?.navigation?.navigate('AvailabilityList')}>
@@ -146,8 +146,7 @@ const UserTab = (props: props) => {
                 label={`${t('availabilities')}`}
               />
             </TouchableOpacity>
-          )} */}
-          {userInfo && (
+          ):(
             <TouchableOpacity
               style={styles.itemtabs}
               onPress={() => navigate('Recovery')}>
@@ -162,6 +161,7 @@ const UserTab = (props: props) => {
               />
             </TouchableOpacity>
           )}
+   
           <View
             style={{
               flex: 1,
