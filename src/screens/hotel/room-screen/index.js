@@ -14,8 +14,6 @@ import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal
 import {useAppSelector} from 'hooks/use-store';
 import {t} from 'i18next';
 import {navigate} from 'navigation/navigation-ref';
-// import {addToCart, getRooms} from 'services/api/hotel-api-actions';
-// import {setRooms} from 'store/reducers/hotel-reducer';
 
 import {Checkbox} from 'components/atoms/checkbox';
 import HotelRoom from 'components/molecules/hotel/hotel-room';

@@ -50,7 +50,6 @@ const AllCars = props => {
     />
   );
   const renderFooter = () => {
-    // Render a loading indicator while more data is being fetched
     if (!loading) return null;
     return (
       <View style={{paddingVertical: 70}}>

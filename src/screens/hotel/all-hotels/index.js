@@ -10,7 +10,6 @@ import {FlatList, RefreshControl, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import i18n from 'translation';
 import styles from './styles';
-// import {EmptyList} from 'components/molecules/hotel/empty-list';
 import {useIsFocused} from '@react-navigation/native';
 import {ADD_HOTEL_DEFAULT} from 'config/constants';
 import {getAllHotels} from 'services/api/hotel/api-actions';
@@ -24,7 +23,6 @@ const AllHotels = props => {
   const dispatch = useAppDispatch();
   const {hotel} = useSelector(s => s);
   const {hotels} = hotel;
-  // const {locations, hotel_filter, hotels} = hotels;
 
   const [page, setPage] = React.useState(1);
   const {t} = i18n;
@@ -51,7 +49,6 @@ const AllHotels = props => {
     />
   );
   const renderFooter = () => {
-    // Render a loading indicator while more data is being fetched
     if (!loading && !pageLoading) return null;
     return (
       <View style={{paddingVertical: 70}}>
@@ -65,7 +62,6 @@ const AllHotels = props => {
         style={{height: mvs(70)}}
         isSearch={false}
         title={t('hotels')}
-        // back={true}
       />
 
       {loading ? (

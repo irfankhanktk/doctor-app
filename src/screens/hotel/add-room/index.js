@@ -130,7 +130,6 @@ const AddRoom = props => {
         }
       } else {
         setFieldTouched('title', true);
-        // setFieldTouched('content', true);
         setFieldTouched('ical_import_url', true);
         setFieldTouched('image_id', true);
         setFieldTouched('beds', true);
@@ -239,9 +238,7 @@ const AddRoom = props => {
             label={t('featured_image')}
           />
           <ImageBackground
-            // source={{
-            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-            // }}
+
             style={styles.bannerImageContainer}>
             <PrimaryButton
               loading={featuredImageLoading}

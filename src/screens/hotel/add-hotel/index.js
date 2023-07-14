@@ -17,8 +17,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -193,11 +193,7 @@ const AddHotel = props => {
             value={edit_hotel?.row?.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
-          <ImageBackground
-            // source={{
-            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-            // }}
-            style={styles.bannerImageContainer}>
+          <ImageBackground style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
               loading={imageLoading}
@@ -331,11 +327,7 @@ const AddHotel = props => {
             color={colors.primary}
             label={t('featured_image')}
           />
-          <ImageBackground
-            // source={{
-            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-            // }}
-            style={styles.bannerImageContainer}>
+          <ImageBackground style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
               loading={featuredImageLoading}

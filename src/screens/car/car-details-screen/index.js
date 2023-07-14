@@ -243,12 +243,6 @@ const CarDetailsScreen = props => {
                 <View>
                   {carDetails?.row?.faqs?.map(ele => (
                     <>
-                      {/* <Medium
-                      label={ele?.title}
-                      color={colors.black}
-                      numberOfLines={2}
-                    />
-                    <Regular label={ele?.content} /> */}
                       <CollapsibleView
                         collaspsableColor={colors.black}
                         maxH={60}
@@ -419,14 +413,6 @@ const CarDetailsScreen = props => {
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{paddingVertical: mvs(20)}}>
                     {carDetails?.car_related?.map(ele => (
-                      // <RelatedHotel
-                      //   title={ele?.title}
-                      //   price={ele?.price}
-                      //   rate={ele?.star_rate}
-                      //   source={
-                      //     ele?.image_id ? {uri: ele?.image_id} : IMG.Hotels_Bg
-                      //   }
-                      // />
                       <RelatedCarCard
                         item={ele}
                         onPress={() =>
@@ -434,7 +420,6 @@ const CarDetailsScreen = props => {
                             slug: ele?.slug,
                           })
                         }
-                        // onPressCart={() => setCardModal(true)}
                       />
                     ))}
                   </ScrollView>

@@ -184,11 +184,7 @@ const AddCar = props => {
             value={edit_car?.row?.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
-          <ImageBackground
-            // source={{
-            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-            // }}
-            style={styles.bannerImageContainer}>
+          <ImageBackground style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
               loading={imageLoading}
@@ -339,11 +335,7 @@ const AddCar = props => {
             color={colors.primary}
             label={t('featured_image')}
           />
-          <ImageBackground
-            // source={{
-            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-            // }}
-            style={styles.bannerImageContainer}>
+          <ImageBackground style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
               loading={featuredImageLoading}

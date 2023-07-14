@@ -7,14 +7,14 @@ import React from 'react';
 import {
   Alert,
   I18nManager,
+  Image,
   ImageBackground,
   ScrollView,
   TouchableOpacity,
   View,
-  Image,
 } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
 import ImageView from 'react-native-image-viewing';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
@@ -44,7 +44,6 @@ import HtmlView from './../../../components/atoms/render-html/index';
 
 const HotelDetails = props => {
   const {navigation} = props;
-  const [text, setText] = React.useState('');
   const dispatch = useDispatch();
   const [roomModal, setRoomModal] = React.useState(false);
   const [videoModal, setVideoModal] = React.useState(false);
@@ -52,22 +51,12 @@ const HotelDetails = props => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [visible, setIsVisible] = React.useState(false);
 
-  const [submitReview, setSubmitReview] = React.useState({
-    rate_number: '4',
-    review_content: '',
-  });
   const {hotels} = useAppSelector(s => s?.hotel);
 
   const [selectedRoom, setSelectedRoom] = React.useState({});
 
   const {t} = i18n;
-  const [filter, setFilter] = React.useState({
-    checkin: moment().format(DATE_FORMAT.yyyy_mm_dd),
-    checkout: moment().format(DATE_FORMAT.yyyy_mm_dd),
-    children: '0',
-    rooms: '1',
-    adults: '0',
-  });
+
   const {hotel_id, slug} = props?.route?.params || {};
 
   const [loading, setLoading] = React.useState(true);
@@ -229,10 +218,6 @@ const HotelDetails = props => {
                     }}>
                     <TouchableOpacity
                       key={index}
-                      // onPress={() => {
-                      //   setIsVisible(true);
-                      //   setUrl(item?.large);
-                      // }}
                       onPress={() => handleImagePress(index)}>
                       <Image
                         source={
@@ -246,11 +231,6 @@ const HotelDetails = props => {
                         }}
                       />
                     </TouchableOpacity>
-                    {/* <View style={{marginLeft: mvs(10), width: mvs(100)}}>
-                      <Medium label={item?.author?.name} />
-                      <Regular fontSize={mvs(12)} label={item?.content} />
-                      <RatingStar rate={item?.rate_number} />
-                    </View> */}
                   </Row>
                 ))}
               </ScrollView>

@@ -82,7 +82,6 @@ const RecoveryHotels = props => {
     />
   );
   const renderFooter = () => {
-    // Render a loading indicator while more data is being fetched
     if (!loading && !pageLoading) return null;
     return (
       <View style={{paddingVertical: 70}}>
@@ -98,9 +97,7 @@ const RecoveryHotels = props => {
         title={t('hotels')}
         back={true}
       />
-      {/* <ImageBackground source={IMG.Hotels_Bg} style={styles.bg}>
-        <HotelsHeader isSearch={true} back={true} />
-      </ImageBackground> */}
+
 
       {loading ? (
         <Loader />
