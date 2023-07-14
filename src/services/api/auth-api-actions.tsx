@@ -99,6 +99,7 @@ export const getLocations = () => {
 export const onUpdateProfile = (
   values: any,
   setLoading: (bool: boolean) => void,
+  props:any
 ) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
@@ -106,9 +107,9 @@ export const onUpdateProfile = (
       const res = await postData(URLS.auth.update_profile, values);
       console.log('res of onUpdateProfile=>', res);
 
-      UTILS.setItem(STORAGEKEYS.user, JSON.stringify(values));
-      dispatch(setUserInfo(values));
-      goBack();
+      UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
+      dispatch(setUserInfo(res?.user));
+      Alert.alert('Success',"Save changes successfully")
     } catch (error: any) {
       console.log('error in onUpdateProfile', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));

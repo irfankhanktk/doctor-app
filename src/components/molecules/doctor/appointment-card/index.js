@@ -87,10 +87,26 @@ const AppointmentCard = ({
           marginTop: mvs(15),
           alignItems: 'center',
         }}>
-        <TouchableOpacity onPress={() => UTILS.dialPhone(item?.patient?.phone)}>
-          <Row>
+        <TouchableOpacity
+          style={{
+            flex: 1,
+
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={() => UTILS.dialPhone(item?.patient?.phone)}>
+          <Row
+            style={{
+              flex: 1,
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
             <AntDesign name={'phone'} size={20} />
-            <Regular label={` ${item?.patient?.phone}`} />
+            <Regular
+              style={{paddingRight: mvs(20)}}
+              numberOfLines={1}
+              label={` ${item?.patient?.phone}`}
+            />
           </Row>
         </TouchableOpacity>
         {/* <PrimaryButton textStyle={styles.btnText} containerStyle={styles.btn} title={'Reschedule'} /> */}
@@ -127,7 +143,7 @@ const styles = StyleSheet.create({
     paddingVertical: mvs(10),
     backgroundColor: colors.white,
     borderRadius: mvs(10),
-    marginBottom: mvs(15),
+    marginBottom: mvs(30),
     justifyContent: 'center',
     ...colors.shadow,
   },

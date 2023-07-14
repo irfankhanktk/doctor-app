@@ -1,3 +1,6 @@
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
+import { navigate } from 'navigation/navigation-ref';
 import React from 'react';
 import {
   Image,
@@ -7,23 +10,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import i18n from 'translation';
-import Medium from 'typography/medium-text';
-import { colors } from 'config/colors';
-import { mvs } from 'config/metrices';
-import Bold from '../../../typography/bold-text';
-import { login_bg } from 'assets/doctor/images';
-import { Row } from '../row';
-import { SearchInput } from '../inputs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { navigate } from 'navigation/navigation-ref';
+import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
+import { Row } from '../row';
 type props = {
   style?: StyleProp<TextStyle>;
   title?: string;
   unreadNotification?: number;
   back?: boolean;
   onPress?:()=>{},
+  source?:string
 };
 const AppHeader = ({
   style,
@@ -31,6 +28,7 @@ const AppHeader = ({
   unreadNotification,
   back,
   onPress,
+  source,
   ...props
 }: props) => {
   return (
@@ -43,8 +41,8 @@ const AppHeader = ({
           }}>
             <TouchableOpacity onPress={onPress}>
           <Image
-            source={login_bg}
-            style={{ height: mvs(40), width: mvs(40), borderRadius: mvs(69 / 2) }}
+            source={source}
+            style={{ resizeMode:'contain',height: mvs(40), width: mvs(40), borderRadius: mvs(69 / 2) }}
           />
 
             </TouchableOpacity>

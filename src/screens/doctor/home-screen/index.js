@@ -1,5 +1,5 @@
 import {useIsFocused} from '@react-navigation/native';
-import {appointment_bg} from 'assets/doctor/images';
+import {appointment_bg, login_bg} from 'assets/doctor/images';
 import {IconButton} from 'components/atoms/buttons';
 import AppHeader from 'components/atoms/headers';
 import {SearchInput} from 'components/atoms/inputs';
@@ -73,6 +73,9 @@ const Home = props => {
         unreadNotification={unreadNotification}
         title={`\t${userInfo?.name || t('guest')}`}
         onPress={() => navigate('DoctorUserTab')}
+        source={
+          userInfo?.avatar_id ? {uri: `${userInfo?.avatar_id}`} : login_bg
+        }
       />
 
       <View style={styles.container}>

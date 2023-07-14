@@ -1,6 +1,6 @@
 import SearchableDropDown from 'components/atoms/searchable-dropdown';
 import React, {useRef, useState} from 'react';
-import {Alert, TouchableOpacity, View} from 'react-native';
+import {Alert, I18nManager, TouchableOpacity, View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
@@ -129,7 +129,11 @@ const AddCarLocation = props => {
       <TouchableOpacity
         onPress={() => props?.navigation?.goBack()}
         style={styles.backButton}>
-        <AntDesign size={20} name="arrowleft" color={'black'} />
+        <AntDesign
+          size={20}
+          name={I18nManager.isRTL ? 'arrowright' : 'arrowleft'}
+          color={'black'}
+        />
       </TouchableOpacity>
       <View style={styles.searchContainer}>
         <SearchableDropDown
