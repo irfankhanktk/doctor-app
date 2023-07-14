@@ -183,7 +183,6 @@ const RoomScreen = props => {
               : room,
           );
 
-          console.log('newRooms=>>>', newRooms);
           setSelectedRoom({});
           setRoomSelectedModal(false);
         }}

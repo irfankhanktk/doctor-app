@@ -1,4 +1,3 @@
-import {PlusButton} from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
@@ -10,14 +9,13 @@ import {Alert, FlatList, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import i18n from 'translation';
 import styles from './styles';
-// import {EmptyList} from 'components/molecules/hotel/empty-list';
+import HotelRecoveryCard from 'components/molecules/hotel/hotel-recovery-card';
 import {
   getRecoveryHotels,
   permnentlyDeleteHotel,
   recoverHotel,
 } from 'services/api/hotel/api-actions';
 import {UTILS} from 'utils';
-import HotelRecoveryCard from 'components/molecules/hotel/hotel-recovery-card';
 
 const RecoveryHotels = props => {
   const [cartModal, setCardModal] = React.useState(false);
@@ -25,6 +23,8 @@ const RecoveryHotels = props => {
   const [loading, setLoading] = React.useState(true);
   const [recoverLoading, setRecoverLoading] = React.useState(false);
   const [pageLoading, setPageLoading] = React.useState(false);
+  const [deleteLodaing, setDeleteLoading] = React.useState(false);
+
   const dispatch = useAppDispatch();
   const {hotel} = useSelector(s => s);
   const [hotels, setHotels] = React.useState([]);
@@ -45,10 +45,11 @@ const RecoveryHotels = props => {
   };
   const getRecover = async hotel_id => {
     try {
-      setRecoverLoading(true);
-      const res = await recoverHotel(hotel_id);
+      setRecoverLoading(hotel_id);
+      await recoverHotel(hotel_id);
       setHotels(pre => pre?.filter(x => x?.id !== hotel_id));
       // setHotels(res?.rows?.data || [])
+      Alert.alert('Recover hotel successfully');
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
@@ -57,11 +58,14 @@ const RecoveryHotels = props => {
   };
   const deleteHotelPress = async hotel_id => {
     try {
+      setDeleteLoading(hotel_id);
       await permnentlyDeleteHotel(hotel_id);
       setHotels(hotels?.filter(x => x?.id !== hotel_id));
       Alert.alert('Delete hotel successfully');
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
+    } finally {
+      setDeleteLoading(false);
     }
   };
   React.useEffect(() => {
@@ -72,8 +76,9 @@ const RecoveryHotels = props => {
     <HotelRecoveryCard
       item={item}
       onPressDelete={() => deleteHotelPress(item?.id)}
-      recoverLoading={recoverLoading}
+      recoverLoading={recoverLoading == item?.id}
       onPressRecover={() => getRecover(item?.id)}
+      deleteLodaing={deleteLodaing == item?.id}
     />
   );
   const renderFooter = () => {
@@ -118,10 +123,6 @@ const RecoveryHotels = props => {
           />
         </View>
       )}
-      {/* <PlusButton
-        containerStyle={{bottom: mvs(70)}}
-        onPress={() => props?.navigation?.navigate('AddHotel')}
-      /> */}
     </View>
   );
 };

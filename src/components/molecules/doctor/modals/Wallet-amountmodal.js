@@ -26,7 +26,6 @@ const WalletAmount = ({
     try {
       setLoading(true);
       const res = await onAddAmount(value);
-      console.log('res===>>>>> addamount', res);
       isSubmited();
       onClose();
       setLoading(false);

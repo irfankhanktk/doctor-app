@@ -155,7 +155,6 @@ const Home = props => {
             contentContainerStyle={styles.contentContainerStyle}
             data={uniquePatient}
             renderItem={({item, index}) => {
-              console.log('item me check===>', item);
               return (
                 <PopularPatientCard
                   key={index}

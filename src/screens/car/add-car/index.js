@@ -36,7 +36,6 @@ import styles from './styles';
 import {I18nManager} from 'react-native';
 const AddCar = props => {
   const {navigation, route} = props;
-  // console.log('check id =====>', route?.params?.id);
   const {car} = useSelector(s => s);
   const {edit_car} = car;
   const [loading, setLoading] = React.useState(true);
@@ -113,19 +112,16 @@ const AddCar = props => {
         setImageLoading(false);
         setFeaturedImageLoading(false);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
         onHandleChange('gallery', [...edit_car?.row?.gallery, file_resp?.data]);
       } else if (v == 'bannerImage') {
         setImageLoading(true);
         setFeaturedImageLoading(false);
         setGalleryImageLoading(false);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
         onHandleChange('banner_image_id', file_resp?.data);
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
         onHandleChange('image_id', file_resp?.data);
       }
     } catch (error) {

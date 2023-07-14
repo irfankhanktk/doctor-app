@@ -11,7 +11,6 @@ import MyMap from 'components/molecules/map';
 
 const HospitalDetails = props => {
   const {hospital} = props?.route.params;
-  console.log('hospital--->', hospital);
   const {t} = i18n;
   const [loading, setLoading] = React.useState(false);
   const [appointmentDetails, setAppointmentDetails] = React.useState(null);

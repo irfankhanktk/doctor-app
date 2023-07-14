@@ -161,7 +161,6 @@ const SpecialistDetails = props => {
         visible={appointmentModal}
         onClose={item => {
           setAppointmentModal(false);
-          console.log('item?', item);
           if (item) props?.navigation?.navigate('TimeSlot', item);
         }}
       />

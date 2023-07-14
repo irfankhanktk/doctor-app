@@ -153,28 +153,6 @@ const AddRoom = props => {
     // setAddImage(copy);
     setFieldValue('gallery', copy);
   };
-  // const openGallery = async v => {
-  //   try {
-  //     setAddImageLoading(true);
-  //     const res = await UTILS._returnImageGallery();
-  //     const file_resp = await postFileData({file: res, type: 'image'});
-  //     console.log('res of file->>>', file_resp?.data);
-  //     const uri = res.uri;
-
-  //     if (v === 'gallery' && file_resp?.data) {
-  //       setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
-  //         ...file_resp?.data,
-  //       });
-  //     } else {
-  //       setFieldValue('image_id', file_resp?.data);
-  //     }
-  //   } catch (error) {
-  //     console.log('upload image error', error);
-  //     Alert.alert('Error', UTILS?.returnError(error));
-  //   } finally {
-  //     setAddImageLoading(false);
-  //   }
-  // };
 
   const openGallery = async v => {
     try {
@@ -183,14 +161,12 @@ const AddRoom = props => {
         setGalleryImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
-        // console.log('res of file->>>', file_resp?.data);
         setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
           ...file_resp?.data,
         });
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
-        // console.log('res of file->>>', file_resp?.data);
         setFieldValue('image_id', file_resp?.data);
       }
     } catch (error) {

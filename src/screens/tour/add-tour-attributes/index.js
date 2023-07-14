@@ -28,7 +28,6 @@ const AddTourAttributes = props => {
   const [selectedTypes, setSelectedTypes] = useState(
     edit_tour?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
   );
-  console.log('selected type===>', selectedTypes);
   const attributes = tour_attributes?.attributes?.map(ele => ({
     ...ele,
     data: ele?.terms || [],
@@ -47,7 +46,6 @@ const AddTourAttributes = props => {
         terms: selectedTypes?.map(x => x?.id),
       });
       resetStack('ventStack');
-      console.log('res=>>>add update vent>>', res);
     } catch (error) {
       Alert.alert(UTILS.returnError(error));
     } finally {

@@ -48,7 +48,6 @@ const ForgotPassword = (props: props) => {
         
         setLoading(true);
         const res = await onForgot(values);
-        console.log('res===>>>>> forgot', res);
         setOtpModalVisible(true);
       } catch (error) {
       console.log('error=>', error);

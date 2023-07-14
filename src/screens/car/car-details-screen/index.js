@@ -48,7 +48,6 @@ import {UTILS} from 'utils';
 const CarDetailsScreen = props => {
   const [videoModal, setVideoModal] = React.useState(false);
   const [carDetails, setCarDetails] = React.useState({});
-  console.log('check car details===>', carDetails?.row?.status);
   const [submitReview, setSubmitReview] = React.useState({
     review_title: 'car',
     review_content: '',

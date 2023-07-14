@@ -258,6 +258,7 @@
   "import_url":"استيراد عنوان Url",
   "new_password_required":"مطلوب كلمة مرور جديدة",
   "phone_required":"الهاتف مطلوب",
-  "new_password":"كلمة المرور الجديدة"
+  "new_password":"كلمة المرور الجديدة",
+  "Vendor_info":"معلومات البائع"
   
 }

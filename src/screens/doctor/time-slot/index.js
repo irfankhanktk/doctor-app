@@ -37,7 +37,6 @@ const TimeSlotScreen = props => {
           item?.hospital_id,
           moment().add(selectedIndex, 'day').format('DD-MM-YYYY'),
         );
-        console.log('res of getDoctorSlots', res);
         setSlots(res?.LocationSlots || []);
         setTimeFormat(res?.arrayFormat || []);
         setDoctorInfo(res?.doctor || {});

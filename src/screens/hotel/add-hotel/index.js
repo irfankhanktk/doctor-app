@@ -36,7 +36,6 @@ const AddHotel = props => {
   const {navigation, route} = props;
   const {hotel} = useSelector(s => s);
   const {edit_hotel} = hotel;
-  console.log('edit_hotel::::', edit_hotel);
   const [loading, setLoading] = React.useState(true);
   const [btnLoading, setBtnLoading] = React.useState(false);
   const [imageLoading, setImageLoading] = React.useState(false);
@@ -73,7 +72,6 @@ const AddHotel = props => {
       Alert.alert(t('save_changes_successfully'));
       navigate('Location');
     } catch (error) {
-      console.log('error===> ', UTILS.returnError(error));
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
       setBtnLoading(false);
@@ -119,7 +117,7 @@ const AddHotel = props => {
         setGalleryImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
+        'res of file->>>', file_resp?.data;
         onHandleChange('gallery', [
           ...edit_hotel?.row?.gallery,
           file_resp?.data,
@@ -128,13 +126,11 @@ const AddHotel = props => {
         setImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
 
         onHandleChange('banner_image_id', file_resp?.data);
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
         onHandleChange('image_id', file_resp?.data);
       }
     } catch (error) {

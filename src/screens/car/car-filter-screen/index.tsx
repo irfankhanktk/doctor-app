@@ -136,7 +136,6 @@ const CarFilterScreen = (props: any) => {
   const { hotel, car } = useSelector(s => s);
   const { locations, car_filter, cars } = car;
 
-  console.log('carfilter=>>>', car_filter);
   return (
     <View style={styles.container}>
       <Header1x2x

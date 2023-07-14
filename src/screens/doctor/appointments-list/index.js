@@ -34,7 +34,6 @@ const AppointmentsList = props => {
     <AppointmentCard
       onPressStatus={async status => {
         try {
-          console.log('status=>', status);
           if (status === APPOINTMNETSTATUS.completed) {
             navigate('Checkout', {
               id: item?.id,
@@ -65,7 +64,7 @@ const AppointmentsList = props => {
 
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('appointments')} />
+      <Header1x2x back={true} title={t('appointments')} />
       {loading ? (
         <Loader />
       ) : (

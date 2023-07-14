@@ -33,7 +33,7 @@ const DateRangePicker = ({children, onChangeText, setVisible, visible}) => {
             }}
             onSelectDateRange={range => {
               // setVisible(false);
-              console.log('range', range);
+
               onChangeText(range);
             }}
             blockSingleDateSelection={true}

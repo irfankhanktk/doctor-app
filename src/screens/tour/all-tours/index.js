@@ -21,7 +21,6 @@ const AllTours = props => {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const {userInfo} = user;
-  console.log('userInfo', userInfo);
 
   const {t} = i18n;
   const getHomeTours = bool => {

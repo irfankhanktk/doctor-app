@@ -31,7 +31,6 @@ type props = CompositeScreenProps<
 const UserTab = (props: props) => {
   const user = useAppSelector(s => s?.user);
   const userInfo = user?.userInfo;
-  console.log('user info===>',userInfo);
   
   const dispatch = useAppDispatch();
   const { t } = i18n;
@@ -52,8 +51,7 @@ const UserTab = (props: props) => {
           props,
         ),
       );
-      console.log('file', file?.data);
-      console.log('image', img);
+  
     } catch (error) {
       Alert.alert('Error', UTILS?.returnError(error));
     }

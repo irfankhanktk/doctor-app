@@ -11,8 +11,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: mvs(20),
     paddingTop: mvs(20),
-
-    paddingBottom: mvs(100),
   },
   bg: {
     borderBottomLeftRadius: mvs(20),

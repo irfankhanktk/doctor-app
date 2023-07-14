@@ -25,7 +25,6 @@ const AllHotels = props => {
   const {hotel} = useSelector(s => s);
   const {hotels} = hotel;
   // const {locations, hotel_filter, hotels} = hotels;
-  // console.log('hotel ===>', hotels);
 
   const [page, setPage] = React.useState(1);
   const {t} = i18n;

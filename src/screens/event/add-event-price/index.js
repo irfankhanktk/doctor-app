@@ -109,7 +109,6 @@ const AddEventPrice = props => {
     setFieldValue('service_fee', updatedService);
   };
 
-  console.log('values me check===>', values);
   return (
     <View style={styles.container}>
       <Header1x2x title={t('add_price')} back={true} />
