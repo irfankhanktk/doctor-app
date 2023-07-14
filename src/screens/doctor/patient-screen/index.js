@@ -45,27 +45,24 @@ const AllPatientScreen = () => {
   return (
     <View>
       <Header1x2x back={true} title={'All Patients'} />
-      <View style={{paddingHorizontal: mvs(20)}}>
-        <FlatList
-          ListEmptyComponent={
-            !loading && <EmptyList label={t('no_patients')} />
-          }
-          contentContainerStyle={styles.contentContainerStyle}
-          data={uniquePatient}
-          renderItem={({item, index}) => {
-            return (
-              <PopularPatientCard
-                style={{width: '100%'}}
-                key={index}
-                name={item?.name}
-                image={item?.avatar_id ? `${item?.avatar_id}` : false}
-                Imagestyle={{width: '100%'}}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => index?.toString()}
-        />
-      </View>
+
+      <FlatList
+        ListEmptyComponent={!loading && <EmptyList label={t('no_patients')} />}
+        contentContainerStyle={styles.contentContainerStyle}
+        data={uniquePatient}
+        renderItem={({item, index}) => {
+          return (
+            <PopularPatientCard
+              style={{width: '100%'}}
+              key={index}
+              name={item?.name}
+              image={item?.avatar_id ? `${item?.avatar_id}` : false}
+              Imagestyle={{width: '100%'}}
+            />
+          );
+        }}
+        keyExtractor={(item, index) => index?.toString()}
+      />
     </View>
   );
 };
