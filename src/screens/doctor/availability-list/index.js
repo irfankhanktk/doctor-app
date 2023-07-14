@@ -54,7 +54,7 @@ const AvailabilityList = props => {
 
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('availability')} />
+      <Header1x2x back={true} title={t('availability')} />
       {loading ? (
         <Loader />
       ) : (
