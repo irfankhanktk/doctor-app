@@ -86,7 +86,7 @@ const Notifications = props => {
   };
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('notifications')} />
+      <Header1x2x back={true} title={t('notifications')} />
       {loading ? (
         <Loader />
       ) : (

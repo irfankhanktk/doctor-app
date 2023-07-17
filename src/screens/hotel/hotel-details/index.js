@@ -7,12 +7,15 @@ import React from 'react';
 import {
   Alert,
   I18nManager,
+  Image,
   ImageBackground,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
+import ImageView from 'react-native-image-viewing';
 import Entypo from 'react-native-vector-icons/Entypo';
+
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
@@ -24,6 +27,7 @@ import {Loader} from 'components/atoms/loader';
 import {useAppSelector} from 'hooks/use-store';
 import {goBack, navigate} from 'navigation/navigation-ref';
 import Icon from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import {PrimaryButton} from 'components/atoms/buttons';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
@@ -41,28 +45,19 @@ import SvgUri from 'react-native-svg-uri';
 
 const HotelDetails = props => {
   const {navigation} = props;
-  const [text, setText] = React.useState('');
   const dispatch = useDispatch();
   const [roomModal, setRoomModal] = React.useState(false);
   const [videoModal, setVideoModal] = React.useState(false);
   const [hotelDetails, setHotelDetails] = React.useState({});
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [visible, setIsVisible] = React.useState(false);
 
-  const [submitReview, setSubmitReview] = React.useState({
-    rate_number: '4',
-    review_content: '',
-  });
   const {hotels} = useAppSelector(s => s?.hotel);
 
   const [selectedRoom, setSelectedRoom] = React.useState({});
 
   const {t} = i18n;
-  const [filter, setFilter] = React.useState({
-    checkin: moment().format(DATE_FORMAT.yyyy_mm_dd),
-    checkout: moment().format(DATE_FORMAT.yyyy_mm_dd),
-    children: '0',
-    rooms: '1',
-    adults: '0',
-  });
+
   const {hotel_id, slug} = props?.route?.params || {};
 
   const [loading, setLoading] = React.useState(true);
@@ -117,6 +112,10 @@ const HotelDetails = props => {
     } finally {
       setStatusChangeLoading(false);
     }
+  };
+  const handleImagePress = index => {
+    setCurrentIndex(index);
+    setIsVisible(true);
   };
 
   const location = {
@@ -211,33 +210,77 @@ const HotelDetails = props => {
                   style={{marginHorizontal: mvs(10)}}
                 />
               </Row>
+
+              <ScrollView
+                contentContainerStyle={{
+                  marginVertical: mvs(10),
+                }}
+                horizontal
+                showsHorizontalScrollIndicator={false}>
+                {hotelDetails?.row?.gallery?.map((item, index) => (
+                  <Row
+                    style={{
+                      backgroundColor: colors.secondary,
+                      marginRight: mvs(10),
+                      borderRadius: mvs(15),
+                      padding: mvs(10),
+                    }}>
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => handleImagePress(index)}>
+                      <Image
+                        source={
+                          item?.large ? {uri: item?.large} : IMG.Hotels_Bg
+                        }
+                        style={{
+                          height: mvs(80),
+                          width: mvs(80),
+                          resizeMode: 'cover',
+                          borderRadius: mvs(10),
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </Row>
+                ))}
+              </ScrollView>
+
+              <Medium
+                label={t('Vendor_info')}
+                style={{marginTop: mvs(12), fontSize: mvs(18)}}
+              />
+              <TouchableOpacity style={styles.contentContainerStyleNew}>
+                <Row style={{justifyContent: 'flex-start'}}>
+                  <FontAwesome
+                    name="user-circle"
+                    color={colors.lightGray}
+                    size={mvs(40)}
+                    style={{
+                      alignSelf: 'center',
+                    }}
+                  />
+                  <View style={{marginLeft: mvs(14)}}>
+                    <Row style={{justifyContent: 'flex-start'}}>
+                      <Medium label={'Vendor Name'} />
+                      <Icon
+                        name="checkcircle"
+                        color={colors.lightGray}
+                        size={mvs(16)}
+                        style={{
+                          alignSelf: 'center',
+                          marginLeft: mvs(6),
+                        }}
+                      />
+                    </Row>
+                    <Medium label={t('Mmeber Since January 2023')} />
+                  </View>
+                </Row>
+              </TouchableOpacity>
               <Medium
                 label={t('description')}
                 style={{marginTop: mvs(12), fontSize: mvs(18)}}
               />
               <HtmlView html={hotelDetails?.row?.content} />
-              {/* <Medium
-                label={t('rooms')}
-                style={{marginTop: mvs(12), fontSize: mvs(18)}}
-              />
-              <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-                {hotelDetails?.rooms?.map(ele => (
-                  <HotelRoom
-                    hotel_img={{uri: `${ele?.image_id}`}}
-                    roomtitle={ele?.title}
-                    beds={ele?.beds}
-                    size={ele?.size}
-                    adults={ele?.adults}
-                    children={ele?.children}
-                    onPressroom={() => setVideoModal(true)}
-                    onPress={() => {
-                      navigate('RoomBooking', {
-                        room: ele,
-                      });
-                    }}
-                  />
-                ))}
-              </ScrollView> */}
+
               <Medium
                 style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('rules')}
@@ -310,60 +353,6 @@ const HotelDetails = props => {
                   onPress={() => statusChangePress()}
                 />
               </Row>
-
-              {/* <Medium
-                style={{marginTop: mvs(12), fontSize: mvs(18)}}
-                label={t('review')}
-              /> 
-              <Row>
-                <Row
-                  style={{
-                    backgroundColor: colors.primary,
-                    alignSelf: 'flex-start',
-                    paddingVertical: mvs(5),
-                    paddingHorizontal: mvs(10),
-                    borderRadius: mvs(5),
-                    alignItems: 'center',
-                  }}>
-                  <Bold
-                    style={{
-                      color: colors.white,
-                      fontSize: mvs(15),
-                      lineHeight: mvs(20),
-                    }}
-                    label={hotelDetails?.row?.review_score}
-                  />
-                  <Icon name={'star'} size={mvs(15)} color={colors.yellow} />
-                </Row>
-              </Row> 
-            <ScrollView
-                contentContainerStyle={{marginVertical: mvs(10)}}
-                horizontal
-                showsHorizontalScrollIndicator={false}>
-                {hotelDetails?.reviews?.map((item, index) => (
-                  <Row
-                    key={index}
-                    style={{
-                      backgroundColor: colors.secondary,
-                      marginRight: mvs(10),
-                      padding: mvs(10),
-                    }}>
-                    <Image
-                      source={IMG.Doctors}
-                      style={{
-                        height: mvs(30),
-                        width: mvs(30),
-                        borderRadius: mvs(15),
-                      }}
-                    />
-                    <View style={{marginLeft: mvs(10), width: mvs(100)}}>
-                      <Medium label={item?.user?.name} />
-                      <Regular fontSize={mvs(12)} label={item?.content} />
-                      <RatingStar rate={item?.rate_number} />
-                    </View>
-                  </Row>
-                ))}
-              </ScrollView> */}
             </ScrollView>
           </View>
 
@@ -372,10 +361,24 @@ const HotelDetails = props => {
             onClose={setRoomModal}
             room={selectedRoom}
           />
+          <ImageView
+            // images={carDetails?.row?.gallery?.large}
+            // images={[
+            //   {
+            //     uri: url,
+            //   },
+            // ]}
+            images={hotelDetails?.row?.gallery?.map((item, index) => ({
+              uri: item.large,
+            }))}
+            imageIndex={currentIndex}
+            visible={visible}
+            onRequestClose={() => setIsVisible(false)}
+          />
           <HotelVideoModal
             visible={videoModal}
             onClose={setVideoModal}
-            url={hotelDetails?.video}
+            url={hotelDetails?.row?.video}
           />
         </>
       )}

@@ -11,6 +11,8 @@ import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 const HotelRecoveryCard = ({
   item,
+  recoveryLodaing,
+  deleteLodaing,
   style,
   onPress = () => {},
   onPressRecover = () => {},
@@ -38,8 +40,10 @@ const HotelRecoveryCard = ({
                 containerStyle={styles.recoveryBtn}
                 title="Recovery"
                 onPress={onPressRecover}
+                loading={recoveryLodaing}
               />
               <PrimaryButton
+                loading={deleteLodaing}
                 containerStyle={styles.recoveryBtn}
                 title="Delete"
                 onPress={onPressDelete}

@@ -12,7 +12,6 @@ import {t} from 'i18next';
 
 const AddEventLocation = props => {
   const {values} = props?.route?.params || {};
-  console.log('values in map=>>', values);
   const {navigation} = props;
   const dispatch = useDispatch();
   const {event, user, hotel} = useSelector(s => s);
@@ -26,7 +25,6 @@ const AddEventLocation = props => {
         }
       : null,
   );
-  // console.log('marker cordinate check===>', markerCoordinates);
 
   const [selectedItem, setSelectedItem] = React.useState(null);
   const [region, setRegion] = React.useState({
@@ -35,7 +33,6 @@ const AddEventLocation = props => {
     latitude: 51.528564,
     longitude: -0.20301,
   });
-  console.log('region-->', region);
   const mapRef = useRef(null);
   const handleLongPress = async event => {
     try {
@@ -60,7 +57,6 @@ const AddEventLocation = props => {
   };
   React.useEffect(() => {
     if (selectedItem) {
-      console.log('selectedItem=>>', selectedItem);
       handleRegionChange({
         latitude: selectedItem?.map_lat * 1,
         longitude: selectedItem?.map_lng * 1,
@@ -117,7 +113,6 @@ const AddEventLocation = props => {
           items={locations}
           selectedItem={selectedItem}
           onChangeItem={item => {
-            console.log('item::', item);
             setSelectedItem(item);
           }}
         />

@@ -31,7 +31,6 @@ const AddCarAttributes = props => {
   const [selectedTypes, setSelectedTypes] = useState(
     edit_car?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
   );
-  console.log('selected type===>', selectedTypes);
   const attributes = car_attributes?.attributes?.map(ele => ({
     ...ele,
     data: ele?.terms || [],
@@ -59,7 +58,6 @@ const AddCarAttributes = props => {
       );
       Alert.alert(t('save_changes_successfully'));
       resetStack('CarStack');
-      console.log('res=>>>add update car>>', res);
     } catch (error) {
       Alert.alert(UTILS.returnError(error));
     } finally {

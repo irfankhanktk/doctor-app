@@ -17,8 +17,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -36,7 +36,6 @@ const AddHotel = props => {
   const {navigation, route} = props;
   const {hotel} = useSelector(s => s);
   const {edit_hotel} = hotel;
-  console.log('edit_hotel::::', edit_hotel);
   const [loading, setLoading] = React.useState(true);
   const [btnLoading, setBtnLoading] = React.useState(false);
   const [imageLoading, setImageLoading] = React.useState(false);
@@ -74,7 +73,6 @@ const AddHotel = props => {
       Alert.alert(t('save_changes_successfully'));
       navigate('Location');
     } catch (error) {
-      console.log('error===> ', UTILS.returnError(error));
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
       setBtnLoading(false);
@@ -120,7 +118,7 @@ const AddHotel = props => {
         setGalleryImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
+        'res of file->>>', file_resp?.data;
         onHandleChange('gallery', [
           ...edit_hotel?.row?.gallery,
           file_resp?.data,
@@ -129,13 +127,11 @@ const AddHotel = props => {
         setImageLoading(true);
 
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
 
         onHandleChange('banner_image_id', file_resp?.data);
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
         onHandleChange('image_id', file_resp?.data);
       }
     } catch (error) {
@@ -197,11 +193,7 @@ const AddHotel = props => {
             value={edit_hotel?.row?.video}
           />
           <Regular color={colors.primary} label={t('banner_image')} />
-          <ImageBackground
-            // source={{
-            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-            // }}
-            style={styles.bannerImageContainer}>
+          <ImageBackground style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
               loading={imageLoading}
@@ -335,11 +327,7 @@ const AddHotel = props => {
             color={colors.primary}
             label={t('featured_image')}
           />
-          <ImageBackground
-            // source={{
-            //   uri: 'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg',
-            // }}
-            style={styles.bannerImageContainer}>
+          <ImageBackground style={styles.bannerImageContainer}>
             <PrimaryButton
               title={t('upload_image')}
               loading={featuredImageLoading}

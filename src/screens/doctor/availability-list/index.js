@@ -2,19 +2,13 @@ import {useIsFocused} from '@react-navigation/native';
 import {PlusButton} from 'components/atoms/buttons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
-import DoctorAvailabilityCard from 'components/molecules/doctor/doctor-availability-card';
 import DoctorHospitalCard from 'components/molecules/doctor/doctor-hospital-card';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
-import {arrayFormat} from 'config/constants';
 import {useAppSelector} from 'hooks/use-store';
 import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
 import {FlatList, View} from 'react-native';
-import {
-  getDoctorAvailability,
-  onDeleteAvailbility,
-  onEditAvailbility,
-} from 'services/api/doctor/api-actions';
+import {getDoctorAvailability} from 'services/api/doctor/api-actions';
 import i18n from 'translation';
 import styles from './styles';
 
@@ -54,7 +48,7 @@ const AvailabilityList = props => {
 
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('availability')} />
+      <Header1x2x back={true} title={t('availability')} />
       {loading ? (
         <Loader />
       ) : (

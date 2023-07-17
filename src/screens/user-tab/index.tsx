@@ -31,7 +31,6 @@ type props = CompositeScreenProps<
 const UserTab = (props: props) => {
   const user = useAppSelector(s => s?.user);
   const userInfo = user?.userInfo;
-  console.log('user info===>',userInfo);
   
   const dispatch = useAppDispatch();
   const { t } = i18n;
@@ -52,8 +51,7 @@ const UserTab = (props: props) => {
           props,
         ),
       );
-      console.log('file', file?.data);
-      console.log('image', img);
+  
     } catch (error) {
       Alert.alert('Error', UTILS?.returnError(error));
     }
@@ -134,7 +132,7 @@ const UserTab = (props: props) => {
               />
             </TouchableOpacity>
           )}
-          {/* {userInfo && (
+          {userInfo?.role?.name === 'Doctor' ?(
             <TouchableOpacity
               style={styles.itemtabs}
               onPress={() => props?.navigation?.navigate('AvailabilityList')}>
@@ -148,8 +146,7 @@ const UserTab = (props: props) => {
                 label={`${t('availabilities')}`}
               />
             </TouchableOpacity>
-          )} */}
-          {userInfo && (
+          ):(
             <TouchableOpacity
               style={styles.itemtabs}
               onPress={() => navigate('Recovery')}>
@@ -164,6 +161,7 @@ const UserTab = (props: props) => {
               />
             </TouchableOpacity>
           )}
+   
           <View
             style={{
               flex: 1,

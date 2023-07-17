@@ -80,7 +80,6 @@ const EditAvailability = props => {
                 placeholder={t('hospital')}
                 onChangeText={str => {
                   copy[index].hospital_id = str;
-                  console.log('payload=>', payload);
                   setPayload(copy);
                 }}
                 id={payload[index]?.hospital_id}
@@ -109,7 +108,6 @@ const EditAvailability = props => {
                           },
                         ]}
                         onPress={() => {
-                          console.log('days?.length ', days?.length);
                           if (bool) {
                             if (days?.length !== 1) {
                               newDays = days?.filter(d => d?.day !== item);

@@ -116,7 +116,18 @@ const styles = StyleSheet.create({
 
 
     width: '100%'
-  }
+  },
+  contentContainerStyleNew: {
+    // flexGrow: 1,
+    paddingHorizontal: mvs(10),
+    marginVertical: mvs(10),
+    paddingVertical: mvs(10),
+    backgroundColor: colors.white,
+    justifyContent: 'center',
+ borderWidth:StyleSheet.hairlineWidth,
+    borderRadius: mvs(6),
+    borderColor:colors.border
+  },
 
 });
 export default styles;

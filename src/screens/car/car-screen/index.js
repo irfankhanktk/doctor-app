@@ -194,7 +194,6 @@ const CarScreen = props => {
               : room,
           );
 
-          console.log('newRooms=>>>', newRooms);
           setSelectedRoom({});
           setRoomSelectedModal(false);
         }}

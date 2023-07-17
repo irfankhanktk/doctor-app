@@ -65,7 +65,6 @@ const AddCarLocation = props => {
   };
   React.useEffect(() => {
     if (selectedItem) {
-      console.log('selectedItem=>>', selectedItem);
       handleRegionChange({
         latitude: selectedItem?.map_lat * 1,
         longitude: selectedItem?.map_lng * 1,
@@ -140,7 +139,6 @@ const AddCarLocation = props => {
           items={locations}
           selectedItem={selectedItem}
           onChangeItem={item => {
-            console.log('item::', item);
             setSelectedItem(item);
           }}
         />

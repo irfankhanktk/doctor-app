@@ -140,7 +140,6 @@ const AddHotelLocation = props => {
           items={locations}
           selectedItem={selectedItem}
           onChangeItem={item => {
-            console.log('item::', item);
             setSelectedItem(item);
           }}
         />

@@ -28,7 +28,6 @@ const AvailabilityDetails = props => {
     (async () => {
       try {
         setLoading(true);
-        console.log(userInfo?.id, props?.route?.params?.hospital_id);
         const res = await getDoctorAvailabilityDetails(
           userInfo?.id,
           props?.route?.params?.hospital_id,

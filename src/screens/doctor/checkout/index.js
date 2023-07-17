@@ -47,7 +47,6 @@ const Checkout = props => {
   React.useEffect(() => {
     (async () => {
       const res = await getAppointmentDetails(params?.id, setLoading);
-      console.log('res of appointment: details ->', res);
       setAppointmentDetails(res?.appointment);
       setArrayFormat(res?.arrayFormat || []);
     })();
@@ -86,7 +85,6 @@ const Checkout = props => {
                 />
               </Row>
             </View>
-            {console.log('appointmentDetails?.wallet?.balance', selectedMethod)}
             <PaymentMethodCard
               onChange={setSelectedMethod}
               selectedMethod={selectedMethod}

@@ -1,5 +1,6 @@
 import {ModalWrapper} from 'components/atoms/modal-wrapper';
-// import PlayVideo from 'components/atoms/play-video';
+import PlayVideo from 'components/atoms/play-video';
+
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
 import React from 'react';
@@ -20,7 +21,7 @@ const HotelVideoModal = ({
       onBackButtonPress={() => onClose()}
       visible={visible}
       style={[styles.contentContainerStyle, style]}>
-      <View style={styles.container}>{/* <PlayVideo url={url} /> */}</View>
+      <View style={styles.container}>{<PlayVideo url={url} />}</View>
     </ModalWrapper>
   );
 };

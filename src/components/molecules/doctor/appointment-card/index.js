@@ -114,7 +114,6 @@ const AppointmentCard = ({
           loading={statusLoading}
           disabled={item?.status === 'completed' || statusLoading}
           onPress={() => {
-            // console.log(item.status, 'item status');
             onPressStatus(
               item?.status === APPOINTMNETSTATUS?.confirmed
                 ? APPOINTMNETSTATUS?.completed

@@ -75,7 +75,6 @@ const Signup = (props: props) => {
       try {
 
         const addressComponent = await UTILS._returnAddress(location?.latitude, location?.longitude);
-        // console.log('addressComponent=>', addressComponent);
         setFieldValue('map_lat', location?.latitude);
         setFieldValue('map_lng', location?.longitude);
         setFieldValue('city', addressComponent?.city);

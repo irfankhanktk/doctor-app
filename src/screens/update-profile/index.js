@@ -15,7 +15,6 @@ const UpdateProfile = props => {
   const {navigation} = props;
   const {t} = i18n;
   const {userInfo} = useAppSelector(s => s?.user);
-  // console.log('userinfo======>', userInfo);
   const dispatch = useAppDispatch();
   const initialValues = userInfo ?? {
     name: '',

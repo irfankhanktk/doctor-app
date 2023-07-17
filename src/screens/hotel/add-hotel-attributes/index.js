@@ -66,12 +66,10 @@ const AddHotelAttributes = props => {
     );
 
     if (selectedIndex !== -1) {
-      // Item is already selected, remove it from the selectedTypes array
       const updatedSelectedTypes = [...selectedTypes];
       updatedSelectedTypes.splice(selectedIndex, 1);
       setSelectedTypes(updatedSelectedTypes);
     } else {
-      // Item is not selected, add it to the selectedTypes array
       setSelectedTypes([...selectedTypes, item]);
     }
   };

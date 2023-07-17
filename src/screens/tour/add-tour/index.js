@@ -34,7 +34,6 @@ import {addTourValidation} from 'validations';
 import styles from './styles';
 const AddTour = props => {
   const {navigation, route} = props;
-  // console.log('check id =====>', route?.params?.id);
   const {tour} = useSelector(s => s);
   const {edit_tour} = tour;
   const [loading, setLoading] = React.useState(true);
@@ -77,7 +76,6 @@ const AddTour = props => {
   }, [route?.params?.id]);
   React.useEffect(() => {
     if (edit_tour && route?.params?.id) {
-      // console.log('edit_tour?.row?.popp->>', edit_tour?.row?.faqs);
       setFieldValue('title', edit_tour?.row?.title);
       setFieldValue('content', edit_tour?.row?.content);
       setFieldValue('faqs', [...edit_tour?.row?.faqs]);
@@ -95,8 +93,7 @@ const AddTour = props => {
   }, []);
   const onSubmit = async () => {
     try {
-      // console.log('valuess->>', values);
-      // console.log('errors->>', errors);
+  
       navigation?.navigate('AddTourLocation', {values});
       return;
       if (isValid && Object.keys(touched).length > 0) {
@@ -143,7 +140,6 @@ const AddTour = props => {
         setImageLoading(false);
         setFeaturedImageLoading(false);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
         setFieldValue(`gallery[${values?.gallery?.length || 0}]`, {
           ...file_resp?.data,
         });
@@ -152,12 +148,10 @@ const AddTour = props => {
         setFeaturedImageLoading(false);
         setGalleryImageLoading(false);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
         setFieldValue('banner_image_id', file_resp?.data);
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
-        console.log('res of file->>>', file_resp?.data);
         setFieldValue('image_id', file_resp?.data);
       }
 
@@ -181,7 +175,6 @@ const AddTour = props => {
       setGalleryImageLoading(false);
     }
   };
-  // console.log('values me check====>', values);
   return (
     <View style={styles.container1}>
       <Header1x2x

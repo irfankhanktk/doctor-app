@@ -27,7 +27,6 @@ const AddEventAttributes = props => {
   const [selectedTypes, setSelectedTypes] = useState(
     edit_event?.row?.terms?.map(x => ({...x, id: x?.term_id})) || [],
   );
-  console.log('selected type===>', selectedTypes);
   const attributes = event_attributes?.attributes?.map(ele => ({
     ...ele,
     data: ele?.terms || [],
@@ -45,7 +44,6 @@ const AddEventAttributes = props => {
         terms: selectedTypes?.map(x => x?.id),
       });
       resetStack('ventStack');
-      console.log('res=>>>add update vent>>', res);
     } catch (error) {
       Alert.alert(UTILS.returnError(error));
     } finally {

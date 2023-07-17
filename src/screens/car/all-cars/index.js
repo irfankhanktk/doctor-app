@@ -23,7 +23,6 @@ const AllCars = props => {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const {userInfo} = user;
-  console.log('userInfo', userInfo);
 
   const {t} = i18n;
   const getHomeCars = bool => {
@@ -51,7 +50,6 @@ const AllCars = props => {
     />
   );
   const renderFooter = () => {
-    // Render a loading indicator while more data is being fetched
     if (!loading) return null;
     return (
       <View style={{paddingVertical: 70}}>

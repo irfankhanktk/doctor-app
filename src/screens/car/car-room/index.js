@@ -74,7 +74,6 @@ const AddCar = props => {
         setLoading(true);
         if (room_id) {
           const res = await getRoomForEdit(hotel_id, room_id);
-          console.log('res:::room for edit', res);
           setAttributes(res?.attributes || []);
           setFieldValue('title', res?.row?.title);
           // setFieldValue('content', true);
@@ -115,7 +114,6 @@ const AddCar = props => {
             },
             hotel_id,
           );
-          console.log('res=>>>add hotel room >>', res);
           navigation?.navigate('RoomScreen');
           Alert.alert('onsubmit');
         } catch (error) {
@@ -154,7 +152,6 @@ const AddCar = props => {
       setAddImageLoading(true);
       const res = await UTILS._returnImageGallery();
       const file_resp = await postFileData({file: res, type: 'image'});
-      console.log('res of file->>>', file_resp?.data);
       const uri = res.uri;
 
       if (v === 'gallery' && file_resp?.data) {

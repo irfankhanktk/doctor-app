@@ -48,7 +48,6 @@ const AppointmentDetails = props => {
   ]);
   const onPressStatus = async status => {
     try {
-      console.log('status=>', status);
       if (status === APPOINTMNETSTATUS.completed) {
         navigate('Checkout', {
           id: appointmentDetails?.id,
@@ -68,19 +67,14 @@ const AppointmentDetails = props => {
       setStatusLoading(false);
     }
   };
-  console.log('id', appointmentDetails?.id);
   React.useEffect(() => {
     (async () => {
       const res = await getAppointmentDetails(params?.id, setLoading);
-      console.log('res of appointment: details ->', res);
       setAppointmentDetails(res?.appointment);
       setArrayFormat(res?.arrayFormat || []);
     })();
   }, []);
-  console.log(
-    'appointmentDetail appointmentDetails?.doctors=>>',
-    appointmentDetails?.doctor,
-  );
+
   return (
     <View style={styles.container}>
       <Header1x2x title={t('appointment_details')} />

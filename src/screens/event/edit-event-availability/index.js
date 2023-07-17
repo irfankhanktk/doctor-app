@@ -32,7 +32,6 @@ const EditEventAvailability = props => {
   const [date, setDate] = React.useState(moment('2023-10-10').startOf('month'));
   const [availability, setAvailability] = React.useState([]);
   const [eventId, setEventId] = React.useState();
-  console.log('state eventid ===?', eventId);
   const [rooms, setRooms] = React.useState([]);
   const [filterModal, setFilterModal] = React.useState(false);
   const [roomSelectModal, setRoomSelectModal] = React.useState(false);
@@ -58,7 +57,6 @@ const EditEventAvailability = props => {
       );
       seteventId(events?.data[0]?.id);
       setAvailability(res || []);
-      console.log('res me check=====>', res);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {

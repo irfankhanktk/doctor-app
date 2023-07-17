@@ -70,7 +70,6 @@ const CarAvailabilityModal = ({
                 end_date: dates?.secondDate,
               }));
             }}>
-            {console.log('filterData:::', filterData)}
             <Medium
               label={
                 !filterData?.start_date

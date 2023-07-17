@@ -53,7 +53,6 @@ const RenewPasswordScreen = props => {
       setLoading(false);
       Alert.alert('Password is Changed Successfully');
       navigate('Login');
-      console.log('res===>>>>> onchangepassword', res);
       // setOtpModalVisible(true);
     } catch (error) {
       console.log('error=>', error);
