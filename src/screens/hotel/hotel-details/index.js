@@ -312,17 +312,31 @@ const HotelDetails = props => {
                   </>
                 ))}
               </View>
-              <Medium
-                style={{marginTop: mvs(12), fontSize: mvs(18)}}
-                label={t('services')}
-              />
-              <Row>
-                {['Wifi', 'Bathroom', 'Wakeup call'].map((item, index) => (
-                  <View>
-                    <Regular label={item} />
-                  </View>
-                ))}
-              </Row>
+              {hotelDetails?.row?.attributes?.map((attr, index) => (
+                <View key={index}>
+                  <Medium
+                    style={{marginTop: mvs(12), fontSize: mvs(18)}}
+                    label={attr?.parent?.title}
+                  />
+                  <Row style={{flexWrap: 'wrap'}}>
+                    {attr?.child?.map((item, i) => (
+                      <View
+                        style={{marginHorizontal: mvs(5), marginBottom: mvs(5)}}
+                        key={i}>
+                        <Row>
+                          {/* {item?.image_id ? (
+                            <SvgUri source={{uri: `${item?.image_id}`}} />
+                          ) : null} */}
+                          <Regular
+                            style={{marginHorizontal: mvs(2)}}
+                            label={item?.title}
+                          />
+                        </Row>
+                      </View>
+                    ))}
+                  </Row>
+                </View>
+              ))}
               <Medium
                 style={{marginTop: mvs(12), fontSize: mvs(18)}}
                 label={t('location')}

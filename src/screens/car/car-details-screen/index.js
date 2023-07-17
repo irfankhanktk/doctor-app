@@ -284,86 +284,34 @@ const CarDetailsScreen = props => {
                     </>
                   ))}
                 </View>
-                <Medium
-                  style={{marginTop: mvs(12), fontSize: mvs(18)}}
-                  label={t('car_features')}
-                />
-                <Row style={{paddingVertical: mvs(8)}}>
-                  <Row style={{justifyContent: 'flex-start'}}>
-                    <MaterialCommunityIcons
-                      name="airbag"
-                      color={colors.black}
-                      size={mvs(16)}
+                {carDetails?.row?.attributes?.map((attr, index) => (
+                  <View key={index}>
+                    <Medium
+                      style={{marginTop: mvs(12), fontSize: mvs(18)}}
+                      label={attr?.parent?.title}
                     />
-                    <Regular
-                      label={'Airbag'}
-                      style={{marginLeft: mvs(5)}}
-                      fontSize={mvs(12)}
-                    />
-                  </Row>
-                  <Row style={{justifyContent: 'flex-start'}}>
-                    <MaterialCommunityIcons
-                      name="radio"
-                      color={colors.black}
-                      size={mvs(16)}
-                    />
-                    <Regular
-                      label={'FM Radio'}
-                      style={{marginLeft: mvs(5)}}
-                      fontSize={mvs(12)}
-                    />
-                  </Row>
-                  <Row style={{justifyContent: 'flex-start'}}>
-                    <MaterialCommunityIcons
-                      name="car-door"
-                      color={colors.black}
-                      size={mvs(16)}
-                    />
-                    <Regular
-                      label={'Power Windows'}
-                      style={{marginLeft: mvs(5)}}
-                      fontSize={mvs(12)}
-                    />
-                  </Row>
-                </Row>
-                <Row style={{paddingVertical: mvs(8)}}>
-                  <Row style={{justifyContent: 'flex-start'}}>
-                    <MaterialCommunityIcons
-                      name="motion-sensor"
-                      color={colors.black}
-                      size={mvs(16)}
-                    />
-                    <Regular
-                      label={' Sensor'}
-                      style={{marginLeft: mvs(5)}}
-                      fontSize={mvs(12)}
-                    />
-                  </Row>
-                  <Row style={{justifyContent: 'flex-start'}}>
-                    <Ionicons
-                      name="speedometer"
-                      color={colors.black}
-                      size={mvs(16)}
-                    />
-                    <Regular
-                      label={'Speed KM'}
-                      style={{marginLeft: mvs(5)}}
-                      fontSize={mvs(12)}
-                    />
-                  </Row>
-                  <Row style={{justifyContent: 'flex-start'}}>
-                    <MaterialCommunityIcons
-                      name="steering"
-                      color={colors.black}
-                      size={mvs(16)}
-                    />
-                    <Regular
-                      label={'Steering Wheel'}
-                      style={{marginLeft: mvs(5)}}
-                      fontSize={mvs(12)}
-                    />
-                  </Row>
-                </Row>
+                    <Row style={{flexWrap: 'wrap'}}>
+                      {attr?.child?.map((item, i) => (
+                        <View
+                          style={{
+                            marginHorizontal: mvs(5),
+                            marginBottom: mvs(5),
+                          }}
+                          key={i}>
+                          <Row>
+                            {/* {item?.image_id ? (
+                            <SvgUri source={{uri: `${item?.image_id}`}} />
+                          ) : null} */}
+                            <Regular
+                              style={{marginHorizontal: mvs(2)}}
+                              label={item?.title}
+                            />
+                          </Row>
+                        </View>
+                      ))}
+                    </Row>
+                  </View>
+                ))}
                 <Medium
                   style={{marginTop: mvs(12), fontSize: mvs(18)}}
                   label={t('location')}

@@ -1,11 +1,15 @@
-import { AppDispatch, RootState } from 'store';
-import { getData, postData } from './';
-import { URLS } from './api-urls';
-import { UTILS } from 'utils';
-import { STORAGEKEYS } from 'config/constants';
-import { Alert } from 'react-native';
-import { setLocations, setUserInfo, setWallet } from './../../store/reducers/user-reducer';
-import { goBack, resetStack } from 'navigation/navigation-ref';
+import {AppDispatch, RootState} from 'store';
+import {getData, postData} from './';
+import {URLS} from './api-urls';
+import {UTILS} from 'utils';
+import {STORAGEKEYS} from 'config/constants';
+import {Alert} from 'react-native';
+import {
+  setLocations,
+  setUserInfo,
+  setWallet,
+} from './../../store/reducers/user-reducer';
+import {goBack, resetStack} from 'navigation/navigation-ref';
 export const getUserInfo = () => {
   return getData(URLS.auth.get_user_info);
 };
@@ -99,7 +103,7 @@ export const getLocations = () => {
 export const onUpdateProfile = (
   values: any,
   setLoading: (bool: boolean) => void,
-  props:any
+  props: any,
 ) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
@@ -109,7 +113,7 @@ export const onUpdateProfile = (
 
       UTILS.setItem(STORAGEKEYS.user, JSON.stringify(res?.user));
       dispatch(setUserInfo(res?.user));
-      Alert.alert('Success',"Save changes successfully")
+      Alert.alert('Success', 'Save changes successfully');
     } catch (error: any) {
       console.log('error in onUpdateProfile', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));
