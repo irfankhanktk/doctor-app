@@ -63,7 +63,6 @@ const EditRoomAvailability = props => {
   const getAvailabilty = async () => {
     try {
       setLoading(true);
-      // const res1 = await getHotelRooms(hotel_id);
       const res = await getRoomAvailability(
         hotel_id,
         roomId,
@@ -92,9 +91,8 @@ const EditRoomAvailability = props => {
         end_date: filterData?.end_date,
         target_id: roomId,
       };
-      const res = await updateRoomAvailability(hotel_id, data);
+      await updateRoomAvailability(hotel_id, data);
       await getAvailabilty();
-      // setAvailability(res);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
@@ -125,9 +123,6 @@ const EditRoomAvailability = props => {
           />
           <Row>
             <Regular label={date?.format('ll')} />
-            {/* <Regular
-                label={moment(new Date(2023, 6, 0)).add().format('ll')}
-              /> */}
           </Row>
           <AntDesign
             size={mvs(25)}

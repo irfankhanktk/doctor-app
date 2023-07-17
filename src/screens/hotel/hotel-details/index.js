@@ -42,7 +42,6 @@ import {
 import {setHotels} from 'store/reducers/hotel-reducer';
 import HtmlView from './../../../components/atoms/render-html/index';
 import {UTILS} from 'utils';
-import SvgUri from 'react-native-svg-uri';
 
 const HotelDetails = props => {
   const {navigation} = props;

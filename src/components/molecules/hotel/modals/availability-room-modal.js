@@ -25,10 +25,10 @@ const RoomAvailabilityModal = ({
   setFilterData,
   onPress,
 }) => {
+  console.log('filter data modal=======>', filterData);
   const {t} = i18n;
-  const dispatch = useAppDispatch();
   const {hotel} = useSelector(s => s);
-  const {locations, room_filter, rooms} = hotel;
+
   const [dateVisible, setDateVisible] = React.useState(false);
   const handleInputChange = (key, value) => {
     setFilterData(prevFilterData => ({
