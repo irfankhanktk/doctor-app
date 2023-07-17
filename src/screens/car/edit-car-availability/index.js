@@ -23,20 +23,13 @@ import styles from './styles';
 import CarAvailabilityModal from 'components/molecules/car/modals/availability-car-modal';
 
 const EditCarAvailability = props => {
-  const {navigation, route} = props;
-
   const {car} = useSelector(s => s);
   const {cars} = car;
   const [loading, setLoading] = React.useState(true);
-  const [updateLoading, setUpdateLoading] = React.useState(true);
   const [date, setDate] = React.useState(moment('2023-10-10').startOf('month'));
   const [availability, setAvailability] = React.useState([]);
   const [carId, setCarId] = React.useState();
-  const [rooms, setRooms] = React.useState([]);
   const [filterModal, setFilterModal] = React.useState(false);
-  const [roomSelectModal, setRoomSelectModal] = React.useState(false);
-  const [roomId, setRoomId] = useState();
-  const refRBSheet = React.useRef();
   const [filterData, setFilterData] = useState({
     start_date: moment().format(DATE_FORMAT.yyyy_mm_dd),
     end_date: moment().format(DATE_FORMAT.yyyy_mm_dd),
@@ -78,9 +71,7 @@ const EditCarAvailability = props => {
         end_date: filterData?.end_date,
         target_id: carId,
       };
-
-      const res = await updateCarAvailability(data);
-
+      await updateCarAvailability(data);
       await getAvailabilty();
       // setAvailability(res);
     } catch (error) {
@@ -112,9 +103,6 @@ const EditCarAvailability = props => {
           />
           <Row>
             <Regular label={date?.format('ll')} />
-            {/* <Regular
-                label={moment(new Date(2023, 6, 0)).add().format('ll')}
-              /> */}
           </Row>
           <AntDesign
             size={mvs(25)}
@@ -133,7 +121,20 @@ const EditCarAvailability = props => {
               {availability?.map((item, index) => {
                 return (
                   <TouchableOpacity
-                    onPress={() => setFilterModal(true)}
+                    onPress={() => {
+                      setFilterModal(true);
+                      setFilterData({
+                        start_date: moment(item?.start).format(
+                          DATE_FORMAT.yyyy_mm_dd,
+                        ),
+                        end_date: moment(item?.end).format(
+                          DATE_FORMAT.yyyy_mm_dd,
+                        ),
+                        number: `${item?.number}`,
+                        price: `${item?.price}`,
+                        active: `${item?.active}`,
+                      });
+                    }}
                     key={index}
                     style={{
                       height: mvs(60),

@@ -109,7 +109,7 @@ const RoomAvailabilityModal = ({
             <PrimaryInput
               label={t('price')}
               onChangeText={date => handleInputChange('price', date)}
-              value={filterData.children}
+              value={filterData.price}
               placeholder="400"
             />
             <PrimaryInput

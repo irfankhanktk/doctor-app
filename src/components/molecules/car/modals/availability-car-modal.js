@@ -26,9 +26,7 @@ const CarAvailabilityModal = ({
   onPress,
 }) => {
   const {t} = i18n;
-  const dispatch = useAppDispatch();
   const {hotel} = useSelector(s => s);
-  const {locations, room_filter, rooms} = hotel;
   const [dateVisible, setDateVisible] = React.useState(false);
   const handleInputChange = (key, value) => {
     setFilterData(prevFilterData => ({
@@ -109,12 +107,12 @@ const CarAvailabilityModal = ({
             <PrimaryInput
               label={t('price')}
               onChangeText={date => handleInputChange('price', date)}
-              value={filterData.children}
+              value={filterData?.price}
               placeholder="400"
             />
             <PrimaryInput
               onChangeText={date => handleInputChange('number', date)}
-              value={filterData.number}
+              value={filterData?.number}
               label={t('number_of_car')}
               placeholder="1"
             />
@@ -128,14 +126,9 @@ const CarAvailabilityModal = ({
 export default CarAvailabilityModal;
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  // }
   container: {
     backgroundColor: colors.white,
     padding: mvs(15),
-    // height: 220,
-    // width: width,
     borderRadius: mvs(20),
   },
 
@@ -175,7 +168,6 @@ const styles = StyleSheet.create({
   },
   tomarrowText: {
     color: colors.primary,
-    // backgroundColor: colors.primary,
     paddingVertical: mvs(8),
     paddingHorizontal: mvs(20),
     borderRadius: mvs(7),

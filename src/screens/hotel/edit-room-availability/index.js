@@ -23,19 +23,14 @@ import {UTILS} from 'utils';
 import styles from './styles';
 
 const EditRoomAvailability = props => {
-  const {navigation, route} = props;
+  const {route} = props;
   const {hotel_id} = route?.params;
-  const {hotel} = useSelector(s => s);
   const [loading, setLoading] = React.useState(true);
-  const [updateLoading, setUpdateLoading] = React.useState(true);
   const [date, setDate] = React.useState(moment('2023-10-10').startOf('month'));
   const [availability, setAvailability] = React.useState([]);
-
   const [rooms, setRooms] = React.useState([]);
   const [filterModal, setFilterModal] = React.useState(false);
-  const [roomSelectModal, setRoomSelectModal] = React.useState(false);
   const [roomId, setRoomId] = useState();
-  const refRBSheet = React.useRef();
   const [filterData, setFilterData] = useState({
     start_date: moment().format(DATE_FORMAT.yyyy_mm_dd),
     end_date: moment().format(DATE_FORMAT.yyyy_mm_dd),
@@ -141,7 +136,20 @@ const EditRoomAvailability = props => {
               {availability?.map((item, index) => {
                 return (
                   <TouchableOpacity
-                    onPress={() => setFilterModal(true)}
+                    onPress={() => {
+                      setFilterModal(true);
+                      setFilterData({
+                        start_date: moment(item?.start).format(
+                          DATE_FORMAT.yyyy_mm_dd,
+                        ),
+                        end_date: moment(item?.end).format(
+                          DATE_FORMAT.yyyy_mm_dd,
+                        ),
+                        number: `${item?.number}`,
+                        price: `${item?.price}`,
+                        active: `${item?.active}`,
+                      });
+                    }}
                     key={index}
                     style={{
                       height: mvs(60),
