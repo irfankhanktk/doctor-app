@@ -37,6 +37,7 @@ import {
 } from 'services/api/hotel/api-actions';
 import {setHotels} from 'store/reducers/hotel-reducer';
 import HtmlView from './../../../components/atoms/render-html/index';
+import SvgUri from 'react-native-svg-uri';
 
 const HotelDetails = props => {
   const {navigation} = props;
@@ -77,6 +78,7 @@ const HotelDetails = props => {
       setLoading(false);
       setHotelDetails(res);
     } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
       setLoading(false);
     }
   };
@@ -189,6 +191,13 @@ const HotelDetails = props => {
                 flexGrow: 1,
               }}>
               <Medium style={styles.text} label={hotelDetails?.row?.title} />
+              {/* <SvgUri
+                width="200"
+                height="200"
+                source={{
+                  uri: 'http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg',
+                }}
+              /> */}
               <Row style={{justifyContent: 'flex-start'}}>
                 {/* <SpecialistLocation /> */}
                 <Entypo
