@@ -147,16 +147,16 @@ const AddCar = props => {
       ) : (
         <KeyboardAvoidScrollview
           contentContainerStyle={styles.contentContainerStyle}>
-          {route?.params?.id ? (
+          {edit_car?.row?.id ? (
             <PrimaryButton
               containerStyle={{
-                width: 170,
+                width: mvs(170),
                 height: mvs(40),
                 borderRadius: mvs(5),
                 alignSelf: 'flex-end',
               }}
               onPress={() =>
-                navigate('Location')('EditCarAvailability', {
+                navigate('EditCarAvailability', {
                   car_id: route?.params?.id,
                 })
               }

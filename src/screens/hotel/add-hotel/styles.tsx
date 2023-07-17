@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
     marginTop:mvs(10),
     backgroundColor: colors.lightGray
   },
+  manageRoomBtn:{
+    width: '49%',
+    height: mvs(40),
+    borderRadius: mvs(5),
+  },
   buttonContainerStyle:{
     width:mvs(150),
     borderRadius:mvs(5),

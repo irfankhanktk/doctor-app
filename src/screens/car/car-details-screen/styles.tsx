@@ -17,17 +17,11 @@ const styles = StyleSheet.create({
     paddingVertical: mvs(10),
     backgroundColor: colors.white,
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+ borderWidth:StyleSheet.hairlineWidth,
     borderRadius: mvs(6),
+    borderColor:colors.border
   },
+ 
   cardContainer: {
     flex: 1,
     backgroundColor: colors.white,

@@ -158,23 +158,32 @@ const AddHotel = props => {
       ) : (
         <KeyboardAvoidScrollview
           contentContainerStyle={styles.contentContainerStyle}>
-          {route?.params?.id ? (
-            <PrimaryButton
-              containerStyle={{
-                width: 170,
-                height: mvs(40),
-                borderRadius: mvs(5),
-                alignSelf: 'flex-end',
-              }}
-              onPress={() =>
-                navigate('EditRoomAvailability', {hotel_id: route?.params?.id})
-              }
-              title={t('edit_room_availability')}
-            />
+          {edit_hotel?.row?.id ? (
+            <Row>
+              <PrimaryButton
+                containerStyle={styles.manageRoomBtn}
+                onPress={() =>
+                  navigate('RoomScreen', {
+                    hotel_id: edit_hotel?.row?.id,
+                  })
+                }
+                title={t('Manage Room')}
+              />
+              <PrimaryButton
+                containerStyle={styles.manageRoomBtn}
+                onPress={() =>
+                  navigate('EditRoomAvailability', {
+                    hotel_id: edit_hotel?.row?.id,
+                  })
+                }
+                title={t('edit_room_availability')}
+              />
+            </Row>
           ) : (
             <></>
           )}
           <PrimaryInput
+            labelStyle={{marginTop: mvs(20)}}
             label={t('title')}
             placeholder={t('title')}
             onChangeText={str => onHandleChange('title', str)}

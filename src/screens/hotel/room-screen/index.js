@@ -24,6 +24,7 @@ import {
   getHotelRooms,
 } from 'services/api/hotel/api-actions';
 import {UTILS} from 'utils';
+import Regular from 'typography/regular-text';
 const initialFilter = {
   start_date: null,
   end_date: null,
@@ -46,6 +47,7 @@ const RoomScreen = props => {
   const [roomSelectedmodal, setRoomSelectedModal] = React.useState(false);
   const [selectedRoom, setSelectedRoom] = React.useState({});
   const [rooms, setRooms] = React.useState([]);
+  // console.log('rooms ====>', rooms);
   const [statusChangeLoading, setStatusChangeLoading] = React.useState(false);
   const {hotel_id} = props?.route?.params;
   const {hotelDetails} = props?.route?.params;
@@ -105,65 +107,79 @@ const RoomScreen = props => {
   return (
     <View style={styles.container1}>
       <Header1x2x title={t('Available_Rooms')} back={true} />
-      <View style={{flex: 1}}>
-        <Row
-          style={{
-            alignItems: 'center',
-            marginHorizontal: mvs(20),
-            marginTop: mvs(15),
-          }}>
-          <Medium label={t('all_rooms')} fontSize={mvs(20)} />
-        </Row>
-        {loading ? (
-          <Loader />
-        ) : (
-          <ScrollView
-            contentContainerStyle={{
-              paddingHorizontal: mvs(20),
-              paddingBottom: mvs(20),
-              flexGrow: 1,
-            }}
-            style={{paddingVertical: mvs(20), flexGrow: 1}}>
-            {rooms?.map((ele, index) => (
-              <HotelRoom
-                key={index}
-                selectedRoomNumber={ele?.selectedRoomNumber}
-                hotel_img={{uri: `${ele?.image_id?.url}`}}
-                roomtitle={ele?.title}
-                beds={ele?.beds}
-                size={ele?.size}
-                adults={ele?.adults}
-                children={ele?.children}
-                number={ele?.number}
-                status={ele?.status}
-                deleteLoading={deleteLoading === ele?.id}
-                loading={statusChangeLoading === ele?.id}
-                onPressStatusChange={() =>
-                  roomStatusChangePress(hotel_id, ele?.id, ele?.status)
-                }
-                onPressEditRoom={() =>
-                  props?.navigation?.navigate('AddRoom', {
-                    hotel_id,
-                    room_id: ele?.id,
-                  })
-                }
-                onPressDeleteRoom={() => onDeleteRoom(hotel_id, ele?.id)}
-                onPressroom={() => setVideoModal(true)}
-                onPressselectedRoom={() => {
-                  setRoomSelectedModal(true);
-                  setSelectedRoom(ele);
-                }}
-                onPress={() => {
-                  navigate('RoomBooking', {
-                    room: ele,
-                  });
-                }}
-              />
-            ))}
-          </ScrollView>
-        )}
-      </View>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {rooms?.length ? (
+            <View style={{flex: 1}}>
+              <Row
+                style={{
+                  alignItems: 'center',
+                  marginHorizontal: mvs(20),
+                  marginTop: mvs(15),
+                }}>
+                <Medium label={t('all_rooms')} fontSize={mvs(20)} />
+              </Row>
 
+              <ScrollView
+                contentContainerStyle={{
+                  paddingHorizontal: mvs(20),
+                  paddingBottom: mvs(20),
+                  flexGrow: 1,
+                }}
+                style={{paddingVertical: mvs(20), flexGrow: 1}}>
+                {rooms?.map((ele, index) => (
+                  <HotelRoom
+                    key={index}
+                    selectedRoomNumber={ele?.selectedRoomNumber}
+                    hotel_img={{uri: `${ele?.image_id?.url}`}}
+                    roomtitle={ele?.title}
+                    beds={ele?.beds}
+                    size={ele?.size}
+                    adults={ele?.adults}
+                    children={ele?.children}
+                    number={ele?.number}
+                    status={ele?.status}
+                    deleteLoading={deleteLoading === ele?.id}
+                    loading={statusChangeLoading === ele?.id}
+                    onPressStatusChange={() =>
+                      roomStatusChangePress(hotel_id, ele?.id, ele?.status)
+                    }
+                    onPressEditRoom={() =>
+                      props?.navigation?.navigate('AddRoom', {
+                        hotel_id,
+                        room_id: ele?.id,
+                      })
+                    }
+                    onPressDeleteRoom={() => onDeleteRoom(hotel_id, ele?.id)}
+                    onPressroom={() => setVideoModal(true)}
+                    onPressselectedRoom={() => {
+                      setRoomSelectedModal(true);
+                      setSelectedRoom(ele);
+                    }}
+                    onPress={() => {
+                      navigate('RoomBooking', {
+                        room: ele,
+                      });
+                    }}
+                  />
+                ))}
+              </ScrollView>
+            </View>
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'white',
+              }}>
+              <Medium label={t('This_hotel_no_rooms')} />
+            </View>
+          )}
+        </>
+      )}
       <HotelVideoModal
         visible={videoModal}
         onClose={setVideoModal}

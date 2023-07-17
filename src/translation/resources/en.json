@@ -51,6 +51,8 @@
   "new_password_required":"New Password is required",
   "phone_required":"Phone is required",
   "Vendor_info":"Vendor Info",
+  "Member_Since":"Member Since",
+  "This_hotel_no_rooms":"This hotel has no rooms",
 
   "new_password":"New Password",
   "phone": "Phone",

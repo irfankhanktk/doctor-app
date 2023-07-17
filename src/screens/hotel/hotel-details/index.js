@@ -41,6 +41,7 @@ import {
 } from 'services/api/hotel/api-actions';
 import {setHotels} from 'store/reducers/hotel-reducer';
 import HtmlView from './../../../components/atoms/render-html/index';
+import {UTILS} from 'utils';
 
 const HotelDetails = props => {
   const {navigation} = props;
@@ -52,7 +53,7 @@ const HotelDetails = props => {
   const [visible, setIsVisible] = React.useState(false);
 
   const {hotels} = useAppSelector(s => s?.hotel);
-
+  // console.log('hotel room check======>', hotelDetails?.row?.author?.name);
   const [selectedRoom, setSelectedRoom] = React.useState({});
 
   const {t} = i18n;
@@ -72,6 +73,8 @@ const HotelDetails = props => {
       setLoading(false);
       setHotelDetails(res);
     } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
+    } finally {
       setLoading(false);
     }
   };
@@ -251,7 +254,7 @@ const HotelDetails = props => {
                   />
                   <View style={{marginLeft: mvs(14)}}>
                     <Row style={{justifyContent: 'flex-start'}}>
-                      <Medium label={'Vendor Name'} />
+                      <Medium label={hotelDetails?.row?.author?.name} />
                       <Icon
                         name="checkcircle"
                         color={colors.lightGray}
@@ -262,7 +265,11 @@ const HotelDetails = props => {
                         }}
                       />
                     </Row>
-                    <Medium label={t('Mmeber Since January 2023')} />
+                    <Medium
+                      label={`${t('Member_Since')}  ${moment(
+                        hotelDetails?.row?.author?.created_at,
+                      ).format('MMMM,YYYY')}`}
+                    />
                   </View>
                 </Row>
               </TouchableOpacity>

@@ -48,11 +48,17 @@ const EditRoomAvailability = props => {
     getRooms();
   }, []);
   const getRooms = async () => {
-    const res1 = await getHotelRooms(hotel_id);
-    if (!res1?.rows?.data?.length)
-      throw new Error('You have no rooms against hotel id');
-    setRoomId(res1?.rows?.data[0]?.id);
-    setRooms(res1?.rows?.data);
+    try {
+      const res1 = await getHotelRooms(hotel_id);
+      if (!res1?.rows?.data?.length)
+        throw new Error('You have no rooms against hotel id');
+      setRoomId(res1?.rows?.data[0]?.id);
+      setRooms(res1?.rows?.data);
+    } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
+    } finally {
+      setLoading(false);
+    }
   };
   const getAvailabilty = async () => {
     try {
@@ -64,7 +70,6 @@ const EditRoomAvailability = props => {
         moment(date).format(DATE_FORMAT.yyyy_mm_dd),
         moment(date).endOf('month').format(DATE_FORMAT.yyyy_mm_dd),
       );
-
       setAvailability(res);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
@@ -88,7 +93,6 @@ const EditRoomAvailability = props => {
         target_id: roomId,
       };
       const res = await updateRoomAvailability(hotel_id, data);
-
       await getAvailabilty();
       // setAvailability(res);
     } catch (error) {

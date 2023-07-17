@@ -18,6 +18,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18n from 'translation';
@@ -145,8 +146,6 @@ const CarDetailsScreen = props => {
               flexGrow: 1,
             }}>
             <ImageBackground
-              // source={IMG.Hotels_Bg}
-              // source={carDetails?.row?.image_id}
               source={
                 carDetails?.row?.image_id
                   ? {uri: carDetails?.row?.image_id}
@@ -156,11 +155,9 @@ const CarDetailsScreen = props => {
               <Row style={{paddingHorizontal: mvs(10)}}>
                 <Row
                   style={{
-                    // backgroundColor: 'red',
                     alignSelf: 'center',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    // marginHorizontal: mvs(10),
                     paddingVertical: mvs(5),
                   }}>
                   <TouchableOpacity
@@ -187,7 +184,6 @@ const CarDetailsScreen = props => {
                 }}>
                 <Medium style={styles.text} label={carDetails?.row?.title} />
                 <Row style={{justifyContent: 'flex-start'}}>
-                  {/* <SpecialistLocation /> */}
                   <Entypo
                     name="location"
                     color={colors.black}
@@ -229,6 +225,41 @@ const CarDetailsScreen = props => {
                     </Row>
                   ))}
                 </ScrollView>
+                <Medium
+                  label={t('Vendor_info')}
+                  style={{marginTop: mvs(12), fontSize: mvs(18)}}
+                />
+                <TouchableOpacity style={styles.contentContainerStyleNew}>
+                  <Row style={{justifyContent: 'flex-start'}}>
+                    <FontAwesome
+                      name="user-circle"
+                      color={colors.lightGray}
+                      size={mvs(40)}
+                      style={{
+                        alignSelf: 'center',
+                      }}
+                    />
+                    <View style={{marginLeft: mvs(14)}}>
+                      <Row style={{justifyContent: 'flex-start'}}>
+                        <Medium label={carDetails?.row?.author?.name} />
+                        <Icon
+                          name="checkcircle"
+                          color={colors.lightGray}
+                          size={mvs(16)}
+                          style={{
+                            alignSelf: 'center',
+                            marginLeft: mvs(6),
+                          }}
+                        />
+                      </Row>
+                      <Medium
+                        label={`${t('Member_Since')}  ${moment(
+                          carDetails?.row?.author?.created_at,
+                        ).format('MMMM,YYYY')}`}
+                      />
+                    </View>
+                  </Row>
+                </TouchableOpacity>
                 <Medium
                   label={t('description')}
                   style={{marginTop: mvs(12), fontSize: mvs(18)}}

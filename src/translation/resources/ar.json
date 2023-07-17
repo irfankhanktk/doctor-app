@@ -259,6 +259,10 @@
   "new_password_required":"مطلوب كلمة مرور جديدة",
   "phone_required":"الهاتف مطلوب",
   "new_password":"كلمة المرور الجديدة",
-  "Vendor_info":"معلومات البائع"
+  "Vendor_info":"معلومات البائع",
+  "Member_Since":"عضو منذ",
+  "This_hotel_no_rooms":"هذا الفندق لا يحتوي على غرف"
+  
+
   
 }
