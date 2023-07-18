@@ -46,12 +46,13 @@ const CarCard = ({
             <View>
               <Medium label={item?.title} color={colors.white} />
             </View>
-            <PrimaryButton
-              onPress={onPressCart}
-              containerStyle={styles.btn}
-              textStyle={styles.btnTxt}
-              title={`$${item?.price} / ${t('day')}`}
-            />
+
+            <View style={styles.btn}>
+              <Medium
+                textStyle={styles.btnTxt}
+                label={`$${item?.price} / ${t('day')}`}
+              />
+            </View>
           </Row>
 
           <Row style={{justifyContent: 'flex-start'}}>
@@ -182,9 +183,9 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: colors.white,
-    height: mvs(28),
-    width: mvs(96),
-    borderRadius: mvs(10),
+    height: mvs(30),
+    padding: mvs(5),
+    borderRadius: mvs(5),
     ...colors.shadow,
   },
   btnTxt: {color: colors.primary, fontSize: mvs(12), lineHeight: mvs(16)},
