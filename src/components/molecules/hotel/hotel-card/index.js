@@ -1,5 +1,6 @@
-import {PrimaryButton} from 'components/atoms/buttons';
 import {Row} from 'components/atoms/row';
+import {colors} from 'config/colors';
+import {mvs} from 'config/metrices';
 import React from 'react';
 import {
   ImageBackground,
@@ -13,14 +14,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-import {colors} from 'config/colors';
-import {mvs} from 'config/metrices';
-const HotelCard = ({
-  item,
-  style,
-  onPress = () => {},
-  onPressRecover = () => {},
-}) => {
+const HotelCard = ({item, editPress, onPress = () => {}}) => {
   const {t} = i18n;
 
   return (
@@ -40,12 +34,13 @@ const HotelCard = ({
             <View style={{flex: 1}}>
               <Row style={{alignItems: 'center'}}>
                 <Medium label={item?.title} color={colors.white} />
-                <PrimaryButton
-                  onPress={onPressRecover}
-                  containerStyle={styles.btn}
-                  textStyle={styles.btnTxt}
-                  title={`${item?.price} / ${t('night')}`}
-                />
+
+                <View style={styles.btn}>
+                  <Medium
+                    label={`${item?.price} / ${t('night')}`}
+                    textStyle={styles.btnTxt}
+                  />
+                </View>
               </Row>
               <Row style={{justifyContent: 'flex-start'}}>
                 <Entypo
@@ -67,14 +62,19 @@ const HotelCard = ({
           </Row>
         </LinearGradient>
       </ImageBackground>
-      <Row style={styles.rowRating}>
-        <Icon name={'star'} color={colors.white} size={mvs(12)} />
-        <Regular
-          style={styles.rateTxt}
-          label={`${item?.star_rate} (2.3k)`}
-          fontSize={mvs(12)}
-          color={colors.white}
-        />
+      <Row style={{position: 'absolute', width: '96%', alignItems: 'center'}}>
+        <Row style={styles.rowRating}>
+          <Icon name={'star'} color={colors.white} size={mvs(12)} />
+          <Regular
+            style={styles.rateTxt}
+            label={`${item?.star_rate} (2.3k)`}
+            fontSize={mvs(12)}
+            color={colors.white}
+          />
+        </Row>
+        <TouchableOpacity style={styles.editBtn} onPress={editPress}>
+          <Entypo name="edit" color={colors.black} size={mvs(20)} />
+        </TouchableOpacity>
       </Row>
     </TouchableOpacity>
   );
@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
 
     ...colors.shadow,
   },
-  // row: {backgroundColor: 'red'},
   bg: {
     width: '100%',
     height: '100%',
@@ -96,10 +95,11 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: colors.white,
-    height: mvs(28),
-    width: mvs(130),
-    // padding: mvs(5),
-    borderRadius: mvs(10),
+    alignitems: 'center',
+    justifyContent: 'center',
+    height: mvs(30),
+    padding: mvs(5),
+    borderRadius: mvs(5),
     ...colors.shadow,
   },
   btnTxt: {
@@ -109,12 +109,11 @@ const styles = StyleSheet.create({
   },
   imgStyle: {borderRadius: mvs(15), resizeMode: 'contain'},
   rowRating: {
-    position: 'absolute',
+    // position: 'absolute',
     padding: mvs(15),
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.20)',
     borderTopLeftRadius: mvs(15),
-    // borderBottomLeftRadius: mvs(15),
   },
   rateTxt: {marginLeft: mvs(10), lineHeight: mvs(16)},
   grd: {
@@ -132,5 +131,13 @@ const styles = StyleSheet.create({
     width: mvs(30),
     borderRadius: mvs(15),
     backgroundColor: colors.red,
+  },
+  editBtn: {
+    backgroundColor: colors.white,
+    borderRadius: mvs(7),
+    justifyContent: 'center',
+    alignitems: 'center',
+    height: mvs(30),
+    padding: mvs(5),
   },
 });

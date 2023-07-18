@@ -14,29 +14,31 @@ import i18n from 'translation';
 import styles from './styles';
 import {setCarForEdit} from 'store/reducers/car-reducer';
 import {ADD_CAR_DEFAULT} from 'config/constants';
+import {useIsFocused} from '@react-navigation/native';
+import {navigate} from 'navigation/navigation-ref';
 const AllCars = props => {
   const [loading, setLoading] = React.useState(true);
   const dispatch = useAppDispatch();
   const {car, user} = useSelector(s => s);
   const {car_filter, cars} = car;
-  const [page, setPage] = React.useState(1);
   const [refreshing, setRefreshing] = React.useState(false);
-
+  const isFocus = useIsFocused();
   const {userInfo} = user;
 
   const {t} = i18n;
   const getHomeCars = bool => {
     dispatch(getCars(bool ? setRefreshing : setLoading));
   };
-  React.useEffect(() => {
-    dispatch(setCarForEdit({row: {...ADD_CAR_DEFAULT}}));
-  }, []);
+
   React.useEffect(() => {
     getHomeCars();
   }, [car_filter]);
   React.useEffect(() => {
     dispatch(getLocations());
   }, []);
+  React.useEffect(() => {
+    if (isFocus) dispatch(setCarForEdit({row: {...ADD_CAR_DEFAULT}}));
+  }, [isFocus]);
   const renderCarItem = ({item}) => (
     <CarCard
       item={item}
@@ -46,7 +48,7 @@ const AllCars = props => {
           id: item?.id,
         })
       }
-      onPressCart={() => {}}
+      editPress={() => navigate('CarTopTab', {id: item?.id})}
     />
   );
   const renderFooter = () => {

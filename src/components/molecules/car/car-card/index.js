@@ -18,11 +18,19 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-const CarCard = ({item, style, onPress = () => {}, onPressCart = () => {}}) => {
+const CarCard = ({
+  item,
+  editPress,
+  onPress = () => {},
+  onPressCart = () => {},
+}) => {
   const {t} = i18n;
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
+      <TouchableOpacity style={styles.editBtn} onPress={editPress}>
+        <Entypo name="edit" color={colors.black} size={mvs(20)} />
+      </TouchableOpacity>
       <ImageBackground
         source={{uri: `${item?.image_id}`}}
         imageStyle={styles.imgStyle}
@@ -37,21 +45,6 @@ const CarCard = ({item, style, onPress = () => {}, onPressCart = () => {}}) => {
           <Row style={styles.row}>
             <View>
               <Medium label={item?.title} color={colors.white} />
-
-              {/* <Row style={{justifyContent: 'flex-start'}}>
-                
-                <Entypo
-                  name="location"
-                  color={colors.red}
-                  size={mvs(18)}
-                  style={{marginRight: mvs(10)}}
-                />
-                <Regular
-                  fontSize={mvs(12)}
-                  label={item?.address}
-                  color={colors.white}
-                />
-              </Row> */}
             </View>
             <PrimaryButton
               onPress={onPressCart}
@@ -93,7 +86,6 @@ const CarCard = ({item, style, onPress = () => {}, onPressCart = () => {}}) => {
             </View>
             <View
               style={{
-                // borderWidth: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: mvs(40),
@@ -125,7 +117,6 @@ const CarCard = ({item, style, onPress = () => {}, onPressCart = () => {}}) => {
             </View>
             <View
               style={{
-                // borderWidth: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: mvs(40),
@@ -144,15 +135,6 @@ const CarCard = ({item, style, onPress = () => {}, onPressCart = () => {}}) => {
           </Row>
         </LinearGradient>
       </ImageBackground>
-      {/* <Row style={styles.rowRating}>
-        <Icon name={'star'} color={colors.white} size={mvs(12)} />
-        <Regular
-          style={styles.rateTxt}
-          label={`${item?.star_rate} (${item?.review_score})`}
-          fontSize={mvs(12)}
-          color={colors.white}
-        />
-      </Row> */}
       {item?.is_featured ? (
         <Row style={styles.rowRating1}>
           <Regular
@@ -169,16 +151,6 @@ const CarCard = ({item, style, onPress = () => {}, onPressCart = () => {}}) => {
           <Icon name={'hearto'} color={colors.white} size={mvs(19)} />
         </View>
       ) : null}
-      {/* {item?.is_featured ? (
-        <View style={styles.heartContainer}>
-          <Icon name={'hearto'} color={colors.white} size={mvs(19)} />
-        </View>
-      ) : null} */}
-      {/* {item?.is_featured ? (
-        <View style={styles.heartContainer}>
-          <Icon name={'hearto'} color={colors.white} size={mvs(19)} />
-        </View>
-      ) : null} */}
     </TouchableOpacity>
   );
 };
@@ -190,6 +162,17 @@ const styles = StyleSheet.create({
     marginBottom: mvs(20),
 
     ...colors.shadow,
+  },
+  editBtn: {
+    backgroundColor: colors.white,
+    borderRadius: mvs(7),
+    height: mvs(30),
+    padding: mvs(5),
+    position: 'absolute',
+    zIndex: 1,
+    alignSelf: 'flex-end',
+    right: mvs(15),
+    top: mvs(10),
   },
   row: {alignItems: 'flex-end'},
   bg: {

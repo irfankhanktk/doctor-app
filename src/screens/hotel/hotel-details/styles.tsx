@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     padding: mvs(5),
     borderRadius: mvs(7),
     flexDirection: 'row'
-
   },
   deleteBtn: {
     borderRadius: mvs(5),

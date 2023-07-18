@@ -14,12 +14,13 @@ import {useIsFocused} from '@react-navigation/native';
 import {ADD_HOTEL_DEFAULT} from 'config/constants';
 import {getAllHotels} from 'services/api/hotel/api-actions';
 import {setHotelForEdit} from 'store/reducers/hotel-reducer';
+import {navigate} from 'navigation/navigation-ref';
 
 const AllHotels = props => {
   const isFocus = useIsFocused();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
-  const [pageLoading, setPageLoading] = React.useState(false);
+
   const dispatch = useAppDispatch();
   const {hotel} = useSelector(s => s);
   const {hotels} = hotel;
@@ -45,11 +46,11 @@ const AllHotels = props => {
           slug: item?.slug,
         })
       }
-      // onPressEdit={() => navigate('AddHotel', { id: item?.id })}
+      editPress={() => navigate('HotelTopTab', {id: item?.id})}
     />
   );
   const renderFooter = () => {
-    if (!loading && !pageLoading) return null;
+    if (!loading) return null;
     return (
       <View style={{paddingVertical: 70}}>
         <Loader />
@@ -82,7 +83,7 @@ const AllHotels = props => {
             renderItem={renderHotelItem}
             keyExtractor={(item, index) => index?.toString()}
             onEndReached={() => {
-              if (!loading && !pageLoading && page < hotels?.last_page) {
+              if (!loading && page < hotels?.last_page) {
                 setPage(page + 1);
               }
             }}

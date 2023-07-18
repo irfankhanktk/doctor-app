@@ -1,6 +1,4 @@
 import {Row} from 'components/atoms/row';
-
-import {DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
@@ -40,8 +38,8 @@ import {
   getHotelDetails,
 } from 'services/api/hotel/api-actions';
 import {setHotels} from 'store/reducers/hotel-reducer';
-import HtmlView from './../../../components/atoms/render-html/index';
 import {UTILS} from 'utils';
+import HtmlView from './../../../components/atoms/render-html/index';
 
 const HotelDetails = props => {
   const {navigation} = props;
@@ -53,7 +51,6 @@ const HotelDetails = props => {
   const [visible, setIsVisible] = React.useState(false);
 
   const {hotels} = useAppSelector(s => s?.hotel);
-  // console.log('hotel room check======>', hotelDetails?.row?.author?.name);
   const [selectedRoom, setSelectedRoom] = React.useState({});
 
   const {t} = i18n;
@@ -119,23 +116,6 @@ const HotelDetails = props => {
     setIsVisible(true);
   };
 
-  const location = {
-    latitude: (hotelDetails?.row?.map_lat || 19.229727) * 1,
-    longitude: (hotelDetails?.row?.map_lng || 72.98447) * 1,
-  };
-  const handleMapReady = () => {
-    if (location) {
-      mapViewRef.current.animateToRegion({
-        latitude: location.latitude,
-        longitude: location.longitude,
-        latitudeDelta: 0.02,
-        longitudeDelta: 0.02,
-      });
-    }
-  };
-
-  const mapViewRef = React.createRef();
-
   return (
     <View style={styles.container}>
       {loading ? (
@@ -191,15 +171,8 @@ const HotelDetails = props => {
                 flexGrow: 1,
               }}>
               <Medium style={styles.text} label={hotelDetails?.row?.title} />
-              {/* <SvgUri
-                width="200"
-                height="200"
-                source={{
-                  uri: 'http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg',
-                }}
-              /> */}
+
               <Row style={{justifyContent: 'flex-start'}}>
-                {/* <SpecialistLocation /> */}
                 <Entypo
                   name="location"
                   color={colors.black}
@@ -362,7 +335,7 @@ const HotelDetails = props => {
                   onPress={() => deleteHotelPress()}
                 />
                 <PrimaryButton
-                  disabled={statusChangeLoading}
+                  loading={statusChangeLoading}
                   containerStyle={styles.publishBtn}
                   title={
                     hotelDetails?.row?.status === 'publish'
