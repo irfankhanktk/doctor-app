@@ -91,6 +91,7 @@
   "total": "Total",
   "payments": "Payments",
   "patients": "Patients",
+  "all_patients":"All Patients",
   "popular_patients": "Popular Patients",
   "availabilities": "Availabilities",
   "availability": "Availability",

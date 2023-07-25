@@ -1,41 +1,45 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { SplashIcon } from 'assets/doctor/icons';
-import { splash_bg } from 'assets/doctor/images';
-import { useAppDispatch } from 'hooks/use-store';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {SplashIcon} from 'assets/doctor/icons';
+import {splash_bg} from 'assets/doctor/images';
+import {useAppDispatch} from 'hooks/use-store';
 import React from 'react';
-import { ImageBackground, View } from 'react-native';
-import { getUserInfo } from 'services/api/auth-api-actions';
+import {ImageBackground, View} from 'react-native';
+import {getUserInfo} from 'services/api/auth-api-actions';
 import i18n from 'translation';
-import { UTILS } from 'utils';
-import { STORAGEKEYS } from '../../config/constants';
-import { setLanguage, setLocation, setUserInfo } from '../../store/reducers/user-reducer';
+import {UTILS} from 'utils';
+import {STORAGEKEYS} from '../../config/constants';
+import {
+  setLanguage,
+  setLocation,
+  setUserInfo,
+} from '../../store/reducers/user-reducer';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import styles from './styles';
 type props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const Splash = (props: props) => {
-  const { navigation } = props;
+  const {navigation} = props;
   const dispatch = useAppDispatch();
 
-
   React.useEffect(() => {
-
     (async () => {
       try {
         let screen: any = 'Login';
-        UTILS.get_current_location((position) => {
-          dispatch(setLocation({
-            latitude: position?.coords?.latitude,
-            longitude: position?.coords?.longitude
-          }))
-
-        }, (error) => {
-
-        })
+        UTILS.get_current_location(
+          position => {
+            dispatch(
+              setLocation({
+                latitude: position?.coords?.latitude,
+                longitude: position?.coords?.longitude,
+              }),
+            );
+          },
+          error => {},
+        );
         UTILS.getItem(STORAGEKEYS.lang).then((lang: any) => {
           i18n.changeLanguage(lang);
           dispatch(setLanguage(lang ?? 'en'));
-        })
+        });
 
         UTILS.getItem(STORAGEKEYS.token).then(async (token: any) => {
           if (token) {
@@ -43,7 +47,7 @@ const Splash = (props: props) => {
               const res = await getUserInfo();
               const role = res?.user?.role?.name;
               screen = `${role}Stack`;
-              dispatch(setUserInfo(res?.user))
+              dispatch(setUserInfo(res?.user));
             } catch (error) {
               console.log('error', error);
             }
@@ -52,22 +56,20 @@ const Splash = (props: props) => {
             navigation?.replace(screen);
           }, 2000);
         });
-
-      } catch (error) {
-
-      }
-    })()
+      } catch (error) {}
+    })();
   }, []);
 
-
   return (
-    <View style={{ ...styles.container }}>
-      <ImageBackground source={splash_bg} style={{
-        height: '100%',
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
+    <View style={{...styles.container}}>
+      <ImageBackground
+        source={splash_bg}
+        style={{
+          height: '100%',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         <SplashIcon />
       </ImageBackground>
     </View>
