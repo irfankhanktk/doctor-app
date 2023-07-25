@@ -10,6 +10,7 @@ import {
   setWallet,
 } from './../../store/reducers/user-reducer';
 import {goBack, resetStack} from 'navigation/navigation-ref';
+import axios from 'axios';
 export const getUserInfo = () => {
   return getData(URLS.auth.get_user_info);
 };
@@ -156,3 +157,17 @@ export const onLogoutPress = () => {
     }
   };
 };
+export const getPaymentUri = async (data: any) =>
+  axios.post('https://secure.clickpay.com.sa/payment/request', data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'SNJNL9M6RH-J69NMZLB9Z-GGNBNKDBTJ',
+    },
+  });
+export const getPaymentTransationStatus = async (data: any) =>
+  axios.post('https://secure.clickpay.com.sa/payment/query', data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'SNJNL9M6RH-J69NMZLB9Z-GGNBNKDBTJ',
+    },
+  });

@@ -22,6 +22,7 @@ import UpdatePassword from 'screens/update-password';
 import RecoveryHotels from 'screens/hotel/recovery-hotels';
 import EventStack from './event/event-stack';
 import TourStack from './tour/tour-stack';
+import PaymentGatewayScreen from 'payment-gateway-screen';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -58,6 +59,10 @@ export const RootNavigator = () => {
         <Stack.Screen name="CarStack" component={CarStack} />
         <Stack.Screen name="EventStack" component={EventStack} />
         <Stack.Screen name="TourStack" component={TourStack} />
+        <Stack.Screen
+          name="PaymentGatewayScreen"
+          component={PaymentGatewayScreen}
+        />
       </Stack.Navigator>
     </View>
   );

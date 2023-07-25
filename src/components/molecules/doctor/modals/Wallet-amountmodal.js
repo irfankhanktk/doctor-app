@@ -1,15 +1,14 @@
-import {CrossModal} from 'assets/doctor/icons';
-import {PrimaryButton} from 'components/atoms/buttons';
-import {ModalWrapper} from 'components/atoms/modal-wrapper';
 import {colors} from 'config/colors';
+import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import Medium from 'typography/medium-text';
-import {mvs} from 'config/metrices';
-import {OtpInput} from '../otp-input';
-import PrimaryInput from 'components/atoms/inputs';
-import i18n from 'translation';
 import {onAddAmount} from 'services/api/auth-api-actions';
+import i18n from 'translation';
+import PrimaryInput from 'components/atoms/inputs';
+import {mvs} from 'config/metrices';
+import {ModalWrapper} from 'components/atoms/modal-wrapper';
+import {CrossModal} from 'assets/doctor/icons';
+import {PrimaryButton} from 'components/atoms/buttons';
 const WalletAmount = ({
   style,
   email,
@@ -24,8 +23,18 @@ const WalletAmount = ({
   const [loading, setLoading] = React.useState(false);
   const onSubmit = async () => {
     try {
+      if (!userInfo?.transaction_id) {
+        onClose();
+        navigate('PaymentGatewayScreen', {amount: value?.amount});
+
+        return;
+      }
       setLoading(true);
-      const res = await onAddAmount(value);
+      await onAddAmount({
+        ...value,
+        payable_type: 'User',
+        transaction_id: userInfo?.transaction_id,
+      });
       isSubmited();
       onClose();
       setLoading(false);
@@ -45,32 +54,22 @@ const WalletAmount = ({
         <TouchableOpacity onPress={() => onClose()} style={styles.cross}>
           <CrossModal height={mvs(30)} width={mvs(30)} />
         </TouchableOpacity>
-        {/* <Medium
-          numberOfLines={2}
-          style={styles.msg}
-          label={`Verification is sent to ${email || ''}`}
-        /> */}
+
         <View style={styles.otp}>
           <PrimaryInput
             keyboardType={'number-pad'}
-            // error={
-            //   touched?.email && errors?.email
-            //     ? `${t(errors?.email)}`
-            //     : undefined
-            // }
+            editable={!userInfo?.transaction_id}
+            value={`${value?.amount}`}
             label={t('add_amount')}
             placeholder={t('add_amount')}
-            onChangeText={str =>
-              setValue({user_id: userInfo?.id, amount: parseInt(str)})
-            }
+            onChangeText={str => setValue({user_id: userInfo?.id, amount: str})}
             // onBlur={() => setFieldTouched('email', true)}
             // value={values.email}
           />
           <PrimaryButton
             loading={loading}
-            // disabled={value?.length !== 6}
             onPress={() => onSubmit()}
-            title={t('submit')}
+            title={t(!userInfo?.transaction_id ? 'add_amount' : 'submit')}
             containerStyle={{marginTop: mvs(20)}}
           />
         </View>

@@ -1,7 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 type Props = {
   userInfo: any;
+  transaction_id: any;
+
   language: string;
   location?: {
     latitude: number;
@@ -10,11 +12,12 @@ type Props = {
   notifications: any[];
   wallet: any;
   unreadNotification: number;
-  locations: any[],
-
+  locations: any[];
 };
 const initialState: Props = {
   userInfo: null,
+  transaction_id: null,
+
   language: 'en',
   location: undefined,
   notifications: [],
@@ -29,6 +32,9 @@ export const userSlice = createSlice({
   reducers: {
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
+    },
+    setTransactionId: (state, action) => {
+      state.transaction_id = action.payload;
     },
     setLanguage: (state, action) => {
       state.language = action.payload;
@@ -63,6 +69,8 @@ export const {
   setLanguage,
   setLocation,
   setNotifications,
+  setTransactionId,
+
   setLocations,
   setWallet,
   // demoAsync

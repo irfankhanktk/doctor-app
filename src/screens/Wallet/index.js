@@ -1,5 +1,5 @@
 import {PrimaryButton} from 'components/atoms/buttons';
-
+import {useIsFocused} from '@react-navigation/native';
 import {Loader} from 'components/atoms/loader';
 import Header1x2x from 'components/atoms/walletheader/header-1x-2x';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
@@ -17,11 +17,12 @@ import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 import styles from './styles';
+import {setTransactionId} from 'store/reducers/user-reducer';
 
 const WalletScreen = props => {
   const dispatch = useAppDispatch();
-  const {userInfo, wallet} = useAppSelector(s => s.user);
-
+  const {userInfo, wallet, transaction_id} = useAppSelector(s => s.user);
+  const isFocus = useIsFocused();
   const {t} = i18n;
   const [otpModalVisible, setOtpModalVisible] = React.useState(false);
 
@@ -124,27 +125,15 @@ const WalletScreen = props => {
 
             <WalletAmount
               onClose={() => setOtpModalVisible(false)}
-              visible={otpModalVisible}
+              visible={otpModalVisible || (isFocus && transaction_id)}
               setValue={setValue}
               value={value}
-              userInfo={userInfo}
+              userInfo={{...userInfo, transaction_id}}
               isSubmited={() => {
                 setIsSubmited(!isSubmited);
+                if (transaction_id) dispatch(setTransactionId(null));
               }}
             />
-            {/* <AntDesign
-            onPress={() => setOtpModalVisible(true)}
-            name="pluscircle"
-            color={colors.primary}
-            size={mvs(45)}
-            style={{
-              position: 'absolute',
-              bottom: mvs(30),
-              right: mvs(30),
-              alignSelf: 'flex-end',
-            }}
-          /> */}
-            {/* <PrimaryPhoneInput value={phone} onChangeText={setPhone} getCallingCode={(code) => { }} /> */}
           </View>
         )}
       </View>
