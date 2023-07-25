@@ -157,6 +157,20 @@ export const onLogoutPress = () => {
     }
   };
 };
+export const deletePermanentAccount = () => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const res = await getData(`${URLS.auth.delete_account}`);
+      console.log('res of deletaccount', res);
+      Alert.alert('Success', 'Account Deleted Successfully');
+      dispatch(onLogoutPress());
+      return res;
+    } catch (error) {
+      console.log('error', UTILS.returnError(error));
+      Alert.alert('Error', UTILS.returnError(error));
+    }
+  };
+};
 export const getPaymentUri = async (data: any) =>
   axios.post('https://secure.clickpay.com.sa/payment/request', data, {
     headers: {

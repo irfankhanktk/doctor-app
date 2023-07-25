@@ -1,29 +1,34 @@
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { colors } from 'config/colors';
-import { mvs } from 'config/metrices';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {colors} from 'config/colors';
+import {mvs} from 'config/metrices';
 import React from 'react';
-import { TouchableOpacity, View ,ImageBackground,Image} from 'react-native';
+import {TouchableOpacity, View, ImageBackground, Image} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { onLogoutPress, onUpdateProfile } from 'services/api/auth-api-actions';
+import {
+  deletePermanentAccount,
+  onLogoutPress,
+  onUpdateProfile,
+} from 'services/api/auth-api-actions';
 import TabParamList from 'types/navigation-types/bottom-tab';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-import { useAppDispatch, useAppSelector } from 'hooks/use-store';
+import {useAppDispatch, useAppSelector} from 'hooks/use-store';
 import i18n from '../../translation/index';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import styles from './styles';
-import { navigate } from 'navigation/navigation-ref';
-import { Loader } from 'components/atoms/loader';
-import { UTILS } from 'utils';
-import { Alert } from 'react-native';
-import { postFileData } from 'services/api/hotel/api-actions';
-import { login_bg } from 'assets/doctor/images';
+import {navigate} from 'navigation/navigation-ref';
+import {Loader} from 'components/atoms/loader';
+import {UTILS} from 'utils';
+import {Alert} from 'react-native';
+import {postFileData} from 'services/api/hotel/api-actions';
+import {login_bg} from 'assets/doctor/images';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 type props = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, 'UserTab'>,
   NativeStackScreenProps<RootStackParamList>
@@ -31,9 +36,9 @@ type props = CompositeScreenProps<
 const UserTab = (props: props) => {
   const user = useAppSelector(s => s?.user);
   const userInfo = user?.userInfo;
-  
+
   const dispatch = useAppDispatch();
-  const { t } = i18n;
+  const {t} = i18n;
   const [imagegallery, setImageGallery] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
@@ -51,15 +56,33 @@ const UserTab = (props: props) => {
           props,
         ),
       );
-  
     } catch (error) {
       Alert.alert('Error', UTILS?.returnError(error));
     }
   };
+  const deleteAcc = async () => {
+    Alert.alert(
+      'Warning!',
+      'Are you sure you want to Delete your account?. Your account will be deleted permanently and your all data will be deleted',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            dispatch(deletePermanentAccount());
+          },
+        },
+      ],
+    );
+  };
   return (
     <View style={styles.container}>
       <View style={styles.body}>
-      <View style={{...styles.img}}>
+        <View style={{...styles.img}}>
           {loading ? (
             <Loader color={colors.white} />
           ) : (
@@ -87,10 +110,7 @@ const UserTab = (props: props) => {
             </TouchableOpacity>
           )}
         </View>
-        <Medium
-          label={userInfo?.name || t('guest_mode')}
-          style={styles.name}
-        />
+        <Medium label={userInfo?.name || t('guest_mode')} style={styles.name} />
         <Regular
           label={`${userInfo?.email || 'guest@gmail.com'}`}
           style={styles.email}
@@ -132,7 +152,7 @@ const UserTab = (props: props) => {
               />
             </TouchableOpacity>
           )}
-          {userInfo?.role?.name === 'Doctor' ?(
+          {userInfo?.role?.name === 'Doctor' ? (
             <TouchableOpacity
               style={styles.itemtabs}
               onPress={() => props?.navigation?.navigate('AvailabilityList')}>
@@ -146,7 +166,7 @@ const UserTab = (props: props) => {
                 label={`${t('availabilities')}`}
               />
             </TouchableOpacity>
-          ):(
+          ) : (
             <TouchableOpacity
               style={styles.itemtabs}
               onPress={() => navigate('Recovery')}>
@@ -155,13 +175,24 @@ const UserTab = (props: props) => {
                 size={mvs(22)}
                 color={colors.primary}
               />
+              <Regular style={styles.itemText1} label={`${t('recovery')}`} />
+            </TouchableOpacity>
+          )}
+          {userInfo && (
+            <TouchableOpacity
+              style={styles.itemtabs}
+              onPress={() => deleteAcc()}>
+              <MaterialCommunityIcons
+                name="account-cancel"
+                size={mvs(28)}
+                color={colors.red}
+              />
               <Regular
                 style={styles.itemText1}
-                label={`${t('recovery')}`}
+                label={`${t('delete_account')}`}
               />
             </TouchableOpacity>
           )}
-   
           <View
             style={{
               flex: 1,

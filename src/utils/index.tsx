@@ -143,7 +143,10 @@ export const UTILS = {
       const temp = JSON.parse(_response);
       const resp = getErrorList(temp);
       console.log('ASDFGFDSDF:::', resp);
-      return resp;
+      if (resp) return resp;
+      else {
+        return 'Something went wrong.';
+      }
     } else if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
