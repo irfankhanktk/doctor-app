@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     padding: mvs(15),
-    height: 500,
+    // height: 500,
     // width: width,
     borderRadius: mvs(20),
   },

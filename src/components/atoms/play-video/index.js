@@ -1,19 +1,33 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-// import Video from 'react-native-video';
-import {HOTEL_DETAILS} from 'config/constants';
-import {WebView} from 'react-native-webview';
-const PlayVideo = ({url}) => {
+import React, {useCallback, useState} from 'react';
+import {View} from 'react-native';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import {mvs} from 'config/metrices';
+
+export default function YouTubeVideo({url}) {
+  const [playing, setPlaying] = useState('paused');
+
+  const onStateChange = useCallback(state => {
+    setPlaying(state);
+    if (state === 'ended') {
+      // Alert.alert('video has finished playing!');
+    }
+  }, []);
+  function getYouTubeVideoId() {
+    const regex =
+      /^(?:https?:\/\/)?(?:www\.)?youtube(?:-nocookie)?\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|youtu\.be\/)([^"&?/ ]{11})/;
+    const match = url.match(regex);
+    return match && match[1];
+  }
+
+  const videoId = getYouTubeVideoId();
   return (
-    <WebView
-      source={{uri: url}} // Can be a URL or a local file path
-      // source={{ uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' }} // Can be a URL or a local file path
-      style={{flex: 1}}
-      javaScriptEnabled={true}
-      domStorageEnabled={true}
-      startInLoadingState={false}
-      scalesPageToFit={true}
-    />
+    <View>
+      <YoutubePlayer
+        height={mvs(180)}
+        play={playing === 'playing'}
+        videoId={videoId}
+        onChangeState={onStateChange}
+      />
+    </View>
   );
-};
-export default PlayVideo;
+}
