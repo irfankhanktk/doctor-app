@@ -30,7 +30,7 @@ const WalletScreen = props => {
     getWalletHistory();
   }, []);
 
-  const [value, setValue] = React.useState({});
+  const [value, setValue] = React.useState('');
   const initialValues = {
     amount: '',
     // password: '',

@@ -61,12 +61,11 @@ const WalletAmount = ({
           <PrimaryInput
             keyboardType={'number-pad'}
             editable={!userInfo?.transaction_id}
-            value={`${value?.amount}`}
+            value={`${value}`}
             label={t('add_amount')}
             placeholder={t('add_amount')}
             onChangeText={setValue}
             // onBlur={() => setFieldTouched('email', true)}
-            value={value}
           />
           <PrimaryButton
             loading={loading}
