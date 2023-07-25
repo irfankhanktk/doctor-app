@@ -12,6 +12,7 @@ export const URLS = {
     forget_password: 'doctor/forgetPassword',
     update_profile: 'user/updateProfile',
     locations: 'locations',
+    delete_account: 'user/permanently_deleted',
   },
   availability: {
     add: 'doctor/addDoctorAvailability',

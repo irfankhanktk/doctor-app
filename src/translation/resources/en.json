@@ -87,6 +87,7 @@
   "notifications": "Notifications",
   "completed": "Completed",
   "confirmed": "Confirmed",
+  "delete_account":"Delete Account",
   "waiting": "Waiting",
   "total": "Total",
   "payments": "Payments",
