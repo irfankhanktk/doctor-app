@@ -1,7 +1,7 @@
 import {colors} from 'config/colors';
 import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {onAddAmount} from 'services/api/auth-api-actions';
 import i18n from 'translation';
 import PrimaryInput from 'components/atoms/inputs';
@@ -9,6 +9,7 @@ import {mvs} from 'config/metrices';
 import {ModalWrapper} from 'components/atoms/modal-wrapper';
 import {CrossModal} from 'assets/doctor/icons';
 import {PrimaryButton} from 'components/atoms/buttons';
+import {UTILS} from 'utils';
 const WalletAmount = ({
   style,
   email,
@@ -25,14 +26,14 @@ const WalletAmount = ({
     try {
       if (!userInfo?.transaction_id) {
         onClose();
-        navigate('PaymentGatewayScreen', {amount: value?.amount});
+        navigate('PaymentGatewayScreen', {amount: value});
 
         return;
       }
       setLoading(true);
       await onAddAmount({
-        ...value,
-        payable_type: 'User',
+        payable_type: userInfo?.role?.name,
+        user_id: userInfo?.id,
         transaction_id: userInfo?.transaction_id,
       });
       isSubmited();
@@ -40,6 +41,7 @@ const WalletAmount = ({
       setLoading(false);
     } catch (error) {
       console.log('error=>', error);
+      Alert.alert('Error', UTILS.returnError(error));
       setLoading(false);
     }
   };
@@ -62,9 +64,9 @@ const WalletAmount = ({
             value={`${value?.amount}`}
             label={t('add_amount')}
             placeholder={t('add_amount')}
-            onChangeText={str => setValue({user_id: userInfo?.id, amount: str})}
+            onChangeText={setValue}
             // onBlur={() => setFieldTouched('email', true)}
-            // value={values.email}
+            value={value}
           />
           <PrimaryButton
             loading={loading}
