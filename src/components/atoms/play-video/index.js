@@ -15,11 +15,19 @@ export default function YouTubeVideo({url}) {
   function getYouTubeVideoId() {
     const regex =
       /^(?:https?:\/\/)?(?:www\.)?youtube(?:-nocookie)?\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|youtu\.be\/)([^"&?/ ]{11})/;
-    const match = url.match(regex);
+    const match = url?.match(regex);
     return match && match[1];
   }
+  function getYouTubeVideo() {
+    const lastSlashIndex = url?.lastIndexOf('/');
+    if (lastSlashIndex !== -1) {
+      return url?.substr(lastSlashIndex + 1);
+    }
+    return null;
+  }
+  let videoId = getYouTubeVideoId();
+  if (!videoId) videoId = getYouTubeVideo();
 
-  const videoId = getYouTubeVideoId();
   return (
     <View>
       <YoutubePlayer
