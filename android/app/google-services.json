@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:91601287529:android:75d1f047603069991a65f8",
+        "mobilesdk_app_id": "1:91601287529:android:1bc27b1d25bd293e1a65f8",
         "android_client_info": {
-          "package_name": "com.bookme"
+          "package_name": "com.bookingapp.bookme"
         }
       },
       "oauth_client": [
@@ -43,9 +43,53 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:91601287529:android:790cc118468f32aa1a65f8",
+        "mobilesdk_app_id": "1:91601287529:android:3009b524d007ad861a65f8",
         "android_client_info": {
           "package_name": "com.bookingapp.doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91601287529-qv3mib0089d66fufg2etl0c38ggu95qt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookingapp.doctor",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "91601287529-bo6pksk2uub7di8djp3gpf9ea3og4nol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYIN2lA1cXqfcuVzVGdjuMxnwji0M9TJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91601287529-bo6pksk2uub7di8djp3gpf9ea3og4nol.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91601287529-abdihggu0140f9sogr6a2t8bmhro17j6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bookme"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91601287529:android:5f413e2d996e00d31a65f8",
+        "android_client_info": {
+          "package_name": "com.taskmanager"
         }
       },
       "oauth_client": [
