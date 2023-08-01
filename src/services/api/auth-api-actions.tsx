@@ -1,15 +1,15 @@
-import {AppDispatch, RootState} from 'store';
-import {getData, postData} from './';
-import {URLS} from './api-urls';
-import {UTILS} from 'utils';
-import {STORAGEKEYS} from 'config/constants';
-import {Alert} from 'react-native';
+import { AppDispatch, RootState } from 'store';
+import { getData, postData } from './';
+import { URLS } from './api-urls';
+import { UTILS } from 'utils';
+import { STORAGEKEYS } from 'config/constants';
+import { Alert } from 'react-native';
 import {
   setLocations,
   setUserInfo,
   setWallet,
 } from './../../store/reducers/user-reducer';
-import {goBack, resetStack} from 'navigation/navigation-ref';
+import { goBack, resetStack } from 'navigation/navigation-ref';
 import axios from 'axios';
 export const getUserInfo = () => {
   return getData(URLS.auth.get_user_info);
@@ -27,6 +27,8 @@ export const onLogin = (
       await UTILS.setItem(STORAGEKEYS.token, res?.access_token);
 
       const uRes = await getUserInfo();
+      console.log('result of info:::', uRes?.user);
+
       dispatch(setUserInfo(uRes?.user));
       const role = uRes?.user?.role?.name;
       let screen = `${role}Stack`;
