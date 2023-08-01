@@ -111,6 +111,8 @@ export const onUpdateProfile = (
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       setLoading(true);
+      delete values?.role;
+      delete values?.roles;
       const res = await postData(URLS.auth.update_profile, values);
       console.log('res of onUpdateProfile=>', res);
 
