@@ -22,7 +22,7 @@ export const signupFormValidation = yup.object().shape({
   name: yup.string().required('req_name'),
   email: yup.string().email('invalid_email').required('req_email'),
 
-    phone: yup.string().max(13, 'invalid_phone').required('phone_required'),
+  phone: yup.string().max(13, 'invalid_phone').required('phone_required'),
   password: yup.string().required('req_pass').min(8, 'weak_pass'),
   confirm_password: yup
     .string()
@@ -37,7 +37,7 @@ export const signupFormValidation = yup.object().shape({
   experience: yup.string().required('req_experience'),
 });
 export const updateProfileFormValidation = yup.object().shape({
-  name: yup.string().required('req_name'),
+  first_name: yup.string().required('req_name'),
   email: yup.string().email('invalid_email').required('req_email'),
   phone: yup.string().max(13, 'invalid_phone').required('phone_required'),
 
@@ -99,6 +99,6 @@ export const addPriceHotelValidation = yup.object().shape({
   check_out_time: yup.string().required('checkout_required'),
   price: yup.string().required('price_required'),
 
- 
+
 
 });

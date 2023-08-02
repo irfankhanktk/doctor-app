@@ -37,7 +37,7 @@ const AddAvailability = props => {
 
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('add_availability')} />
+      <Header1x2x back title={t('add_availability')} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         {payload?.map((item, index) => {

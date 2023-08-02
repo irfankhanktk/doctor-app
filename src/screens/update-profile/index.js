@@ -17,7 +17,7 @@ const UpdateProfile = props => {
   const {userInfo} = useAppSelector(s => s?.user);
   const dispatch = useAppDispatch();
   const initialValues = userInfo ?? {
-    name: '',
+    first_name: '',
     email: '',
     phone: '',
     city: '',
@@ -56,12 +56,16 @@ const UpdateProfile = props => {
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
-          error={touched?.name && errors?.name ? t(errors?.name) : ''}
-          label={t('name')}
-          placeholder={t('name')}
-          onChangeText={str => setFieldValue('name', str)}
-          onBlur={() => setFieldTouched('name', true)}
-          value={values.name || ''}
+          error={
+            touched?.first_name && errors?.first_name
+              ? t(errors?.first_name)
+              : ''
+          }
+          label={t('first_name')}
+          placeholder={t('first_name')}
+          onChangeText={str => setFieldValue('first_name', str)}
+          onBlur={() => setFieldTouched('first_name', true)}
+          value={values.first_name || ''}
         />
         <PrimaryInput
           keyboardType={'email-address'}

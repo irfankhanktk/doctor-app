@@ -40,6 +40,7 @@ import {
 import {setHotels} from 'store/reducers/hotel-reducer';
 import {UTILS} from 'utils';
 import HtmlView from './../../../components/atoms/render-html/index';
+import {Hotels_Bg} from 'assets/car/images';
 
 const HotelDetails = props => {
   const {navigation} = props;
@@ -203,9 +204,7 @@ const HotelDetails = props => {
                       key={index}
                       onPress={() => handleImagePress(index)}>
                       <Image
-                        source={
-                          item?.large ? {uri: item?.large} : IMG.Hotels_Bg
-                        }
+                        source={item?.large ? {uri: item?.large} : Hotels_Bg}
                         style={{
                           height: mvs(80),
                           width: mvs(80),

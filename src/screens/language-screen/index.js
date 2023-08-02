@@ -45,7 +45,7 @@ const LanguageScreen = props => {
   };
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('change_language')} />
+      <Header1x2x back title={t('change_language')} />
       <View style={styles.body}>
         <PrimaryButton
           disabled={language === 'en'}

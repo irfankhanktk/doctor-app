@@ -1,13 +1,12 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {SplashIcon} from 'assets/doctor/icons';
-import {splash_bg} from 'assets/doctor/images';
-import {useAppDispatch} from 'hooks/use-store';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { SplashIcon } from 'assets/doctor/icons';
+import { useAppDispatch } from 'hooks/use-store';
 import React from 'react';
-import {ImageBackground, View} from 'react-native';
-import {getUserInfo} from 'services/api/auth-api-actions';
+import { View } from 'react-native';
+import { getUserInfo } from 'services/api/auth-api-actions';
 import i18n from 'translation';
-import {UTILS} from 'utils';
-import {STORAGEKEYS} from '../../config/constants';
+import { UTILS } from 'utils';
+import { STORAGEKEYS } from '../../config/constants';
 import {
   setLanguage,
   setLocation,
@@ -18,7 +17,7 @@ import styles from './styles';
 type props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const Splash = (props: props) => {
-  const {navigation} = props;
+  const { navigation } = props;
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -34,7 +33,7 @@ const Splash = (props: props) => {
               }),
             );
           },
-          error => {},
+          error => { },
         );
         UTILS.getItem(STORAGEKEYS.lang).then((lang: any) => {
           i18n.changeLanguage(lang);
@@ -56,22 +55,13 @@ const Splash = (props: props) => {
             navigation?.replace(screen);
           }, 2000);
         });
-      } catch (error) {}
+      } catch (error) { }
     })();
   }, []);
 
   return (
-    <View style={{...styles.container}}>
-      <ImageBackground
-        source={splash_bg}
-        style={{
-          height: '100%',
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <SplashIcon />
-      </ImageBackground>
+    <View style={{ ...styles.container }}>
+      <SplashIcon />
     </View>
   );
 };

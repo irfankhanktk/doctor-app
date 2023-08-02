@@ -65,8 +65,9 @@ const AddCarPrice = props => {
     }
   };
   const handleAddExtraPrice = () => {
+    const temp = edit_car?.row?.extra_price || [];
     onHandleChange('extra_price', [
-      ...edit_car?.row?.extra_price,
+      ...temp,
       {name: '', price: '', type: '', per_person: '0'},
     ]);
   };
@@ -77,8 +78,9 @@ const AddCarPrice = props => {
     onHandleChange('extra_price', updatedExteraPrice);
   };
   const handleAddService = () => {
+    const temp = edit_car?.row?.service_fee || [];
     onHandleChange('service_fee', [
-      ...edit_car?.row?.service_fee,
+      ...temp,
       {name: '', desc: '', price: '', type: '', per_person: '0'},
     ]);
   };
@@ -176,8 +178,9 @@ const AddCarPrice = props => {
                   placeholder={t('extra_price_name')}
                   onChangeText={str => {
                     const copy = [...edit_car?.row?.extra_price];
-                    extra_price.name = str;
-                    copy[index] = extra_price;
+                    const item = {...extra_price};
+                    item.name = str;
+                    copy[index] = item;
                     onHandleChange(`extra_price`, copy);
                   }}
                   value={extra_price?.name}
@@ -188,8 +191,9 @@ const AddCarPrice = props => {
                   placeholder={t('0')}
                   onChangeText={str => {
                     const copy = [...edit_car?.row?.extra_price];
-                    extra_price.price = str;
-                    copy[index] = extra_price;
+                    const item = {...extra_price};
+                    item.price = str;
+                    copy[index] = item;
                     onHandleChange(`extra_price`, copy);
                   }}
                   value={`${extra_price?.price}`}
@@ -206,8 +210,9 @@ const AddCarPrice = props => {
                     editable={false}
                     onChangeText={str => {
                       const copy = [...edit_car?.row?.extra_price];
-                      extra_price.type = str;
-                      copy[index] = extra_price;
+                      const item = {...extra_price};
+                      item.type = str;
+                      copy[index] = item;
                       onHandleChange(`extra_price`, copy);
                     }}
                     value={extra_price?.type}
@@ -215,12 +220,12 @@ const AddCarPrice = props => {
                 </TouchableOpacity>
                 <Row style={{justifyContent: 'flex-start'}}>
                   <Checkbox
-                    checked={extra_price?.per_person === '1'}
+                    checked={extra_price?.per_person == '1'}
                     onPress={() => {
                       const copy = [...edit_car?.row?.extra_price];
-                      extra_price.per_person =
-                        extra_price?.per_person === '1' ? '0' : '1';
-                      copy[index] = extra_price;
+                      const item = {...extra_price};
+                      item.per_person = item?.per_person == '1' ? '0' : '1';
+                      copy[index] = item;
                       onHandleChange(`extra_price`, copy);
                     }}
                   />
@@ -241,11 +246,11 @@ const AddCarPrice = props => {
         ) : null}
         <Row style={{justifyContent: 'flex-start', marginTop: mvs(10)}}>
           <Checkbox
-            checked={edit_car?.row?.enable_service_fee === '1'}
+            checked={edit_car?.row?.enable_service_fee == '1'}
             onPress={() =>
               onHandleChange(
                 'enable_service_fee',
-                edit_car?.row?.enable_service_fee === '1' ? '0' : '1',
+                edit_car?.row?.enable_service_fee == '1' ? '0' : '1',
               )
             }
           />
@@ -255,7 +260,7 @@ const AddCarPrice = props => {
             style={{marginLeft: mvs(10), color: colors.black}}
           />
         </Row>
-        {edit_car?.row?.enable_service_fee === '1' ? (
+        {edit_car?.row?.enable_service_fee == '1' ? (
           <>
             {edit_car?.row?.service_fee?.map((service_fee, index) => (
               <View style={styles.enableServiceContainer} key={index}>
@@ -276,11 +281,12 @@ const AddCarPrice = props => {
                   placeholder={t('fee_name')}
                   onChangeText={str => {
                     const copy = [...edit_car?.row?.service_fee];
-                    service_fee.name = str;
-                    copy[index] = service_fee;
+                    const item = {...service_fee};
+                    item.name = str;
+                    copy[index] = item;
                     onHandleChange(`service_fee`, copy);
                   }}
-                  value={edit_car?.row?.name}
+                  value={service_fee?.name}
                 />
 
                 <PrimaryInput
@@ -288,22 +294,25 @@ const AddCarPrice = props => {
                   placeholder={t('fee_desc')}
                   onChangeText={str => {
                     const copy = [...edit_car?.row?.service_fee];
-                    service_fee.desc = str;
-                    copy[index] = service_fee;
+                    const item = {...service_fee};
+                    item.desc = str;
+                    copy[index] = item;
                     onHandleChange(`service_fee`, copy);
                   }}
-                  value={edit_car?.row?.desc}
+                  value={service_fee?.desc}
                 />
                 <PrimaryInput
                   label={t('price')}
                   placeholder={t('0')}
                   onChangeText={str => {
                     const copy = [...edit_car?.row?.service_fee];
-                    service_fee.price = str;
-                    copy[index] = service_fee;
+                    const item = {...service_fee};
+
+                    item.price = str;
+                    copy[index] = item;
                     onHandleChange(`service_fee`, copy);
                   }}
-                  value={`${edit_car?.row?.price}`}
+                  value={`${service_fee?.price}`}
                 />
                 <TouchableOpacity
                   onPress={() => {
@@ -316,21 +325,24 @@ const AddCarPrice = props => {
                     editable={false}
                     onChangeText={str => {
                       const copy = [...edit_car?.row?.service_fee];
-                      service_fee.type = str;
-                      copy[index] = service_fee;
+                      const item = {...service_fee};
+
+                      item.type = str;
+                      copy[index] = item;
                       onHandleChange(`service_fee`, copy);
                     }}
-                    value={service_fee.type}
+                    value={service_fee?.type}
                   />
                 </TouchableOpacity>
                 <Row style={{justifyContent: 'flex-start'}}>
                   <Checkbox
-                    checked={service_fee?.per_person === '1'}
+                    checked={service_fee?.per_person == '1'}
                     onPress={() => {
                       const copy = [...edit_car?.row?.service_fee];
-                      service_fee.type =
-                        service_fee?.per_person === '1' ? '0' : '1';
-                      copy[index] = service_fee;
+                      const item = {...service_fee};
+                      item.type = item?.per_person == '1' ? '0' : '1';
+                      copy[index] = item;
+                      console.log('item::::', item);
                       onHandleChange(`service_fee`, copy);
                     }}
                   />
@@ -360,27 +372,36 @@ const AddCarPrice = props => {
         visible={extraPrice}
         onChangeText={str => {
           const copy = [...edit_car?.row?.extra_price];
-          copy[index].type = str;
+          const item = {...copy[index]};
+          item.type = str;
+          copy[index] = item;
           onHandleChange(`extra_price`, copy);
         }}
         onClose={() => {
           setExteraPrice(false);
           setIndex(0);
         }}
-        value={edit_car?.row?.extra_price[index]?.type}
+        value={
+          edit_car?.row?.extra_price && edit_car?.row?.extra_price[index]?.type
+        }
       />
       <BuyerFeeBottomSheetModal
         visible={buyerFeeType}
         onChangeText={str => {
           const copy = [...edit_car?.row?.service_fee];
-          copy[buyerFeeIndex].type = str;
+          const item = {...copy[buyerFeeIndex]};
+          item.type = str;
+          copy[buyerFeeIndex] = item;
           onHandleChange(`service_fee`, copy);
         }}
         onClose={() => {
           setBuyerFeeType(false);
           setBuyerFeeIndex(0);
         }}
-        value={edit_car?.row?.service_fee[buyerFeeIndex]?.type}
+        value={
+          edit_car?.row?.service_fee &&
+          edit_car?.row?.service_fee[buyerFeeIndex]?.type
+        }
       />
     </View>
   );

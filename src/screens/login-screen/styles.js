@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     flexGrow: 1,
-    paddingTop: '50%',
+    paddingTop: '25%',
     paddingHorizontal: mvs(20),
   },
   txt: {marginBottom: mvs(10), fontSize: mvs(20)},

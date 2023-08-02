@@ -71,7 +71,6 @@ export const getAppointmentDetails = async (
 export const onChangePassword = async (values: any) => {
   try {
     const res = await postData(URLS.auth.change_password, values);
-    console.log('res of onChangepassword=>', res);
     return res;
   } catch (error: any) {
     console.log('error in change password', UTILS.returnError(error));
@@ -85,7 +84,6 @@ export const onChangeAppoinmentStatus = async (
   setLoading: (bool: any) => void,
 ) => {
   try {
-    console.log('onChangeAppoinmentStatus appointment_id=>', appointment_id);
     setLoading(true);
     const res = await postData(URLS.appointment.status_change, {
       appointment_id,
@@ -121,7 +119,6 @@ export const onCompleteAppoinment = async (
       formData,
     );
     setLoading(false);
-    console.log('res of compleete appointment', res?.data);
   } catch (error: any) {
     console.log('error in onCompleteAppoinment', UTILS.returnError(error));
     setLoading(false);
@@ -195,7 +192,6 @@ export const onEditHospitalAvailbilityDetails = async (
         doctor_id,
       },
     );
-    console.log('res of onEditHospitalAvailbilityDetails=>', res);
     return res;
   } catch (error: any) {
     console.log(
@@ -212,7 +208,6 @@ export const getDoctorAvailability = async (doctor_id: string) => {
     const res = await postData(URLS.availability.get_doctor_hospitals, {
       doctor_id,
     });
-    console.log('res of getDoctorAvailability=>', res);
     return res;
   } catch (error: any) {
     console.log('error in getDoctorAvailability', UTILS.returnError(error));
@@ -236,7 +231,6 @@ export const updateDoctorAvailabilityDaysTime = async (values: any) => {
       URLS.availability.update_doctor_availability,
       values,
     );
-    console.log('res of updateDoctorAvailabilityDaysTime=>', res);
     return res;
   } catch (error: any) {
     console.log(
@@ -256,7 +250,6 @@ export const getDoctorAvailabilityDetails = async (
       doctor_id,
       hospital_id,
     });
-    console.log('res of getDoctorAvailabilityDetails=>', res);
     return res;
   } catch (error: any) {
     console.log(

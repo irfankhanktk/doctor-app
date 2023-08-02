@@ -88,10 +88,6 @@ const Home = props => {
           </ImageBackground>
           <Row
             style={{
-              ...colors.shadow,
-              borderRadius: mvs(15),
-              backgroundColor: colors.white,
-              paddingVertical: mvs(10),
               marginVertical: mvs(20),
             }}>
             <AppointmentCounter

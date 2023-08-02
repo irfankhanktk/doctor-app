@@ -3,15 +3,15 @@
  */
 export const colors = {
   border: '#E8E8E8',
-  black: '#706561',
+  black: '#1a2b48',
   white: '#FFFFFF',
   lightGray: '#dfdede',
   red: '#ff0707',
   green: '#0DC183',
   transparent: 'transparent',
-  primary: '#023B96', //'#5586FF'
+  primary: '#fd7e14', //'#5586FF'
   yellow: '#ffd79c',
-  blueHalf: 'rgba(2,59,150,0.23)',
+  blueHalf: '#1a2b48',
   secondary: '#f3f3f3', //'#F2F2F2',
   shadow: {
     shadowColor: "#000",

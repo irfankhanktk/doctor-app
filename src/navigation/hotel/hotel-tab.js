@@ -4,7 +4,6 @@ import {Animated, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {CurvedBottomBar} from 'react-native-curved-bottom-bar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Home from 'screens/doctor/home-screen';
 import AllHotels from 'screens/hotel/all-hotels';
 import UserTab from 'screens/user-tab';
 

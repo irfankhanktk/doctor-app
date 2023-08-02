@@ -22,6 +22,7 @@ import styles from './styles';
 import {goBack, navigate} from 'navigation/navigation-ref';
 import {Alert} from 'react-native';
 import {I18nManager} from 'react-native';
+import {IMGElementContentLoading} from 'react-native-render-html';
 const AddHotelPrice = props => {
   const {navigation, route} = props;
   const dispatch = useAppDispatch();
@@ -67,8 +68,9 @@ const AddHotelPrice = props => {
     }
   };
   const handleAddExtraPrice = () => {
+    const temp = edit_hotel?.row?.extra_price || [];
     onHandleChange('extra_price', [
-      ...edit_hotel?.row?.extra_price,
+      ...temp,
       {name: '', price: '', type: '', per_person: '0'},
     ]);
   };
@@ -79,8 +81,9 @@ const AddHotelPrice = props => {
     onHandleChange('extra_price', updatedExteraPrice);
   };
   const handleAddService = () => {
+    const temp = edit_hotel?.row?.service_fee || [];
     onHandleChange('service_fee', [
-      ...edit_hotel?.row?.service_fee,
+      ...temp,
       {name: '', desc: '', price: '', type: '', per_person: '0'},
     ]);
   };
@@ -119,7 +122,7 @@ const AddHotelPrice = props => {
           label={t('min_advance_reservation')}
           placeholder={t('0')}
           onChangeText={str => onHandleChange('min_day_before_booking', str)}
-          value={edit_hotel?.row?.min_day_before_booking}
+          value={`${edit_hotel?.row?.min_day_before_booking}`}
         />
         <Regular
           label={'(Optional)'}
@@ -131,7 +134,7 @@ const AddHotelPrice = props => {
           label={t('min_day_stay')}
           placeholder={t('Ex: 2')}
           onChangeText={str => onHandleChange('min_day_stays', str)}
-          value={edit_hotel?.row?.min_day_stays}
+          value={`${edit_hotel?.row?.min_day_stays}`}
         />
         <Regular
           label={'(Optional)'}
@@ -148,18 +151,18 @@ const AddHotelPrice = props => {
 
         <Row style={{justifyContent: 'flex-start'}}>
           <Checkbox
-            checked={edit_hotel?.row?.enable_extra_price === '1'}
+            checked={edit_hotel?.row?.enable_extra_price == '1'}
             onPress={() => {
               onHandleChange(
                 'enable_extra_price',
-                edit_hotel?.row?.enable_extra_price === '1' ? '0' : '1',
+                edit_hotel?.row?.enable_extra_price == '1' ? '0' : '1',
               );
             }}
           />
           <Regular label={t('enable_price')} style={{marginLeft: mvs(10)}} />
         </Row>
 
-        {edit_hotel?.row?.enable_extra_price === '1' ? (
+        {edit_hotel?.row?.enable_extra_price == '1' ? (
           <>
             {edit_hotel?.row?.extra_price.map((extra_price, index) => (
               <View style={styles.policyContainer} key={index}>
@@ -179,8 +182,13 @@ const AddHotelPrice = props => {
                   placeholder={t('extra_price_name')}
                   onChangeText={str => {
                     const copy = [...edit_hotel?.row?.extra_price];
-                    extra_price.name = str;
-                    copy[index] = extra_price;
+                    const item = {...extra_price};
+                    item.name = str;
+                    copy[index] = item;
+                    console.log(
+                      'copy:edit_hotel?.row?.extra_price::',
+                      edit_hotel?.row?.extra_price,
+                    );
                     onHandleChange(`extra_price`, copy);
                   }}
                   value={extra_price?.name}
@@ -191,8 +199,9 @@ const AddHotelPrice = props => {
                   placeholder={t('0')}
                   onChangeText={str => {
                     const copy = [...edit_hotel?.row?.extra_price];
-                    extra_price.price = str;
-                    copy[index] = extra_price;
+                    const item = {...extra_price};
+                    item.price = str;
+                    copy[index] = item;
                     onHandleChange(`extra_price`, copy);
                   }}
                   value={extra_price?.price}
@@ -208,8 +217,9 @@ const AddHotelPrice = props => {
                     editable={false}
                     onChangeText={str => {
                       const copy = [...edit_hotel?.row?.extra_price];
-                      extra_price.type = str;
-                      copy[index] = extra_price;
+                      const item = {...extra_price};
+                      item.type = str;
+                      copy[index] = item;
                       onHandleChange(`extra_price`, copy);
                     }}
                     value={extra_price?.type}
@@ -217,12 +227,12 @@ const AddHotelPrice = props => {
                 </TouchableOpacity>
                 <Row style={{justifyContent: 'flex-start'}}>
                   <Checkbox
-                    checked={extra_price?.per_person === '1'}
+                    checked={extra_price?.per_person == '1'}
                     onPress={() => {
                       const copy = [...edit_hotel?.row?.extra_price];
-                      extra_price.per_person =
-                        extra_price?.per_person === '1' ? '0' : '1';
-                      copy[index] = extra_price;
+                      const item = {...extra_price};
+                      item.per_person = item?.per_person == '1' ? '0' : '1';
+                      copy[index] = item;
                       onHandleChange(`extra_price`, copy);
                     }}
                   />
@@ -243,18 +253,18 @@ const AddHotelPrice = props => {
         ) : null}
         <Row style={{justifyContent: 'flex-start', marginTop: mvs(10)}}>
           <Checkbox
-            checked={edit_hotel?.row?.enable_service_fee === '1'}
+            checked={edit_hotel?.row?.enable_service_fee == '1'}
             onPress={() => {
               onHandleChange(
                 'enable_service_fee',
-                edit_hotel?.row?.enable_service_fee === '1' ? '0' : '1',
+                edit_hotel?.row?.enable_service_fee == '1' ? '0' : '1',
               );
             }}
           />
           <Regular label={t('enable_extra')} style={{marginLeft: mvs(10)}} />
         </Row>
 
-        {edit_hotel?.row?.enable_service_fee === '1' ? (
+        {edit_hotel?.row?.enable_service_fee == '1' ? (
           <>
             {edit_hotel?.row?.service_fee?.map((service_fee, index) => (
               <View style={styles.enableServiceContainer} key={index}>
@@ -275,11 +285,12 @@ const AddHotelPrice = props => {
                   placeholder={t('fee_name')}
                   onChangeText={str => {
                     const copy = [...edit_hotel?.row?.service_fee];
-                    service_fee.name = str;
-                    copy[index] = service_fee;
+                    const item = {...service_fee};
+                    item.name = str;
+                    copy[index] = item;
                     onHandleChange(`service_fee`, copy);
                   }}
-                  value={edit_hotel?.row?.name}
+                  value={service_fee?.name}
                 />
 
                 <PrimaryInput
@@ -287,23 +298,25 @@ const AddHotelPrice = props => {
                   placeholder={t('fee_desc')}
                   onChangeText={str => {
                     const copy = [...edit_hotel?.row?.service_fee];
-                    service_fee.desc = str;
-                    copy[index] = service_fee;
+                    const item = {...service_fee};
+                    item.desc = str;
+                    copy[index] = item;
                     onHandleChange(`service_fee`, copy);
                   }}
-                  value={edit_hotel?.row?.desc}
+                  value={service_fee?.desc}
                 />
                 <PrimaryInput
                   label={t('price')}
                   placeholder={t('0')}
                   onChangeText={str => {
                     const copy = [...edit_hotel?.row?.service_fee];
-                    service_fee.price = str;
-                    copy[index] = service_fee;
+                    const item = {...service_fee};
+                    item.price = str;
+                    copy[index] = item;
 
                     onHandleChange(`service_fee`, copy);
                   }}
-                  value={edit_hotel?.row?.price}
+                  value={service_fee?.price}
                 />
                 <TouchableOpacity
                   onPress={() => {
@@ -316,8 +329,9 @@ const AddHotelPrice = props => {
                     editable={false}
                     onChangeText={str => {
                       const copy = [...edit_hotel?.row?.service_fee];
-                      service_fee.type = str;
-                      copy[index] = service_fee;
+                      const item = {...service_fee};
+                      item.type = str;
+                      copy[index] = item;
                       onHandleChange(`service_fee`, copy);
                     }}
                     value={service_fee.type}
@@ -325,12 +339,12 @@ const AddHotelPrice = props => {
                 </TouchableOpacity>
                 <Row style={{justifyContent: 'flex-start'}}>
                   <Checkbox
-                    checked={service_fee?.per_person === '1'}
+                    checked={service_fee?.per_person == '1'}
                     onPress={() => {
                       const copy = [...edit_hotel?.row?.service_fee];
-                      service_fee.type =
-                        service_fee?.per_person === '1' ? '0' : '1';
-                      copy[index] = service_fee;
+                      const item = {...service_fee};
+                      item.per_person = item?.per_person == '1' ? '0' : '1';
+                      copy[index] = item;
                       onHandleChange(`service_fee`, copy);
                     }}
                   />
@@ -360,7 +374,9 @@ const AddHotelPrice = props => {
         visible={extraPrice}
         onChangeText={str => {
           const copy = [...edit_hotel?.row?.extra_price];
-          copy[index].type = str;
+          const item = {...copy[index]};
+          item.type = str;
+          copy[index] = item;
           onHandleChange(`extra_price`, copy);
         }}
         onClose={() => {
@@ -373,14 +389,19 @@ const AddHotelPrice = props => {
         visible={buyerFeeType}
         onChangeText={str => {
           const copy = [...edit_hotel?.row?.service_fee];
-          copy[buyerFeeIndex].type = str;
+          const item = {...copy[buyerFeeIndex]};
+          item.type = str;
+          copy[buyerFeeIndex] = item;
           onHandleChange(`service_fee`, copy);
         }}
         onClose={() => {
           setBuyerFeeType(false);
           setBuyerFeeIndex(0);
         }}
-        value={edit_hotel?.row?.service_fee[buyerFeeIndex]?.type}
+        value={
+          edit_hotel?.row?.service_fee &&
+          edit_hotel?.row?.service_fee[buyerFeeIndex]?.type
+        }
       />
     </View>
   );
