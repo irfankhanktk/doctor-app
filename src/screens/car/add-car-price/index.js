@@ -340,7 +340,7 @@ const AddCarPrice = props => {
                     onPress={() => {
                       const copy = [...edit_car?.row?.service_fee];
                       const item = {...service_fee};
-                      item.type = item?.per_person == '1' ? '0' : '1';
+                      item.per_person = item?.per_person == '1' ? '0' : '1';
                       copy[index] = item;
                       console.log('item::::', item);
                       onHandleChange(`service_fee`, copy);

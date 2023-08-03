@@ -344,6 +344,7 @@ const AddHotelPrice = props => {
                       const copy = [...edit_hotel?.row?.service_fee];
                       const item = {...service_fee};
                       item.per_person = item?.per_person == '1' ? '0' : '1';
+
                       copy[index] = item;
                       onHandleChange(`service_fee`, copy);
                     }}
