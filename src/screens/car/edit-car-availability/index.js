@@ -1,32 +1,32 @@
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {InputWithIcon} from 'components/atoms/inputs';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
-import {Loader} from 'components/atoms/loader';
-import {Row} from 'components/atoms/row';
+import { InputWithIcon } from 'components/atoms/inputs';
+import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
+import { Loader } from 'components/atoms/loader';
+import { Row } from 'components/atoms/row';
 
-import {colors} from 'config/colors';
-import {DATE_FORMAT} from 'config/constants';
-import {mvs} from 'config/metrices';
-import {t} from 'i18next';
+import CarAvailabilityModal from 'components/molecules/car/modals/availability-car-modal';
+import { colors } from 'config/colors';
+import { DATE_FORMAT } from 'config/constants';
+import { mvs } from 'config/metrices';
+import { t } from 'i18next';
 import moment from 'moment';
-import React, {useState} from 'react';
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   getCarAvailability,
   updateCarAvailability,
 } from 'services/api/car/api-actions';
 import Regular from 'typography/regular-text';
-import {UTILS} from 'utils';
+import { UTILS } from 'utils';
 import styles from './styles';
-import CarAvailabilityModal from 'components/molecules/car/modals/availability-car-modal';
 
 const EditCarAvailability = props => {
   const {car} = useSelector(s => s);
   const {cars} = car;
   const [loading, setLoading] = React.useState(true);
-  const [date, setDate] = React.useState(moment('2023-10-10').startOf('month'));
+  const [date, setDate] = React.useState(moment().startOf('month'));
   const [availability, setAvailability] = React.useState([]);
   const [carId, setCarId] = React.useState();
   const [filterModal, setFilterModal] = React.useState(false);
@@ -73,7 +73,6 @@ const EditCarAvailability = props => {
       };
       await updateCarAvailability(data);
       await getAvailabilty();
-      // setAvailability(res);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));
     } finally {
@@ -152,10 +151,11 @@ const EditCarAvailability = props => {
                     <Regular
                       style={{marginTop: mvs(10)}}
                       label={item?.active ? `$${item?.price}` : item?.title}
+                       color={item?.active ? colors.white :colors.lightGray }
                     />
                     <Row style={{position: 'absolute', width: '100%', top: 0}}>
-                      <Regular label={moment(item?.start).format('DD')} />
-                      <Regular label={moment(item?.start).format('ddd')} />
+                      <Regular   color={item?.active ? colors.white :colors.lightGray }  label={moment(item?.start).format('DD')} />
+                      <Regular   color={item?.active ? colors.white :colors.lightGray } label={moment(item?.start).format('ddd')} />
                     </Row>
                   </TouchableOpacity>
                 );

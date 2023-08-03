@@ -1,32 +1,31 @@
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {InputWithIcon} from 'components/atoms/inputs';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
-import {Loader} from 'components/atoms/loader';
-import {Row} from 'components/atoms/row';
+import { InputWithIcon } from 'components/atoms/inputs';
+import { KeyboardAvoidScrollview } from 'components/atoms/keyboard-avoid-scrollview';
+import { Loader } from 'components/atoms/loader';
+import { Row } from 'components/atoms/row';
 import RoomAvailabilityModal from 'components/molecules/hotel/modals/availability-room-modal';
-import {colors} from 'config/colors';
-import {DATE_FORMAT} from 'config/constants';
-import {mvs} from 'config/metrices';
-import {t} from 'i18next';
+import { colors } from 'config/colors';
+import { DATE_FORMAT } from 'config/constants';
+import { mvs } from 'config/metrices';
+import { t } from 'i18next';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useSelector} from 'react-redux';
 import {
   getHotelRooms,
   getRoomAvailability,
   updateRoomAvailability,
 } from 'services/api/hotel/api-actions';
 import Regular from 'typography/regular-text';
-import {UTILS} from 'utils';
+import { UTILS } from 'utils';
 import styles from './styles';
 
 const EditRoomAvailability = props => {
   const {route} = props;
   const {hotel_id} = route?.params;
   const [loading, setLoading] = React.useState(true);
-  const [date, setDate] = React.useState(moment('2023-10-10').startOf('month'));
+  const [date, setDate] = React.useState(moment().startOf('month'));
   const [availability, setAvailability] = React.useState([]);
   const [rooms, setRooms] = React.useState([]);
   const [filterModal, setFilterModal] = React.useState(false);
@@ -167,10 +166,11 @@ const EditRoomAvailability = props => {
                     <Regular
                       style={{marginTop: mvs(10)}}
                       label={item?.active ? item?.event : item?.title}
+                      color={item?.active ? colors.white :colors.lightGray }
                     />
                     <Row style={{position: 'absolute', width: '100%', top: 0}}>
-                      <Regular label={moment(item?.start).format('DD')} />
-                      <Regular label={moment(item?.start).format('ddd')} />
+                      <Regular  color={item?.active ? colors.white :colors.lightGray } label={moment(item?.start).format('DD')} />
+                      <Regular  color={item?.active ? colors.white :colors.lightGray } label={moment(item?.start).format('ddd')} />
                     </Row>
                   </TouchableOpacity>
                 );

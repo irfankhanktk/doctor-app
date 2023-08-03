@@ -1,23 +1,21 @@
-import {PrimaryButton} from 'components/atoms/buttons';
-import {ModalWrapper} from 'components/atoms/modal-wrapper';
-import {HalfOutLineInput} from 'components/atoms/outline-iput';
-import {Row} from 'components/atoms/row';
-import {useAppDispatch} from 'hooks/use-store';
+import { PrimaryButton } from 'components/atoms/buttons';
+import { ModalWrapper } from 'components/atoms/modal-wrapper';
+import { Row } from 'components/atoms/row';
 import moment from 'moment';
 import React from 'react';
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 
+import { Checkbox } from 'components/atoms/checkbox';
 import DateRangePicker from 'components/atoms/date-range-picker';
-import {colors} from 'config/colors';
-import {mvs} from 'config/metrices';
+import PrimaryInput from 'components/atoms/inputs';
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
 import Bold from 'typography/bold-text';
 import Regular from 'typography/regular-text';
-import {Checkbox} from 'components/atoms/checkbox';
-import PrimaryInput from 'components/atoms/inputs';
 const CarAvailabilityModal = ({
   visible = false,
   onClose = () => {},
@@ -26,7 +24,6 @@ const CarAvailabilityModal = ({
   onPress,
 }) => {
   const {t} = i18n;
-  const {hotel} = useSelector(s => s);
   const [dateVisible, setDateVisible] = React.useState(false);
   const handleInputChange = (key, value) => {
     setFilterData(prevFilterData => ({
