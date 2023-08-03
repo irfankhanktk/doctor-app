@@ -106,13 +106,18 @@ const AddCar = props => {
   };
   const openGallery = async v => {
     try {
-      const res = await UTILS._returnImageGallery();
+      const res = await UTILS._returnImageGallery(v== 'gallery');
       if (v == 'gallery') {
         setGalleryImageLoading(true);
         setImageLoading(false);
         setFeaturedImageLoading(false);
-        const file_resp = await postFileData({file: res, type: 'image'});
-        onHandleChange('gallery', [...edit_car?.row?.gallery, file_resp?.data]);
+        const file_resp = await Promise.all(res?.map(imgData=>postFileData({file: imgData, type: 'image'})));
+        const arr=file_resp?.map(x=>x?.data);
+        const temp = edit_car?.row?.gallery || []
+        onHandleChange('gallery', [
+          ...temp,
+         ...arr
+        ]);
       } else if (v == 'bannerImage') {
         setImageLoading(true);
         setFeaturedImageLoading(false);

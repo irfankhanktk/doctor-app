@@ -20,6 +20,7 @@ export const putData = async (url, data) => {
   return response;
 };
 export const postFormData = async (url, data) => {
+  console.log('data==>', data);
   console.log('url==>', url);
 
   data = UTILS.getFormData(data);

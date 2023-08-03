@@ -123,7 +123,6 @@
   "optional": "خياري",
   "days": "أيام",
   "prescription_card_heading": "تفاصيل الوصفة",
-
   "hotels": "الفنادق",
   "add_room": "أضف غرفة",
   "add_hotel": "إضافة فندق",
@@ -190,7 +189,6 @@
   "number": "رقم",
   "upload_image": "تحميل الصور",
   "number_of_room": "عدد الغرف",
-
   "cars": "سيارة",
   "all_cars": "كل السيارات",
   "car_filter": "مرشح السيارة",
@@ -239,7 +237,7 @@
   "number_required": "الرقم مطلوب",
   "recovery": "استعادة",
   "save_changes": "احفظ التغييرات",
-  "save_changes_successfully":"حفظ التغييرات بنجاح",
+  "save_changes_successfully": "حفظ التغييرات بنجاح",
   "number_of_car": "عدد السيارات",
   "availabel_booking": "متاح للحجز؟",
   "status": "حالة",
@@ -251,21 +249,18 @@
   "rules": "قواعد",
   "rooms": "غرف",
   "save_next": "حفظ & التالي",
-  "delete_car":"حذف السيارة",
-  "beds_required":"السرير رقم مطلوب",
-  "size_required":"حجم الغرفة مطلوب",
-  "adults_required":"مطلوب الكبار",
-  "import_url":"استيراد عنوان Url",
-  "new_password_required":"مطلوب كلمة مرور جديدة",
-  "phone_required":"الهاتف مطلوب",
-  "new_password":"كلمة المرور الجديدة",
-  "Vendor_info":"معلومات البائع",
-  "Member_Since":"عضو منذ",
-  "This_hotel_no_rooms":"هذا الفندق لا يحتوي على غرف",
-  "all_patients":"كل المرضى",
-  "delete_account":"حذف الحساب"
-
-  
-
-  
+  "delete_car": "حذف السيارة",
+  "beds_required": "السرير رقم مطلوب",
+  "size_required": "حجم الغرفة مطلوب",
+  "adults_required": "مطلوب الكبار",
+  "import_url": "استيراد عنوان Url",
+  "new_password_required": "مطلوب كلمة مرور جديدة",
+  "phone_required": "الهاتف مطلوب",
+  "new_password": "كلمة المرور الجديدة",
+  "Vendor_info": "معلومات البائع",
+  "Member_Since": "عضو منذ",
+  "This_hotel_no_rooms": "هذا الفندق لا يحتوي على غرف",
+  "all_patients": "كل المرضى",
+  "delete_account": "حذف الحساب",
+  "save_hotel": "حفظ الفندق"
 }

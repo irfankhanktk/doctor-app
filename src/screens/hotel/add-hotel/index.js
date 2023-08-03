@@ -113,15 +113,15 @@ const AddHotel = props => {
   };
   const openGallery = async v => {
     try {
-      const res = await UTILS._returnImageGallery();
+      const res = await UTILS._returnImageGallery(v == 'gallery');
       if (v == 'gallery') {
         setGalleryImageLoading(true);
-
-        const file_resp = await postFileData({file: res, type: 'image'});
-        'res of file->>>', file_resp?.data;
+        const file_resp = await Promise.all(res?.map(imgData=>postFileData({file: imgData, type: 'image'})));
+        const arr=file_resp?.map(x=>x?.data);
+        const temp=edit_hotel?.row?.gallery||[];
         onHandleChange('gallery', [
-          ...edit_hotel?.row?.gallery,
-          file_resp?.data,
+          ...temp,
+         ...arr
         ]);
       } else if (v == 'bannerImage') {
         setImageLoading(true);

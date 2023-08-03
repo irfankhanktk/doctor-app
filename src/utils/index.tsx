@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CommonActions} from '@react-navigation/native';
-import moment from 'moment';
+import { CommonActions } from '@react-navigation/native';
 import {
   Alert,
   Linking,
@@ -9,11 +8,10 @@ import {
   Share,
   ToastAndroid,
 } from 'react-native';
+import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
 import ImagePicker from 'react-native-image-crop-picker';
-import uuid from 'react-native-uuid';
-import {NavigationProps} from '../types/navigation-types';
-import Geocoder from 'react-native-geocoding';
+import { NavigationProps } from '../types/navigation-types';
 Geocoder.init('AIzaSyCbFQqjZgQOWRMuQ_RpXU0kGAUIfJhDw98');
 // Helper function to convert degrees to radians
 function toRadians(degrees: any) {
@@ -21,7 +19,7 @@ function toRadians(degrees: any) {
 }
 // Initialize the module (needs to be done only once)
 const getErrorList = (data: any) => {
-  const {message, errors} = data;
+  const { message, errors } = data;
   let concatenatedMessages: any = null;
   console.log('errors=>>::', errors);
 
@@ -40,7 +38,7 @@ const getErrorList = (data: any) => {
 export const horizontalAnimation: any = {
   headerShown: false,
   gestureDirection: 'horizontal',
-  cardStyleInterpolator: ({current, layouts}: any) => {
+  cardStyleInterpolator: ({ current, layouts }: any) => {
     return {
       cardStyle: {
         transform: [
@@ -138,7 +136,7 @@ export const UTILS = {
   },
   returnError: (error: any) => {
     if (error?.response?.request) {
-      let {_response} = error?.response?.request;
+      let { _response } = error?.response?.request;
       console.log('FACTORY ERRORS :: ', JSON.parse(_response));
       const temp = JSON.parse(_response);
       const resp = getErrorList(temp);
@@ -202,8 +200,8 @@ export const UTILS = {
   },
 
   get_current_location: async (
-    onSuccess = (position: any) => {},
-    onError = (error: any) => {},
+    onSuccess = (position: any) => { },
+    onError = (error: any) => { },
   ) => {
     try {
       const flag = await UTILS.requestLocationPermission();
@@ -227,9 +225,9 @@ export const UTILS = {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(toRadians(lat1)) *
-        Math.cos(toRadians(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
@@ -259,19 +257,19 @@ export const UTILS = {
         if (
           item.types.some((el: any) => el === 'administrative_area_level_1')
         ) {
-          returnAddress = {...returnAddress, province: item.long_name};
+          returnAddress = { ...returnAddress, province: item.long_name };
         } else if (
           item.types.some((el: any) => el === 'administrative_area_level_2')
         ) {
-          returnAddress = {...returnAddress, district: item.long_name};
+          returnAddress = { ...returnAddress, district: item.long_name };
         } else if (
           item.types.some((el: any) => el === 'administrative_area_level_3')
         ) {
-          returnAddress = {...returnAddress, tehsil: item.long_name};
+          returnAddress = { ...returnAddress, tehsil: item.long_name };
         } else if (item.types.some((el: any) => el === 'locality')) {
-          returnAddress = {...returnAddress, city: item.long_name};
+          returnAddress = { ...returnAddress, city: item.long_name };
         } else if (item.types.some((el: any) => el === 'sublocality')) {
-          returnAddress = {...returnAddress, area: item.long_name};
+          returnAddress = { ...returnAddress, area: item.long_name };
         } else if (item.types.some((el: any) => el === 'street_address')) {
           returnAddress = {
             ...returnAddress,
@@ -371,9 +369,10 @@ export const UTILS = {
       throw new Error(error);
     }
   },
-  _returnImageGallery: async () => {
+  _returnImageGallery: async (multi = false) => {
     try {
       let image = await ImagePicker.openPicker({
+        multiple: multi,
         // width: 1000,
         // height: 800,
         cropping: true,
@@ -382,16 +381,32 @@ export const UTILS = {
         // compressImageMaxWidth: 1500,
         // compressImageMaxHeight: 1000,
       });
-      const dotIndex = image?.path?.lastIndexOf('.');
-      const extension = image?.path.substring(dotIndex + 1);
-      return {
-        uri:
-          Platform.OS === 'android'
-            ? image?.path
-            : image?.path.replace('file://', ''),
-        name: image?.filename || `${new Date().getTime()}.${extension}`,
-        type: image?.mime,
-      };
+      if (multi) {
+        const result = image?.map((res: any) => {
+          const dotIndex = res?.path?.lastIndexOf('.');
+          const extension = res?.path.substring(dotIndex + 1);
+          return {
+            uri:
+              Platform.OS === 'android'
+                ? res?.path
+                : res?.path.replace('file://', ''),
+            name: res?.filename || `${new Date().getTime()}.${extension}`,
+            type: res?.mime,
+          };
+        })
+        return result;
+      } else {
+        const dotIndex = image?.path?.lastIndexOf('.');
+        const extension = image?.path.substring(dotIndex + 1);
+        return {
+          uri:
+            Platform.OS === 'android'
+              ? image?.path
+              : image?.path.replace('file://', ''),
+          name: image?.filename || `${new Date().getTime()}.${extension}`,
+          type: image?.mime,
+        };
+      }
     } catch (error: any) {
       throw new Error(error);
     }

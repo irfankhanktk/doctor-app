@@ -125,7 +125,7 @@ const AddHotelAttributes = props => {
           onPress={onSubmit}
           loading={addBtnLoading}
           disabled={!selectedTypes?.length}
-          title={t('add_hotel')}
+          title={t('save_hotel')}
           containerStyle={{marginTop: mvs(30), marginBottom: mvs(20)}}
         />
       </KeyboardAvoidScrollview>
