@@ -189,3 +189,4 @@ export const getPaymentTransationStatus = async (data: any) =>
       Authorization: 'SNJNL9M6RH-J69NMZLB9Z-GGNBNKDBTJ',
     },
   });
+export const getBookings = (slug: any) => getData(`${URLS.auth.get_bookings}`);

@@ -1,10 +1,10 @@
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {colors} from 'config/colors';
-import {mvs} from 'config/metrices';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { colors } from 'config/colors';
+import { mvs } from 'config/metrices';
 import React from 'react';
-import {TouchableOpacity, View, ImageBackground, Image} from 'react-native';
+import { TouchableOpacity, View, ImageBackground, Image } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -18,16 +18,16 @@ import {
 import TabParamList from 'types/navigation-types/bottom-tab';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-import {useAppDispatch, useAppSelector} from 'hooks/use-store';
+import { useAppDispatch, useAppSelector } from 'hooks/use-store';
 import i18n from '../../translation/index';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import styles from './styles';
-import {navigate} from 'navigation/navigation-ref';
-import {Loader} from 'components/atoms/loader';
-import {UTILS} from 'utils';
-import {Alert} from 'react-native';
-import {postFileData} from 'services/api/hotel/api-actions';
-import {login_bg} from 'assets/doctor/images';
+import { navigate } from 'navigation/navigation-ref';
+import { Loader } from 'components/atoms/loader';
+import { UTILS } from 'utils';
+import { Alert } from 'react-native';
+import { postFileData } from 'services/api/hotel/api-actions';
+import { login_bg } from 'assets/doctor/images';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 type props = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, 'UserTab'>,
@@ -38,20 +38,20 @@ const UserTab = (props: props) => {
   const userInfo = user?.userInfo;
 
   const dispatch = useAppDispatch();
-  const {t} = i18n;
+  const { t } = i18n;
   const [imagegallery, setImageGallery] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
   const ImageUpload = async () => {
     try {
       const img = await UTILS._returnImageGallery();
-      const file = await postFileData({file: img, type: 'image'});
-      const data = {...userInfo};
+      const file = await postFileData({ file: img, type: 'image' });
+      const data = { ...userInfo };
       delete data.roles;
       delete data.role;
       dispatch(
         onUpdateProfile(
-          {...data, avatar_id: file?.data?.data?.id},
+          { ...data, avatar_id: file?.data?.data?.id },
           setLoading,
           props,
         ),
@@ -82,13 +82,13 @@ const UserTab = (props: props) => {
   return (
     <View style={styles.container}>
       <View style={styles.body}>
-        <View style={{...styles.img}}>
+        <View style={{ ...styles.img }}>
           {loading ? (
             <Loader color={colors.white} />
           ) : (
             <Image
               source={
-                userInfo?.avatar_id ? {uri: `${userInfo?.avatar_id}`} : login_bg
+                userInfo?.avatar_id ? { uri: `${userInfo?.avatar_id}` } : login_bg
               }
               style={styles.imgUpload}
               resizeMode="contain"
@@ -125,6 +125,17 @@ const UserTab = (props: props) => {
               <Regular
                 style={styles.itemText1}
                 label={`${t('update_password')}`}
+              />
+            </TouchableOpacity>
+          )}
+          {userInfo && (
+            <TouchableOpacity
+              style={styles.itemtabs}
+              onPress={() => props?.navigation?.navigate('MyBookingList')}>
+              <FontAwesome name="key" size={mvs(22)} color={colors.primary} />
+              <Regular
+                style={styles.itemText1}
+                label={`${t('my_bookings')}`}
               />
             </TouchableOpacity>
           )}

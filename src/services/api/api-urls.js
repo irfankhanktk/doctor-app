@@ -13,6 +13,7 @@ export const URLS = {
     update_profile: 'user/updateProfile',
     locations: 'locations',
     delete_account: 'user/permanently_deleted',
+    get_bookings: 'vendor/booking-report',
   },
   availability: {
     add: 'doctor/addDoctorAvailability',
