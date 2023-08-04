@@ -1,6 +1,7 @@
 import {Hotels_Bg} from 'assets/car/images';
 import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
+import {DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
@@ -9,8 +10,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
+import Regular from 'typography/regular-text';
 const AppointmentCard = ({item, style, onPress = () => {}}) => {
-  console.log('check booking item ========>', item);
   const {t} = i18n;
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -20,7 +21,11 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           // marginTop: mvs(10),
           alignItems: 'center',
         }}>
-        <Medium label={t('Status')} fontSize={mvs(20)} color={colors.primary} />
+        <Medium
+          label={`${t('BookingId :')} ${item?.id}`}
+          fontSize={mvs(20)}
+          color={colors.primary}
+        />
         <Medium
           label={`${item?.status}`}
           fontSize={mvs(20)}
@@ -34,27 +39,12 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           }
           style={styles.img}
         />
-        <View style={styles.leftContainer}>
-          <Row>
-            <Medium label={item?.service?.title} style={styles.name} />
-
-            {/* <Medium label={item?.status} style={styles.status} /> */}
-          </Row>
-          <Row style={{justifyContent: 'flex-start', alignItems: 'center'}}>
-            <Entypo
-              name="location"
-              color={colors.primary}
-              size={mvs(16)}
-              style={{marginTop: mvs(6)}}
-            />
-            <Medium
-              label={item?.service?.address}
-              style={{...styles.address, marginLeft: mvs(6)}}
-            />
-          </Row>
-          {/* <Medium label={'sjdjksdghjksah'} style={styles.address} /> */}
+        <View style={{flex: 1}}>
+          <Regular label={`${item?.first_name} ${item?.last_name}`} />
+          <Regular numberOfLines={1} label={item?.email} />
         </View>
       </Row>
+
       <Row style={styles.timeRow}>
         <View style={styles.alignItems}>
           <Row style={styles.alignItems}>
@@ -85,11 +75,9 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           paddingHorizontal: mvs(10),
           alignItems: 'center',
         }}>
-        <Medium label={t('Duration')} fontSize={mvs(14)} />
+        <Medium label={t('order_date')} fontSize={mvs(14)} />
         <Medium
-          label={
-            `${item?.duration_nights} ${t('Nights')}` || `1 ${t('Nights')}`
-          }
+          label={moment(item?.created_at).format(DATE_FORMAT.mmm_dd_yyyy)}
           style={styles.label}
           color={colors.primary}
         />
@@ -119,7 +107,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           }}>
           <Medium label={'Total'} fontSize={mvs(14)} />
           <Medium
-            label={`SAR ${item?.total}`}
+            label={`SR ${item?.total}`}
             style={styles.label}
             color={colors.red}
           />
@@ -131,7 +119,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           }}>
           <Medium label={t('Paid')} fontSize={mvs(14)} />
           <Medium
-            label={`SAR ${item?.paid || '0'} `}
+            label={`SR ${item?.paid || '0'} `}
             style={styles.label}
             color={colors.red}
           />
@@ -143,7 +131,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           }}>
           <Medium label={t('Remain')} fontSize={mvs(14)} />
           <Medium
-            label={`SAR${item?.total - item?.paid} `}
+            label={`SR ${item?.total - item?.paid} `}
             style={styles.label}
             color={colors.red}
           />
@@ -194,8 +182,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   img: {
-    height: mvs(72),
-    width: mvs(72),
+    height: mvs(50),
+    width: mvs(50),
     borderRadius: mvs(36),
     marginRight: mvs(10),
     resizeMode: 'cover',

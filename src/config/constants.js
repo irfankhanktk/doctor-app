@@ -1,5 +1,6 @@
 export const DATE_FORMAT = {
   yyyy_mm_dd: 'YYYY-MM-DD',
+  mmm_dd_yyyy: 'MMM DD, YYYY',
 };
 export const COLLECTIONS = {
   users: 'users',

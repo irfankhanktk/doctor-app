@@ -70,7 +70,7 @@ const HotelCard = ({
         <Icon name={'star'} color={colors.white} size={mvs(12)} />
         <Regular
           style={styles.rateTxt}
-          label={`${item?.star_rate} (2.3k)`}
+          label={`${item?.star_rate} (${item?.review_score || 0})`}
           fontSize={mvs(12)}
           color={colors.white}
         />
