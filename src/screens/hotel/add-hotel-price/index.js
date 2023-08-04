@@ -125,7 +125,7 @@ const AddHotelPrice = props => {
           value={`${edit_hotel?.row?.min_day_before_booking}`}
         />
         <Regular
-          label={'(Optional)'}
+          label={t('optional')}
           fontSize={12}
           style={{alignSelf: 'flex-end'}}
         />
@@ -137,7 +137,7 @@ const AddHotelPrice = props => {
           value={`${edit_hotel?.row?.min_day_stays}`}
         />
         <Regular
-          label={'(Optional)'}
+          label={t('optional')}
           fontSize={12}
           style={{alignSelf: 'flex-end'}}
         />

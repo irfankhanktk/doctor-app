@@ -71,6 +71,7 @@ const Home = props => {
     <View style={styles.container}>
       <AppHeader
         unreadNotification={unreadNotification}
+        notification
         title={`\t${userInfo?.name || t('guest')}`}
         onPress={() => navigate('DoctorUserTab')}
         source={

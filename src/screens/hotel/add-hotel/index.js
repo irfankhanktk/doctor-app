@@ -33,7 +33,7 @@ import Regular from 'typography/regular-text';
 import {UTILS} from 'utils';
 import styles from './styles';
 const AddHotel = props => {
-  const {navigation, route} = props;
+  const {route} = props;
   const {hotel} = useSelector(s => s);
   const {edit_hotel} = hotel;
   const [loading, setLoading] = React.useState(true);
@@ -116,13 +116,12 @@ const AddHotel = props => {
       const res = await UTILS._returnImageGallery(v == 'gallery');
       if (v == 'gallery') {
         setGalleryImageLoading(true);
-        const file_resp = await Promise.all(res?.map(imgData=>postFileData({file: imgData, type: 'image'})));
-        const arr=file_resp?.map(x=>x?.data);
-        const temp=edit_hotel?.row?.gallery||[];
-        onHandleChange('gallery', [
-          ...temp,
-         ...arr
-        ]);
+        const file_resp = await Promise.all(
+          res?.map(imgData => postFileData({file: imgData, type: 'image'})),
+        );
+        const arr = file_resp?.map(x => x?.data);
+        const temp = edit_hotel?.row?.gallery || [];
+        onHandleChange('gallery', [...temp, ...arr]);
       } else if (v == 'bannerImage') {
         setImageLoading(true);
 
@@ -167,7 +166,7 @@ const AddHotel = props => {
                     hotel_id: edit_hotel?.row?.id,
                   })
                 }
-                title={t('Manage Room')}
+                title={t('manage_room')}
               />
               <PrimaryButton
                 containerStyle={styles.manageRoomBtn}

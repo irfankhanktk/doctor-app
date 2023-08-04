@@ -1,41 +1,41 @@
+import {PrimaryButton} from 'components/atoms/buttons';
+import {Checkbox} from 'components/atoms/checkbox';
+import Header1x2x from 'components/atoms/headers/header-1x-2x';
+import PrimaryInput from 'components/atoms/inputs';
+import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
+import {Loader} from 'components/atoms/loader';
+import {Row} from 'components/atoms/row';
+import {colors} from 'config/colors';
+import {mvs} from 'config/metrices';
+import {useFormik} from 'formik';
+import {t} from 'i18next';
+import {goBack} from 'navigation/navigation-ref';
 import React, {useState} from 'react';
 import {
-  View,
+  Alert,
+  FlatList,
   Image,
   ImageBackground,
-  FlatList,
-  TouchableOpacity,
   SectionList,
-  Alert,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import styles from './styles';
-import Header1x2x from 'components/atoms/headers/header-1x-2x';
-import {t} from 'i18next';
-import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview';
-import PrimaryInput from 'components/atoms/inputs';
-import {useFormik} from 'formik';
-import Regular from 'typography/regular-text';
-import {PrimaryButton} from 'components/atoms/buttons';
-import {mvs} from 'config/metrices';
-import {colors} from 'config/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {UTILS} from 'utils';
-import {Checkbox} from 'components/atoms/checkbox';
-import {Row} from 'components/atoms/row';
-import Bold from 'typography/bold-text';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   getRoomAttributes,
   getRoomForEdit,
   onAddOrUpdateRoom,
   postFileData,
 } from 'services/api/hotel/api-actions';
-import {useDispatch, useSelector} from 'react-redux';
+import Bold from 'typography/bold-text';
+import Regular from 'typography/regular-text';
+import {UTILS} from 'utils';
 import {addRoomValidation} from 'validations';
-import {Loader} from 'components/atoms/loader';
-import {goBack} from 'navigation/navigation-ref';
+import styles from './styles';
 
 const AddRoom = props => {
-  const {navigation, route} = props;
+  const {route} = props;
   const {hotel_id, room_id} = route?.params || {};
 
   const dispatch = useDispatch();
@@ -43,7 +43,6 @@ const AddRoom = props => {
   const [attributes, setAttributes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [addBtnloading, setAddBtnLoading] = useState(false);
-  const [addImageloading, setAddImageLoading] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [galleryImageLoading, setGalleryImageLoading] = React.useState(false);
   const [featuredImageLoading, setFeaturedImageLoading] = React.useState(false);
@@ -92,6 +91,7 @@ const AddRoom = props => {
           setSelectedTypes(
             res?.row?.terms.map(x => ({...x, id: x?.term_id})) || [],
           );
+          allFieldTouch();
         } else {
           const res = await getRoomAttributes(hotel_id);
           setAttributes(res?.attributes || []);
@@ -104,12 +104,13 @@ const AddRoom = props => {
       }
     })();
   }, []);
+
   const onSubmit = async () => {
     try {
       if (isValid && Object.keys(touched).length > 0) {
         try {
           setAddBtnLoading(true);
-          const res = await onAddOrUpdateRoom(
+          await onAddOrUpdateRoom(
             {
               ...values,
               id: room_id || null,
@@ -121,7 +122,7 @@ const AddRoom = props => {
           );
 
           goBack();
-          Alert.alert('onsubmit');
+          Alert.alert('Save successfully');
         } catch (error) {
           console.log(error);
           Alert.alert('Error', UTILS.returnError(error));
@@ -129,19 +130,21 @@ const AddRoom = props => {
           setAddBtnLoading(false);
         }
       } else {
-        setFieldTouched('title', true);
-        setFieldTouched('ical_import_url', true);
-        setFieldTouched('image_id', true);
-        setFieldTouched('beds', true);
-        setFieldTouched('number', true);
-        setFieldTouched('size', true);
-        setFieldTouched('adults', true);
-        setFieldTouched('price', true);
-        setFieldTouched('gallery[0]', true);
+        allFieldTouch();
       }
     } catch (error) {
       console.log('error=>', error);
     }
+  };
+  const allFieldTouch = () => {
+    setFieldTouched('title', true);
+    setFieldTouched('ical_import_url', true);
+    // setFieldTouched('image_id', true);
+    setFieldTouched('beds', true);
+    setFieldTouched('number', true);
+    setFieldTouched('size', true);
+    setFieldTouched('adults', true);
+    setFieldTouched('price', true);
   };
 
   const onImageRemove = index => {
@@ -149,7 +152,6 @@ const AddRoom = props => {
     copy = copy.filter((e, i) => {
       return i != index;
     });
-    // setAddImage(copy);
     setFieldValue('gallery', copy);
   };
 
@@ -158,22 +160,18 @@ const AddRoom = props => {
       const res = await UTILS._returnImageGallery(v == 'gallery');
       if (v == 'gallery') {
         setGalleryImageLoading(true);
-        
-        const file_resp = await Promise.all(res?.map(imgData=>postFileData({file: imgData, type: 'image'})));
-        const arr=file_resp?.map(x=>x?.data);
-        const temp=values?.gallery ||[];
-        setFieldValue(`gallery`,  [
-            ...temp,
-           ...arr
-          ]);
-        // onHandleChange('gallery', [
-        //   ...temp,
-        //  ...arr
-        // ]);
+
+        const file_resp = await Promise.all(
+          res?.map(imgData => postFileData({file: imgData, type: 'image'})),
+        );
+        const arr = file_resp?.map(x => x?.data);
+        const temp = values?.gallery || [];
+        setFieldValue(`gallery`, [...temp, ...arr]);
       } else {
         setFeaturedImageLoading(true);
         const file_resp = await postFileData({file: res, type: 'image'});
         setFieldValue('image_id', file_resp?.data);
+        setFieldTouched('image_id', true);
       }
     } catch (error) {
       console.log('upload image error', error);
@@ -244,9 +242,7 @@ const AddRoom = props => {
             color={colors.primary}
             label={t('featured_image')}
           />
-          <ImageBackground
-
-            style={styles.bannerImageContainer}>
+          <ImageBackground style={styles.bannerImageContainer}>
             <PrimaryButton
               loading={featuredImageLoading}
               title={t('upload_image')}

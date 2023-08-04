@@ -262,5 +262,11 @@
   "This_hotel_no_rooms": "هذا الفندق لا يحتوي على غرف",
   "all_patients": "كل المرضى",
   "delete_account": "حذف الحساب",
-  "save_hotel": "حفظ الفندق"
+  "save_hotel": "حفظ الفندق",
+  "manage_room":"إدارة الغرفة",
+  "Attr":"صفات",
+  "Content":"محتوى",
+  "Location":"موقع",
+  "Price":"سعر"
+
 }

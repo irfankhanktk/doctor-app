@@ -1,27 +1,19 @@
+import * as IMG from 'assets/doctor/images';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
-import AppointmentCard from 'components/molecules/doctor/appointment-card';
+import {Row} from 'components/atoms/row';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
 import {colors} from 'config/colors';
-import {mvs, width} from 'config/metrices';
+import {mvs} from 'config/metrices';
 import {useAppDispatch, useAppSelector} from 'hooks/use-store';
-import React, {useEffect} from 'react';
-import {FlatList, View, Img, TouchableOpacity, Image} from 'react-native';
-import {
-  getAppointmentsList,
-  getNotifications,
-  onReadNotifications,
-  readNotifications,
-} from 'services/api/doctor/api-actions';
-import i18n from 'translation';
-import styles from './styles';
-import * as IMG from 'assets/doctor/images';
-import Regular from 'typography/regular-text';
-import Medium from 'typography/medium-text';
-import Bold from 'typography/bold-text';
-import {Row} from 'components/atoms/row';
 import moment from 'moment';
-import {useIsFocused} from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {FlatList, Image, View} from 'react-native';
+import {onReadNotifications} from 'services/api/doctor/api-actions';
+import i18n from 'translation';
+import Medium from 'typography/medium-text';
+import Regular from 'typography/regular-text';
+import styles from './styles';
 
 const Notifications = props => {
   const dispatch = useAppDispatch();

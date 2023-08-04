@@ -129,7 +129,7 @@
   "short_Presciption": "Short Prescription",
   "prescription_details": "Add Prescription Details",
   "prescription_image": "Prescription Image",
-  "optional": "optional",
+  "optional": "Optional",
   "days": "Days",
   "prescription_card_heading": "Prescription Details",
   "save_hotel": "Save Hotel",
@@ -263,5 +263,11 @@
   "beds_required": "Bed No is required",
   "size_required": "Room size is required",
   "adults_required": "Adult is required",
-  "import_url": "Import Url"
+  "import_url": "Import Url",
+  "manage_room":"Manage Room",
+  "Attr":"Attr",
+  "Content":"Content",
+  "Location":"Location",
+  "Price":"Price",
+  
 }

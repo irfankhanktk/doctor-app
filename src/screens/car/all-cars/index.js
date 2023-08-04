@@ -19,7 +19,7 @@ import {navigate} from 'navigation/navigation-ref';
 const AllCars = props => {
   const [loading, setLoading] = React.useState(true);
   const dispatch = useAppDispatch();
-  const {car, user} = useSelector(s => s);
+  const {car, user, unreadNotification} = useSelector(s => s);
   const {car_filter, cars} = car;
   const [refreshing, setRefreshing] = React.useState(false);
   const isFocus = useIsFocused();
@@ -67,6 +67,8 @@ const AllCars = props => {
         title={t('cars')}
         back={false}
         isCart={userInfo?.id}
+        unreadNotification={unreadNotification}
+        notification
         {...props}
       />
 

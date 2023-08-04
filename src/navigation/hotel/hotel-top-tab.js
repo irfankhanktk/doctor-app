@@ -1,5 +1,6 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {mvs} from 'config/metrices';
+import {t} from 'i18next';
 import {Animated, TouchableOpacity, View} from 'react-native';
 import AddHotel from 'screens/hotel/add-hotel';
 import AddHotelAttributes from 'screens/hotel/add-hotel-attributes';
@@ -75,13 +76,34 @@ export default HotelTopTab = props => {
   return (
     <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
       <Tab.Screen
+        options={{
+          tabBarLabel: t('Content'),
+        }}
         name="Content"
         component={AddHotel}
         initialParams={{id: route?.params?.id}}
       />
-      <Tab.Screen name="Location" component={AddHotelLocation} />
-      <Tab.Screen name="Price" component={AddHotelPrice} />
-      <Tab.Screen name="Attr" component={AddHotelAttributes} />
+      <Tab.Screen
+        options={{
+          tabBarLabel: t('Location'),
+        }}
+        name="Location"
+        component={AddHotelLocation}
+      />
+      <Tab.Screen
+        options={{
+          tabBarLabel: t('Price'),
+        }}
+        name="Price"
+        component={AddHotelPrice}
+      />
+      <Tab.Screen
+        options={{
+          tabBarLabel: t('Attr'),
+        }}
+        name="Attr"
+        component={AddHotelAttributes}
+      />
     </Tab.Navigator>
   );
 };

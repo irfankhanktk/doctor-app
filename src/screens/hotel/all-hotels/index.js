@@ -22,7 +22,7 @@ const AllHotels = props => {
   const [loading, setLoading] = React.useState(true);
 
   const dispatch = useAppDispatch();
-  const {hotel} = useSelector(s => s);
+  const {hotel, unreadNotification} = useSelector(s => s);
   const {hotels} = hotel;
 
   const [page, setPage] = React.useState(1);
@@ -63,6 +63,8 @@ const AllHotels = props => {
         style={{height: mvs(70)}}
         isSearch={false}
         title={t('hotels')}
+        notification
+        unreadNotification={unreadNotification}
       />
 
       {loading ? (
