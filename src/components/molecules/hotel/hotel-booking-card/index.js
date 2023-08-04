@@ -10,6 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 const AppointmentCard = ({item, style, onPress = () => {}}) => {
+  console.log('check booking item ========>', item);
   const {t} = i18n;
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -118,7 +119,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           }}>
           <Medium label={'Total'} fontSize={mvs(14)} />
           <Medium
-            label={`$${item?.total}`}
+            label={`SAR ${item?.total}`}
             style={styles.label}
             color={colors.red}
           />
@@ -130,7 +131,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           }}>
           <Medium label={t('Paid')} fontSize={mvs(14)} />
           <Medium
-            label={`$${item?.paid || '0'} `}
+            label={`SAR ${item?.paid || '0'} `}
             style={styles.label}
             color={colors.red}
           />
@@ -142,7 +143,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           }}>
           <Medium label={t('Remain')} fontSize={mvs(14)} />
           <Medium
-            label={`$${item?.total - item?.paid} `}
+            label={`SAR${item?.total - item?.paid} `}
             style={styles.label}
             color={colors.red}
           />

@@ -52,9 +52,7 @@ const HeaderX = ({
         <Medium fontSize={mvs(20)} label={title} style={[styles.title]} />
 
         {notification ? (
-          <TouchableOpacity
-            disabled={true}
-            onPress={() => navigate('Notifications')}>
+          <TouchableOpacity onPress={() => navigate('Notifications')}>
             <Ionicons
               name="notifications-sharp"
               size={mvs(25)}
