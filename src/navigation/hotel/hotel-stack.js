@@ -17,7 +17,7 @@ import AddHotelAttributes from 'screens/hotel/add-hotel-attributes';
 import RecoveryHotels from 'screens/hotel/recovery-hotels';
 import EditRoomAvailability from 'screens/hotel/edit-room-availability';
 import HotelTopTab from './hotel-top-tab';
-import MyBookingList from 'screens/hotel/my-booking-list';
+import MyBookingList from 'screens/my-booking-list';
 const Stack = createNativeStackNavigator();
 
 export default HotelStack = () => {

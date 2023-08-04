@@ -23,7 +23,8 @@ import RecoveryHotels from 'screens/hotel/recovery-hotels';
 import EventStack from './event/event-stack';
 import TourStack from './tour/tour-stack';
 import PaymentGatewayScreen from 'payment-gateway-screen';
-import MyBookingList from 'screens/hotel/my-booking-list';
+import MyBookingList from 'screens/my-booking-list';
+import BookingDetails from 'screens/booking-details';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -61,6 +62,7 @@ export const RootNavigator = () => {
         <Stack.Screen name="EventStack" component={EventStack} />
         <Stack.Screen name="TourStack" component={TourStack} />
         <Stack.Screen name="MyBookingList" component={MyBookingList} />
+        <Stack.Screen name="BookingDetails" component={BookingDetails} />
 
         <Stack.Screen
           name="PaymentGatewayScreen"
