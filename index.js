@@ -22,6 +22,6 @@ async function onMessageReceived(remoteMessage) {
     data: remoteMessage?.data,
   });
 }
-// messaging().onMessage(onMessageReceived);
+messaging().onMessage(onMessageReceived);
 messaging().setBackgroundMessageHandler(onMessageReceived);
 AppRegistry.registerComponent(appName, () => App);

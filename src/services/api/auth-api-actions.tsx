@@ -6,6 +6,7 @@ import { STORAGEKEYS } from 'config/constants';
 import { Alert } from 'react-native';
 import {
   setLocations,
+  setNotifications,
   setUserInfo,
   setWallet,
 } from './../../store/reducers/user-reducer';
@@ -190,3 +191,23 @@ export const getPaymentTransationStatus = async (data: any) =>
     },
   });
 export const getBookings = (slug: any) => getData(`${URLS.auth.get_bookings}`);
+///Notifications///
+export const getNotifications = (
+  values: any,
+  // setLoading: (bool: boolean) => void,
+  // readNotifications: () => void,
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      // setLoading(true);
+      const res = await postData(URLS.auth.get_notification, values);
+      // readNotifications()
+      dispatch(setNotifications(res?.notifications || []));
+    } catch (error: any) {
+      console.log('error in notification', UTILS.returnError(error));
+      Alert.alert('', UTILS.returnError(error));
+    } finally {
+      // setLoading(false);
+    }
+  };
+};
