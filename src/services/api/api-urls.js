@@ -15,6 +15,10 @@ export const URLS = {
     delete_account: 'user/permanently_deleted',
     get_bookings: 'vendor/booking-report',
   },
+  booking: {
+    status_change: 'booking/bulkEdit',
+    paid_amount: 'booking/setPaidAmount',
+  },
   availability: {
     add: 'doctor/addDoctorAvailability',
     get_doctor_hospitals: 'doctor/getDoctorHospital',
@@ -44,8 +48,10 @@ export const URLS = {
     add_amount: 'user/addDeposit',
   },
   // hotel vendor module
+
   hotel_vendor: {
     get_hotel_list: 'user/hotel?',
+
     recovery: {
       get_recovery_hotels: 'user/hotel/recovery',
       recover_hotel: 'user/hotel/restore/', //hotel id

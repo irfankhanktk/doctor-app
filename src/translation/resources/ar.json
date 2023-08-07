@@ -267,6 +267,15 @@
   "Attr":"صفات",
   "Content":"محتوى",
   "Location":"موقع",
-  "Price":"سعر"
+  "Price":"سعر",
+  "my_bookings":"حجوزاتي",
+  "booking_id":"معرف الحجز",
+  "order_date":"تاريخ الطلب",
+  "remain":"يبقى",
+  "paid":"مدفوع",
+  "invoice":"فاتورة",
+  "set_paid":"مجموعة مدفوعة"
+
+
 
 }

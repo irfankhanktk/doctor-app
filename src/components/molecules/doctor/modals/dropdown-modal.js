@@ -1,15 +1,12 @@
 import {CrossModal} from 'assets/doctor/icons';
-import {Loader} from 'components/atoms/loader';
 import {ModalWrapper} from 'components/atoms/modal-wrapper';
 import {colors} from 'config/colors';
+import {mvs} from 'config/metrices';
+import {t} from 'i18next';
 import React from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Medium from 'typography/medium-text';
-import {mvs} from 'config/metrices';
-import DoctorAvailabilityLocation from '../doctor-availability-location';
-import {EmptyList} from '../empty-list';
-import {t} from 'i18next';
 
 const DropdownModal = ({
   style = {},

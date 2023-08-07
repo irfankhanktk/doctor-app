@@ -2,13 +2,19 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
 import {useAppDispatch, useAppSelector} from 'hooks/use-store';
 import React from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, View, Alert} from 'react-native';
 import i18n from 'translation';
 import styles from './styles';
 import {UTILS} from 'utils';
 import HotelBookingCard from 'components/molecules/hotel/hotel-booking-card';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
 import {getBookings} from 'services/api/auth-api-actions';
+import {
+  changeBookingStatus,
+  paidBookingAmount,
+} from 'services/api/hotel/api-actions';
+import {BOOKING_STATUSES} from 'config/constants';
+import PaidAmountModal from 'components/molecules/doctor/modals/paid_modal';
 
 const MyBookingList = props => {
   const dispatch = useAppDispatch();
@@ -16,6 +22,9 @@ const MyBookingList = props => {
   const [loading, setLoading] = React.useState(true);
   const [bookings, setBookings] = React.useState([]);
   const {userInfo} = useAppSelector(s => s?.user);
+  const [paid, setPaid] = React.useState(false);
+  const [bookingItem, setBookingItem] = React.useState({});
+
   // const isHistory = props?.route?.params?.isHistory;
   const isHistory = props?.route?.params;
   // console.log('statsu', bookings?.status);
@@ -39,15 +48,38 @@ const MyBookingList = props => {
   }, [userInfo?.id]);
   const renderItem = ({item}) => (
     <HotelBookingCard
+      onInvoice={() => {}}
+      onPaid={() => {
+        setPaid(true);
+        setBookingItem(item);
+      }}
       onPress={() =>
         props?.navigation?.navigate('BookingDetails', {
           booking: item,
         })
       }
+      onChangeStatus={async status => {
+        try {
+          const bookingStatus = BOOKING_STATUSES.find(x => x?.id == status);
+          const res = await changeBookingStatus({
+            id: item?.id,
+            action: bookingStatus?.title?.toLowerCase(),
+          });
+          const copy = [...bookings];
+          setBookings(
+            copy?.map(x => ({
+              ...x,
+              status:
+                x?.id === item?.id
+                  ? bookingStatus?.title?.toLowerCase()
+                  : x?.status,
+            })),
+          );
+        } catch (error) {
+          Alert.alert(UTILS.returnError(error));
+        }
+      }}
       item={item}
-      // slotTime={`${arrayFormat[item?.start_time_id]} - ${
-      //   arrayFormat[item?.end_time_id]
-      // }`}
     />
   );
 
@@ -71,6 +103,13 @@ const MyBookingList = props => {
           keyExtractor={(_, index) => index?.toString()}
         />
       )}
+
+      <PaidAmountModal
+        bookingItem={bookingItem}
+        setBookingItem={setBookingItem}
+        onClose={() => setPaid(false)}
+        visible={paid}
+      />
     </View>
   );
 };

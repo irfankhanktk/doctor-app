@@ -86,6 +86,8 @@ export const permnentlyDeleteHotel = (hotel_id: any) => getData(`${URLS.hotel_ve
 export const changeHotelStatus = (hotel_id: any, status = 'make-publish') => getData(`${URLS.hotel_vendor.change_hotel_status}${hotel_id}/?action=${status}`);
 export const getRecoveryHotels = () => getData(`${URLS.hotel_vendor.recovery.get_recovery_hotels}`);
 export const recoverHotel = (hotel_id: any) => getData(`${URLS.hotel_vendor.recovery.recover_hotel}${hotel_id}`);
+export const changeBookingStatus = (data: any) => postData(`${URLS.booking.status_change}`, data);
+export const paidBookingAmount = (data: any) => postData(`${URLS.booking.paid_amount}`, data);
 //room endpoints
 export const getRoomAttributes = (hotel_id: any) =>
     getData(`${URLS.hotel_vendor.room.get_room_attributes}${hotel_id}/create`);
