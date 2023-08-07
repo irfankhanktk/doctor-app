@@ -18,12 +18,12 @@ import {
   getAllCategories,
   getAllHospitals,
   getHomeData,
-  getNotifications,
 } from 'services/api/doctor/api-actions';
 import i18n from 'translation';
 import Bold from 'typography/bold-text';
 import Regular from 'typography/regular-text';
 import styles from './styles';
+import {getNotifications} from 'services/api/auth-api-actions';
 const Home = props => {
   const {userInfo, unreadNotification, location} = useAppSelector(s => s?.user);
   const isFocus = useIsFocused();
@@ -41,7 +41,6 @@ const Home = props => {
       try {
         if (isFocus) {
           const res = await getHomeData(userInfo?.id);
-          loadNotifications();
           setHomeData(res);
         }
       } catch (error) {
@@ -50,13 +49,7 @@ const Home = props => {
       }
     })();
   }, [isFocus]);
-  const loadNotifications = async () => {
-    try {
-      dispatch(getNotifications({doctor_id: userInfo?.id}));
-    } catch (error) {
-      console.log('error=>', error);
-    }
-  };
+
   const uniquePatient = [];
   const seenIds = new Set();
 

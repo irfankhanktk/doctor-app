@@ -1,22 +1,15 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  I18nManager,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-} from 'react-native';
+import {I18nManager, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Medium from 'typography/medium-text';
 import {colors} from 'config/colors';
 import {mvs} from 'config/metrices';
-import {SearchInput} from '../inputs';
-import {Row} from '../row';
-import Regular from 'typography/regular-text';
 import {navigate} from 'navigation/navigation-ref';
+import Medium from 'typography/medium-text';
+import Regular from 'typography/regular-text';
+import {Row} from '../row';
 const HeaderX = ({
   style = {},
   title,

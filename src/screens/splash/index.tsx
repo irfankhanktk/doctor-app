@@ -3,7 +3,7 @@ import { SplashIcon } from 'assets/doctor/icons';
 import { useAppDispatch } from 'hooks/use-store';
 import React from 'react';
 import { View } from 'react-native';
-import { getUserInfo } from 'services/api/auth-api-actions';
+import { getNotifications, getUserInfo } from 'services/api/auth-api-actions';
 import i18n from 'translation';
 import { UTILS } from 'utils';
 import { STORAGEKEYS } from '../../config/constants';
@@ -19,7 +19,13 @@ type props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 const Splash = (props: props) => {
   const { navigation } = props;
   const dispatch = useAppDispatch();
-
+  const loadNotifications = async () => {
+    try {
+      dispatch(getNotifications());
+    } catch (error) {
+      console.log('error=>', error);
+    }
+  };
   React.useEffect(() => {
     (async () => {
       try {
@@ -46,6 +52,7 @@ const Splash = (props: props) => {
               const res = await getUserInfo();
               const role = res?.user?.role?.name;
               screen = `${role}Stack`;
+              loadNotifications();
               dispatch(setUserInfo(res?.user));
             } catch (error) {
               console.log('error', error);

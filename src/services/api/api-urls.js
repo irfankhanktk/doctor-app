@@ -37,8 +37,8 @@ export const URLS = {
     getAll: 'doctor/allSpecialization',
   },
   notification: {
-    get_notification: 'doctor/getNotification',
-    read_notification: 'doctor/readNotification',
+    get_notification: 'user/getNotification',
+    read_notification: 'user/readNotification',
   },
   wallet: {
     get_wallet: 'user/getWallet',

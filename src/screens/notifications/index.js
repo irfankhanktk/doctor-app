@@ -14,6 +14,7 @@ import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 import styles from './styles';
+import {getNotifications} from 'services/api/auth-api-actions';
 
 const Notifications = props => {
   const dispatch = useAppDispatch();
@@ -21,13 +22,13 @@ const Notifications = props => {
   const {t} = i18n;
   const [loading, setLoading] = React.useState(false);
 
-  // const loadNotifications = async () => {
-  //   try {
-  //     dispatch(getNotifications({ doctor_id: userInfo?.id }, setLoading, readNotifications));
-  //   } catch (error) {
-  //     console.log('error=>', error);
-  //   }
-  // };
+  const loadNotifications = async () => {
+    try {
+      dispatch(getNotifications());
+    } catch (error) {
+      console.log('error=>', error);
+    }
+  };
   const readNotifications = async () => {
     try {
       const unreadNoti = notifications
@@ -35,7 +36,7 @@ const Notifications = props => {
         ?.map(x => x?.id);
       if (!unreadNoti?.length) return;
       await onReadNotifications({
-        doctor_id: userInfo?.id,
+        user_id: userInfo?.id,
         ids: unreadNoti,
       });
     } catch (error) {
@@ -45,6 +46,9 @@ const Notifications = props => {
 
   useEffect(() => {
     readNotifications();
+  }, [notifications]);
+  useEffect(() => {
+    loadNotifications();
   }, []);
   const renderAppointmentItem = ({item, index}) => (
     <View

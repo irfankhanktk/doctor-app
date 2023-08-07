@@ -1,17 +1,17 @@
-import { AppDispatch, RootState } from 'store';
-import { getData, postData } from './';
-import { URLS } from './api-urls';
-import { UTILS } from 'utils';
+import axios from 'axios';
 import { STORAGEKEYS } from 'config/constants';
+import { resetStack } from 'navigation/navigation-ref';
 import { Alert } from 'react-native';
+import { AppDispatch, RootState } from 'store';
+import { UTILS } from 'utils';
+import { getData, postData } from './';
 import {
   setLocations,
   setNotifications,
   setUserInfo,
   setWallet,
 } from './../../store/reducers/user-reducer';
-import { goBack, resetStack } from 'navigation/navigation-ref';
-import axios from 'axios';
+import { URLS } from './api-urls';
 export const getUserInfo = () => {
   return getData(URLS.auth.get_user_info);
 };
@@ -186,15 +186,10 @@ export const getPaymentTransationStatus = async (data: any) =>
 export const getBookings = (slug: any) => getData(`${URLS.auth.get_bookings}`);
 ///Notifications///
 export const getNotifications = (
-  values: any,
-  // setLoading: (bool: boolean) => void,
-  // readNotifications: () => void,
 ) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
-      // setLoading(true);
-      const res = await postData(URLS.auth.get_notification, values);
-      // readNotifications()
+      const res = await postData(URLS.auth.get_notification);
       dispatch(setNotifications(res?.notifications || []));
     } catch (error: any) {
       console.log('error in notification', UTILS.returnError(error));
