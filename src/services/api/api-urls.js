@@ -4,6 +4,7 @@ export const URLS = {
   image_url: `${IP}/`,
   auth: {
     signup: 'doctor/signup',
+    get_notification: 'user/getNotification',
     login: 'auth/login',
     get_user_info: 'user/userInfo',
     update_password: 'user/updatePassword',

@@ -24,21 +24,17 @@ const WalletAmount = ({
   const [loading, setLoading] = React.useState(false);
   const onSubmit = async () => {
     try {
-      if (!userInfo?.transaction_id) {
-        onClose();
-        navigate('PaymentGatewayScreen', {amount: value});
-
-        return;
-      }
-      setLoading(true);
-      await onAddAmount({
-        payable_type: userInfo?.role?.name,
-        user_id: userInfo?.id,
-        transaction_id: userInfo?.transaction_id,
-      });
-      isSubmited();
       onClose();
-      setLoading(false);
+      navigate('PaymentGatewayScreen', {amount: value});
+      // setLoading(true);
+      // await onAddAmount({
+      //   payable_type: userInfo?.role?.name,
+      //   user_id: userInfo?.id,
+      //   transaction_id: userInfo?.transaction_id,
+      // });
+      // isSubmited();
+      // onClose();
+      // setLoading(false);
     } catch (error) {
       console.log('error=>', error);
       Alert.alert('Error', UTILS.returnError(error));
