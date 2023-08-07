@@ -1,19 +1,18 @@
-import { PrimaryButton } from 'components/atoms/buttons';
-import { ModalWrapper } from 'components/atoms/modal-wrapper';
-import { Row } from 'components/atoms/row';
+import {PrimaryButton} from 'components/atoms/buttons';
+import {ModalWrapper} from 'components/atoms/modal-wrapper';
+import {Row} from 'components/atoms/row';
 import moment from 'moment';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { useSelector } from 'react-redux';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 
-import { Checkbox } from 'components/atoms/checkbox';
+import {Checkbox} from 'components/atoms/checkbox';
 import DateRangePicker from 'components/atoms/date-range-picker';
 import PrimaryInput from 'components/atoms/inputs';
-import { colors } from 'config/colors';
-import { mvs } from 'config/metrices';
+import {colors} from 'config/colors';
+import {mvs} from 'config/metrices';
 import Bold from 'typography/bold-text';
 import Regular from 'typography/regular-text';
 const CarAvailabilityModal = ({

@@ -1,23 +1,22 @@
 import {Loader} from 'components/atoms/loader';
 import {useAppDispatch, useAppSelector} from 'hooks/use-store';
 import {goBack} from 'navigation/navigation-ref';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {ActivityIndicator, Alert, StyleSheet, View} from 'react-native';
 import WebView from 'react-native-webview';
 import {
   getPaymentTransationStatus,
   getPaymentUri,
+  onAddAmount,
 } from 'services/api/auth-api-actions';
-import {setTransactionId} from 'store/reducers/user-reducer';
 import {UTILS} from 'utils';
 
 const PaymentGatewayScreen = props => {
   const {amount} = props?.route?.params;
-  const [paymentStatus, setPaymentStatus] = React.useState('');
   const [data, setData] = React.useState({});
   const [loading, setLoading] = React.useState(true);
   const dispatch = useAppDispatch();
-  const {transaction_id} = useAppSelector(s => s?.user);
+  let isRedirected = false;
   const handleWebViewNavigationStateChange = async newNavState => {
     // You can handle any custom logic based on the URL here
     // For example, checking if the payment was successful or not
@@ -25,9 +24,10 @@ const PaymentGatewayScreen = props => {
     const searchString = '/start';
     console.log('url:::>>>>>', url);
     if (url === 'https://bookme.com.sa/') {
-      if (transaction_id) return;
+      if (isRedirected) return;
       // Payment was successful
       try {
+        isRedirected = true;
         const payload = {
           profile_id: 43265,
           tran_ref: data?.tran_ref,
@@ -36,7 +36,10 @@ const PaymentGatewayScreen = props => {
         const res = await getPaymentTransationStatus(payload);
         console.log('res:::getPaymentTransationStatus:::', res?.data);
         if (res?.data?.payment_result?.response_status === 'A') {
-          dispatch(setTransactionId(data?.tran_ref));
+          await onAddAmount({
+            transaction_id: data?.tran_ref,
+          });
+          // dispatch(setTransactionId(data?.tran_ref));
           Alert.alert(
             'Transaction Successfull',
             'Your transaction is processed successfully',
@@ -90,7 +93,7 @@ const PaymentGatewayScreen = props => {
     console.log('status:::::::', data.paymentStatus);
     // Handle payment status sent from the WebView
     if (data.paymentStatus) {
-      setPaymentStatus(data.paymentStatus);
+      // setPaymentStatus(data.paymentStatus);
       // You can perform actions based on the payment status here
       // For example, navigate to a success/failure screen
     }

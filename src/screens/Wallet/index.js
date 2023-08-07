@@ -125,13 +125,12 @@ const WalletScreen = props => {
 
             <WalletAmount
               onClose={() => setOtpModalVisible(false)}
-              visible={otpModalVisible || (isFocus && transaction_id)}
+              visible={otpModalVisible}
               setValue={setValue}
               value={value}
-              userInfo={{...userInfo, transaction_id}}
+              userInfo={{...userInfo}}
               isSubmited={() => {
                 setIsSubmited(!isSubmited);
-                if (transaction_id) dispatch(setTransactionId(null));
               }}
             />
           </View>

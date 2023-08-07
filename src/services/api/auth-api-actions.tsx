@@ -66,15 +66,8 @@ export const onSignup = (
   };
 };
 //// add amount///
-export const onAddAmount = async (values: any) => {
-  try {
-    const res = await postData(URLS.wallet.add_amount, values);
-    console.log('res of addamount=>', res);
-    return res;
-  } catch (error: any) {
-    console.log('error in addamount', UTILS.returnError(error));
-    Alert.alert('', UTILS.returnError(error));
-  }
+export const onAddAmount = (values: any) => {
+  return postData(URLS.wallet.add_amount, values);
 };
 /// Wallet ///
 export const getWallet = (values: any, setLoading: (bool: boolean) => void) => {
