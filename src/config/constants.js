@@ -77,6 +77,15 @@ export const arrayFormat = [
   {title: '23:30', id: 47},
   {title: '24:00', id: 48},
 ];
+export const BOOKING_STATUSES = [
+  {id: 0, title: 'Completed'},
+  {id: 1, title: 'Processing'},
+  {id: 3, title: 'Confirmed'},
+  {id: 4, title: 'Cancelled'},
+  {id: 5, title: 'Paid'},
+  {id: 6, title: 'Unpaid'},
+  {id: 7, title: 'Partial Payment'},
+];
 export const ADD_HOTEL_DEFAULT = {
   title: '',
   content: '',

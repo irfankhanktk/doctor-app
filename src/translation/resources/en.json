@@ -269,5 +269,15 @@
   "Content":"Content",
   "Location":"Location",
   "Price":"Price",
+  "my_bookings":"My Bookings",
+  "booking_id":"BookingId",
+  "order_date":"Order date",
+  "remain":"Remain",
+  "paid":"Paid",
+  "invoice":"Invloice",
+  "set_paid":"Set Paid"
+  
+
+  
   
 }

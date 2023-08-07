@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingVertical: mvs(30),
     paddingHorizontal: mvs(20),
-    paddingBottom: mvs(100),
+
   },
   columnWrapperStyle: {
     justifyContent: 'space-between',

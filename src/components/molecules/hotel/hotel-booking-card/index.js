@@ -1,35 +1,49 @@
 import {Hotels_Bg} from 'assets/car/images';
+import {PrimaryButton} from 'components/atoms/buttons';
+import {InputWithIcon} from 'components/atoms/inputs';
 import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
-import {DATE_FORMAT} from 'config/constants';
+import {BOOKING_STATUSES, DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
-const AppointmentCard = ({item, style, onPress = () => {}}) => {
+const AppointmentCard = ({
+  item,
+  style,
+  onChangeStatus,
+  onPress = () => {},
+  onInvoice = () => {},
+  onPaid = () => {},
+}) => {
   const {t} = i18n;
+  const items = BOOKING_STATUSES;
+
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Row
         style={{
-          paddingHorizontal: mvs(10),
-          // marginTop: mvs(10),
           alignItems: 'center',
         }}>
         <Medium
-          label={`${t('BookingId :')} ${item?.id}`}
+          label={`${t('booking_id')}${':'} ${item?.id}`}
           fontSize={mvs(20)}
           color={colors.primary}
         />
-        <Medium
-          label={`${item?.status}`}
-          fontSize={mvs(20)}
-          color={colors.primary}
+        <InputWithIcon
+          containerStyle={styles.statusContainer}
+          value={`${item?.status}`}
+          items={items}
+          onChangeText={onChangeStatus}
+          id={
+            BOOKING_STATUSES?.find(
+              x => x?.title?.toLowerCase() == item?.status?.toLowerCase(),
+            )?.id
+          }
         />
       </Row>
       <Row style={{justifyContent: 'flex-start'}}>
@@ -44,7 +58,26 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
           <Regular numberOfLines={1} label={item?.email} />
         </View>
       </Row>
-
+      <Row style={{marginTop: mvs(10)}}>
+        <PrimaryButton
+          onPress={onInvoice}
+          title={t('invoice')}
+          containerStyle={{
+            width: '48%',
+            height: mvs(40),
+            borderRadius: mvs(5),
+          }}
+        />
+        <PrimaryButton
+          onPress={onPaid}
+          title={t('set_paid')}
+          containerStyle={{
+            width: '48%',
+            height: mvs(40),
+            borderRadius: mvs(5),
+          }}
+        />
+      </Row>
       <Row style={styles.timeRow}>
         <View style={styles.alignItems}>
           <Row style={styles.alignItems}>
@@ -105,7 +138,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
             // paddingHorizontal: mvs(10),
             alignItems: 'center',
           }}>
-          <Medium label={'Total'} fontSize={mvs(14)} />
+          <Medium label={t('total')} fontSize={mvs(14)} />
           <Medium
             label={`SR ${item?.total}`}
             style={styles.label}
@@ -117,7 +150,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
             // paddingHorizontal: mvs(10),
             alignItems: 'center',
           }}>
-          <Medium label={t('Paid')} fontSize={mvs(14)} />
+          <Medium label={t('paid')} fontSize={mvs(14)} />
           <Medium
             label={`SR ${item?.paid || '0'} `}
             style={styles.label}
@@ -129,7 +162,7 @@ const AppointmentCard = ({item, style, onPress = () => {}}) => {
             // paddingHorizontal: mvs(10),
             alignItems: 'center',
           }}>
-          <Medium label={t('Remain')} fontSize={mvs(14)} />
+          <Medium label={t('remain')} fontSize={mvs(14)} />
           <Medium
             label={`SR ${item?.total - item?.paid} `}
             style={styles.label}
@@ -147,7 +180,6 @@ const styles = StyleSheet.create({
     paddingVertical: mvs(10),
     backgroundColor: colors.white,
     borderRadius: mvs(10),
-    marginBottom: mvs(15),
     justifyContent: 'center',
     ...colors.shadow,
   },
@@ -169,6 +201,16 @@ const styles = StyleSheet.create({
   timeRow: {
     marginTop: mvs(10),
     alignItems: 'center',
+  },
+  statusContainer: {
+    borderWidth: 1,
+    alignItems: 'center',
+    // marginLeft: mvs(15),
+    borderColor: colors.primary,
+    borderRadius: mvs(5),
+    width: mvs(150),
+    marginBottom: mvs(0),
+    height: mvs(30),
   },
   row: {
     alignItems: 'center',

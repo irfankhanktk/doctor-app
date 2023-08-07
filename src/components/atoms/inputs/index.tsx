@@ -258,7 +258,10 @@ export const InputWithIcon = (props: props) => {
       <Regular label={error ? `${t(error)}` : ''} style={styles.errorLabel} />
       <DropdownModal
         onClose={() => setVisible(false)}
-        onChangeText={onChangeText}
+        onChangeText={(data: string) => {
+          onChangeText(data);
+          setVisible(false);
+        }}
         value={id}
         visible={visible}
         items={items}
