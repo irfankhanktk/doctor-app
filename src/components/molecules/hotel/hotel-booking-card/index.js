@@ -28,12 +28,8 @@ const AppointmentCard = ({
       <Row
         style={{
           alignItems: 'center',
+          flexDirection: 'row-reverse',
         }}>
-        <Medium
-          label={`${t('booking_id')}${':'} ${item?.id}`}
-          fontSize={mvs(20)}
-          color={colors.primary}
-        />
         <InputWithIcon
           containerStyle={styles.statusContainer}
           value={`${item?.status}`}
@@ -44,6 +40,11 @@ const AppointmentCard = ({
               x => x?.title?.toLowerCase() == item?.status?.toLowerCase(),
             )?.id
           }
+        />
+        <Medium
+          label={`${t('booking_id')}${':'} ${item?.id}`}
+          fontSize={mvs(20)}
+          color={colors.primary}
         />
       </Row>
       <Row style={{justifyContent: 'flex-start'}}>
