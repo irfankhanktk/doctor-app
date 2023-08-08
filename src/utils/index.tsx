@@ -20,6 +20,7 @@ function toRadians(degrees: any) {
 // Initialize the module (needs to be done only once)
 const getErrorList = (data: any) => {
   const { message, errors } = data;
+  if (typeof message === 'string') return message;
   let concatenatedMessages: any = null;
   console.log('errors=>>::', errors);
 

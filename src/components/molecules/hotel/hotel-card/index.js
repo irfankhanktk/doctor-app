@@ -1,5 +1,6 @@
 import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
+import {CURRENCY} from 'config/constants';
 import {mvs} from 'config/metrices';
 import React from 'react';
 import {
@@ -37,7 +38,7 @@ const HotelCard = ({item, editPress, onPress = () => {}}) => {
 
                 <View style={styles.btn}>
                   <Medium
-                    label={`${item?.price} / ${t('night')}`}
+                    label={`${CURRENCY} ${item?.price} / ${t('night')}`}
                     textStyle={styles.btnTxt}
                   />
                 </View>

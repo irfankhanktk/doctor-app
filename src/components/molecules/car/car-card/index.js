@@ -1,6 +1,7 @@
 import {PrimaryButton} from 'components/atoms/buttons';
 import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
+import {CURRENCY} from 'config/constants';
 import {mvs} from 'config/metrices';
 import React from 'react';
 import {
@@ -50,7 +51,7 @@ const CarCard = ({
             <View style={styles.btn}>
               <Medium
                 textStyle={styles.btnTxt}
-                label={`$${item?.price} / ${t('day')}`}
+                label={`${CURRENCY} ${item?.price} / ${t('day')}`}
               />
             </View>
           </Row>

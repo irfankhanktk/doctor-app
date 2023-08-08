@@ -18,6 +18,7 @@ import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 import styles from './styles';
 import {setTransactionId} from 'store/reducers/user-reducer';
+import {CURRENCY} from 'config/constants';
 
 const WalletScreen = props => {
   const dispatch = useAppDispatch();
@@ -56,18 +57,22 @@ const WalletScreen = props => {
     }
   };
   useEffect(() => {
-    getWalletHistory();
-  }, [isSubmited]);
+    if (isFocus) getWalletHistory();
+  }, [isSubmited, isFocus]);
   return (
     <View style={styles.container}>
       <Header1x2x
         title={t('wallet')}
-        wallettext={`SR ${loading ? '--' : wallet?.wallet?.balance ?? '--'}`}
+        wallettext={`${CURRENCY} ${
+          loading ? '--' : wallet?.wallet?.balance ?? '--'
+        }`}
       />
       <View style={styles.walletcard}>
         <Feather name="shopping-bag" size={mvs(35)} color={'#000'} />
         <Medium
-          label={`SR ${loading ? '--' : wallet?.wallet?.balance ?? '--'}`}
+          label={`${CURRENCY} ${
+            loading ? '--' : wallet?.wallet?.balance ?? '--'
+          }`}
           fontSize={mvs(20)}
           color={'#000'}
         />

@@ -21,6 +21,7 @@ export const weekDays = [
   'Satureday',
   'Sunday',
 ];
+export const CURRENCY = 'SR';
 export const APPOINTMNETSTATUS = {
   confirmed: 'confirmed',
   completed: 'completed',
