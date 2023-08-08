@@ -13,8 +13,9 @@ import {
   changeBookingStatus,
   paidBookingAmount,
 } from 'services/api/hotel/api-actions';
-import {BOOKING_STATUSES} from 'config/constants';
+import {BOOKING_STATUSES, STORAGEKEYS} from 'config/constants';
 import PaidAmountModal from 'components/molecules/doctor/modals/paid_modal';
+import InvoiceModal from 'components/molecules/doctor/modals/invoice_modal';
 
 const MyBookingList = props => {
   const dispatch = useAppDispatch();
@@ -23,9 +24,21 @@ const MyBookingList = props => {
   const [bookings, setBookings] = React.useState([]);
   const {userInfo} = useAppSelector(s => s?.user);
   const [paid, setPaid] = React.useState(false);
+  const [invoice, setInvoice] = React.useState(false);
   const [bookingItem, setBookingItem] = React.useState({});
 
-  // const isHistory = props?.route?.params?.isHistory;
+  const getToken = async item => {
+    try {
+      const storedToken = await UTILS.getItem(STORAGEKEYS.token);
+      if (storedToken !== null) {
+        setInvoice(true);
+        setBookingItem({...item, bearerToken: storedToken});
+      }
+    } catch (error) {
+      console.error('Error retrieving token:', error);
+    }
+  };
+
   const isHistory = props?.route?.params;
   // console.log('statsu', bookings?.status);
   React.useEffect(() => {
@@ -48,7 +61,7 @@ const MyBookingList = props => {
   }, [userInfo?.id]);
   const renderItem = ({item}) => (
     <HotelBookingCard
-      onInvoice={() => {}}
+      onInvoice={() => getToken(item)}
       onPaid={() => {
         setPaid(true);
         setBookingItem(item);
@@ -109,6 +122,12 @@ const MyBookingList = props => {
         setBookingItem={setBookingItem}
         onClose={() => setPaid(false)}
         visible={paid}
+      />
+      <InvoiceModal
+        bookingItem={bookingItem}
+        setBookingItem={setBookingItem}
+        onClose={() => setInvoice(false)}
+        visible={invoice}
       />
     </View>
   );

@@ -1,18 +1,16 @@
-import {colors} from 'config/colors';
-import {navigate} from 'navigation/navigation-ref';
-import React from 'react';
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {onAddAmount} from 'services/api/auth-api-actions';
-import i18n from 'translation';
-import PrimaryInput from 'components/atoms/inputs';
-import {mvs} from 'config/metrices';
-import {ModalWrapper} from 'components/atoms/modal-wrapper';
 import {CrossModal} from 'assets/doctor/icons';
 import {PrimaryButton} from 'components/atoms/buttons';
-import {UTILS} from 'utils';
-import Regular from 'typography/regular-text';
+import PrimaryInput from 'components/atoms/inputs';
+import {ModalWrapper} from 'components/atoms/modal-wrapper';
 import {Row} from 'components/atoms/row';
+import {colors} from 'config/colors';
+import {mvs} from 'config/metrices';
+import React from 'react';
+import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {paidBookingAmount} from 'services/api/hotel/api-actions';
+import i18n from 'translation';
+import Regular from 'typography/regular-text';
+import {UTILS} from 'utils';
 const PaidAmountModal = ({
   style,
   email,
@@ -25,7 +23,12 @@ const PaidAmountModal = ({
 }) => {
   const {t} = i18n;
   const [loading, setLoading] = React.useState(false);
-  const [remain, setRemain] = React.useState();
+
+  const [remain, setRemain] = React.useState(bookingItem?.pay_now);
+  React.useEffect(() => {
+    setRemain(bookingItem?.pay_now);
+  }, [bookingItem?.pay_now]);
+
   const data = {
     remain: remain,
     id: bookingItem?.id,
@@ -87,6 +90,7 @@ const PaidAmountModal = ({
           </Row>
 
           <PrimaryButton
+            disabled={bookingItem?.paid == bookingItem?.total}
             onPress={() => onSubmit()}
             loading={loading}
             title={t('save')}
