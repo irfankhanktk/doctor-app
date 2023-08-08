@@ -275,9 +275,18 @@
   "remain":"Remain",
   "paid":"Paid",
   "invoice":"Invloice",
-  "set_paid":"Set Paid"
-  
-
-  
+  "set_paid":"Set Paid",
+  "no_booking":"You have no booking yet",
+  "booking_details":"Booking Details",
+  "full_name":"Full Name",
+  "address":"Address",
+  "booking_status":"Booking status",
+  "booking_date":"Booking Date",
+  "booking_method":"Booking Method",
+  "start_date":"Start Date",
+  "end_date":"End Date",
+  "rental_price":"Rental price",
+  "extra_price":"Extra Price",
+  "customer_information":"Customer information"
   
 }

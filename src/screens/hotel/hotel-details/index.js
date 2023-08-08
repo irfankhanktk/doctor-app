@@ -26,6 +26,7 @@ import {useAppSelector} from 'hooks/use-store';
 import {goBack, navigate} from 'navigation/navigation-ref';
 import Icon from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {PrimaryButton} from 'components/atoms/buttons';
 import HotelVideoModal from 'components/molecules/hotel/modals/hotel-video-modal';
@@ -159,7 +160,15 @@ const HotelDetails = props => {
                   })
                 }
                 style={styles.checkRooms}>
-                <Medium label={t('check_room')} />
+                <Row style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Medium label={t('check_room')} />
+                  <MaterialCommunityIcons
+                    name="hand-pointing-right"
+                    color={colors.black}
+                    size={mvs(20)}
+                    style={{marginLeft: mvs(8)}}
+                  />
+                </Row>
               </TouchableOpacity>
             </Row>
           </ImageBackground>

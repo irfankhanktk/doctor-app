@@ -1,15 +1,16 @@
-import {PrimaryButton} from 'components/atoms/buttons';
 import {useIsFocused} from '@react-navigation/native';
+import {PrimaryButton} from 'components/atoms/buttons';
 import {Loader} from 'components/atoms/loader';
 import Header1x2x from 'components/atoms/walletheader/header-1x-2x';
 import {EmptyList} from 'components/molecules/doctor/empty-list';
 import WalletAmount from 'components/molecules/doctor/modals/Wallet-amountmodal';
 import {colors} from 'config/colors';
+import {CURRENCY} from 'config/constants';
 import {mvs} from 'config/metrices';
 import {useAppDispatch, useAppSelector} from 'hooks/use-store';
 import moment from 'moment';
 import React, {useEffect} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, RefreshControl, View} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {getWallet} from 'services/api/auth-api-actions';
@@ -17,25 +18,20 @@ import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 import styles from './styles';
-import {setTransactionId} from 'store/reducers/user-reducer';
-import {CURRENCY} from 'config/constants';
 
 const WalletScreen = props => {
   const dispatch = useAppDispatch();
-  const {userInfo, wallet, transaction_id} = useAppSelector(s => s.user);
+  const {userInfo, wallet} = useAppSelector(s => s.user);
   const isFocus = useIsFocused();
   const {t} = i18n;
   const [otpModalVisible, setOtpModalVisible] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   React.useEffect(() => {
     getWalletHistory();
   }, []);
 
   const [value, setValue] = React.useState('');
-  const initialValues = {
-    amount: '',
-    // password: '',
-  };
 
   const [loading, setLoading] = React.useState(false);
   const [isSubmited, setIsSubmited] = React.useState(false);
@@ -50,12 +46,7 @@ const WalletScreen = props => {
   const itemSeparatorComponent = () => {
     return <View style={{paddingVertical: mvs(5)}}></View>;
   };
-  const verifyOtp = () => {
-    try {
-    } catch (error) {
-      console.log('error=>', error);
-    }
-  };
+
   useEffect(() => {
     if (isFocus) getWalletHistory();
   }, [isSubmited, isFocus]);
@@ -98,6 +89,12 @@ const WalletScreen = props => {
             />
 
             <FlatList
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={() => getWalletHistory()}
+                />
+              }
               data={wallet?.tansactions}
               ListEmptyComponent={<EmptyList label={t('history_content')} />}
               renderItem={({item, index}) => (

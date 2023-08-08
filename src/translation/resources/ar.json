@@ -274,7 +274,26 @@
   "remain":"يبقى",
   "paid":"مدفوع",
   "invoice":"فاتورة",
-  "set_paid":"مجموعة مدفوعة"
+  "set_paid":"مجموعة مدفوعة",
+  "no_booking":"ليس لديك حجز بعد",
+  "booking_details":"تفاصيل الحجز",
+  "full_name":"الاسم الكامل",
+  "address":"عنوان",
+  "booking_status":"وضع الحجز",
+  "booking_date":"تاريخ الحجز",
+  "booking_method":"طريقة الحجز",
+  "start_date":"تاريخ البدء",
+  "end_date":"تاريخ الانتهاء",
+  "rental_price":"سعر الإيجار",
+  "extra_price":"سعر إضافي",
+  "customer_information":"معلومات العميل"
+
+
+
+
+
+
+
 
 
 

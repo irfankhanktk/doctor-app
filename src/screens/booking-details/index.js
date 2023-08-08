@@ -1,161 +1,179 @@
-import {Hotels_Bg} from 'assets/car/images';
-import {DoctorMap} from 'assets/doctor/icons';
 import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
 import {Row} from 'components/atoms/row';
 import {colors} from 'config/colors';
+import {DATE_FORMAT} from 'config/constants';
 import {mvs} from 'config/metrices';
 import moment from 'moment';
 import React from 'react';
-import {ImageBackground, ScrollView, View} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
+import {View} from 'react-native';
 import i18n from 'translation';
-import Medium from 'typography/medium-text';
+import Bold from 'typography/bold-text';
 import Regular from 'typography/regular-text';
 import styles from './styles';
 
 const BookingDetails = props => {
+  const item = props?.route?.params?.booking;
+
   const {t} = i18n;
   // const {userInfo} = useAppSelector(s => s?.user);
   const [loading, setLoading] = React.useState(false);
-  const [historyData, setHistoryData] = React.useState({});
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={Hotels_Bg} style={styles.hotelsimgbackground}>
-        <Header1x2x
-          style={{height: mvs(200)}}
-          isSearch={false}
-          title={t('booking_details')}
-          back={true}
-        />
-      </ImageBackground>
+      <Header1x2x
+        // style={{height: mvs(200)}}
+        isSearch={false}
+        title={t('booking_details')}
+        back={true}
+      />
 
       {loading ? (
         <Loader />
       ) : (
-        <View style={styles.cardContainer}>
-          <View style={styles.line} />
-          <ScrollView contentContainerStyle={styles.contentContainerStyle}>
-            <Medium
-              style={styles.text}
-              label={historyData?.booking?.service?.title}
+        <View style={styles.contentContainerStyle}>
+          <Bold
+            label={`${t('booking_id')}${':'} ${item?.id}`}
+            fontSize={mvs(18)}
+            color={colors.primary}
+          />
+          <Bold
+            label={t('customer_information')}
+            fontSize={mvs(16)}
+            color={colors.primary}
+          />
+          <Row>
+            <Regular label={t('full_name')} />
+            <Regular label={`${item?.first_name} ${item?.last_name}`} />
+          </Row>
+          <Row>
+            <Regular label={t('email')} />
+            <Regular label={`${item?.email}`} />
+          </Row>
+          <Row>
+            <Regular label={t('phone')} />
+            <Regular label={`${item?.phone} `} />
+          </Row>
+          <Row>
+            <Regular label={t('address')} />
+            <Regular label={item?.address} />
+          </Row>
+          <Bold
+            label={t('booking_details')}
+            fontSize={mvs(16)}
+            color={colors.primary}
+          />
+          <Row>
+            <Regular label={t('booking_status')} />
+            <Regular label={`${item?.status} `} />
+          </Row>
+          <Row>
+            <Regular label={t('booking_date')} />
+            <Regular
+              label={moment(item?.created_at).format(DATE_FORMAT.mmm_dd_yyyy)}
             />
-            <Row style={{justifyContent: 'flex-start'}}>
-              <DoctorMap />
-              <Medium
-                label={historyData?.booking?.service?.address}
-                style={{marginHorizontal: mvs(10)}}
-              />
-            </Row>
-            <Row
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                marginTop: mvs(10),
-              }}>
-              <AntDesign
-                name="infocirlce"
-                color={colors.primary}
-                size={mvs(16)}
-              />
-              <Medium
-                label={`Vendor: ${historyData?.vendor?.name}`}
-                style={{marginLeft: mvs(10)}}
-                color={colors.primary}
-              />
-            </Row>
-            <Medium label={t('booking_details')} style={styles.heading} />
-            <View style={styles.contentContainerStyleNew}>
-              <Row style={styles.alignItems}>
-                <Row style={styles.alignItems}>
-                  <Feather name={'log-in'} size={15} color={colors.green} />
-                  <Medium
-                    label={t(`check_in`)}
-                    style={{...styles.label, marginLeft: mvs(10)}}
-                  />
-                </Row>
-                <Medium
-                  label={moment(historyData?.booking?.start_date).format(
-                    'DD/MM/YYYY',
-                  )}
-                  style={styles.slotTime}
-                />
-              </Row>
-              <Row style={styles.alignItems}>
-                <Row style={styles.alignItems}>
-                  <Feather name={'log-out'} size={15} color={colors.red} />
-                  <Medium
-                    label={t`check_out`}
-                    style={{...styles.label, marginLeft: mvs(10)}}
-                  />
-                </Row>
-                <Medium
-                  label={moment(historyData?.booking?.end_date).format(
-                    'DD/MM/YYYY',
-                  )}
-                  style={styles.slotTime}
-                />
-              </Row>
-              <View>
-                <Row style={{alignItems: 'center'}}>
-                  <Medium label={t('no_of_nights')} style={styles.label} />
-                  <Regular
-                    label={historyData?.booking?.duration_nights}
-                    style={styles.value}
-                  />
-                </Row>
-                <Row style={{alignItems: 'center'}}>
-                  <Medium label={t('no_of_adults')} style={styles.label} />
-                  <Regular
-                    label={historyData?.booking?.adults}
-                    style={styles.value}
-                  />
-                </Row>
-              </View>
-            </View>
-            <Medium label={t('room_details')} style={styles.heading} />
-            <View style={styles.contentContainerStyleNew}>
-              <View>
-                {historyData?.booking?.rooms?.map((item, index) => (
-                  <Row style={{alignItems: 'center'}}>
-                    <Medium
-                      label={`${item?.room?.title}*${item?.number}`}
-                      style={styles.label}
-                    />
-                    <Regular
-                      label={`$${item?.price * item?.number}`}
-                      style={styles.value}
-                    />
-                  </Row>
-                ))}
-                <Medium label={'Extra prices'} color={colors.black} />
-                {historyData?.booking?.extra_price.map((item, index) => (
-                  <Row style={{alignItems: 'center'}}>
-                    <Medium label={item?.name} style={styles.label} />
-                    <Regular label={`$${item?.price}`} style={styles.value} />
-                  </Row>
-                ))}
-                <Row style={{alignItems: 'center'}}>
-                  <Medium label={'Service Fee'} style={styles.label} />
-                  <Regular
-                    label={historyData?.booking?.service?.service_fee || '$0'}
-                    style={styles.value}
-                  />
-                </Row>
-              </View>
-            </View>
+          </Row>
+          <Row>
+            <Regular label={t('booking_method')} />
+            <Regular label={`${item?.gateway} `} />
+          </Row>
+          <Row>
+            <Regular color={colors.black} label={t('start_date')} />
+            <Regular
+              color={colors.black}
+              label={moment(item?.start_date).format(DATE_FORMAT.mmm_dd_yyyy)}
+            />
+          </Row>
+          <Row>
+            <Regular color={colors.black} label={t('end_date')} />
+            <Regular
+              color={colors.black}
+              label={moment(item?.end_date).format(DATE_FORMAT.mmm_dd_yyyy)}
+            />
+          </Row>
 
-            <Row style={{alignItems: 'center'}}>
-              <Medium label={t('Total')} fontSize={mvs(18)} />
-              <Medium
-                label={`$${historyData?.booking?.total}`}
-                color={colors.primary}
-                fontSize={mvs(20)}
-              />
+          {item?.object_model === 'hotel' ? (
+            <Row>
+              <Regular label={t('night')} />
+              <Regular label={`${item?.duration_nights} `} />
             </Row>
-          </ScrollView>
+          ) : (
+            <></>
+          )}
+          {item?.object_model === 'hotel' ? (
+            <Row>
+              <Regular label={t('adults')} />
+              <Regular label={`${item?.adults} `} />
+            </Row>
+          ) : (
+            <></>
+          )}
+          {item?.object_model === 'hotel' ? (
+            <Row>
+              <Regular label={t('children')} />
+              <Regular label={`${item?.children} `} />
+            </Row>
+          ) : (
+            <></>
+          )}
+          {item?.object_model === 'car' ? (
+            <Row>
+              <Regular label={t('days')} />
+              <Regular label={`${item?.days} `} />
+            </Row>
+          ) : (
+            <></>
+          )}
+          {item?.object_model === 'car' ? (
+            <Row>
+              <Regular label={t('number')} />
+              <Regular label={`${item?.number} `} />
+            </Row>
+          ) : (
+            <></>
+          )}
+          {item?.object_model === 'car' ? (
+            <Row>
+              <Regular label={t('rental_price')} />
+              <Regular label={`${item?.rental_price} ${'SR'}`} />
+            </Row>
+          ) : (
+            <></>
+          )}
+          <Bold label={t('extra_price')} color={colors?.primary} />
+          <View>
+            {item?.extra_price.map(item => (
+              <Row style={{marginLeft: mvs(10)}} key={item.name}>
+                <Regular label={item?.name} />
+                <Regular label={`${item?.price} ${'SR'}`} />
+              </Row>
+            ))}
+          </View>
+
+          <View>
+            {item?.buyer_fees.map(item => (
+              <Row key={item.name}>
+                <Regular label={item?.name} />
+                <Regular label={`${item?.price} ${'SR'}`} />
+              </Row>
+            ))}
+          </View>
+          <View>
+            {item?.vendor_service_fee.map(item => (
+              <Row key={item.name}>
+                <Regular label={item?.name} />
+                <Regular label={`${item?.price} ${'SR'}`} />
+              </Row>
+            ))}
+          </View>
+          <Row>
+            <Bold label={t('total')} />
+            <Bold label={`${item?.total} ${'SR'}`} />
+          </Row>
+          <Row>
+            <Bold label={t('paid')} />
+            <Bold label={`${item?.paid} ${'SR'}`} />
+          </Row>
         </View>
       )}
     </View>

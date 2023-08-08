@@ -8,19 +8,21 @@ import {mvs} from 'config/metrices';
 import {useAppDispatch, useAppSelector} from 'hooks/use-store';
 import moment from 'moment';
 import React, {useEffect} from 'react';
-import {FlatList, Image, View} from 'react-native';
+import {FlatList, Image, RefreshControl, View} from 'react-native';
+import {getNotifications} from 'services/api/auth-api-actions';
 import {onReadNotifications} from 'services/api/doctor/api-actions';
 import i18n from 'translation';
 import Medium from 'typography/medium-text';
 import Regular from 'typography/regular-text';
 import styles from './styles';
-import {getNotifications} from 'services/api/auth-api-actions';
 
 const Notifications = props => {
   const dispatch = useAppDispatch();
   const {userInfo, notifications} = useAppSelector(s => s.user);
+
   const {t} = i18n;
   const [loading, setLoading] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const loadNotifications = async () => {
     try {
@@ -94,6 +96,12 @@ const Notifications = props => {
         <Loader />
       ) : (
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => loadNotifications()}
+            />
+          }
           ListEmptyComponent={<EmptyList label={t('no_notification')} />}
           contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}

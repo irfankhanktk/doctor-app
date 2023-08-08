@@ -2,7 +2,7 @@ import Header1x2x from 'components/atoms/headers/header-1x-2x';
 import {Loader} from 'components/atoms/loader';
 import {useAppDispatch, useAppSelector} from 'hooks/use-store';
 import React from 'react';
-import {FlatList, View, Alert} from 'react-native';
+import {FlatList, View, Alert, RefreshControl} from 'react-native';
 import i18n from 'translation';
 import styles from './styles';
 import {UTILS} from 'utils';
@@ -22,10 +22,12 @@ const MyBookingList = props => {
   const {t} = i18n;
   const [loading, setLoading] = React.useState(true);
   const [bookings, setBookings] = React.useState([]);
+
   const {userInfo} = useAppSelector(s => s?.user);
   const [paid, setPaid] = React.useState(false);
   const [invoice, setInvoice] = React.useState(false);
   const [bookingItem, setBookingItem] = React.useState({});
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const getToken = async item => {
     try {
@@ -41,23 +43,24 @@ const MyBookingList = props => {
 
   const isHistory = props?.route?.params;
   // console.log('statsu', bookings?.status);
-  React.useEffect(() => {
-    (async () => {
-      try {
-        if (!userInfo?.id) {
-          UTILS.returnAlert();
-          return;
-        }
-        setLoading(true);
-        const res = await getBookings();
-        // console.log('res::::', res?.data?.bookings);
-        setBookings(res?.data?.bookings?.data || []);
-      } catch (error) {
-        Alert.alert('Error', UTILS.returnError(error));
-      } finally {
-        setLoading(false);
+  const getBook = async () => {
+    try {
+      if (!userInfo?.id) {
+        UTILS.returnAlert();
+        return;
       }
-    })();
+      setLoading(true);
+      const res = await getBookings();
+      // console.log('res::::', res?.data?.bookings);
+      setBookings(res?.data?.data || []);
+    } catch (error) {
+      Alert.alert('Error', UTILS.returnError(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+  React.useEffect(() => {
+    getBook();
   }, [userInfo?.id]);
   const renderItem = ({item}) => (
     <HotelBookingCard
@@ -108,6 +111,12 @@ const MyBookingList = props => {
         <Loader />
       ) : (
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => getBook()}
+            />
+          }
           ListEmptyComponent={<EmptyList label={t('no_booking')} />}
           contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}

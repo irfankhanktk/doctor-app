@@ -77,7 +77,7 @@ export const getWallet = (values: any, setLoading: (bool: boolean) => void) => {
       const res = await postData(URLS.wallet.get_wallet, values);
 
       dispatch(setWallet(res || {}));
-      console.log('res of wallet=>', res);
+
     } catch (error: any) {
       console.log('error in wallet', UTILS.returnError(error));
       Alert.alert('', UTILS.returnError(error));
