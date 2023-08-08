@@ -32,9 +32,7 @@ const PaymentGatewayScreen = props => {
           profile_id: 43265,
           tran_ref: data?.tran_ref,
         };
-        console.log(':getPaymentTransationStatus:::');
         const res = await getPaymentTransationStatus(payload);
-        console.log('res:::getPaymentTransationStatus:::', res?.data);
         if (res?.data?.payment_result?.response_status === 'A') {
           await onAddAmount({
             transaction_id: data?.tran_ref,

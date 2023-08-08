@@ -47,7 +47,7 @@ client.interceptors.response.use(
     if (error?.response?.status === undefined && error?.config === undefined) {
       return Promise.reject('Hi Dude');
     } else if (error?.response?.status === 401) {
-      originalRequest._retry = true;
+      // originalRequest._retry = true;
       navigate('Login');
       //await DIVIY_API.refreshToken(JSON.parse(token)?.refresh_token);
     }

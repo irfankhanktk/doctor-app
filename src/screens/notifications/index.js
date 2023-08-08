@@ -64,9 +64,16 @@ const Notifications = props => {
         />
         <View style={styles.titleandtextview}>
           <Row>
-            <Medium label={item.title} />
+            <Medium
+              label={item.title}
+              color={item?.is_read ? colors?.blueHalf : colors.white}
+            />
           </Row>
-          <Regular label={item.text} numberOfLines={3} />
+          <Regular
+            label={item.text}
+            numberOfLines={3}
+            color={item?.is_read ? colors?.blueHalf : colors.white}
+          />
         </View>
       </Row>
       <Regular
