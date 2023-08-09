@@ -84,7 +84,9 @@ const PaidAmountModal = ({
               containerStyle={styles.remainInputContainer}
               style={{height: mvs(30)}}
               placeholder="00 SR"
-              onChangeText={setRemain}
+              onChangeText={str =>
+                setRemain(str <= bookingItem?.total * 1 ? str : remain)
+              }
               value={remain}
             />
           </Row>

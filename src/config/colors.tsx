@@ -13,6 +13,8 @@ export const colors = {
   yellow: '#ffd79c',
   blueHalf: '#1a2b48',
   secondary: '#f3f3f3', //'#F2F2F2',
+  dicountcolor: '#e83e8c',
+
   shadow: {
     shadowColor: "#000",
     shadowOffset: {

@@ -326,7 +326,7 @@ const CarDetailsScreen = props => {
                     longitude: (carDetails?.row?.map_lng || 72.98447) * 1,
                   }}
                 />
-                <Medium
+                {/* <Medium
                   style={{marginTop: mvs(12), fontSize: mvs(18)}}
                   label={t('review')}
                 />
@@ -377,9 +377,9 @@ const CarDetailsScreen = props => {
                       </View>
                     </Row>
                   ))}
-                </ScrollView>
+                </ScrollView> */}
 
-                <Medium
+                {/* <Medium
                   style={{marginTop: mvs(12), fontSize: mvs(18)}}
                   label={t('you_might_also_like')}
                 />
@@ -402,7 +402,7 @@ const CarDetailsScreen = props => {
                       />
                     ))}
                   </ScrollView>
-                </View>
+                </View> */}
                 <Row>
                   <PrimaryButton
                     loading={deleteLoading}

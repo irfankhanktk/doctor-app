@@ -47,25 +47,44 @@ const CarCard = ({
             <View>
               <Medium label={item?.title} color={colors.white} />
             </View>
-
-            <View style={styles.btn}>
-              <Medium
-                textStyle={styles.btnTxt}
-                label={`${CURRENCY} ${item?.price} / ${t('day')}`}
-              />
-            </View>
+            <PrimaryButton
+              onPress={onPressCart}
+              containerStyle={styles.btnn}
+              textStyle={styles.btnTxtt}
+              title={`${(100 - (item?.sale_price / item?.price) * 100)?.toFixed(
+                1,
+              )} %`}
+              // title={`  $${item?.price} / ${t('day')}`}
+            />
           </Row>
-
-          <Row style={{justifyContent: 'flex-start'}}>
-            {item?.location?.name && (
-              <Entypo
-                name="location"
-                color={colors.red}
-                size={mvs(18)}
-                style={{marginRight: mvs(10)}}
-              />
-            )}
-            <Medium label={item?.location?.name} color={colors.white} />
+          <Row>
+            <Row style={{justifyContent: 'flex-start'}}>
+              {item?.location?.name && (
+                <Entypo
+                  name="location"
+                  color={colors.red}
+                  size={mvs(18)}
+                  style={{marginRight: mvs(10)}}
+                />
+              )}
+              <Medium label={item?.location?.name} color={colors.white} />
+            </Row>
+            <Row style={{justifyContent: 'flex-start'}}>
+              <Medium label={t('from')} color={colors.white} />
+              <Row style={{justifyContent: 'flex-start'}}>
+                <Medium
+                  label={`${CURRENCY} ${item?.price}`}
+                  color={colors.red}
+                  style={{textDecorationLine: 'line-through'}}
+                />
+                <Medium
+                  label={`${CURRENCY} ${item?.sale_price}`}
+                  color={colors.white}
+                  fontSize={mvs(16)}
+                  style={{marginLeft: mvs(6)}}
+                />
+              </Row>
+            </Row>
           </Row>
 
           <Row style={{paddingVertical: mvs(10)}}>
@@ -177,6 +196,15 @@ const styles = StyleSheet.create({
     top: mvs(10),
   },
   row: {alignItems: 'flex-end'},
+  btnn: {
+    backgroundColor: colors.dicountcolor,
+
+    height: mvs(28),
+    width: mvs(50),
+    borderRadius: mvs(10),
+    ...colors.shadow,
+  },
+  btnTxtt: {color: colors.white, fontSize: mvs(12), lineHeight: mvs(16)},
   bg: {
     width: '100%',
     height: '100%',

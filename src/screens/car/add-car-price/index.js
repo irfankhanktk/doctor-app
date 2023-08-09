@@ -103,6 +103,7 @@ const AddCarPrice = props => {
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <PrimaryInput
+          keyboardType="numeric"
           label={t('min_advance_reservation')}
           placeholder={t('0')}
           onChangeText={str => onHandleChange('min_day_before_booking', str)}
@@ -115,6 +116,7 @@ const AddCarPrice = props => {
         />
 
         <PrimaryInput
+          keyboardType="numeric"
           label={t('min_day_stay')}
           placeholder={t('Ex: 2')}
           onChangeText={str => onHandleChange('min_day_stays', str)}
@@ -126,21 +128,29 @@ const AddCarPrice = props => {
           style={{alignSelf: 'flex-end'}}
         />
         <PrimaryInput
+          keyboardType="numeric"
           label={t('car_number')}
           placeholder={t('number')}
           onChangeText={str => onHandleChange('number', str)}
           value={`${edit_car?.row?.number}`}
         />
         <PrimaryInput
+          keyboardType="numeric"
           label={t('price')}
           placeholder={t('car_price')}
           onChangeText={str => onHandleChange('price', str)}
           value={`${edit_car?.row?.price}`}
         />
         <PrimaryInput
+          keyboardType="numeric"
           label={t('sale_price')}
           placeholder={t('car_sale_price')}
-          onChangeText={str => onHandleChange('sale_price', str)}
+          onChangeText={str =>
+            onHandleChange(
+              'sale_price',
+              str < edit_car?.row?.price ? str : edit_car?.row?.sale_price,
+            )
+          }
           value={`${edit_car?.row?.sale_price}`}
         />
         <Row style={{justifyContent: 'flex-start'}}>
@@ -302,6 +312,7 @@ const AddCarPrice = props => {
                   value={service_fee?.desc}
                 />
                 <PrimaryInput
+                  keyboardType="numeric"
                   label={t('price')}
                   placeholder={t('0')}
                   onChangeText={str => {
@@ -312,7 +323,7 @@ const AddCarPrice = props => {
                     copy[index] = item;
                     onHandleChange(`service_fee`, copy);
                   }}
-                  value={`${service_fee?.price}`}
+                  value={`${service_fee?.price ? service_fee?.price : ''}`}
                 />
                 <TouchableOpacity
                   onPress={() => {
