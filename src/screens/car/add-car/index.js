@@ -106,18 +106,17 @@ const AddCar = props => {
   };
   const openGallery = async v => {
     try {
-      const res = await UTILS._returnImageGallery(v== 'gallery');
+      const res = await UTILS._returnImageGallery(v == 'gallery');
       if (v == 'gallery') {
         setGalleryImageLoading(true);
         setImageLoading(false);
         setFeaturedImageLoading(false);
-        const file_resp = await Promise.all(res?.map(imgData=>postFileData({file: imgData, type: 'image'})));
-        const arr=file_resp?.map(x=>x?.data);
-        const temp = edit_car?.row?.gallery || []
-        onHandleChange('gallery', [
-          ...temp,
-         ...arr
-        ]);
+        const file_resp = await Promise.all(
+          res?.map(imgData => postFileData({file: imgData, type: 'image'})),
+        );
+        const arr = file_resp?.map(x => x?.data);
+        const temp = edit_car?.row?.gallery || [];
+        onHandleChange('gallery', [...temp, ...arr]);
       } else if (v == 'bannerImage') {
         setImageLoading(true);
         setFeaturedImageLoading(false);
@@ -267,15 +266,17 @@ const AddCar = props => {
               value={`${edit_car?.row?.passenger}`}
             />
             <PrimaryInput
+              keyboardType="numeric"
               mainContainer={{width: '48%'}}
               label={t('gear')}
               placeholder={t('car_gear')}
               onChangeText={str => onHandleChange('gear', str)}
-              value={`${edit_car?.row?.gear}`}
+              value={`${edit_car?.row?.gear || '0'}`}
             />
           </Row>
           <Row>
             <PrimaryInput
+              keyboardType="numeric"
               mainContainer={{width: '48%'}}
               label={t('baggage')}
               placeholder={t('car_baggage')}
@@ -283,6 +284,7 @@ const AddCar = props => {
               value={`${edit_car?.row?.baggage}`}
             />
             <PrimaryInput
+              keyboardType="numeric"
               mainContainer={{width: '48%'}}
               label={t('door')}
               placeholder={t('car_door')}

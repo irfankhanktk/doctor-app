@@ -47,15 +47,19 @@ const CarCard = ({
             <View>
               <Medium label={item?.title} color={colors.white} />
             </View>
-            <PrimaryButton
-              onPress={onPressCart}
-              containerStyle={styles.btnn}
-              textStyle={styles.btnTxtt}
-              title={`${(100 - (item?.sale_price / item?.price) * 100)?.toFixed(
-                1,
-              )} %`}
-              // title={`  $${item?.price} / ${t('day')}`}
-            />
+            {item?.price ? (
+              <PrimaryButton
+                onPress={onPressCart}
+                containerStyle={styles.btnn}
+                textStyle={styles.btnTxtt}
+                title={`${(
+                  100 -
+                  (item?.sale_price / item?.price) * 100
+                )?.toFixed(1)} %`}
+              />
+            ) : (
+              <></>
+            )}
           </Row>
           <Row>
             <Row style={{justifyContent: 'flex-start'}}>
@@ -73,12 +77,12 @@ const CarCard = ({
               <Medium label={t('from')} color={colors.white} />
               <Row style={{justifyContent: 'flex-start'}}>
                 <Medium
-                  label={`${CURRENCY} ${item?.price}`}
+                  label={`${CURRENCY} ${item?.price || '0'}`}
                   color={colors.red}
                   style={{textDecorationLine: 'line-through'}}
                 />
                 <Medium
-                  label={`${CURRENCY} ${item?.sale_price}`}
+                  label={`${CURRENCY} ${item?.sale_price || '0'}`}
                   color={colors.white}
                   fontSize={mvs(16)}
                   style={{marginLeft: mvs(6)}}
@@ -87,7 +91,7 @@ const CarCard = ({
             </Row>
           </Row>
 
-          <Row style={{paddingVertical: mvs(10)}}>
+          <Row>
             <View
               style={{
                 justifyContent: 'center',
