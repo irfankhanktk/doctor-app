@@ -25,6 +25,7 @@ import TourStack from './tour/tour-stack';
 import PaymentGatewayScreen from 'payment-gateway-screen';
 import MyBookingList from 'screens/my-booking-list';
 import BookingDetails from 'screens/booking-details';
+import Dashboard from 'screens/vendor-dashboard';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
@@ -63,6 +64,7 @@ export const RootNavigator = () => {
         <Stack.Screen name="TourStack" component={TourStack} />
         <Stack.Screen name="MyBookingList" component={MyBookingList} />
         <Stack.Screen name="BookingDetails" component={BookingDetails} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
 
         <Stack.Screen
           name="PaymentGatewayScreen"

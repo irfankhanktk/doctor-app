@@ -109,6 +109,7 @@ const UserTab = (props: props) => {
               <MaterialIcons name="edit" color={colors.black} size={mvs(20)} />
             </TouchableOpacity>
           )}
+          <Regular onPress={() => navigate('Dashboard')} label={'Dashboard'} />
         </View>
         <Medium label={userInfo?.name || t('guest_mode')} style={styles.name} />
         <Regular
