@@ -287,6 +287,7 @@
   "end_date":"End Date",
   "rental_price":"Rental price",
   "extra_price":"Extra Price",
-  "customer_information":"Customer information"
+  "customer_information":"Customer information",
+  "dashboard":"Dashboard"
   
 }

@@ -199,3 +199,4 @@ export const getNotifications = (
     }
   };
 };
+export const getDashBoard = (slug: any) => getData(`${URLS.auth.get_bookings}`);

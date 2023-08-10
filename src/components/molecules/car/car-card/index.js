@@ -74,13 +74,21 @@ const CarCard = ({
               <Medium label={item?.location?.name} color={colors.white} />
             </Row>
             <Row style={{justifyContent: 'flex-start'}}>
-              <Medium label={t('from')} color={colors.white} />
+              {!!item?.sale_price && (
+                <Medium label={t('from')} color={colors.white} />
+              )}
               <Row style={{justifyContent: 'flex-start'}}>
-                <Medium
-                  label={`${CURRENCY} ${item?.price || '0'}`}
-                  color={colors.red}
-                  style={{textDecorationLine: 'line-through'}}
-                />
+                {!!item?.sale_price && (
+                  <Medium
+                    label={`${CURRENCY} ${item?.price || '0'}`}
+                    color={item?.sale_price ? colors.red : colors?.white}
+                    style={{
+                      textDecorationLine: item?.sale_price
+                        ? 'line-through'
+                        : 'none',
+                    }}
+                  />
+                )}
                 <Medium
                   label={`${CURRENCY} ${item?.sale_price || '0'}`}
                   color={colors.white}
