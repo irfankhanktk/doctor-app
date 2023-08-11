@@ -15,6 +15,7 @@ export const URLS = {
     locations: 'locations',
     delete_account: 'user/permanently_deleted',
     get_bookings: 'vendor/booking-report',
+    get_dashboard: 'user/dashboard',
   },
   booking: {
     status_change: 'booking/bulkEdit',
