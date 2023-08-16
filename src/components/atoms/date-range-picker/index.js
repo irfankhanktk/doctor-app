@@ -1,7 +1,6 @@
 import {colors} from 'config/colors';
-import moment from 'moment';
-import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import DateRange from 'rn-select-date-range';
 
 const DateRangePicker = ({children, onChangeText, setVisible, visible}) => {

@@ -6,7 +6,7 @@ import {useFormik} from 'formik';
 import {useAppDispatch} from 'hooks/use-store';
 import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Alert, Linking, TouchableOpacity, View} from 'react-native';
 
 import {SplashIcon} from 'assets/doctor/icons';
 import PrimaryInput from 'components/atoms/inputs';
@@ -35,17 +35,39 @@ const LoginScreen = props => {
       validationSchema: signinFormValidation,
       onSubmit: () => {},
     });
+  async function checkApplicationPermission() {
+    const authorizationStatus = await messaging().requestPermission();
+
+    if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+      console.log('User has notification permissions enabled.');
+      return true;
+    } else if (
+      authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL
+    ) {
+      console.log('User has provisional notification permissions.');
+      return true;
+    } else {
+      console.log('User has notification permissions disabled');
+      return false;
+    }
+  }
   const onSubmit = async () => {
     try {
-      messaging()
-        .getToken()
-        .then(fcmToken => {
-          console.log('fcmToken=>', fcmToken);
-          dispatch(onLogin({...values, token: fcmToken}, setLoading, props));
-        })
-        .catch(error => console.log(error));
+      const flag = await checkApplicationPermission();
+      // await messaging().registerDeviceForRemoteMessages();
+      if (flag) {
+        const fcmToken = await messaging().getToken();
+        dispatch(onLogin({...values, token: fcmToken}, setLoading, props));
+      } else {
+        Alert.alert(
+          'Error',
+          'Enable push notifications from app setting first',
+        );
+        Linking.openSettings();
+      }
     } catch (error) {
       console.log('error=>', error);
+      Alert.alert('Error', 'Enable push notifications from app setting first');
     }
   };
   return (
