@@ -2,8 +2,8 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {colors} from 'config/colors';
 import * as React from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import RenewPasswordScreen from 'screens/Renew_Password';
 import WalletScreen from 'screens/Wallet';
 import ForgotPassword from 'screens/doctor/forgot-password';
@@ -29,9 +29,14 @@ import Dashboard from 'screens/vendor-dashboard';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={{flex: 0, backgroundColor: colors.primary}} />
+    <View
+      style={{
+        ...styles.container,
+        paddingTop: Platform.OS === 'ios' ? insets.top : 0,
+      }}>
       <StatusBar
         translucent={false}
         backgroundColor={colors.primary}
@@ -76,5 +81,5 @@ export const RootNavigator = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, backgroundColor: colors.primary},
 });

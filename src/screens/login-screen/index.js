@@ -54,7 +54,7 @@ const LoginScreen = props => {
   const onSubmit = async () => {
     try {
       const flag = await checkApplicationPermission();
-      // await messaging().registerDeviceForRemoteMessages();
+      await messaging().registerDeviceForRemoteMessages();
       if (flag) {
         const fcmToken = await messaging().getToken();
         dispatch(onLogin({...values, token: fcmToken}, setLoading, props));

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: colors.secondary,
     borderRadius: mvs(5),
-    // justifyContent: 'flex-end',
+    overflow: 'hidden',
     alignItems: 'center',
   },
   img: {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     width: mvs(140),
     borderTopRightRadius: mvs(10),
     borderTopLeftRadius: mvs(10),
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
   },
   profile: {
     marginTop: mvs(15),

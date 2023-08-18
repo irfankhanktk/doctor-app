@@ -19,8 +19,8 @@ type props = {
   title?: string;
   unreadNotification?: number;
   back?: boolean;
-  onPress?:()=>{},
-  source?:string
+  onPress?: () => {},
+  source?: string
 };
 const AppHeader = ({
   style,
@@ -39,13 +39,13 @@ const AppHeader = ({
             alignItems: 'center',
             justifyContent: 'flex-start',
           }}>
-            <TouchableOpacity onPress={onPress}>
-          <Image
-            source={source}
-            style={{ resizeMode:'contain',height: mvs(40), width: mvs(40), borderRadius: mvs(69 / 2) }}
-          />
+          <TouchableOpacity onPress={onPress}>
+            <Image
+              source={source}
+              style={{ height: mvs(40), width: mvs(40), borderRadius: mvs(69 / 2) }}
+            />
 
-            </TouchableOpacity>
+          </TouchableOpacity>
 
           <Medium fontSize={mvs(20)} label={title} style={[styles.title]} />
         </Row>

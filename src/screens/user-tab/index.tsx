@@ -94,7 +94,7 @@ const UserTab = (props: props) => {
                   userInfo?.avatar_id ? { uri: `${userInfo?.avatar_id}` } : login_bg
                 }
                 style={styles.imgUpload}
-                resizeMode="contain"
+              // resizeMode="contain"
               />
             )}
             {userInfo?.id && (

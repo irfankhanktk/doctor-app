@@ -1,11 +1,15 @@
 #import "AppDelegate.h"
 #import <Firebase.h>
+#import <GoogleMaps/GoogleMaps.h>
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //map key
+   [GMSServices provideAPIKey:@"AIzaSyCbFQqjZgQOWRMuQ_RpXU0kGAUIfJhDw98"]; // add this line using the api key obtained from Google Console
+
    [FIRApp configure];
   self.moduleName = @"QuickBookVendor";
   // You can add your custom initial props in the dictionary below.

@@ -1,4 +1,5 @@
 import {Loader} from 'components/atoms/loader';
+import {colors} from 'config/colors';
 import {useAppDispatch, useAppSelector} from 'hooks/use-store';
 import {goBack} from 'navigation/navigation-ref';
 import React, {useEffect} from 'react';
@@ -112,7 +113,7 @@ const PaymentGatewayScreen = props => {
         startInLoadingState
         renderLoading={() => (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="blue" />
+            <ActivityIndicator size="large" color={colors.primary} />
           </View>
         )}
         onNavigationStateChange={handleWebViewNavigationStateChange}
