@@ -52,23 +52,14 @@ const LoginScreen = props => {
     }
   }
   const onSubmit = async () => {
+    let fcmToken = '12345';
     try {
-      const flag = await checkApplicationPermission();
-      await messaging().registerDeviceForRemoteMessages();
-      if (flag) {
-        const fcmToken = await messaging().getToken();
-        dispatch(onLogin({...values, token: fcmToken}, setLoading, props));
-      } else {
-        Alert.alert(
-          'Error',
-          'Enable push notifications from app setting first',
-        );
-        Linking.openSettings();
-      }
+      await checkApplicationPermission();
+      fcmToken = await messaging().getToken();
     } catch (error) {
       console.log('error=>', error);
-      Alert.alert('Error', 'Enable push notifications from app setting first');
     }
+    dispatch(onLogin({...values, token: fcmToken}, setLoading, props));
   };
   return (
     <View style={styles.container}>
@@ -123,14 +114,14 @@ const LoginScreen = props => {
             onPress={onSubmit}
             title={t('login')}
           />
-          {/* <TouchableOpacity
-              style={{alignSelf: 'center', marginTop: mvs(20)}}
-              onPress={() => navigate('Signup')}>
-              <Medium
-                label={t('dont_have_account')}
-                style={{textDecorationLine: 'underline'}}
-              />
-            </TouchableOpacity> */}
+          <TouchableOpacity
+            style={{alignSelf: 'center', marginTop: mvs(20)}}
+            onPress={() => navigate('Signup')}>
+            <Medium
+              label={t('dont_have_account')}
+              style={{textDecorationLine: 'underline'}}
+            />
+          </TouchableOpacity>
           <OtpModal
             onClose={() => setOtpModalVisible(false)}
             visible={otpModalVisible}

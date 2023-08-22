@@ -37,7 +37,8 @@ const DropdownModal = ({
           {items?.map((item, index) => {
             return (
               <TouchableOpacity
-                onPress={() => onChangeText(item?.id)}
+                key={index}
+                onPress={() => onChangeText(`${item?.id}`)}
                 style={styles.button}>
                 <Medium label={item?.title} style={{fontSize: mvs(16)}} />
                 <Icon

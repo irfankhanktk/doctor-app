@@ -48,15 +48,13 @@ export const onLogin = (
 export const onSignup = (
   values: any,
   setLoading: (bool: boolean) => void,
-  props: any,
-  setOtpLoading: (bool: boolean) => void,
 ) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       setLoading(true);
       const res = await postData(URLS.auth.signup, values);
       console.log('res of onSignupPress=>', res);
-      setOtpLoading(true);
+      Alert.alert('Account', res?.message)
     } catch (error: any) {
       console.log('error in onSignupPress', UTILS?.returnError(error));
       Alert.alert('', UTILS?.returnError(error));
@@ -200,3 +198,4 @@ export const getNotifications = (
   };
 };
 export const getDashBoard = (slug: any) => getData(`${URLS.auth.get_dashboard}`);
+export const getRoles = () => getData(`${URLS.auth.get_roles}`);

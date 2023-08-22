@@ -19,22 +19,17 @@ export const renewpasswordFormValidation = yup.object().shape({
     .oneOf([yup.ref('password')], 'miss_match_pass'),
 });
 export const signupFormValidation = yup.object().shape({
-  name: yup.string().required('req_name'),
+  first_name: yup.string().required('req_first_name'),
+  last_name: yup.string().required('req_last_name'),
+  business_name: yup.string().required('req_business_name'),
   email: yup.string().email('invalid_email').required('req_email'),
-
   phone: yup.string().max(13, 'invalid_phone').required('phone_required'),
   password: yup.string().required('req_pass').min(8, 'weak_pass'),
   confirm_password: yup
     .string()
     .required('req_pass')
     .oneOf([yup.ref('password')], 'miss_match_pass'),
-  doc_cat_id: yup.string().required('req_cat'),
-  zip_code: yup.string().required('req_zip_code'),
-  city: yup.string().required('req_city'),
-  short_description: yup.string().required('req_short_description'),
-  state: yup.string().required('req_state'),
-  price: yup.string().required('req_price'),
-  experience: yup.string().required('req_experience'),
+
 });
 export const updateProfileFormValidation = yup.object().shape({
   first_name: yup.string().required('req_name'),

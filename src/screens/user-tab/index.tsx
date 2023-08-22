@@ -113,7 +113,7 @@ const UserTab = (props: props) => {
               </TouchableOpacity>
             )}
           </View>
-          <Medium label={userInfo?.name || t('guest_mode')} style={styles.name} />
+          <Medium label={userInfo?.first_name || t('guest_mode')} style={styles.name} />
           <Regular
             label={`${userInfo?.email || 'guest@gmail.com'}`}
             style={styles.email}

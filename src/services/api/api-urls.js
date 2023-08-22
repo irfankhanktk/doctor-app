@@ -3,7 +3,7 @@ export const URLS = {
   base_url: `${IP}/api/`,
   image_url: `${IP}/`,
   auth: {
-    signup: 'doctor/signup',
+    signup: 'vendor/register',
     get_notification: 'user/getNotification',
     login: 'auth/login',
     get_user_info: 'user/userInfo',
@@ -16,6 +16,7 @@ export const URLS = {
     delete_account: 'user/permanently_deleted',
     get_bookings: 'vendor/booking-report',
     get_dashboard: 'user/dashboard',
+    get_roles: 'vendor/roles',
   },
   booking: {
     status_change: 'booking/bulkEdit',
