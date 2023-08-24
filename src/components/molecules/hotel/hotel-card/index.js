@@ -63,7 +63,16 @@ const HotelCard = ({item, editPress, onPress = () => {}}) => {
           </Row>
         </LinearGradient>
       </ImageBackground>
-      <Row style={{position: 'absolute', width: '96%', alignItems: 'center'}}>
+      <Row
+        style={{
+          position: 'absolute',
+          padding: mvs(15),
+          alignItems: 'center',
+          width: '100%',
+          backgroundColor: 'rgba(0,0,0,0.20)',
+          borderTopLeftRadius: mvs(15),
+          borderTopRightRadius: mvs(15),
+        }}>
         <Row style={styles.rowRating}>
           <Icon name={'star'} color={colors.white} size={mvs(12)} />
           <Regular
@@ -111,10 +120,10 @@ const styles = StyleSheet.create({
   imgStyle: {borderRadius: mvs(15), resizeMode: 'contain'},
   rowRating: {
     // position: 'absolute',
-    padding: mvs(15),
+    // padding: mvs(15),
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.20)',
-    borderTopLeftRadius: mvs(15),
+    // backgroundColor: 'rgba(0,0,0,0.20)',
+    // borderTopLeftRadius: mvs(15),
   },
   rateTxt: {marginLeft: mvs(10), lineHeight: mvs(16)},
   grd: {

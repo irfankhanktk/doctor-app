@@ -21,15 +21,7 @@ const Stack = createNativeStackNavigator();
 export default TourStack = () => {
   return (
     <View style={styles.container}>
-      <SafeAreaView style={{flex: 0, backgroundColor: colors.primary}} />
-      <StatusBar
-        translucent={false}
-        backgroundColor={colors.primary}
-        barStyle={'light-content'}
-      />
-      <Stack.Navigator
-        // initialRouteName="Splash"
-        screenOptions={horizontalAnimation}>
+      <Stack.Navigator screenOptions={horizontalAnimation}>
         <Stack.Screen name="TourTabBar" component={TourTabBar} />
         <Stack.Screen name="AllTours" component={AllTours} />
         <Stack.Screen name="TourFilterScreen" component={TourFilterScreen} />

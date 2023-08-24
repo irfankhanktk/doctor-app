@@ -1,4 +1,5 @@
-export const IP = 'https://bookme.com.sa';
+export const IP = 'https://bookitanytime.com';
+
 export const URLS = {
   base_url: `${IP}/api/`,
   image_url: `${IP}/`,

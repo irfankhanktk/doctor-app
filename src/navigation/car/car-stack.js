@@ -18,12 +18,6 @@ const Stack = createNativeStackNavigator();
 export default CarStack = () => {
   return (
     <View style={styles.container}>
-      <SafeAreaView style={{flex: 0, backgroundColor: colors.primary}} />
-      <StatusBar
-        translucent={false}
-        backgroundColor={colors.primary}
-        barStyle={'light-content'}
-      />
       <Stack.Navigator
         // initialRouteName="Splash"
         screenOptions={horizontalAnimation}>

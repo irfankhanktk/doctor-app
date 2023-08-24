@@ -85,7 +85,11 @@ const WalletScreen = props => {
             <Medium
               label={t('history')}
               fontSize={mvs(20)}
-              style={{marginLeft: mvs(14)}}
+              style={{
+                marginHorizontal: mvs(14),
+                marginTop: mvs(15),
+                alignSelf: 'flex-start',
+              }}
             />
 
             <FlatList

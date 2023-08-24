@@ -1,31 +1,31 @@
 // In App.js in a new project
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {colors} from 'config/colors';
+import PaymentGatewayScreen from 'payment-gateway-screen';
 import * as React from 'react';
 import {Platform, StatusBar, StyleSheet, View} from 'react-native';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import RenewPasswordScreen from 'screens/Renew_Password';
 import WalletScreen from 'screens/Wallet';
+import BookingDetails from 'screens/booking-details';
 import ForgotPassword from 'screens/doctor/forgot-password';
+import RecoveryHotels from 'screens/hotel/recovery-hotels';
 import LanguageScreen from 'screens/language-screen';
 import LoginScreen from 'screens/login-screen';
+import MyBookingList from 'screens/my-booking-list';
 import Notifications from 'screens/notifications';
 import RenewPassword from 'screens/renew-password';
 import Signup from 'screens/signup';
 import Splash from 'screens/splash';
-import {horizontalAnimation} from '../utils';
-import {DoctorStack} from './doctor/doctor-stack';
-import HotelStack from './hotel/hotel-stack';
-import CarStack from './car/car-stack';
-import UpdateProfile from 'screens/update-profile';
 import UpdatePassword from 'screens/update-password';
-import RecoveryHotels from 'screens/hotel/recovery-hotels';
-import EventStack from './event/event-stack';
-import TourStack from './tour/tour-stack';
-import PaymentGatewayScreen from 'payment-gateway-screen';
-import MyBookingList from 'screens/my-booking-list';
-import BookingDetails from 'screens/booking-details';
+import UpdateProfile from 'screens/update-profile';
 import Dashboard from 'screens/vendor-dashboard';
+import {horizontalAnimation} from '../utils';
+import CarStack from './car/car-stack';
+import {DoctorStack} from './doctor/doctor-stack';
+import EventStack from './event/event-stack';
+import HotelStack from './hotel/hotel-stack';
+import TourStack from './tour/tour-stack';
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator = () => {

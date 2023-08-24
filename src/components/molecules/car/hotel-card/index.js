@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     height: mvs(210),
     borderRadius: mvs(15),
     marginBottom: mvs(20),
-
+    backgroundColor: colors.white,
     ...colors.shadow,
   },
   // row: {backgroundColor: 'red'},
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   imgStyle: {borderRadius: mvs(15)},
   rowRating: {
     position: 'absolute',
+
     padding: mvs(15),
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.20)',
