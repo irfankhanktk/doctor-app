@@ -46,7 +46,7 @@ const Signup = props => {
   }, []);
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('signup')} />
+      <Header1x2x back title={t('signup')} />
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
         <Formik
@@ -142,7 +142,6 @@ const Signup = props => {
           )}
         </Formik>
       </KeyboardAvoidScrollview>
-      {/* </ImageBackground> */}
     </View>
   );
 };
