@@ -5,6 +5,7 @@ import {goBack} from 'navigation/navigation-ref';
 import React, {useEffect} from 'react';
 import {ActivityIndicator, Alert, StyleSheet, View} from 'react-native';
 import WebView from 'react-native-webview';
+import {IP, URLS} from 'services/api/api-urls';
 import {
   getPaymentTransationStatus,
   getPaymentUri,
@@ -24,7 +25,7 @@ const PaymentGatewayScreen = props => {
     const {url} = newNavState;
     const searchString = '/start';
     console.log('url:::>>>>>', url);
-    if (url === 'https://bookme.com.sa/') {
+    if (url === `${IP}/`) {
       if (isRedirected) return;
       // Payment was successful
       try {
@@ -70,8 +71,8 @@ const PaymentGatewayScreen = props => {
           cart_id: '938u4983u923',
           cart_currency: 'SAR',
           cart_amount: amount,
-          callback: 'https://bookme.com.sa/',
-          return: 'https://bookme.com.sa/',
+          callback: `${IP}/`,
+          return: `https://bookitanytime.com/api/user/paymentRedirect`,
           // callback: 'https://yourdomain.com/yourcallback',
           // return: 'https://yourdomain.com/yourpage',
         };

@@ -13,14 +13,8 @@ import {signupFormValidation} from 'validations';
 import styles from './styles';
 
 const Signup = props => {
-  const [otpModalVisible, setOtpModalVisible] = React.useState(false);
-  const [value, setValue] = React.useState('');
-  const {navigation} = props;
   const {t} = i18n;
-  const {doctor, user} = useAppSelector(s => s);
-  const {location} = user;
-  const {spec_categories} = doctor;
-  console.log('location=>>>', location);
+  const {user} = useAppSelector(s => s);
 
   const dispatch = useAppDispatch();
   const initialValues = {
@@ -59,11 +53,17 @@ const Signup = props => {
           initialValues={initialValues}
           validationSchema={signupFormValidation}
           onSubmit={handleFormSubmit}>
-          {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            touched,
+            values,
+            errors,
+          }) => (
             <View>
               <PrimaryInput
-                isRequired
-                error={errors.first_name}
+                error={touched?.first_name ? t(errors.first_name) : ''}
                 label={t('first_name')}
                 placeholder={t('first_name')}
                 onChangeText={handleChange('first_name')}
@@ -71,8 +71,7 @@ const Signup = props => {
                 value={values.first_name}
               />
               <PrimaryInput
-                isRequired
-                error={errors.last_name}
+                error={touched?.last_name ? t(errors.last_name) : ''}
                 label={t('last_name')}
                 placeholder={t('last_name')}
                 onChangeText={handleChange('last_name')}
@@ -80,8 +79,7 @@ const Signup = props => {
                 value={values.last_name}
               />
               <PrimaryInput
-                isRequired
-                error={errors.business_name}
+                error={touched?.business_name ? t(errors.business_name) : ''}
                 label={t('business_name')}
                 placeholder={t('business_name')}
                 onChangeText={handleChange('business_name')}
@@ -89,9 +87,8 @@ const Signup = props => {
                 value={values.business_name}
               />
               <PrimaryInput
-                isRequired
                 keyboardType={'email-address'}
-                error={t(`${errors?.email || ''}`)}
+                error={touched?.email ? t(`${errors?.email || ''}`) : ''}
                 label={t('email')}
                 placeholder={t('email')}
                 onChangeText={handleChange('email')}
@@ -100,8 +97,7 @@ const Signup = props => {
               />
 
               <PrimaryInput
-                isRequired
-                error={errors.phone}
+                error={touched?.phone ? t(errors.phone) : ''}
                 label={t('phone')}
                 placeholder={t('phone')}
                 onChangeText={handleChange('phone')}
@@ -109,15 +105,15 @@ const Signup = props => {
                 value={values.phone}
               />
               <InputWithIcon
+                label={t('role')}
                 value={roles?.find(x => x?.id == values?.role)?.name || ''}
                 id={values?.role}
                 onChangeText={handleChange('role')}
                 items={roles?.map(x => ({...x, title: x?.name}))}
               />
               <PrimaryInput
-                isRequired
                 isPassword
-                error={errors?.password}
+                error={touched?.password ? t(errors?.password) : ''}
                 placeholder={'********'}
                 label={t('password')}
                 onChangeText={handleChange('password')}
@@ -125,9 +121,12 @@ const Signup = props => {
                 value={values.password}
               />
               <PrimaryInput
-                isRequired
                 isPassword
-                error={t(`${errors?.confirm_password || ''}`)}
+                error={
+                  touched?.confirm_password
+                    ? t(`${errors?.confirm_password || ''}`)
+                    : ''
+                }
                 placeholder={'********'}
                 label={t('confirm_pass')}
                 onChangeText={handleChange('confirm_password')}
