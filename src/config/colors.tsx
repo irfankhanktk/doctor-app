@@ -9,7 +9,7 @@ export const colors = {
   red: '#ff0707',
   green: '#0DC183',
   transparent: 'transparent',
-  primary: '#fd7e14', //'#5586FF'
+  primary: '#213662', //'#5586FF'
   yellow: '#ffd79c',
   blueHalf: '#1a2b48',
   secondary: '#f3f3f3', //'#F2F2F2',

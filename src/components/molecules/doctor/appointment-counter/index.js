@@ -11,7 +11,7 @@ const AppointmentCounter = ({value, label, style, onPress}) => {
       <Medium
         style={styles.value}
         numberOfLines={1}
-        color={colors.primary}
+        color={colors.white}
         label={value}
       />
       <Regular style={styles.label} label={label} />
@@ -21,7 +21,7 @@ const AppointmentCounter = ({value, label, style, onPress}) => {
 export default React.memo(AppointmentCounter);
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.blueHalf,
+    backgroundColor: colors.primary,
     flex: 1,
     marginHorizontal: mvs(2),
     justifyContent: 'center',
@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
   label: {
     lineHeight: mvs(16),
     fontSize: mvs(12),
-    color: colors.primary,
+    color: colors.white,
   },
 });

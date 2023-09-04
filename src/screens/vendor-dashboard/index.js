@@ -11,6 +11,7 @@ import Bold from 'typography/bold-text';
 import styles from './style';
 import moment from 'moment';
 import {DATE_FORMAT} from 'config/constants';
+import {colors} from 'config/colors';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -48,26 +49,58 @@ const Dashboard = () => {
       <View style={{paddingVertical: mvs(30), paddingHorizontal: mvs(20)}}>
         <Row style={styles.buttonContainer}>
           <TouchableOpacity style={styles.counterButton}>
-            <Bold label={cardReport?.[0]?.title} />
-            <Bold fontSize={mvs(20)} label={cardReport?.[0]?.amount} />
-            <Bold fontSize={mvs(12)} label={cardReport?.[0]?.desc} />
+            <Bold label={cardReport?.[0]?.title} color={colors.white} />
+            <Bold
+              fontSize={mvs(20)}
+              label={cardReport?.[0]?.amount}
+              color={colors.white}
+            />
+            <Bold
+              fontSize={mvs(12)}
+              label={cardReport?.[0]?.desc}
+              color={colors.white}
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.counterButton}>
-            <Bold label={cardReport?.[1]?.title} />
-            <Bold fontSize={mvs(20)} label={cardReport?.[1]?.amount} />
-            <Bold fontSize={mvs(12)} label={cardReport?.[1]?.desc} />
+            <Bold label={cardReport?.[1]?.title} color={colors.white} />
+            <Bold
+              fontSize={mvs(20)}
+              label={cardReport?.[1]?.amount}
+              color={colors.white}
+            />
+            <Bold
+              fontSize={mvs(12)}
+              label={cardReport?.[1]?.desc}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </Row>
         <Row style={styles.buttonContainer}>
           <TouchableOpacity style={styles.counterButton}>
-            <Bold label={cardReport?.[2]?.title} />
-            <Bold fontSize={mvs(20)} label={cardReport?.[2]?.amount} />
-            <Bold fontSize={mvs(12)} label={cardReport?.[2]?.desc} />
+            <Bold label={cardReport?.[2]?.title} color={colors.white} />
+            <Bold
+              fontSize={mvs(20)}
+              label={cardReport?.[2]?.amount}
+              color={colors.white}
+            />
+            <Bold
+              fontSize={mvs(12)}
+              label={cardReport?.[2]?.desc}
+              color={colors.white}
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.counterButton}>
-            <Bold label={cardReport?.[3]?.title} />
-            <Bold fontSize={mvs(20)} label={cardReport?.[3]?.amount} />
-            <Bold fontSize={mvs(12)} label={cardReport?.[3]?.desc} />
+            <Bold label={cardReport?.[3]?.title} color={colors.white} />
+            <Bold
+              fontSize={mvs(20)}
+              label={cardReport?.[3]?.amount}
+              color={colors.white}
+            />
+            <Bold
+              fontSize={mvs(12)}
+              label={cardReport?.[3]?.desc}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </Row>
       </View>
@@ -80,8 +113,8 @@ const Dashboard = () => {
           yAxisLabel=""
           chartConfig={{
             backgroundColor: '#e26a00',
-            backgroundGradientFrom: '#fb8c00',
-            backgroundGradientTo: '#ffa726',
+            backgroundGradientFrom: colors.blueHalf,
+            backgroundGradientTo: colors.primary,
             decimalPlaces: 0,
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           }}

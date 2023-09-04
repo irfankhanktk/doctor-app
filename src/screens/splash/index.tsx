@@ -14,6 +14,9 @@ import {
 } from '../../store/reducers/user-reducer';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import styles from './styles';
+import { Image } from 'react-native';
+import { logo } from 'assets/doctor/images';
+import { mvs } from 'config/metrices';
 type props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const Splash = (props: props) => {
@@ -68,7 +71,10 @@ const Splash = (props: props) => {
 
   return (
     <View style={{ ...styles.container }}>
-      <SplashIcon />
+      <Image
+        source={logo}
+        style={{ alignSelf: 'center', height: mvs(120), width: mvs(120) }}
+      />
     </View>
   );
 };

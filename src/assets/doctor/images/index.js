@@ -8,3 +8,4 @@ export {default as appointment_bg} from './appointment-home-bg.png';
 export {default as master} from './master.jpeg';
 export {default as cash} from './cash.jpeg';
 export {default as notificationcardicon} from './notification.png';
+export {default as logo} from './logo.png';

@@ -6,9 +6,9 @@ import {useFormik} from 'formik';
 import {useAppDispatch} from 'hooks/use-store';
 import {navigate} from 'navigation/navigation-ref';
 import React from 'react';
-import {Alert, Linking, TouchableOpacity, View} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 
-import {SplashIcon} from 'assets/doctor/icons';
+import {logo} from 'assets/doctor/images';
 import PrimaryInput from 'components/atoms/inputs';
 import {KeyboardAvoidScrollview} from 'components/atoms/keyboard-avoid-scrollview/index';
 import {onLogin} from 'services/api/auth-api-actions';
@@ -67,7 +67,10 @@ const LoginScreen = props => {
       <View style={styles.container}>
         <KeyboardAvoidScrollview
           contentContainerStyle={styles.contentContainerStyle}>
-          <SplashIcon style={{alignSelf: 'center'}} />
+          <Image
+            source={logo}
+            style={{alignSelf: 'center', height: mvs(120), width: mvs(120)}}
+          />
           <Bold label={t('login')} style={styles.txt} />
           <PrimaryInput
             keyboardType={'email-address'}

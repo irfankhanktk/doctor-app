@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 4,
+    color: colors.white,
   },
   counterValue: {
     fontSize: 24,

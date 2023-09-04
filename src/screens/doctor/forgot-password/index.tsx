@@ -14,6 +14,9 @@ import Bold from 'typography/bold-text';
 import { forgotemailFormValidation } from 'validations';
 import RootStackParamList from '../../types/navigation-types/root-stack';
 import styles from './styles';
+import { logo } from 'assets/doctor/images';
+import { Image } from 'react-native';
+import { mvs } from 'config/metrices';
 type props = NativeStackScreenProps<RootStackParamList, 'ForgotPassword'>;
 
 const ForgotPassword = (props: props) => {
@@ -67,7 +70,10 @@ const ForgotPassword = (props: props) => {
 
       <KeyboardAvoidScrollview
         contentContainerStyle={styles.contentContainerStyle}>
-        <RenewLogo style={styles.renew} />
+        <Image
+          source={logo}
+          style={{ alignSelf: 'center', height: mvs(120), width: mvs(120) }}
+        />
         <Bold label={`${t('forgot_password')}`} style={styles.txt} />
         <PrimaryInput
           keyboardType={'email-address'}

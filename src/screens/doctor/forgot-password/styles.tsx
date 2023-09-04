@@ -8,11 +8,11 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white
     },
     contentContainerStyle: {
-        paddingTop: 80,
+        paddingTop: '15%',
         paddingHorizontal: mvs(20)
     },
     button: {
-        marginTop: mvs(20),
+        marginTop: mvs(50),
     },
     txt: { fontSize: mvs(20), marginBottom: mvs(10), color: colors.primary },
     renew: { alignSelf: 'center', marginBottom: mvs(15) }
