@@ -554,7 +554,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookme.vendor;
-				PRODUCT_NAME = QuickBookVendor;
+				PRODUCT_NAME = BookItAnyTime;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -583,7 +583,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookme.vendor;
-				PRODUCT_NAME = QuickBookVendor;
+				PRODUCT_NAME = BookItAnyTime;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
