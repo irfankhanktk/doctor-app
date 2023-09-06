@@ -203,15 +203,14 @@ const CarDetailsScreen = props => {
                   showsHorizontalScrollIndicator={false}>
                   {carDetails?.row?.gallery?.map((item, index) => (
                     <Row
+                      key={index}
                       style={{
                         backgroundColor: colors.secondary,
                         marginRight: mvs(10),
                         borderRadius: mvs(15),
                         padding: mvs(10),
                       }}>
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => handleImagePress(index)}>
+                      <TouchableOpacity onPress={() => handleImagePress(index)}>
                         <Image
                           source={item?.large ? {uri: item?.large} : IMG.Car_bg}
                           style={{
@@ -272,8 +271,8 @@ const CarDetailsScreen = props => {
                 />
 
                 <View>
-                  {carDetails?.row?.faqs?.map(ele => (
-                    <>
+                  {carDetails?.row?.faqs?.map((ele, index) => (
+                    <View key={index}>
                       <CollapsibleView
                         collaspsableColor={colors.black}
                         maxH={60}
@@ -281,7 +280,7 @@ const CarDetailsScreen = props => {
                         numberOfLines={2}>
                         <Regular label={ele?.content} />
                       </CollapsibleView>
-                    </>
+                    </View>
                   ))}
                 </View>
                 {carDetails?.row?.attributes?.map((attr, index) => (

@@ -55,6 +55,7 @@ const CollapsibleView = ({
       <TouchableOpacity onPress={toggleHeight}>
         <Row style={{ alignItems: 'center' }}>
           <Medium
+            style={{ flex: 1 }}
             label={label}
             numberOfLines={numberOfLines}
             color={collaspsableColor}
