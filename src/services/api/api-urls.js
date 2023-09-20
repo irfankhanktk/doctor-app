@@ -3,6 +3,7 @@ export const IP = 'https://bookitanytime.com';
 export const URLS = {
   base_url: `${IP}/api/`,
   image_url: `${IP}/`,
+  redirect_url: 'https://bookitanytime.com/api/user/paymentRedirect',
   auth: {
     signup: 'vendor/register',
     get_notification: 'user/getNotification',
