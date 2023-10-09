@@ -51,7 +51,7 @@ const MyBookingList = props => {
       }
       setLoading(true);
       const res = await getBookings();
-      // console.log('res::::', res?.data?.bookings);
+      console.log('res::::', res?.data?.bookings);
       setBookings(res?.data?.data || []);
     } catch (error) {
       Alert.alert('Error', UTILS.returnError(error));

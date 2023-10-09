@@ -44,7 +44,7 @@ type props = {
   errorStyle?: StyleProp<ViewStyle>;
   secureTextEntry?: boolean | undefined;
   ref?: React.LegacyRef<PhoneInput> | undefined;
-  defaultCode?: 'PK';
+  defaultCode?: 'SA';
   layout?: 'first';
   isPassword?: boolean;
   editable?: boolean;
@@ -287,7 +287,7 @@ export const PrimaryPhoneInput = (props: props) => {
     error,
     ref,
     layout = 'first',
-    defaultCode = 'PK',
+    defaultCode = 'SA',
     onBlur,
   } = props;
   return (

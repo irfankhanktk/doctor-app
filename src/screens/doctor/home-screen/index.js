@@ -145,6 +145,7 @@ const Home = props => {
             contentContainerStyle={styles.contentContainerStyle}
             data={uniquePatient}
             renderItem={({item, index}) => {
+              console.log('unique patients====>', item);
               return (
                 <PopularPatientCard
                   key={index}

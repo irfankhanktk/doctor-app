@@ -140,7 +140,9 @@ const UserTab = (props: props) => {
                 />
               </TouchableOpacity>
             )}
-            {userInfo && (
+            {userInfo?.role?.name === 'Doctor' ? (
+              <></>
+            ) : (
               <TouchableOpacity
                 style={styles.itemtabs}
                 onPress={() => props?.navigation?.navigate('MyBookingList')}>

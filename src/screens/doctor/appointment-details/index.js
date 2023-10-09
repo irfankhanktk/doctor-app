@@ -28,6 +28,8 @@ const AppointmentDetails = props => {
   const {t} = i18n;
   const [loading, setLoading] = React.useState(true);
   const [appointmentDetails, setAppointmentDetails] = React.useState(null);
+  console.log('appointments item====>', appointmentDetails);
+
   const [arrayFormat, setArrayFormat] = React.useState([]);
   const [prescriptionData, setPrescriptionData] = React.useState([
     {
@@ -77,7 +79,7 @@ const AppointmentDetails = props => {
 
   return (
     <View style={styles.container}>
-      <Header1x2x title={t('appointment_details')} />
+      <Header1x2x back title={t('appointment_details')} />
       <View style={styles.container}>
         {loading ? (
           <Loader />
@@ -86,7 +88,7 @@ const AppointmentDetails = props => {
             <DoctorAppointmentDetails
               name={appointmentDetails?.patient?.name}
               subTitle={appointmentDetails?.patient?.designation}
-              image={appointmentDetails?.patient?.banner_image_id}
+              image={appointmentDetails?.patient?.avatar_id}
               experience={appointmentDetails?.patient?.experience}
               fee={appointmentDetails?.patient?.price}
               rating={appointmentDetails?.patient?.review_score}

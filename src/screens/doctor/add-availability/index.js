@@ -31,8 +31,10 @@ const AddAvailability = props => {
   const {doctor, user} = useAppSelector(s => s);
   const {userInfo} = user;
   const {hospitals} = doctor;
+  // console.log('hospitals=====>', hospitals[0]?.title);
 
   const [payload, setPayload] = React.useState([obj]);
+  console.log('payload check===>', payload);
   const [loading, setLoading] = React.useState(false);
 
   return (
@@ -79,9 +81,11 @@ const AddAvailability = props => {
                 id={payload[index]?.hospital_id}
                 value={
                   hospitals?.find(h => h?.id === payload[index]?.hospital_id)
-                    ?.title
+                    ?.title || ''
                 }
+                // value="Hello"
               />
+
               <View style={{paddingHorizontal: mvs(12)}}>
                 <ScrollView
                   contentContainerStyle={{marginBottom: mvs(5)}}

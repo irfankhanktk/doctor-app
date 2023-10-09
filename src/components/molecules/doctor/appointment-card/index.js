@@ -29,8 +29,8 @@ const AppointmentCard = ({
       <Row style={{justifyContent: 'flex-start'}}>
         <Image
           source={
-            item?.doctor?.banner_image_id
-              ? {uri: item?.doctor?.banner_image_id}
+            item?.patient?.avatar_id
+              ? {uri: item?.patient?.avatar_id}
               : login_bg
           }
           style={styles.img}
