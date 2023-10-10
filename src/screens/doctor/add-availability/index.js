@@ -4,7 +4,7 @@ import {colors} from 'config/colors';
 import {arrayFormat, weekDays} from 'config/constants';
 import {mvs} from 'config/metrices';
 import React from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, TouchableOpacity, View, TextStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {onAddAvailability} from 'services/api/doctor/api-actions';
 import i18n from 'translation';
@@ -31,7 +31,7 @@ const AddAvailability = props => {
   const {doctor, user} = useAppSelector(s => s);
   const {userInfo} = user;
   const {hospitals} = doctor;
-  // console.log('hospitals=====>', hospitals[0]?.title);
+  console.log('hospitals=====>', hospitals[0]);
 
   const [payload, setPayload] = React.useState([obj]);
   console.log('payload check===>', payload);
@@ -75,14 +75,17 @@ const AddAvailability = props => {
                 items={hospitals}
                 placeholder={t('hospital')}
                 onChangeText={str => {
-                  copy[index].hospital_id = str;
+                  const item = {...copy[index]};
+                  item.hospital_id = str;
+                  copy[index] = item;
                   setPayload(copy);
                 }}
                 id={payload[index]?.hospital_id}
                 value={
-                  hospitals?.find(h => h?.id === payload[index]?.hospital_id)
+                  hospitals?.find(h => h?.id == payload[index]?.hospital_id)
                     ?.title || ''
                 }
+
                 // value="Hello"
               />
 
@@ -137,6 +140,7 @@ const AddAvailability = props => {
                       <View style={{width: '49%'}}>
                         <InputWithIcon
                           items={arrayFormat}
+                          TextStyle={{color: colors.primary}}
                           label={t('start_time')}
                           onChangeText={str => {
                             days[dayIndex].start_time = str;

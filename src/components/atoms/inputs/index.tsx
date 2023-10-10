@@ -252,7 +252,7 @@ export const InputWithIcon = (props: props) => {
           onBlur();
         }}
         style={[styles.dropDownContainer, containerStyle]}>
-        <Medium label={value} />
+        <Medium color={colors.primary} label={value} />
         <Feather size={25} name={'chevron-down'} color={colors.black} />
       </TouchableOpacity>
       <Regular label={error ? `${t(error)}` : ''} style={styles.errorLabel} />
