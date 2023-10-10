@@ -44,6 +44,7 @@ const Checkout = props => {
   const [addPrescription, setAddPresciprtion] = React.useState([
     {presciption: '', days: '', time: ''},
   ]);
+  console.log('addPrescription>>>>>>>>>>>>>>>', image);
   React.useEffect(() => {
     (async () => {
       const res = await getAppointmentDetails(params?.id, setLoading);

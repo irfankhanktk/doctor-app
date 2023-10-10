@@ -36,7 +36,7 @@ const PaymentGatewayScreen = props => {
           cart_id: '938u4983u923',
           cart_currency: 'SAR',
           cart_amount: amount,
-          callback: `${IP}/`,
+          callback: `${URLS.redirect_url}`,
           return: `${URLS.redirect_url}`,
           // callback: 'https://yourdomain.com/yourcallback',
           // return: 'https://yourdomain.com/yourpage',
@@ -56,7 +56,7 @@ const PaymentGatewayScreen = props => {
     console.log('data.nativeEvent.url', resdata.nativeEvent.url);
     const url = resdata.nativeEvent.url;
     const searchString = '/start';
-    if (url === `${IP}/`) {
+    if (url === `${URLS.redirect_url}`) {
       // if (isRedirected) return;
       // Payment was successful
       try {
@@ -103,7 +103,7 @@ const PaymentGatewayScreen = props => {
   if (loading) return <Loader />;
   return (
     <View style={{flex: 1}}>
-      {proceedLoading && (
+      {/* {proceedLoading && (
         <Medium
           style={{
             alignSelf: 'center',
@@ -112,7 +112,7 @@ const PaymentGatewayScreen = props => {
           }}
           label={'Wait your payment is proceeding'}
         />
-      )}
+      )} */}
       <WebView
         source={{uri: data?.redirect_url}}
         onMessage={onMessage}

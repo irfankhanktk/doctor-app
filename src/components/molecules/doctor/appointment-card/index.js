@@ -80,7 +80,10 @@ const AppointmentCard = ({
       </Row>
       <Row style={styles.appoinment}>
         <Medium label={t('appointment_status')} />
-        <Regular label={item?.status} style={styles.appoinmentDetails} />
+        <Regular
+          label={item?.status.charAt(0).toUpperCase() + item.status.slice(1)}
+          style={styles.appoinmentDetails}
+        />
       </Row>
       <Row
         style={{
