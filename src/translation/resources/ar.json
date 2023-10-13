@@ -291,5 +291,10 @@
   "dashboard": "لوحة القيادة",
   "req_business_name": "اسم النشاط التجاري مطلوب",
   "business_name": "الاسم التجاري",
-  "role": "دور"
+  "role": "دور",
+  "no_result_found":"لم يتم العثور على نتائج",
+  "are_you_sour_to_change_langugage":"هل أنت متأكد من تغيير اللغة؟",
+  "app_will_restart_once":"سيتم إعادة تشغيل التطبيق مرة واحدة",
+  "Cancel":"يلغي",
+  "OK":"نعم",
 }

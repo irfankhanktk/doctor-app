@@ -292,5 +292,11 @@
   "dashboard": "Dashboard",
   "req_business_name": "Businesss Name is Required",
   "business_name": "Businesss Name",
-  "role": "Role"
+  "role": "Role",
+  "no_result_found":"No Result Found",
+  "are_you_sour_to_change_langugage":"Are you sure to change language ?",
+"app_will_restart_once":"App will restart once",
+"Cancel":"Cancel",
+"OK":"OK"
+
 }

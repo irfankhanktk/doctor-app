@@ -1,4 +1,5 @@
 import { colors } from 'config/colors'
+import { t } from 'i18next'
 import React from 'react'
 import { ColorValue, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import Medium from 'typography/medium-text'
@@ -9,7 +10,7 @@ type props = {
     children?: JSX.Element | JSX.Element[]
 }
 export const EmptyList = (props: props) => {
-    const { children, style, label = 'No Result Found', color = colors.primary } = props;
+    const { children, style, label = t('no_result_found'), color = colors.primary } = props;
     return (
         <View
             style={[styles.contentContainerStyle, style]}>

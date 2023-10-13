@@ -19,16 +19,16 @@ const LanguageScreen = props => {
   const onChangeLanguage = (lang = 'en', rtl = false) => {
     try {
       Alert.alert(
-        'Are you sure to change language ?',
-        'App will restart once',
+        t('are_you_sour_to_change_langugage'),
+        t('app_will_restart_once'),
         [
           {
-            text: 'Cancel',
+            text: t('Cancel'),
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
           {
-            text: 'OK',
+            text: t('OK'),
             onPress: () => {
               dispatch(setLanguage(lang));
               i18n.changeLanguage(lang);
