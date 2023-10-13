@@ -297,6 +297,8 @@
   "are_you_sour_to_change_langugage":"Are you sure to change language ?",
 "app_will_restart_once":"App will restart once",
 "Cancel":"Cancel",
-"OK":"OK"
-
+"OK":"OK",
+"Warning":"Warning!",
+"are_you_sour_to":"Are you sure you want to Delete your account?. Your account will be deleted permanently and your all data will be deleted",
+"Delete":"Delete"
 }

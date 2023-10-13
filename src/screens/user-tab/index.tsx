@@ -63,16 +63,16 @@ const UserTab = (props: props) => {
   };
   const deleteAcc = async () => {
     Alert.alert(
-      'Warning!',
-      'Are you sure you want to Delete your account?. Your account will be deleted permanently and your all data will be deleted',
+      t('Warning'),
+      t('are_you_sour_to'),
       [
         {
-          text: 'Cancel',
+          text: t('Cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
-          text: 'Delete',
+          text: t('Delete'),
           onPress: () => {
             dispatch(deletePermanentAccount());
           },
